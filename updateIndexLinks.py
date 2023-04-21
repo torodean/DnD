@@ -6,7 +6,7 @@ def update_index_files():
     html_files = []
     for root, dirs, files in os.walk("."):
         for file in files:
-            if file.endswith(".html"):
+            if file.endswith("index.html"):
                 html_files.append(os.path.join(root, file))
 
     # Loop through each HTML file found
@@ -41,7 +41,7 @@ def update_index_files():
 
             # Replace index links in file
             updated_data = re.sub(index_links_pattern, index_links_div + '\n' + index_links + '</ul></div>', file_data, flags=re.DOTALL)
-
+            
             # Write updated file data to file
             f.seek(0)
             f.write(updated_data)
