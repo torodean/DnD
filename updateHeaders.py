@@ -2,7 +2,7 @@ import os
 import re
 
 # Define the template file path
-template_file = "templates/HeaderTemplate.html"
+template_file = "templates/headerTemplate.html"
 
 # Define the regular expression to match the header section
 header_regex = re.compile(r"<head>.*?</head>", re.DOTALL)

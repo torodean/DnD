@@ -10,16 +10,6 @@ def create_index_files():
         directory_name = os.path.basename(root)
         with open(index_file_path, 'w') as f:
             f.write(f"<html>\n<head>\n<title>Index of {directory_name}</title>\n</head>\n<body>\n")
-            f.write(f"<h1>Index of {directory_name}</h1>\n")
-            f.write("<ul>\n")
-
-            # Loop through each file in directory and add to index
-            for file in files:
-                if file != "index.html":
-                    file_path = os.path.join(root, file)
-                    f.write(f'<li><a href="{file_path}">{file}</a></li>\n')
-
-            f.write("</ul>\n")
-            f.write("</body>\n</html>\n")
+            f.write(f"<h1>Index of {directory_name}</h1>\n</body>\n</html>\n")
 
 create_index_files()
