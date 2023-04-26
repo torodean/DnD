@@ -7,6 +7,8 @@ nav_file = "templates/navTemplate.html"
 for root, dirs, files in os.walk("."):
     for filename in files:
         if filename.endswith(".html") and "Template" not in filename:
+            print(f"Processing file: {os.path.join(root, filename)}")
+                
             # open the file and read the contents
             filepath = os.path.join(root, filename)
             with open(filepath, "r") as file:
@@ -21,16 +23,23 @@ for root, dirs, files in os.walk("."):
             navMatch = navRegex.search(contents)
             
             if navMatch:
+                print(" -- Found navigation block")
                 # Replace the navigation block with the contents of the template
                 contents = contents.replace(navMatch.group(0), nav_contents)
 
                 # Write the modified HTML back to the file
                 with open(filepath, 'w') as f:
                     f.write(contents)
+                    
+                print(" -- Replaced navigation block")
             else:
+                print(" -- Navigation block not found")
+                
                 # insert the nav contents at the start of the body tag
                 new_contents = contents.replace("<body>", f"<body>\n{nav_contents}")
 
                 # overwrite the file with the new contents
                 with open(filepath, "w") as file:
                     file.write(new_contents)
+                    
+                print(" -- Inserted nav contents at the start of the body tag")
