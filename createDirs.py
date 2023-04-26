@@ -59,7 +59,9 @@ root_dir = "."
 # Define a function to create directories recursively
 def create_dirs(path, structure):
     for key in structure:
-        os.makedirs(os.path.join(path, key))
+        subpath = os.path.join(path, key)
+        if not os.path.exists(subpath):
+            os.makedirs(subpath)
         if structure[key]:
             create_dirs(os.path.join(path, key), structure[key])
 
