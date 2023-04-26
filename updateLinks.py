@@ -55,6 +55,7 @@ def search_html_files(html_files):
                 for pattern in patterns:
                     search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
                     if search_string_match:
+                        search_string = search_string_match.group(0)
                         print(" -- {0} found in {1}".format(search_string, file_path))
                         link_path = get_relative_path(file_path, search_word['full_path'])
 
