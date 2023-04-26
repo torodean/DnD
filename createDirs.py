@@ -10,10 +10,15 @@ structure = {
             "towns": {}
         },
         "items": {
-            "consumables": {},
+            "consumables": {
+                "potions": {},
+                "food": {},
+                "drink": {}
+            },
             "magic": {},
             "weapons": {},
-            "armor": {}
+            "armor": {},
+            "trinkets": {}
         },
         "notes": {},
         "creatures": {
@@ -23,6 +28,9 @@ structure = {
         "lore": {
             "history": {},
             "factions": {},
+            "races": {},
+            "classes": {},
+            "backgrounds": {},
             "deities": {}
         },
         "quests": {},
@@ -30,7 +38,18 @@ structure = {
             "player": {},
             "non-player": {}
         },
-        "spells": {}
+        "spells": {
+            "level_0": {},
+            "level_1": {},
+            "level_2": {},
+            "level_3": {},
+            "level_4": {},
+            "level_5": {},
+            "level_6": {},
+            "level_7": {},
+            "level_8": {},
+            "level_9": {},
+        }
     }
 }
 
