@@ -49,7 +49,7 @@ def search_html_files(html_files):
                 if search_string == file['name_no_ext']:
                     continue
                     
-                pattern = r'(?<![-/">])(?<!>)\b{}\b(?<![-/.])'.format(re.escape(search_string))
+                pattern = r'(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string))
                 search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
                 if search_string_match:
                     print(" -- {0} found in {1}".format(search_string, file_path))
