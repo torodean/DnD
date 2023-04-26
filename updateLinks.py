@@ -30,7 +30,7 @@ def get_relative_path(from_file, to_file):
 def search_html_files(html_files):    
     # Search the body text of each HTML file for the search strings
     for file in html_files:
-        print("Parsing {0} for link updates!".format(file['full_path']))
+        print("Parsing {0} for link updates!".format(fizle['full_path']))
         file_path = file['full_path']
         
         # Read in the contents of the file.
@@ -50,7 +50,13 @@ def search_html_files(html_files):
                     continue
                     
                 patterns = []
-                patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string)))
+                pattern = r'''(?ix)               # Enable case-insensitive matching and verbose mode
+                              (?<![-/">])         # Negative lookbehind to exclude matches preceded by certain characters
+                              (?<!>)              # Negative lookbehind to exclude matches preceded by a '>' character
+                              \b{}\b              # The search string, wrapped in word boundaries
+                              (?<![-/.])          # Negative lookbehind to exclude matches followed by certain characters
+                              (?![^<]*</a>)       # Negative lookahead to exclude matches within <a> tags
+                           '''.format(re.escape(search_string))
                 patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' '))))
                 for pattern in patterns:
                     search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
