@@ -62,6 +62,7 @@ def create_dirs(path, structure):
         subpath = os.path.join(path, key)
         if not os.path.exists(subpath):
             os.makedirs(subpath)
+            print(f"Created directory: {subpath}")
         if structure[key]:
             create_dirs(os.path.join(path, key), structure[key])
 
