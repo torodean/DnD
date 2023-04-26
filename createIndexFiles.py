@@ -4,7 +4,7 @@ def create_index_files():
     for root, dirs, files in os.walk("."):
         # Create index file in current directory
         index_file_path = os.path.join(root, "index.html")
-        if os.path.exists(index_file_path) or "Template" in index_file_path or "css" in index_file_path:
+        if os.path.exists(index_file_path) or "templates" in index_file_path or "css" in index_file_path:
             continue
 
         directory_name = os.path.basename(root)

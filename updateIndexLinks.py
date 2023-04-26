@@ -6,7 +6,7 @@ def update_index_files():
     html_files = []
     for root, dirs, files in os.walk("."):
         for file in files:
-            if file.endswith("index.html"):
+            if file.endswith("index.html") and "Template" not in file:
                 html_files.append(os.path.join(root, file))
 
     # Loop through each HTML file found
