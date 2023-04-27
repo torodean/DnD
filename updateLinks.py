@@ -27,10 +27,11 @@ def find_html_files(directory='.'):
 def get_relative_path(from_file, to_file):
     return os.path.relpath(to_file, os.path.dirname(from_file))
 
+
 def search_html_files(html_files):    
     # Search the body text of each HTML file for the search strings
     for file in html_files:
-        print("Parsing {0} for link updates!".format(fizle['full_path']))
+        print("Parsing {0} for link updates!".format(file['full_path']))
         file_path = file['full_path']
         
         # Read in the contents of the file.
@@ -49,34 +50,24 @@ def search_html_files(html_files):
                 if search_string == file['name_no_ext']:
                     continue
                     
-                patterns = []
-                pattern = r'''(?ix)               # Enable case-insensitive matching and verbose mode
-                              (?<![-/">])         # Negative lookbehind to exclude matches preceded by certain characters
-                              (?<!>)              # Negative lookbehind to exclude matches preceded by a '>' character
-                              \b{}\b              # The search string, wrapped in word boundaries
-                              (?<![-/.])          # Negative lookbehind to exclude matches followed by certain characters
-                              (?![^<]*</a>)       # Negative lookahead to exclude matches within <a> tags
-                           '''.format(re.escape(search_string))
-                patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' '))))
-                for pattern in patterns:
-                    search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
-                    if search_string_match:
-                        search_string = search_string_match.group(0)
-                        print(" -- {0} found in {1}".format(search_string, file_path))
-                        link_path = get_relative_path(file_path, search_word['full_path'])
+                pattern = r'(?<![-/">])(?<!>)\b{}\b(?<![-/.])'.format(re.escape(search_string))
+                search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
+                if search_string_match:
+                    print(" -- {0} found in {1}".format(search_string, file_path))
+                    link_path = get_relative_path(file_path, search_word['full_path'])
 
-                        # Replace the search string with the new string
-                        new_string = "<a href=\"{0}\">{1}</a>".format(link_path, search_string)
-                        new_body_text = re.sub(pattern, new_string, body_text)
-                        body_text = new_body_text
-                        body_tags = re.search("<body(.*?)>", content, flags=re.DOTALL)
-                        content = re.sub(r"<body[^>]*>(.*?)</body>", "<body>" + new_body_text + "</body>", content, flags=re.DOTALL)
-                        content = re.sub(r"<body>", "<body" + body_tags.group(1) + ">", content, flags=re.DOTALL) 
-                        print(" -- Replacing {0} with {1}".format(search_string, new_string))
+                    # Replace the search string with the new string
+                    new_string = "<a href=\"{0}\">{1}</a>".format(link_path, search_string)
+                    new_body_text = re.sub(pattern, new_string, body_text)
+                    body_text = new_body_text
+                    body_tags = re.search("<body(.*?)>", content, flags=re.DOTALL)
+                    content = re.sub(r"<body[^>]*>(.*?)</body>", "<body>" + new_body_text + "</body>", content, flags=re.DOTALL)
+                    content = re.sub(r"<body>", "<body" + body_tags.group(1) + ">", content, flags=re.DOTALL) 
+                    print(" -- Replacing {0} with {1}".format(search_string, new_string))
 
-                        # Write the modified HTML file
-                        with open(file_path, "w") as f:
-                            f.write(content)
+                    # Write the modified HTML file
+                    with open(file_path, "w") as f:
+                        f.write(content)
   
 
 html_files = [] # Initialize html_files variable as an empty list
