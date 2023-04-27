@@ -50,24 +50,27 @@ def search_html_files(html_files):
                 if search_string == file['name_no_ext']:
                     continue
                     
-                pattern = r'(?<![-/">])(?<!>)\b{}\b(?<![-/.])'.format(re.escape(search_string))
-                search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
-                if search_string_match:
-                    print(" -- {0} found in {1}".format(search_string, file_path))
-                    link_path = get_relative_path(file_path, search_word['full_path'])
+                patterns = []
+                patterns.append(r'(?<![-/">])(?<!>)\b{}\b(?<![-/.])'.format(re.escape(search_string)))
+                patterns.append(r'(?<![-/">])(?<!>)\b{}\b(?<![-/.])'.format(re.escape(search_string.replace('_', ' '))))
+                for pattern in patterns:
+                    search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
+                    if search_string_match:
+                        print(" -- {0} found in {1}".format(search_string, file_path))
+                        link_path = get_relative_path(file_path, search_word['full_path'])
 
-                    # Replace the search string with the new string
-                    new_string = "<a href=\"{0}\">{1}</a>".format(link_path, search_string)
-                    new_body_text = re.sub(pattern, new_string, body_text)
-                    body_text = new_body_text
-                    body_tags = re.search("<body(.*?)>", content, flags=re.DOTALL)
-                    content = re.sub(r"<body[^>]*>(.*?)</body>", "<body>" + new_body_text + "</body>", content, flags=re.DOTALL)
-                    content = re.sub(r"<body>", "<body" + body_tags.group(1) + ">", content, flags=re.DOTALL) 
-                    print(" -- Replacing {0} with {1}".format(search_string, new_string))
+                        # Replace the search string with the new string
+                        new_string = "<a href=\"{0}\">{1}</a>".format(link_path, search_string)
+                        new_body_text = re.sub(pattern, new_string, body_text)
+                        body_text = new_body_text
+                        body_tags = re.search("<body(.*?)>", content, flags=re.DOTALL)
+                        content = re.sub(r"<body[^>]*>(.*?)</body>", "<body>" + new_body_text + "</body>", content, flags=re.DOTALL)
+                        content = re.sub(r"<body>", "<body" + body_tags.group(1) + ">", content, flags=re.DOTALL) 
+                        print(" -- Replacing {0} with {1}".format(search_string, new_string))
 
-                    # Write the modified HTML file
-                    with open(file_path, "w") as f:
-                        f.write(content)
+                        # Write the modified HTML file
+                        with open(file_path, "w") as f:
+                            f.write(content)
   
 
 html_files = [] # Initialize html_files variable as an empty list
