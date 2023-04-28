@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import os
+from cssbeautifier import beautify
 
 # Define the directory path to prettify HTML files
 directory_path = os.getcwd()
@@ -23,4 +24,20 @@ for root, directories, files in os.walk(directory_path):
             with open(file_path, "w") as f:
                 f.write(prettified_html)
                 
+            print(f"File {file_path} has been prettified.")
+            
+        elif file.endswith(".css"):
+            file_path = os.path.join(root, file)
+
+            # Read in the file
+            with open(file_path, "r") as f:
+                contents = f.read()
+
+            # Use cssbeautifier to prettify the CSS code
+            prettified_code = beautify(contents)
+
+            # Write the prettified code back to the file
+            with open(file_path, "w") as f:
+                f.write(prettified_code)
+
             print(f"File {file_path} has been prettified.")

@@ -1,6 +1,6 @@
 import os
 
-css_path = "css/openai.css"
+css_path = "css/mmorpdnd.css"
 
 # Loop through all files and subdirectories in the current directory
 for dirpath, dirnames, filenames in os.walk("."):
