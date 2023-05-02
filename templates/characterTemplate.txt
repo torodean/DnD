@@ -1,0 +1,14 @@
+name = fooBar
+level = 13
+race = fooling
+class = footer
+background = barber
+strength = 15
+dexterity = 13
+constitution = 18
+intelligence = 22
+wisdom = 4
+charisma = 14
+proficiencies = strength, acrobatics, history
+information = This is some info for foobar, the template character.
+notes = No notes needed for template dude.
