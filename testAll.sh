@@ -8,7 +8,6 @@ if [[ $(uname) == CYGWIN* ]]; then
 	py createDummyHTMLFiles.py
 	py createIndexFiles.py
 	py updateHeaders.py
-	py fixCSSLinks.py
 	py updateNavigation.py
 	py updateIndexLinks.py
 	#py updateLinks.py
@@ -23,7 +22,6 @@ else
 	python3 updateHeaders.py
 	python3 updateNavigation.py
 	python3 updateIndexLinks.py
-	#python3 updateLinks.py
-	python3 fixCSSLinks.py
+	python3 updateLinks.py
 	python3 prettyHTML.py
 fi
