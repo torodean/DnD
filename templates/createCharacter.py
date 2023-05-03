@@ -98,23 +98,7 @@ else:
 
 
 # Define the fields to replace in the template file
-FIELDS = {
-    'name': '',
-    'image': '',
-    'race': '',
-    'class': '',
-    'level': '',
-    'background': '',
-    'strength': '',
-    'dexterity': '',
-    'constitution': '',
-    'intelligence': '',
-    'wisdom': '',
-    'charisma': '',
-    'proficiencies': '',
-    'information': '',
-    'notes': ''
-}
+FIELDS = {}
 
 with open(CHARACTER_FILE, 'r') as f:
     contents = f.readlines()
@@ -149,6 +133,11 @@ print("Proficiency bonus for level {0} is {1}".format(level, proficiency_bonus))
 # Replace the appropriate fields.
 for field, value in FIELDS.items():
     temp_field = '[' + field + ']'
+    if "senses" in field:
+        if FIELDS['senses'].strip() != "" and "None" not in FIELDS['senses']:
+            value += ", Passive Perception: {0}".format(10+calculate_modifier(int(FIELDS['wisdom'])))
+        else:            
+            value = "Passive Perception = {0}".format(10+calculate_modifier(int(FIELDS['wisdom']))) 
     template = template.replace(temp_field, value)
     if value.isdigit():
         temp_field_modifier = '[' + field + " modifier]"
@@ -222,6 +211,30 @@ template = template.replace("[image-description]", img_desc)
 template = template.replace("[image-url]", img_src)
 
 copy_file_to_directory(img_src, img_dir)
+
+
+# Update abilities
+abilities = FIELDS['abilities'].split(',')
+abilities_output = ""
+for ability in abilities:
+    abilities_output += "<li><strong>"
+    abilities_output += ability.strip()
+    abilities_output += ":</strong>["
+    abilities_output += ability.strip()
+    abilities_output += " description]</li>"
+template = template.replace("[abilities list]", abilities_output)
+
+# Update equipment
+equipment = FIELDS['equipment'].split(',')
+equipment_output = ""
+for equip in equipment:
+    equipment_output += "<li><strong>"
+    equipment_output += equip.strip()
+    equipment_output += ":</strong>["
+    equipment_output += equip.strip()
+    equipment_output += " description]</li>"
+template = template.replace("[equipment list]", equipment_output)
+
 
 # Write the new character file
 with open(filepath, 'w') as f:

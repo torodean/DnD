@@ -133,6 +133,7 @@ footer a:hover {
 /* Style for the name field */
 .character-info h2 {
     font-size: 32px;
+    color: #00a8ff;
     margin-bottom: 10px;
 }
 
@@ -146,9 +147,9 @@ footer a:hover {
 .character-info .character-img {
     float: right;
     margin: 0 0 10px 10px;
-    width: 200px;
+    width: 540px;
     /* adjust this value as needed */
-    height: 200px;
+    height: 540px;
     /* adjust this value as needed */
     border-radius: 50%;
     border: 3px solid #ddd;
