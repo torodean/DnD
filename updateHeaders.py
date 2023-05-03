@@ -17,6 +17,10 @@ for root, dirs, files in os.walk("."):
         if file.endswith(".html") and "Template" not in file:
             # Read the contents of the HTML file
             file_path = os.path.join(root, file)
+            
+            if ".git" in file_path:
+                continue
+                
             with open(file_path, "r") as f:
                 contents = f.read()
 

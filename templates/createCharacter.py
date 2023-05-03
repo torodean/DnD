@@ -1,5 +1,6 @@
 import os
 import re
+import shutil
 import argparse
 
 
@@ -13,6 +14,35 @@ parser.add_argument('-c', "--char_file", help="name of the character input file"
 args = parser.parse_args()
 
 
+def copy_file_to_directory(file_path, directory_path):
+    """Copy a file to a directory.
+
+    Args:
+        file_path (str): The path to the file to copy.
+        directory_path (str): The path to the directory to copy the file to.
+
+    Raises:
+        ValueError: If the file or directory doesn't exist.
+
+    Returns:
+        None
+    """
+
+    # Check if the file exists
+    if not os.path.isfile(file_path):
+        raise ValueError("File does not exist")
+
+    # Check if the directory exists
+    if not os.path.isdir(directory_path):
+        print(f"Directory {directory_path} does not exist. Creating directory...")
+        os.makedirs(directory_path)
+
+    # Copy the file to the directory
+    print(f"Copying {file_path} to {directory_path}")
+    shutil.copy(file_path, directory_path)
+    print(f"File {file_path} copied to {directory_path}")
+    
+    
 def calculate_modifier(attribute_value):
     """
     Calculate the DnD attribute modifier based on the value of the attribute.
@@ -173,17 +203,19 @@ template = template.replace("[background information]", info)
 notes = FIELDS['notes']
 template = template.replace("[notes]", notes)
 
-img_src = FIELDS['image']
+img_src = "img/" + FIELDS['image']
 img_filepath = os.path.join(CHAR_DIR, img_src)
-ime_desc = img_src.split('.')[0] + "-image"
-template = template.replace("[image-description]", ime_desc)
+img_dir = CHAR_DIR + "/img"
+img_desc = img_src.split('/')[1].split('.')[0] + "-image"
+template = template.replace("[image-description]", img_desc)
 template = template.replace("[image-url]", img_src)
+
+copy_file_to_directory(img_src, img_dir)
 
 # Write the new character file
 with open(filepath, 'w') as f:
     f.write(template)
     
-
 
 print(f'Character file created: {filepath}')
 

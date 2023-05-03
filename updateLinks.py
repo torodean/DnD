@@ -15,7 +15,7 @@ def find_html_files(directory='.'):
             if filename.endswith('.html') and "index.html" not in filename:
                 name_no_ext = os.path.splitext(filename)[0]
                 full_path = os.path.join(root, filename)
-                if ".git" not in full_path and "templates" not in full_path and "css" not in full_path:
+                if ".git" not in full_path and "templates" not in full_path and "css" not in full_path and ".git" not in full_path:
                     html_files.append({
                         'name_no_ext': name_no_ext,
                         'name_with_ext': filename,

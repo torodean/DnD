@@ -12,6 +12,9 @@ for root, directories, files in os.walk(directory_path):
         if file.endswith(".html"):
             file_path = os.path.join(root, file)
             
+            if ".git" in file_path:
+                continue
+            
             # Read in the HTML file
             with open(file_path, "r") as f:
                 contents = f.read()

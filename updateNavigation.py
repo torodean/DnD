@@ -6,11 +6,14 @@ nav_file = "templates/navTemplate.html"
 # loop through all files in directory and subdirectories
 for root, dirs, files in os.walk("."):
     for filename in files:
-        if filename.endswith(".html") and "Template" not in filename:
-            print(f"Processing file: {os.path.join(root, filename)}")
-                
+        if filename.endswith(".html") and "Template" not in filename:                
             # open the file and read the contents
             filepath = os.path.join(root, filename)
+            
+            if ".git" in filepath:
+                continue
+                        
+            print(f"Processing file: {filepath}")
             with open(filepath, "r") as file:
                 contents = file.read()
 
