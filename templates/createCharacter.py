@@ -8,7 +8,8 @@ import argparse
 parser = argparse.ArgumentParser()
 
 # add an argument to the parser for the file name
-parser.add_argument('-c', "--char_file", help="name of the character input file")
+parser.add_argument('-c', "--char_file", help="Name of the character input file.")
+parser.add_argument('-p', "--pc", help="This character is a player-character. Characters are considered npc by default.")
 
 # parse the arguments
 args = parser.parse_args()
@@ -86,8 +87,15 @@ def calculate_proficiency_bonus(level):
 
 # Define the template file path and character directory
 TEMPLATE_FILE = 'characterTemplate.html'
-CHARACTER_FILE = 'characterTemplate.txt'
-#CHARACTER_FILE = args.char_file
+
+# Set's the character file parameter.
+if args.char_file is not None:
+    CHARACTER_FILE = args.char_file
+else:
+    CHARACTER_FILE = 'characterTemplate.txt'
+
+
+
 
 # Define the fields to replace in the template file
 FIELDS = {
@@ -119,7 +127,10 @@ for line in contents:
 CHAR_DIR = ""
 for dirpath, dirnames, filenames in os.walk("../"):
     if 'characters' in dirnames:
-        CHAR_DIR = os.path.join(dirpath, 'characters')
+        if args.pc:
+            CHAR_DIR = os.path.join(dirpath, 'characters/player')
+        else:            
+            CHAR_DIR = os.path.join(dirpath, 'characters/non-player')
 
 # Generate the character file path
 char_name = FIELDS['name']
