@@ -1,4 +1,5 @@
 name = fooBar
+image = foobar.jpg
 level = 13
 race = fooling
 class = footer

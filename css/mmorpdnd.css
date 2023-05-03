@@ -146,9 +146,9 @@ footer a:hover {
 .character-info .character-img {
     float: right;
     margin: 0 0 10px 10px;
-    width: 150px;
+    width: 200px;
     /* adjust this value as needed */
-    height: 150px;
+    height: 200px;
     /* adjust this value as needed */
     border-radius: 50%;
     border: 3px solid #ddd;
