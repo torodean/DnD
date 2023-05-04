@@ -10,7 +10,7 @@ for root, dirs, files in os.walk("."):
             # open the file and read the contents
             filepath = os.path.join(root, filename)
             
-            if ".git" in filepath:
+            if ".git" in filepath and ".idea" not in filepath:
                 continue
                         
             print(f"Processing file: {filepath}")

@@ -17,7 +17,7 @@ with open(os.path.join(current_dir, "index.html"), "w") as f:
 # Recursively walk through the directory structure and create HTML files in each subdirectory
 for dirpath, dirnames, filenames in os.walk(current_dir):
     for dirname in dirnames:
-        if "templates" in dirpath or "css" in dirpath or ".git" in dirpath or "templates" in dirname or "css" in dirname or ".git" in dirname:
+        if "templates" in dirpath or "css" in dirpath or ".git" in dirpath or ".idea" in dirpath or "templates" in dirname or "css" in dirname or ".git" in dirname or ".idea" in dirname:
         	continue
         # Create an index.html file in each subdirectory
         with open(os.path.join(dirpath, dirname, "index.html"), "w") as f:

@@ -18,7 +18,7 @@ for root, dirs, files in os.walk("."):
             # Read the contents of the HTML file
             file_path = os.path.join(root, file)
             
-            if ".git" in file_path:
+            if ".git" in file_path or ".idea" in file_path:
                 continue
                 
             with open(file_path, "r") as f:

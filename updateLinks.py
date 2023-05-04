@@ -15,7 +15,7 @@ def find_html_files(directory='.'):
             if filename.endswith('.html') and "index.html" not in filename:
                 name_no_ext = os.path.splitext(filename)[0]
                 full_path = os.path.join(root, filename)
-                if ".git" not in full_path and "templates" not in full_path and "css" not in full_path and ".git" not in full_path:
+                if ".git" not in full_path and "templates" not in full_path and "css" not in full_path and ".git" not in full_path and ".idea" not in full_path:
                     html_files.append({
                         'name_no_ext': name_no_ext,
                         'name_with_ext': filename,
@@ -51,8 +51,8 @@ def search_html_files(html_files):
                     continue
                     
                 patterns = []
-                patterns.append(r'(?<![-/">])(?<!>)\b{}\b(?<![-/.])'.format(re.escape(search_string)))
-                patterns.append(r'(?<![-/">])(?<!>)\b{}\b(?<![-/.])'.format(re.escape(search_string.replace('_', ' '))))
+                patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string)))
+                patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' '))))
                 for pattern in patterns:
                     search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
                     if search_string_match:

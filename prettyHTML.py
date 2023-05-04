@@ -12,7 +12,7 @@ for root, directories, files in os.walk(directory_path):
         if file.endswith(".html"):
             file_path = os.path.join(root, file)
             
-            if ".git" in file_path:
+            if ".git" in file_path or ".idea" in file_path:
                 continue
             
             # Read in the HTML file
