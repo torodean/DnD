@@ -4,6 +4,7 @@ import os
 structure = {
     "campaign": {
         "locations": {
+            "regions": {},
             "dungeons": {},
             "cities": {},
             "landmarks": {},
