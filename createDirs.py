@@ -1,3 +1,4 @@
+#!/bin/python3
 import os
 
 # Define the directory structure
@@ -57,7 +58,17 @@ structure = {
 root_dir = "."
 
 # Define a function to create directories recursively
-def create_dirs(path, structure):
+def create_dirs(path: str, structure: dict) -> None:
+    """
+    Recursively creates directories in the given path according to the structure specified in the dictionary.
+    
+    Args:
+        path (str): The root path where directories will be created.
+        structure (dict): A dictionary representing the structure of the directories to be created.
+        
+    Returns:
+        None
+    """
     for key in structure:
         subpath = os.path.join(path, key)
         if not os.path.exists(subpath):
