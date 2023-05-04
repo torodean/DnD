@@ -85,6 +85,7 @@ class MMORPDND_VARS:
         
         # Define the template file paths
         self.header_template_file = "templates/headerTemplate.html"
+        self.nav_template_file = "templates/navTemplate.html"
         self.css_path = "css/mmorpdnd.css"
 
 
@@ -259,11 +260,11 @@ class MMORPDND:
         """
         # Loop through all HTML files in the current directory and its subdirectories
         for root, dirnames, filenames in os.walk(directory):
-            for file in filenames:
+            for filename in filenames:
                 # check for html file and if "Template" is in filename.
-                if file.endswith(".html") and "Template" not in file:
+                if filename.endswith(".html") and "Template" not in filename:
                     # Read the contents of the HTML file
-                    file_path = os.path.join(root, file)
+                    file_path = os.path.join(root, filename)
                     
                     # Check if we are looking at a file in our exclude list.
                     if any(exclude in file_path for exclude in global_vars.directories_to_exclude):
@@ -279,7 +280,7 @@ class MMORPDND:
                     # Replace the header section with the contents of the template
                     contents = re.sub(global_vars.header_regex, template, contents)
                     
-                    title = "<title>" + file.split('.')[0].replace('_', ' ') + "</title>"
+                    title = "<title>" + filename.split('.')[0].replace('_', ' ') + "</title>"
                     print(title)
                     
                     # Replace the title section with the file name
@@ -302,6 +303,58 @@ class MMORPDND:
                         f.write(contents)
                     
                     print(f"Updated head and css in {file_path}")  # Print progress update
+                    
+
+    def update_navigation(self, directory = global_vars.root_dir):
+        """
+        This will update the navigation block of the html files to match the template.
+        """
+        # loop through all files in directory and subdirectories
+        for root, dirnames, filenames in os.walk(directory):
+            for filename in filenames:
+                if filename.endswith(".html") and "Template" not in filename:                
+                    # open the file and read the contents
+                    file_path = os.path.join(root, filename)
+                    
+                    # Check if we are looking at a file in our exclude list.
+                    if any(exclude in file_path for exclude in global_vars.directories_to_exclude):
+                        continue
+                                
+                    print(f"Processing file: {file_path}")
+                    
+                    # Read the original contents of the file in.
+                    with open(file_path, "r") as file:
+                        contents = file.read()
+
+                    # open the nav file and read the contents
+                    with open(global_vars.nav_template_file, "r") as file:
+                        nav_contents = file.read()
+                        
+                    # Find the navigation block in the original HTML file
+                    navRegex = re.compile(r'<div class="navigation">(.*?)</div>', re.DOTALL)
+                    navMatch = navRegex.search(contents)
+                    
+                    if navMatch:
+                        print(" -- Found navigation block")
+                        # Replace the navigation block with the contents of the template
+                        contents = contents.replace(navMatch.group(0), nav_contents)
+
+                        # Write the modified HTML back to the file
+                        with open(file_path, 'w') as f:
+                            f.write(contents)
+                            
+                        print(" -- Replaced navigation block!")
+                    else:
+                        print(" -- Navigation block not found!")
+                        
+                        # insert the nav contents at the start of the body tag
+                        new_contents = contents.replace("<body>", f"<body>\n{nav_contents}")
+
+                        # overwrite the file with the new contents
+                        with open(file_path, "w") as file:
+                            file.write(new_contents)
+                            
+                        print(" -- Inserted nav contents at the start of the body tag")
             
         
 class MMORPDND_GUI:
@@ -346,6 +399,9 @@ class MMORPDND_GUI:
         
         update_headers_button = tk.Button(self.gui, text="Update HTML Headers", command=self.update_headers, **blue_button_style)
         update_headers_button.pack(pady=5)
+        
+        update_navigation_button = tk.Button(self.gui, text="Update Navigation Blocks", command=self.update_navigation, **blue_button_style)
+        update_navigation_button.pack(pady=5)
 
         
     def run(self):
@@ -363,15 +419,19 @@ class MMORPDND_GUI:
         self.create_index_files()
         self.update_index_links()
         self.update_headers()
+        self.update_navigation()
         
     def update_all(self):
         """
         This method will update all files.
+        
+        Note: The order of these matter!
         """
         self.create_directories()
         self.create_index_files()
         self.update_index_links()
         self.update_headers()
+        self.update_navigation()
         
     def create_directories(self):
         self.mmorpdnd.create_directories(global_vars.root_dir, global_vars.directory_structure)
@@ -387,6 +447,9 @@ class MMORPDND_GUI:
                 
     def update_headers(self):
         self.mmorpdnd.update_headers(global_vars.root_dir)
+                
+    def update_navigation(self):
+        self.mmorpdnd.update_navigation(global_vars.root_dir)
         
 def main():
     # main method code here
