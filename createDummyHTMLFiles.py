@@ -6,6 +6,7 @@ num_files_per_subdirectory = 3
 
 # Get the current directory
 current_dir = os.getcwd()
+script_directory = os.path.dirname(os.path.abspath(__file__))
 
 # Stores all files created so far.
 all_files = []
