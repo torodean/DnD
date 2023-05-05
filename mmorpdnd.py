@@ -1,14 +1,17 @@
 #!/bin/phthon3
-import tkinter as tk
-from tkinter import PhotoImage
 import os
 import re
 import random
+import tkinter as tk
+from tkinter import PhotoImage
+from cssbeautifier import beautify
+from bs4 import BeautifulSoup
 
 class MMORPDND_VARS:
     """
     This is a class for storing variables used by MMORPDND* classes.
     """
+
     def __init__(self):
         """
         Initialization method.
@@ -66,41 +69,44 @@ class MMORPDND_VARS:
                 }
             }
         }
-        
+
         # Define the number of HTML files to create in each subdirectory
-        self.num_dummy_files_per_subdir = 3# Stores all files created so far.
+        self.num_dummy_files_per_subdir = 3  # Stores all files created so far.
         self.all_index_files = []
-        
+
         # Define the root directory
         self.root_dir = os.getcwd()
         self.script_dir = os.path.dirname(os.path.abspath(__file__))
-        
+
         self.directories_to_exclude = ["templates", "css", ".git", ".idea"]
-        
+
         # Define the regular expression to match the header section
         self.header_regex = re.compile(r"<head>.*?</head>", re.DOTALL)
 
         # Define the regular expression to match the header section
         self.title_regex = re.compile(r"<title>.*?</title>", re.DOTALL)
-        
+
         # Define the template file paths
         self.header_template_file = "templates/headerTemplate.html"
         self.nav_template_file = "templates/navTemplate.html"
         self.css_path = "css/mmorpdnd.css"
 
 
-# Define a global variable containing the declared vars. Use this so they are all only defined once and can be updated/stored throughout the applications lifetime.
+# Define a global variable containing the declared vars. Use this so they are all only defined once and can be
+# updated/stored throughout the applications lifetime.
 global_vars = MMORPDND_VARS()
+
 
 class MMORPDND:
     """
     A class for all the main MMORPDND features.
     """
+
     def __init__(self):
         """
         Initialization method.
         """
-        
+
     # Define a function to create directories recursively
     def create_directories(self, path: str, structure: dict) -> None:
         """
@@ -120,9 +126,8 @@ class MMORPDND:
                 print(f"Created directory: {subpath}")
             if structure[key]:
                 self.create_directories(os.path.join(path, key), structure[key])
-                
-                
-    def create_dummy_html_files(self, directory = global_vars.root_dir):
+
+    def create_dummy_html_files(self, directory=global_vars.root_dir):
         """
         Create dummy html files in all directories and sub-directories for testing. Each file will be randomly linked to another file.
         """
@@ -134,7 +139,7 @@ class MMORPDND:
         # Recursively walk through the directory structure and create HTML files in each subdirectory
         for root, dirnames, filenames in os.walk(directory):
             for dirname in dirnames:
-            
+
                 # Check if we are looking at a file in our exclude list.
                 if any(exclude in root for exclude in global_vars.directories_to_exclude):
                     continue
@@ -144,15 +149,16 @@ class MMORPDND:
                 # Create an index.html file in each subdirectory
                 with open(os.path.join(root, dirname, "index.html"), "w") as f:
                     f.write("<html><head></head><body><h1>Welcome to the index page!</h1></body></html>")
-                    
+
                 for i in range(global_vars.num_dummy_files_per_subdir):
                     # Use the current directory name as part of the filename
                     filename = f"{dirname}_{i}.html"
-                    all_dummy_files.append(filename.split('.html')[0])  
+                    all_dummy_files.append(filename.split('.html')[0])
                     random_one = random.choice(all_dummy_files)
                     random_two = random.choice(all_dummy_files)
                     with open(os.path.join(root, dirname, filename), "w") as f:
-                        f.write(f"<html><head></head><body><h1>This is {filename} in {dirname} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
+                        f.write(
+                            f"<html><head></head><body><h1>This is {filename} in {dirname} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
                         print(f"HTML file {directory}/{filename} created successfully!")
 
         # Create additional HTML files in the script directory
@@ -163,21 +169,21 @@ class MMORPDND:
             random_one = random.choice(all_dummy_files)
             random_two = random.choice(all_dummy_files)
             with open(os.path.join(directory, filename), "w") as f:
-                f.write(f"<html><head></head><body><h1>This is {filename} in {directory} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
+                f.write(
+                    f"<html><head></head><body><h1>This is {filename} in {directory} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
                 print(f"HTML file {directory}/{filename} created successfully!")
 
         print("HTML files created successfully!")
 
-
-    def create_index_files(self, directory = global_vars.root_dir):
+    def create_index_files(self, directory=global_vars.root_dir):
         """
         This will create index files for all subdirectories.
-        """    
+        """
         # Loop through all directories and files starting from the specified directory.
         for root, dirnames, filenames in os.walk(directory):
             # Create index file in current directory.
             index_file_path = os.path.join(root, "index.html")
-            
+
             # Skip this directory if index.html already exists.
             if os.path.exists(index_file_path):
                 continue
@@ -191,23 +197,22 @@ class MMORPDND:
                 f.write(f"<html>\n<head>\n<title>Index of {directory_name}</title>\n</head>\n<body>\n")
                 f.write(f"<h1>Index of {directory_name}</h1>\n</body>\n</html>\n")
             print(f"Created index file at {index_file_path}")
-            
-            
+
     def update_index_files(self):
         """
         This will update all index files to include links to the other files in that directory.
         """
-        
+
         print("Updating index files...")
-        
+
         # Get list of all HTML index files in directory and subdirectories
         for root, dirnames, filenames in os.walk("."):
             for file in filenames:
-            
+
                 # Check if we are looking at a file in our exclude list.
                 if any(exclude in root for exclude in global_vars.directories_to_exclude):
-                    continue               
-                
+                    continue
+
                 if file.endswith("index.html"):
                     global_vars.all_index_files.append(os.path.join(root, file))
 
@@ -219,7 +224,7 @@ class MMORPDND:
                 # Find all HTML files in same directory as current file
                 dir_path = os.path.dirname(file)
                 html_files_in_dir = []
-                
+
                 # Add each html file to the list of html files in that directory.
                 for file_name in os.listdir(dir_path):
                     if file_name.endswith(".html"):
@@ -235,7 +240,8 @@ class MMORPDND:
                 # Update index links
                 index_links_div_pattern = r'<div\s+class\s*=\s*["\']indexLinks["\']\s*><ul>'
                 index_links_div_match = re.search(index_links_div_pattern, file_data, re.DOTALL)
-                index_links_div = index_links_div_match.group(0) if index_links_div_match else '<div class="indexLinks"><ul>'
+                index_links_div = index_links_div_match.group(
+                    0) if index_links_div_match else '<div class="indexLinks"><ul>'
                 index_links = ''
                 for html_file in html_files_in_dir:
                     if html_file != 'index.html':
@@ -244,17 +250,17 @@ class MMORPDND:
                         index_links += f'{link}\n'
 
                 # Replace index links in file
-                updated_data = re.sub(index_links_pattern, index_links_div + '\n' + index_links + '</ul></div>', file_data, flags=re.DOTALL)
-                
+                updated_data = re.sub(index_links_pattern, index_links_div + '\n' + index_links + '</ul></div>',
+                                      file_data, flags=re.DOTALL)
+
                 # Write updated file data to file
                 f.seek(0)
                 f.write(updated_data)
                 f.truncate()
                 print(f"{file} updated")
             print("All index.html files updated.")
-            
-            
-    def update_headers(self, directory = global_vars.root_dir):
+
+    def update_headers(self, directory=global_vars.root_dir):
         """
         This will update the headers of the html files to match the template.
         """
@@ -265,11 +271,11 @@ class MMORPDND:
                 if filename.endswith(".html") and "Template" not in filename:
                     # Read the contents of the HTML file
                     file_path = os.path.join(root, filename)
-                    
+
                     # Check if we are looking at a file in our exclude list.
                     if any(exclude in file_path for exclude in global_vars.directories_to_exclude):
                         continue
-                        
+
                     with open(file_path, "r") as f:
                         contents = f.read()
 
@@ -279,49 +285,48 @@ class MMORPDND:
 
                     # Replace the header section with the contents of the template
                     contents = re.sub(global_vars.header_regex, template, contents)
-                    
+
                     title = "<title>" + filename.split('.')[0].replace('_', ' ') + "</title>"
                     print(title)
-                    
+
                     # Replace the title section with the file name
                     contents = re.sub(global_vars.title_regex, title, contents)
-                        
+
                     # Determine the relative path to the CSS file
                     css_relative_path = os.path.relpath(global_vars.css_path, start=root)
-                    
+
                     # Determine the number of subdirectories between the HTML file and the CSS file
                     num_subdirs = css_relative_path.count(os.sep) - 1
-                    
+
                     # Create the correct link path for the CSS file
                     link_path = "../" * num_subdirs + global_vars.css_path
-                    
+
                     # Replace the placeholder with the link to the CSS file
                     contents = contents.replace("%OPENAICSS%", f'<link href="{link_path}" rel="stylesheet"/>')
-                    
+
                     # Overwrite the HTML file with the updated contents 
                     with open(file_path, "w") as f:
                         f.write(contents)
-                    
-                    print(f"Updated head and css in {file_path}")  # Print progress update
-                    
 
-    def update_navigation(self, directory = global_vars.root_dir):
+                    print(f"Updated head and css in {file_path}")  # Print progress update
+
+    def update_navigation(self, directory=global_vars.root_dir):
         """
         This will update the navigation block of the html files to match the template.
         """
         # loop through all files in directory and subdirectories
         for root, dirnames, filenames in os.walk(directory):
             for filename in filenames:
-                if filename.endswith(".html") and "Template" not in filename:                
+                if filename.endswith(".html") and "Template" not in filename:
                     # open the file and read the contents
                     file_path = os.path.join(root, filename)
-                    
+
                     # Check if we are looking at a file in our exclude list.
                     if any(exclude in file_path for exclude in global_vars.directories_to_exclude):
                         continue
-                                
+
                     print(f"Processing file: {file_path}")
-                    
+
                     # Read the original contents of the file in.
                     with open(file_path, "r") as file:
                         contents = file.read()
@@ -329,11 +334,11 @@ class MMORPDND:
                     # open the nav file and read the contents
                     with open(global_vars.nav_template_file, "r") as file:
                         nav_contents = file.read()
-                        
+
                     # Find the navigation block in the original HTML file
                     navRegex = re.compile(r'<div class="navigation">(.*?)</div>', re.DOTALL)
                     navMatch = navRegex.search(contents)
-                    
+
                     if navMatch:
                         print(" -- Found navigation block")
                         # Replace the navigation block with the contents of the template
@@ -342,74 +347,130 @@ class MMORPDND:
                         # Write the modified HTML back to the file
                         with open(file_path, 'w') as f:
                             f.write(contents)
-                            
+
                         print(" -- Replaced navigation block!")
                     else:
                         print(" -- Navigation block not found!")
-                        
+
                         # insert the nav contents at the start of the body tag
                         new_contents = contents.replace("<body>", f"<body>\n{nav_contents}")
 
                         # overwrite the file with the new contents
                         with open(file_path, "w") as file:
                             file.write(new_contents)
-                            
+
                         print(" -- Inserted nav contents at the start of the body tag")
-            
-        
+
+    def beautify_files(self, directory=global_vars.root_dir):
+        """
+
+        :return:
+        """
+        # Modify our exclude list to include template and css files.
+        modified_directories_to_exclude = global_vars.directories_to_exclude
+        modified_directories_to_exclude.remove("templates")
+        modified_directories_to_exclude.remove("css")
+
+        # Loop through all files and subdirectories in the directory
+        for root, dirnames, filenames in os.walk(directory):
+            # Loop through all HTML files in the current directory
+            for file in filenames:
+                file_path = os.path.join(root, file)
+
+                # Check if we are looking at a file in our exclude list.
+                if any(exclude in file_path for exclude in modified_directories_to_exclude):
+                    continue
+
+                if not file.endswith(".html") and not file.endswith(".css"):
+                    continue
+
+                # Read in the HTML file
+                print(file_path)
+                with open(file_path, "r") as f:
+                    contents = f.read()
+
+                # html files.
+                if file.endswith(".html"):
+                    # Use BeautifulSoup to parse the HTML and prettify it
+                    soup = BeautifulSoup(contents, "html.parser")
+                    prettified_content = soup.prettify()
+
+                # html files.
+                elif file.endswith(".css"):
+                    # Use cssbeautifier to prettify the CSS code
+                    prettified_content = beautify(contents)
+
+                # Write the prettified code back to the file
+                with open(file_path, "w") as f:
+                    f.write(prettified_content)
+
+                print(f"File {file_path} has been prettified.")
+
 class MMORPDND_GUI:
     """
     Class to store GUI functions and operations.
     """
+
     def __init__(self):
         """
         Initialization method.
         """
         self.mmorpdnd = MMORPDND()
-        self.gui = tk.Tk()    
+        self.gui = tk.Tk()
         self.gui.title("MMORPDND")
-        self.gui.geometry("300x400")
-        
+        self.gui.geometry("300x450")
+
         # Load icon image
         icon = PhotoImage(file='{}/mmorpdnd.png'.format(global_vars.root_dir))
         # Set icon image
         self.gui.tk.call('wm', 'iconphoto', self.gui._w, icon)
-        
-        blue_button_style = {"font": ("Arial", 14), "bg": "#4287f5", "fg": "#ffffff", "activebackground": "#ffffff", "activeforeground": "#4287f5"}
-        
-        red_button_style = {"font": ("Arial", 14), "bg": "#f54251", "fg": "#ffffff", "activebackground": "#ffffff", "activeforeground": "#f54251"}
+
+        blue_button_style = {"font": ("Arial", 14), "bg": "#4287f5", "fg": "#ffffff", "activebackground": "#ffffff",
+                             "activeforeground": "#4287f5"}
+
+        red_button_style = {"font": ("Arial", 14), "bg": "#f54251", "fg": "#ffffff", "activebackground": "#ffffff",
+                            "activeforeground": "#f54251"}
 
         test_all_button = tk.Button(self.gui, text="Test All", command=self.test_all, **red_button_style)
         test_all_button.pack(pady=5)
-        
+
         update_all_button = tk.Button(self.gui, text="Update All", command=self.update_all, **red_button_style)
         update_all_button.pack(pady=5)
 
-        create_directories_button = tk.Button(self.gui, text="Create Directories", command=self.create_directories, **blue_button_style)
+        create_directories_button = tk.Button(self.gui, text="Create Directories", command=self.create_directories,
+                                              **blue_button_style)
         create_directories_button.pack(pady=5)
-        
-        create_dummy_html_files_button = tk.Button(self.gui, text="Create Dummy HTML Files", command=self.create_dummy_html_files, **blue_button_style)
+
+        create_dummy_html_files_button = tk.Button(self.gui, text="Create Dummy HTML Files",
+                                                   command=self.create_dummy_html_files, **blue_button_style)
         create_dummy_html_files_button.pack(pady=5)
-        
-        create_index_files_button = tk.Button(self.gui, text="Create Index Files", command=self.create_index_files, **blue_button_style)
+
+        create_index_files_button = tk.Button(self.gui, text="Create Index Files", command=self.create_index_files,
+                                              **blue_button_style)
         create_index_files_button.pack(pady=5)
-        
-        update_index_links_button = tk.Button(self.gui, text="Update Index File Links", command=self.update_index_links, **blue_button_style)
+
+        update_index_links_button = tk.Button(self.gui, text="Update Index File Links", command=self.update_index_links,
+                                              **blue_button_style)
         update_index_links_button.pack(pady=5)
-        
-        update_headers_button = tk.Button(self.gui, text="Update HTML Headers", command=self.update_headers, **blue_button_style)
+
+        update_headers_button = tk.Button(self.gui, text="Update HTML Headers", command=self.update_headers,
+                                          **blue_button_style)
         update_headers_button.pack(pady=5)
-        
-        update_navigation_button = tk.Button(self.gui, text="Update Navigation Blocks", command=self.update_navigation, **blue_button_style)
+
+        update_navigation_button = tk.Button(self.gui, text="Update Navigation Blocks", command=self.update_navigation,
+                                             **blue_button_style)
         update_navigation_button.pack(pady=5)
 
-        
+        beautify_files_button = tk.Button(self.gui, text="Beautify Files", command=self.beautify_files,
+                                             **blue_button_style)
+        beautify_files_button.pack(pady=5)
+
     def run(self):
         """
         This method will run/open the GUI.
         """
         self.gui.mainloop()
-        
+
     def test_all(self):
         """
         This method will update all files.
@@ -420,7 +481,8 @@ class MMORPDND_GUI:
         self.update_index_links()
         self.update_headers()
         self.update_navigation()
-        
+        self.beautify_files()
+
     def update_all(self):
         """
         This method will update all files.
@@ -432,25 +494,30 @@ class MMORPDND_GUI:
         self.update_index_links()
         self.update_headers()
         self.update_navigation()
-        
+        self.beautify_files()
+
     def create_directories(self):
         self.mmorpdnd.create_directories(global_vars.root_dir, global_vars.directory_structure)
-        
+
     def create_dummy_html_files(self):
         self.mmorpdnd.create_dummy_html_files(global_vars.root_dir)
-        
+
     def create_index_files(self):
         self.mmorpdnd.create_index_files(global_vars.root_dir)
-        
+
     def update_index_links(self):
         self.mmorpdnd.update_index_files()
-                
+
     def update_headers(self):
         self.mmorpdnd.update_headers(global_vars.root_dir)
-                
+
     def update_navigation(self):
         self.mmorpdnd.update_navigation(global_vars.root_dir)
-        
+
+    def beautify_files(self):
+        self.mmorpdnd.beautify_files(global_vars.root_dir)
+
+
 def main():
     # main method code here
     gui = MMORPDND_GUI()
