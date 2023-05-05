@@ -508,12 +508,21 @@ class MMORPDND_GUI:
         self.mmorpdnd = MMORPDND()
         self.gui = tk.Tk()
         self.gui.title("MMORPDND")
-        self.gui.geometry("300x450")
+        self.gui.geometry("300x470")        
+        
+        # set the background color to red
+        self.gui.configure(bg="black")
 
         # Load icon image
         icon = PhotoImage(file='{}/mmorpdnd.png'.format(global_vars.root_dir))
         # Set icon image
         self.gui.tk.call('wm', 'iconphoto', self.gui._w, icon)
+           
+        # Create the menu bar
+        menubar = tk.Menu(self.gui)
+        # Create a file menu and add it to the menu bar   
+        filemenu = tk.Menu(menubar, tearoff=0)
+        filemenu.add_command(label="Exit", command=self.gui.quit)
 
         blue_button_style = {"font": ("Arial", 14), "bg": "#4287f5", "fg": "#ffffff", "activebackground": "#ffffff",
                              "activeforeground": "#4287f5"}

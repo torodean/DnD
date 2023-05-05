@@ -2,7 +2,131 @@ import os
 import re
 import shutil
 import argparse
+import random        
+import numpy as np
+import json
 
+def print_prob_matrix(prob_matrix):
+    # Convert the probability matrix to a JSON string with indentation and line breaks
+    json_str = json.dumps(prob_matrix, indent=4, sort_keys=True)
+    
+    # Print the JSON string
+    print(json_str)
+
+
+def read_names_from_file(filename):
+    first_names = []
+    last_names = []
+    with open(filename, 'r') as f:
+        for line in f:
+            name = line.strip()
+            first_name = name.split(' ')[0].lower()
+            last_name = name.split(' ')[1].lower()
+            first_names.append(first_name)
+            last_names.append(last_name)        
+    return first_names, last_names
+
+def generate_output_char(input_char, prob_matrix):
+    # Get the probabilities for the output characters given the input character
+    output_probs = prob_matrix.get(input_char)
+    
+    # If there are no probabilities for the input character, return None
+    if output_probs is None:
+        return None
+    
+    # Generate a random number between 0 and 1
+    rand_num = random.random()
+    
+    # Iterate over the output characters and their probabilities
+    total_prob = 0
+    for output_char, prob in output_probs.items():
+        # Add the probability to the running total
+        total_prob += prob
+        
+        # If the random number falls within this probability range, return the output character
+        if rand_num <= total_prob:
+            return output_char
+    
+    # If the random number is greater than the total probability, return None
+    return None
+
+def generate_prob_matrix(words):
+    # Create an empty dictionary to store the probability matrix
+    prob_matrix = {}
+    
+    # Iterate over the words in the list
+    for word in words:
+        # Iterate over the characters in the word
+        for i in range(len(word)):
+            input_char = word[i]
+            
+            # Get the dictionary of output characters and their counts for this input character
+            output_counts = prob_matrix.get(input_char, {})
+            
+            # Increment the count for the next character in the word, if there is one
+            if i < len(word) - 1:
+                output_char = word[i + 1]
+                output_counts[output_char] = output_counts.get(output_char, 0) + 1
+            
+            # Update the dictionary for this input character in the probability matrix
+            prob_matrix[input_char] = output_counts
+    
+    # Convert the counts in the probability matrix to probabilities
+    for input_char, output_counts in prob_matrix.items():
+        total_count = sum(output_counts.values())
+        output_probs = {output_char: count / total_count for output_char, count in output_counts.items()}
+        prob_matrix[input_char] = output_probs
+    
+    return prob_matrix
+
+def generate_word(prob_matrix, min_length=4, max_length=8):
+    # Choose a random length between min_length and max_length
+    length = random.randint(min_length, max_length)
+    
+    # Initialize the word with a random input character
+    input_char = random.choice(list(prob_matrix.keys()))
+    word = input_char
+    
+    # Generate the next (length - 1) characters based on the probabilities in the matrix
+    for i in range(length - 1):
+        output_probs = prob_matrix.get(input_char)
+        
+        # If there are no probabilities for the input character, choose a new input character at random
+        if output_probs is None and word >= min_length:
+            return word
+        if output_probs is None or not output_probs:
+            input_char = random.choice(list(prob_matrix.keys()))
+            word += input_char
+        else:
+            # Generate a random number between 0 and 1
+            rand_num = random.random()
+
+            # Iterate over the output characters and their probabilities
+            total_prob = 0
+            for output_char, prob in output_probs.items():
+                # Add the probability to the running total
+                total_prob += prob
+
+                # If the random number falls within this probability range, use the output character
+                if rand_num <= total_prob:
+                    word += output_char
+                    input_char = output_char
+                    break
+        
+    return word
+
+
+# Testing
+#first_names, last_names = read_names_from_file("names.txt")
+#print(first_names)
+#print(last_names)
+#prob_matrix = generate_prob_matrix(first_names)
+#print_prob_matrix(prob_matrix)
+
+#for i in range(1000):
+#    word = generate_word(prob_matrix)
+#    print(word)
+#exit(1)
 
 # create an ArgumentParser object
 parser = argparse.ArgumentParser()
@@ -68,10 +192,10 @@ def calculate_proficiency_bonus(level):
     Calculate the proficiency bonus based on character level.
 
     Parameters:
-    level (int): The character's level.
+        level (int): The character's level.
 
     Returns:
-    int: The character's proficiency bonus.
+        int: The character's proficiency bonus.
     """
     if level < 5:
         return 2
@@ -85,6 +209,120 @@ def calculate_proficiency_bonus(level):
         return 6
 
 
+def roll_4d6_drop_lowest():
+    """
+    Rolls 4d6 and returns the sum of the highest 3 dice.
+    Returns:
+        int: The sum of the highest 3 dice.
+    """
+    rolls = [random.randint(1, 6) for _ in range(4)]
+    total = sum(sorted(rolls)[1:])
+    print("Rolling 4d6: {0} - Dropping lowest -> {1}".format(rolls, total))
+    return total
+    
+def get_stat_priority(character_class):
+    """
+    Returns a list of attributes ordered by the stat priority for a given class.
+    Args:
+        character_class (str): The class to get the stat priority for.
+    Returns:
+        list: The list of attributes ordered by the stat priority.
+    """
+    stat_priorities = {
+        'barbarian': ['strength', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'charisma'],
+        'bard': ['charisma', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'strength'],
+        'cleric': ['wisdom', 'constitution', 'strength', 'intelligence', 'dexterity', 'charisma'],
+        'druid': ['wisdom', 'constitution', 'dexterity', 'intelligence', 'charisma', 'strength'],
+        'fighter': ['strength', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'charisma'],
+        'monk': ['dexterity', 'wisdom', 'constitution', 'strength', 'intelligence', 'charisma'],
+        'paladin': ['strength', 'constitution', 'charisma', 'wisdom', 'intelligence', 'dexterity'],
+        'ranger': ['dexterity', 'wisdom', 'constitution', 'intelligence', 'strength', 'charisma'],
+        'rogue': ['dexterity', 'intelligence', 'constitution', 'wisdom', 'strength', 'charisma'],
+        'sorcerer': ['charisma', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'strength'],
+        'warlock': ['charisma', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'strength'],
+        'wizard': ['intelligence', 'constitution', 'dexterity', 'wisdom', 'charisma', 'strength']
+    }
+    return stat_priorities.get(character_class.lower(), [])
+    
+
+def generate_character_stats(character_class, level=1):
+    """
+    Generates a list of six stats for a character based on their class and level.
+    Args:
+        character_class (str): The character's class.
+    Returns:
+        list: The list of six stats.
+    """
+    # Get the stat priority for the character's class
+    stat_priority = get_stat_priority(character_class)
+
+    # Roll 4d6 and drop the lowest die for each of the six stats
+    stats = [roll_4d6_drop_lowest() for _ in range(6)]
+
+    # Assign the stats based on the stat priority for the character's class
+    assigned_stats = {}
+    for stat_name in stat_priority:
+        stat_value = max(stats)
+        stats.remove(stat_value)
+        assigned_stats[stat_name] = stat_value
+    
+    return assigned_stats
+    
+    
+def generate_first_name():
+    """
+    Generates a random first name.
+    Returns:
+        str: The first name.
+    """
+    vowels = 'aeiou'
+    consonants = 'bcdfghjklmnpqrstvwxyz'
+
+    # Generate a random name consisting of 3-5 letters
+    length = random.randint(3, 8)
+    name = ''
+    for i in range(length):
+        if i % 2 == 0:  # Add a consonant for even positions
+            name += random.choice(consonants)
+        else:  # Add a vowel for odd positions
+            name += random.choice(vowels)
+
+    # Capitalize the first letter of the name
+    name = name.capitalize()
+
+    return name
+    
+    
+    
+def generate_last_name():
+    """
+    Generates a random last name.
+    Returns:
+        str: The last name.
+    """
+    prefixes = ['von', 'van', 'de', 'di', 'da', 'del', 'tol', 'ban', 'den', 'zol', 'ren']
+    vowels = 'aeiou'
+    consonants = 'bcdfghjklmnpqrstvwxyz'
+
+    # Generate a random name consisting of 3-5 letters
+    length = random.randint(3, 5)
+    name = ''
+    for i in range(length):
+        if i == 0:  # Add a consonant for the first letter
+            name += random.choice(consonants).capitalize()
+        elif i % 2 == 0:  # Add a consonant for even positions
+            name += random.choice(consonants)
+        else:  # Add a vowel for odd positions
+            name += random.choice(vowels)
+
+    # Add a prefix to the name with a 25% chance
+    if random.random() < 0.25:
+        prefix = random.choice(prefixes)
+        name = f"{prefix} {name}"
+
+    return name
+    
+    
 # Define the template file path and character directory
 TEMPLATE_FILE = 'characterTemplate.html'
 
