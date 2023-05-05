@@ -7,6 +7,7 @@ from tkinter import PhotoImage
 from cssbeautifier import beautify
 from bs4 import BeautifulSoup
 
+
 class MMORPDND_VARS:
     """
     This is a class for storing variables used by MMORPDND* classes.
@@ -368,8 +369,11 @@ class MMORPDND:
         """
         # Modify our exclude list to include template and css files.
         modified_directories_to_exclude = global_vars.directories_to_exclude
-        modified_directories_to_exclude.remove("templates")
-        modified_directories_to_exclude.remove("css")
+        if "templates" in modified_directories_to_exclude:
+            modified_directories_to_exclude.remove("templates")
+
+        if "css" in modified_directories_to_exclude:
+            modified_directories_to_exclude.remove("css")
 
         # Loop through all files and subdirectories in the directory
         for root, dirnames, filenames in os.walk(directory):
@@ -405,6 +409,91 @@ class MMORPDND:
                     f.write(prettified_content)
 
                 print(f"File {file_path} has been prettified.")
+
+    def find_all_html_files(self, directory=global_vars.root_dir):
+        """
+        Finds all HTML files (not index.html files) in a directory and its subdirectories.
+
+        :param directory: The directory to search. Defaults to the current directory.
+        :return: A list of dictionaries containing the name (without extension), name (with extension), and full path
+                 of each HTML file found.
+        """
+        html_files = []
+        for root, dirnames, filenames in os.walk(directory):
+            for filename in filenames:
+                file_path = os.path.join(root, filename)
+
+                # Check if we are looking at a file in our exclude list.
+                if any(exclude in file_path for exclude in global_vars.directories_to_exclude):
+                    continue
+
+                if filename.endswith('.html') and "index.html" not in filename:
+                    name_no_ext = os.path.splitext(filename)[0]
+                    html_files.append({
+                        'name_no_ext': name_no_ext,
+                        'name_with_ext': filename,
+                        'full_path': file_path
+                    })
+        return html_files
+
+    def get_relative_path(self, from_file, to_file):
+        return os.path.relpath(to_file, os.path.dirname(from_file))
+
+    def update_html_links(self, directory=global_vars.root_dir):
+        """
+        This will update the links in the various html files to link to the appropriate file.
+        :return:
+        """
+        html_files = self.find_all_html_files(directory)
+        # Search the body text of each HTML file for the search strings
+        for file_info in html_files:
+            print("Parsing {0} for link updates!".format(file_info['full_path']))
+            file_path = file_info['full_path']
+
+            # Read in the contents of the file.
+            with open(file_path, 'r') as f:
+                content = f.read()
+
+            # Use regular expressions to find the body text of the HTML file
+            body_match = re.search("<body.*?>(.*?)</body>", content, flags=re.DOTALL)
+            if body_match:
+                body_text = body_match.group(1)
+                # Search the body text for the search string
+                for search_word in html_files:
+                    search_string = search_word['name_no_ext']
+
+                    # No need to link it it's to the current file.
+                    if search_string == file_info['name_no_ext']:
+                        continue
+
+                    # Define the patterns to search for.
+                    patterns = []
+                    patterns.append(
+                        r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string)))
+                    patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
+                        re.escape(search_string.replace('_', ' '))))
+
+                    # Search through all possible patterns.
+                    for pattern in patterns:
+                        search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
+                        if search_string_match:
+                            print(" -- {0} found in {1}".format(search_string, file_path))
+                            link_path = self.get_relative_path(file_path, search_word['full_path'])
+
+                            # Replace the search string with the new string
+                            new_string = "<a href=\"{0}\">{1}</a>".format(link_path, search_string)
+                            new_body_text = re.sub(pattern, new_string, body_text)
+                            body_text = new_body_text
+                            body_tags = re.search("<body(.*?)>", content, flags=re.DOTALL)
+                            content = re.sub(r"<body[^>]*>(.*?)</body>", "<body>" + new_body_text + "</body>", content,
+                                             flags=re.DOTALL)
+                            content = re.sub(r"<body>", "<body" + body_tags.group(1) + ">", content, flags=re.DOTALL)
+                            print(" -- Replacing {0} with {1}".format(search_string, new_string))
+
+                            # Write the modified HTML file
+                            with open(file_path, "w") as f:
+                                f.write(content)
+
 
 class MMORPDND_GUI:
     """
@@ -461,8 +550,12 @@ class MMORPDND_GUI:
                                              **blue_button_style)
         update_navigation_button.pack(pady=5)
 
+        update_html_links_button = tk.Button(self.gui, text="Update Links", command=self.update_html_links,
+                                          **blue_button_style)
+        update_html_links_button.pack(pady=5)
+
         beautify_files_button = tk.Button(self.gui, text="Beautify Files", command=self.beautify_files,
-                                             **blue_button_style)
+                                          **blue_button_style)
         beautify_files_button.pack(pady=5)
 
     def run(self):
@@ -481,6 +574,7 @@ class MMORPDND_GUI:
         self.update_index_links()
         self.update_headers()
         self.update_navigation()
+        self.update_html_links()
         self.beautify_files()
 
     def update_all(self):
@@ -494,6 +588,7 @@ class MMORPDND_GUI:
         self.update_index_links()
         self.update_headers()
         self.update_navigation()
+        self.update_html_links()
         self.beautify_files()
 
     def create_directories(self):
@@ -516,6 +611,9 @@ class MMORPDND_GUI:
 
     def beautify_files(self):
         self.mmorpdnd.beautify_files(global_vars.root_dir)
+
+    def update_html_links(self):
+        self.mmorpdnd.update_html_links(global_vars.root_dir)
 
 
 def main():
