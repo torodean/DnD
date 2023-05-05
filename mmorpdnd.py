@@ -210,6 +210,7 @@ class MMORPDND:
         for root, dirnames, filenames in os.walk("."):
             for file in filenames:
 
+                print(global_vars.directories_to_exclude)
                 # Check if we are looking at a file in our exclude list.
                 if any(exclude in root for exclude in global_vars.directories_to_exclude):
                     continue
@@ -259,7 +260,7 @@ class MMORPDND:
                 f.write(updated_data)
                 f.truncate()
                 print(f"{file} updated")
-            print("All index.html files updated.")
+        print("All index.html files updated.")
 
     def update_headers(self, directory=global_vars.root_dir):
         """
@@ -368,7 +369,7 @@ class MMORPDND:
         :return:
         """
         # Modify our exclude list to include template and css files.
-        modified_directories_to_exclude = global_vars.directories_to_exclude
+        modified_directories_to_exclude = global_vars.directories_to_exclude[:]
         if "templates" in modified_directories_to_exclude:
             modified_directories_to_exclude.remove("templates")
 
