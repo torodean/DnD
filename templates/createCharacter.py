@@ -13,6 +13,16 @@ def print_prob_matrix(prob_matrix):
     # Print the JSON string
     print(json_str)
 
+def append_to_file(file_path, string_to_append):
+    """
+    Append a string to a file.
+    
+    :param file_path: The path to the file to append to.
+    :param string_to_append: The string to append to the file.
+    """
+    with open(file_path, 'a') as file:
+        file.write(string_to_append + '\n')
+
 
 def read_names_from_file(filename):
     first_names = []
@@ -85,48 +95,65 @@ def generate_word(prob_matrix, min_length=4, max_length=8):
     
     # Initialize the word with a random input character
     input_char = random.choice(list(prob_matrix.keys()))
+    while (prob_matrix.get(input_char) is None or not prob_matrix.get(input_char)):
+        #print(f"reloading {input_char}") 
+        input_char = random.choice(list(prob_matrix.keys()))
+    #print(f"input_char: {input_char}")
     word = input_char
     
     # Generate the next (length - 1) characters based on the probabilities in the matrix
     for i in range(length - 1):
         output_probs = prob_matrix.get(input_char)
-        
-        # If there are no probabilities for the input character, choose a new input character at random
-        if output_probs is None and word >= min_length:
-            return word
-        if output_probs is None or not output_probs:
-            input_char = random.choice(list(prob_matrix.keys()))
-            word += input_char
+        #print(f"output_probs: {output_probs}")
+        while(output_probs is None or not output_probs):
+            #print(f"reloading {output_probs}")
+            os.system("sleep 1")
+            output_probs = prob_matrix.get(input_char)
+        #print(f"output_probs: {output_probs}")
+        temp_list = []
+        for possible_char in output_probs:
+            #print("{0} -> {1}".format(possible_char, output_probs[possible_char]))
+            for i in range(int(output_probs[possible_char]*100)):
+                temp_list.append(possible_char)
+        #print(f"temp_list: {temp_list}")
+        next_char = random.choice(temp_list)
+        output_probs = prob_matrix.get(next_char)
+        if len(word)+1 == length:
+            return word + next_char
         else:
-            # Generate a random number between 0 and 1
-            rand_num = random.random()
-
-            # Iterate over the output characters and their probabilities
-            total_prob = 0
-            for output_char, prob in output_probs.items():
-                # Add the probability to the running total
-                total_prob += prob
-
-                # If the random number falls within this probability range, use the output character
-                if rand_num <= total_prob:
-                    word += output_char
-                    input_char = output_char
-                    break
+            while(output_probs is None or not output_probs):
+                #print(f"reloading {next_char}")
+                next_char = random.choice(temp_list)
+                output_probs = prob_matrix.get(next_char)
+        #print(f"next char {next_char}")
+        word += next_char
+        input_char = next_char
         
     return word
 
 
 # Testing
-#first_names, last_names = read_names_from_file("names.txt")
-#print(first_names)
-#print(last_names)
-#prob_matrix = generate_prob_matrix(first_names)
-#print_prob_matrix(prob_matrix)
+names_file = "names.txt"
+first_names, last_names = read_names_from_file(names_file)
+print(first_names)
+print(last_names)
+prob_matrix_first_name = generate_prob_matrix(first_names)
+prob_matrix_last_names = generate_prob_matrix(last_names)
+print_prob_matrix(prob_matrix_first_name)
+print_prob_matrix(prob_matrix_last_names)
 
-#for i in range(1000):
-#    word = generate_word(prob_matrix)
-#    print(word)
-#exit(1)
+for i in range(1000):
+    word = "{0} {1}".format(generate_word(prob_matrix_first_name), generate_word(prob_matrix_last_names))
+    print(word)
+    user_input = input("Do you want to append this word to the file? (y/n)")
+    if user_input.lower() == 'y':
+        append_to_file(names_file, word)
+    elif user_input.lower() == 'n':
+        continue
+    else:
+        print("Invalid input. Word not appended to file.")
+
+exit(1)
 
 # create an ArgumentParser object
 parser = argparse.ArgumentParser()
