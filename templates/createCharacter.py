@@ -25,16 +25,12 @@ def append_to_file(file_path, string_to_append):
 
 
 def read_names_from_file(filename):
-    first_names = []
-    last_names = []
+    names = []
     with open(filename, 'r') as f:
         for line in f:
             name = line.strip()
-            first_name = name.split(' ')[0].lower()
-            last_name = name.split(' ')[1].lower()
-            first_names.append(first_name)
-            last_names.append(last_name)        
-    return first_names, last_names
+            names.append(name)
+    return names
 
 def generate_output_char(input_char, prob_matrix):
     # Get the probabilities for the output characters given the input character
@@ -89,7 +85,7 @@ def generate_prob_matrix(words):
     
     return prob_matrix
 
-def generate_word(prob_matrix, min_length=4, max_length=8):
+def generate_word(prob_matrix, min_length=4, max_length=10):
     # Choose a random length between min_length and max_length
     length = random.randint(min_length, max_length)
     
@@ -113,7 +109,7 @@ def generate_word(prob_matrix, min_length=4, max_length=8):
         temp_list = []
         for possible_char in output_probs:
             #print("{0} -> {1}".format(possible_char, output_probs[possible_char]))
-            for i in range(int(output_probs[possible_char]*100)):
+            for i in range(int(output_probs[possible_char]*25)): # 25 only pulls anything over 4% 
                 temp_list.append(possible_char)
         #print(f"temp_list: {temp_list}")
         next_char = random.choice(temp_list)
@@ -133,25 +129,38 @@ def generate_word(prob_matrix, min_length=4, max_length=8):
 
 
 # Testing
-names_file = "names.txt"
-first_names, last_names = read_names_from_file(names_file)
-print(first_names)
-print(last_names)
-prob_matrix_first_name = generate_prob_matrix(first_names)
-prob_matrix_last_names = generate_prob_matrix(last_names)
-print_prob_matrix(prob_matrix_first_name)
-print_prob_matrix(prob_matrix_last_names)
+
+#names_file = "dwarven_names.txt"
+#names_file = "town_names.txt"
+names_file = "elven_names.txt"
+
+names = read_names_from_file(names_file)
+
+prob_matrix_names = generate_prob_matrix(names)
+print_prob_matrix(prob_matrix_names)
+
+#first_names = []
+#last_names = []
+#for name in names:
+#    first_name = name.split(' ')[0].lower()
+#    last_name = name.split(' ')[1].lower()
+#    first_names.append(first_name)
+#    last_names.append(last_name)     
+#prob_matrix_first_name = generate_prob_matrix(first_names)
+#prob_matrix_last_names = generate_prob_matrix(last_names)
+#print_prob_matrix(prob_matrix_first_name)
+#print_prob_matrix(prob_matrix_last_names)
 
 for i in range(1000):
-    word = "{0} {1}".format(generate_word(prob_matrix_first_name), generate_word(prob_matrix_last_names))
+    #word = "{0} {1}".format(generate_word(prob_matrix_first_name), generate_word(prob_matrix_last_names))
+    word = "{0}".format(generate_word(prob_matrix_names))
     print(word)
     user_input = input("Do you want to append this word to the file? (y/n)")
     if user_input.lower() == 'y':
         append_to_file(names_file, word)
-    elif user_input.lower() == 'n':
-        continue
     else:
-        print("Invalid input. Word not appended to file.")
+        print("Word not appended to file.")
+        continue
 
 exit(1)
 
