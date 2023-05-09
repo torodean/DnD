@@ -684,6 +684,12 @@ class Creator:
         self.large_text.see("end")
 
     def test(self):
+        """
+        Method for testing.
+
+        :return:
+            None
+        """
         self.output_text("test text")
 
     def get_user_choice(self):
