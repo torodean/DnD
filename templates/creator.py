@@ -316,7 +316,7 @@ def generate_word(prob_matrix, min_length=4, max_length=10):
     return word
 
 
-class Generators:
+class Variables:
     def __init__(self):
         self.current_prob_matrix = None
         self.current_file = ""
@@ -348,7 +348,7 @@ class Creator:
         self.gui.geometry("850x500")
         self.gui.title("File Browser")
 
-        self.generator = Generators()
+        self.variables = Variables()
 
         # Create the menu bar
         menubar = tk.Menu(self.gui)
@@ -438,33 +438,50 @@ class Creator:
         else:
             print("Checkbox disabled")
 
-        self.generator.set_character_folder(npc)
+        self.variables.set_character_folder(npc)
 
     def generate_char(self):
         self.update_input_file()
-        if not self.generator.current_file.endswith(".char"):
-            self.output_text(f"Wrong input file type: {self.generator.current_file}")
+        if not self.variables.current_file.endswith(".char"):
+            self.output_text(f"Wrong input file type: {self.variables.current_file}")
             self.output_text(f"File should end with '.char'")
             return
 
         # Define the fields to replace in the template file
         FIELDS = {}
 
-        with open(self.generator.current_file, 'r') as f:
+        # Open the current file and read in the contents.
+        with open(self.variables.current_file, 'r') as f:
             contents = f.readlines()
 
         for line in contents:
-            var = line.split('=')[0].strip()
-            val = line.split('=')[1].strip()
+            var = line.split('=')[0].strip().lower()
+            val = line.split('=')[1].strip().lower()
             FIELDS[var] = val
+        print(FIELDS)
+
+        if "class" not in FIELDS:
+            self.output_text(f"ERROR: No 'class' value found in FIELDS: {FIELDS}")
+            return
+        char_class = FIELDS['class']
+        if "level" not in FIELDS:
+            char_level = 1
+        else:
+            char_level = FIELDS['level']
+        char_stats = generate_character_stats(char_class, char_level)
+        print(char_stats)
+        attributes = ["strength", "constitution", "wisdom", "charisma", "dexterity", "intelligence"]
+        for attribute in attributes:
+            if attribute not in FIELDS:
+                FIELDS[attribute] = str(char_stats[attribute])
 
         # Generate the character file path
         char_name = FIELDS['name']
         filename = f'{char_name.lower().replace(" ", "_")}.html'
-        filepath = os.path.join(self.generator.characters_folder, filename)
+        filepath = os.path.join(self.variables.characters_folder, filename)
 
         # Read the template file and replace the fields with the character information
-        with open(self.generator.character_template_file, 'r') as f:
+        with open(self.variables.character_template_file, 'r') as f:
             template = f.read()
 
         proficiencies = FIELDS['proficiencies'].strip().split(', ')
@@ -544,13 +561,15 @@ class Creator:
         template = template.replace("[notes]", notes)
 
         img_src = "img/" + FIELDS['image']
-        img_filepath = os.path.join(self.generator.characters_folder, img_src)
-        img_dir = self.generator.characters_folder + "/img"
+        img_dir = self.variables.characters_folder + "/img"
         img_desc = img_src.split('/')[1].split('.')[0] + "-image"
         template = template.replace("[image-description]", img_desc)
         template = template.replace("[image-url]", img_src)
 
-        copy_file_to_directory(img_src, img_dir)
+        try:
+            copy_file_to_directory(img_src, img_dir)
+        except ValueError as e:
+            print(f"An error occurred: {e}")
 
         # Update abilities
         abilities = FIELDS['abilities'].split(',')
@@ -661,28 +680,28 @@ class Creator:
             self.output_text("No file input!")
         else:
             file = self.path_text.get()
-            if file == self.generator.current_file:
+            if file == self.variables.current_file:
                 return
             else:
-                self.generator.reset()
-                self.generator.current_file = file
+                self.variables.reset()
+                self.variables.current_file = file
                 self.output_text(f"Updated current work file to: {file}")
                 if file.endswith(".char") or file.endswith(".names"):
-                    self.generator.current_list = read_lines_from_file(file)
+                    self.variables.current_list = read_lines_from_file(file)
 
     def generate_word(self):
         print("Generating word.")
         self.update_input_file()
-        self.generator.current_prob_matrix = generate_prob_matrix(self.generator.current_list)
-        print_prob_matrix(self.generator.current_prob_matrix)
+        self.variables.current_prob_matrix = generate_prob_matrix(self.variables.current_list)
+        print_prob_matrix(self.variables.current_prob_matrix)
         while self.last_user_input != "reset":
-            word = "{0}".format(generate_word(self.generator.current_prob_matrix))
+            word = "{0}".format(generate_word(self.variables.current_prob_matrix))
             self.output_text(f"Generated word: {word}")
             self.output_text("Do you want to append this word to the file? (y/n)")
             # Get the user's choice
             self.get_user_choice()
             if self.last_user_input == "yes":
-                append_to_file(self.generator.current_file, word)
+                append_to_file(self.variables.current_file, word)
             elif self.last_user_input == "no":
                 self.output_text("Word not appended to file.")
                 continue

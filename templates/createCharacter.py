@@ -293,7 +293,7 @@ TEMPLATE_FILE = 'characterTemplate.html'
 if args.char_file is not None:
     CHARACTER_FILE = args.char_file
 else:
-    CHARACTER_FILE = 'chars/characterTemplate.char'
+    CHARACTER_FILE = 'chars/template.char'
 
 # Define the fields to replace in the template file
 FIELDS = {}
