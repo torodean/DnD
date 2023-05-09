@@ -435,7 +435,7 @@ class Creator:
 
         # Create a trash checkbox
         self.trash_checkbox_value = tk.BooleanVar()
-        trash_checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.trash_checkbox_value,
+        trash_checkbox = tk.Checkbutton(top_button_frame, text="Trash", variable=self.trash_checkbox_value,
                                       command=self.checkbox_changed)
         trash_checkbox.pack(side=tk.LEFT, padx=1)
 
@@ -513,14 +513,20 @@ class Creator:
             FIELDS[var] = val
         print(FIELDS)
 
+        # check to make sure class is defined.
         if "class" not in FIELDS:
             self.output_text(f"ERROR: No 'class' value found in FIELDS: {FIELDS}")
             return
+
         char_class = FIELDS['class']
+
+        # Default to level 1 if none defined.
         if "level" not in FIELDS:
             char_level = 1
         else:
             char_level = FIELDS['level']
+
+        # Create character stats to fill in if none are defined.
         char_stats = generate_character_stats(char_class, char_level)
         print(char_stats)
         attributes = ["strength", "constitution", "wisdom", "charisma", "dexterity", "intelligence"]
@@ -652,6 +658,10 @@ class Creator:
             f.write(template)
 
         print(f'Character file created: {filepath}')
+
+        # move the files to the trash if this option is selected.
+        if self.trash_checkbox_value:
+            global_vars.trash_file(global_vars.current_file)
 
     def output_text(self, text):
         print(text)
