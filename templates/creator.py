@@ -378,6 +378,28 @@ class Variables:
 global_vars = Variables()
 
 
+def get_character_fields(file):
+    char_fields = {}
+    # Open the current file and read in the contents.
+    with open(file, 'r') as f:
+        contents = f.readlines()
+
+    for line in contents:
+        var = line.split('=')[0].strip().lower()
+        val = line.split('=')[1].strip().lower()
+        char_fields[var] = val
+
+    for field in char_fields:
+        print(field)
+
+    # check to make sure class is defined.
+    if "class" not in char_fields:
+        print(f"ERROR: No 'class' value found in char_fields: {char_fields}")
+        return
+
+    return char_fields
+
+
 class Creator:
     def __init__(self):
         self.last_user_input = None
@@ -501,42 +523,26 @@ class Creator:
             return
 
         # Define the fields to replace in the template file
-        FIELDS = {}
-
-        # Open the current file and read in the contents.
-        with open(global_vars.current_file, 'r') as f:
-            contents = f.readlines()
-
-        for line in contents:
-            var = line.split('=')[0].strip().lower()
-            val = line.split('=')[1].strip().lower()
-            FIELDS[var] = val
-        print(FIELDS)
-
-        # check to make sure class is defined.
-        if "class" not in FIELDS:
-            self.output_text(f"ERROR: No 'class' value found in FIELDS: {FIELDS}")
-            return
-
-        char_class = FIELDS['class']
-
+        char_fields = get_character_fields(global_vars.current_file)
+        
+        char_class = char_fields['class']
+        
         # Default to level 1 if none defined.
-        if "level" not in FIELDS:
+        if "level" not in char_fields:
             char_level = 1
         else:
-            char_level = FIELDS['level']
-
+            char_level = int(char_fields['level'])
+            
         # Create character stats to fill in if none are defined.
         char_stats = generate_character_stats(char_class, char_level)
-        print(char_stats)
         attributes = ["strength", "constitution", "wisdom", "charisma", "dexterity", "intelligence"]
         for attribute in attributes:
-            if attribute not in FIELDS:
+            if attribute not in char_fields:
                 self.output_text(f"Generating value for {attribute} as {char_stats[attribute]}")
-                FIELDS[attribute] = str(char_stats[attribute])
+                char_fields[attribute] = str(char_stats[attribute])
 
         # Generate the character file path
-        char_name = FIELDS['name']
+        char_name = char_fields['name']
         filename = f'{char_name.lower().replace(" ", "_")}.html'
         filepath = os.path.join(global_vars.characters_folder, filename)
 
@@ -544,19 +550,18 @@ class Creator:
         with open(global_vars.character_template_file, 'r') as f:
             template = f.read()
 
-        proficiencies = FIELDS['proficiencies'].strip().split(', ')
-        level = int(FIELDS['level'])
-        proficiency_bonus = calculate_proficiency_bonus(level)
-        self.output_text("Proficiency bonus for level {0} is {1}".format(level, proficiency_bonus))
+        proficiencies = char_fields['proficiencies'].strip().split(', ')
+        proficiency_bonus = calculate_proficiency_bonus(char_level)
+        self.output_text("Proficiency bonus for level {0} is {1}".format(char_level, proficiency_bonus))
 
         # Replace the appropriate fields.
-        for field, value in FIELDS.items():
+        for field, value in char_fields.items():
             temp_field = '[' + field + ']'
             if "senses" in field:
-                if FIELDS['senses'].strip() != "" and "None" not in FIELDS['senses']:
-                    value += ", Passive Perception: {0}".format(10 + calculate_modifier(int(FIELDS['wisdom'])))
+                if char_fields['senses'].strip() != "" and "None" not in char_fields['senses']:
+                    value += ", Passive Perception: {0}".format(10 + calculate_modifier(int(char_fields['wisdom'])))
                 else:
-                    value = "Passive Perception = {0}".format(10 + calculate_modifier(int(FIELDS['wisdom'])))
+                    value = "Passive Perception = {0}".format(10 + calculate_modifier(int(char_fields['wisdom'])))
             template = template.replace(temp_field, value)
             if value.isdigit():
                 temp_field_modifier = '[' + field + " modifier]"
@@ -584,15 +589,15 @@ class Creator:
         for match in matches:
             mod_val = 0
             if "arcana" in match or "history" in match or "investigation" in match or "nature" in match or "religion" in match:
-                mod_val = calculate_modifier(int(FIELDS['intelligence']))
+                mod_val = calculate_modifier(int(char_fields['intelligence']))
             elif "animal handling" in match or "insight" in match or "medicine" in match or "perception" in match or "survival" in match:
-                mod_val = calculate_modifier(int(FIELDS['wisdom']))
+                mod_val = calculate_modifier(int(char_fields['wisdom']))
             elif "deception" in match or "intimidation" in match or "performance" in match or "persuasion" in match:
-                mod_val = calculate_modifier(int(FIELDS['charisma']))
+                mod_val = calculate_modifier(int(char_fields['charisma']))
             elif "athletics" in match:
-                mod_val = calculate_modifier(int(FIELDS['strength']))
+                mod_val = calculate_modifier(int(char_fields['strength']))
             elif "acrobatics" in match or "sleight of hand" in match or "stealth" in match:
-                mod_val = calculate_modifier(int(FIELDS['dexterity']))
+                mod_val = calculate_modifier(int(char_fields['dexterity']))
 
             # Add the proficiency bonus if appropriate
             if match in proficiencies:
@@ -614,13 +619,16 @@ class Creator:
             empty_prof_modifier = "-"
             template = template.replace(f'[{match} proficiency]', empty_prof_modifier)
 
-        info = FIELDS['information']
+        # Replace the information block.
+        info = char_fields['information']
         template = template.replace("[background information]", info)
 
-        notes = FIELDS['notes']
+        # Replace the notes block.
+        notes = char_fields['notes']
         template = template.replace("[notes]", notes)
 
-        img_src = "img/" + FIELDS['image']
+        # Replace the image block.
+        img_src = "img/" + char_fields['image']
         img_dir = global_vars.characters_folder + "/img"
         img_desc = img_src.split('/')[1].split('.')[0] + "-image"
         template = template.replace("[image-description]", img_desc)
@@ -628,11 +636,13 @@ class Creator:
 
         try:
             copy_file_to_directory(img_src, img_dir)
+            if self.trash_checkbox_value:
+                global_vars.trash_file(img_src)
         except ValueError as e:
             print(f"An error occurred: {e}")
 
         # Update abilities
-        abilities = FIELDS['abilities'].split(',')
+        abilities = char_fields['abilities'].split(',')
         abilities_output = ""
         for ability in abilities:
             abilities_output += "<li><strong>"
@@ -643,7 +653,7 @@ class Creator:
         template = template.replace("[abilities list]", abilities_output)
 
         # Update equipment
-        equipment = FIELDS['equipment'].split(',')
+        equipment = char_fields['equipment'].split(',')
         equipment_output = ""
         for equip in equipment:
             equipment_output += "<li><strong>"
