@@ -1,0 +1,698 @@
+#!/bin/python3
+import tkinter as tk
+from tkinter import filedialog
+import os
+import re
+import shutil
+import random
+import json
+
+
+def append_to_file(file_path, string_to_append):
+    """
+    Append a string to a file.
+
+    :param file_path: The path to the file to append to.
+    :param string_to_append: The string to append to the file.
+    """
+    with open(file_path, 'a') as file:
+        file.write(string_to_append + '\n')
+
+
+def read_lines_from_file(file_name):
+    """
+    Reads lines from a file and returns them as a list.
+
+    Parameters:
+        file_name (str): The name of the file to read.
+
+    Returns:
+        A list of strings, where each string represents a line from the file.
+        Any leading and trailing whitespace is stripped from each line.
+
+    Raises:
+        FileNotFoundError: If the specified file does not exist.
+        PermissionError: If the specified file cannot be opened due to insufficient permissions.
+    """
+    lines = []
+    with open(file_name, 'r') as f:
+        for line in f:
+            line = line.strip()
+            lines.append(line)
+    return lines
+
+
+def calculate_proficiency_bonus(level):
+    """
+    Calculate the proficiency bonus based on character level.
+
+    Parameters:
+        level (int): The character's level.
+
+    Returns:
+        int: The character's proficiency bonus.
+    """
+    if level < 5:
+        return 2
+    elif level < 9:
+        return 3
+    elif level < 13:
+        return 4
+    elif level < 17:
+        return 5
+    else:
+        return 6
+
+
+def roll_4d6_drop_lowest():
+    """
+    Rolls 4d6 and returns the sum of the highest 3 dice.
+    Returns:
+        int: The sum of the highest 3 dice.
+    """
+    rolls = [random.randint(1, 6) for _ in range(4)]
+    total = sum(sorted(rolls)[1:])
+    print("Rolling 4d6: {0} - Dropping lowest -> {1}".format(rolls, total))
+    return total
+
+
+def get_stat_priority(character_class):
+    """
+    Returns a list of attributes ordered by the stat priority for a given class.
+    Args:
+        character_class (str): The class to get the stat priority for.
+    Returns:
+        list: The list of attributes ordered by the stat priority.
+    """
+    stat_priorities = {
+        'barbarian': ['strength', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'charisma'],
+        'bard': ['charisma', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'strength'],
+        'cleric': ['wisdom', 'constitution', 'strength', 'intelligence', 'dexterity', 'charisma'],
+        'druid': ['wisdom', 'constitution', 'dexterity', 'intelligence', 'charisma', 'strength'],
+        'fighter': ['strength', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'charisma'],
+        'monk': ['dexterity', 'wisdom', 'constitution', 'strength', 'intelligence', 'charisma'],
+        'paladin': ['strength', 'constitution', 'charisma', 'wisdom', 'intelligence', 'dexterity'],
+        'ranger': ['dexterity', 'wisdom', 'constitution', 'intelligence', 'strength', 'charisma'],
+        'rogue': ['dexterity', 'intelligence', 'constitution', 'wisdom', 'strength', 'charisma'],
+        'sorcerer': ['charisma', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'strength'],
+        'warlock': ['charisma', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'strength'],
+        'wizard': ['intelligence', 'constitution', 'dexterity', 'wisdom', 'charisma', 'strength']
+    }
+    return stat_priorities.get(character_class.lower(), [])
+
+
+def generate_character_stats(character_class, level=1):
+    """
+    Generates a list of six stats for a character based on their class and level.
+    Args:
+        character_class (str): The character's class.
+    Returns:
+        list: The list of six stats.
+    """
+    # Get the stat priority for the character's class
+    stat_priority = get_stat_priority(character_class)
+
+    # Roll 4d6 and drop the lowest die for each of the six stats
+    stats = [roll_4d6_drop_lowest() for _ in range(6)]
+
+    # Assign the stats based on the stat priority for the character's class
+    assigned_stats = {}
+    for stat_name in stat_priority:
+        stat_value = max(stats)
+        stats.remove(stat_value)
+        assigned_stats[stat_name] = stat_value
+
+    return assigned_stats
+
+
+def calculate_modifier(attribute_value):
+    """
+    Calculate the DnD attribute modifier based on the value of the attribute.
+
+    Args:
+        attribute_value (int): The value of the attribute.
+
+    Returns:
+        int: The modifier value for the attribute.
+
+    Example:
+        >>> calculate_modifier(15)
+        2
+
+    """
+    modifier = (attribute_value - 10) // 2
+    return modifier
+
+
+def copy_file_to_directory(file_path, directory_path):
+    """Copy a file to a directory.
+
+    Args:
+        file_path (str): The path to the file to copy.
+        directory_path (str): The path to the directory to copy the file to.
+
+    Raises:
+        ValueError: If the file or directory doesn't exist.
+
+    Returns:
+        None
+    """
+
+    # Check if the file exists
+    if not os.path.isfile(file_path):
+        raise ValueError("File does not exist")
+
+    # Check if the directory exists
+    if not os.path.isdir(directory_path):
+        print(f"Directory {directory_path} does not exist. Creating directory...")
+        os.makedirs(directory_path)
+
+    # Copy the file to the directory
+    print(f"Copying {file_path} to {directory_path}")
+    shutil.copy(file_path, directory_path)
+    print(f"File {file_path} copied to {directory_path}")
+
+
+def print_prob_matrix(prob_matrix):
+    """
+    Prints a probability matrix to the console in JSON format.
+
+    Parameters:
+        prob_matrix (dict): A dictionary representing the probability matrix,
+        where each key is an input character and the corresponding value is a dictionary
+        of output characters and their probabilities.
+    """
+    # Convert the probability matrix to a JSON string with indentation and line breaks
+    json_str = json.dumps(prob_matrix, indent=4, sort_keys=True)
+
+    # Print the JSON string
+    print(json_str)
+
+
+def generate_prob_matrix(words):
+    """
+    Generates a probability matrix based on a list of words.
+
+    Parameters:
+        words (list of str): A list of words to use in generating the probability matrix.
+
+    Returns:
+        A dictionary representing the probability matrix, where each key is an input character
+        and the corresponding value is a dictionary of output characters and their probabilities.
+
+    Example:
+        >>> words = ["cat", "dog", "cut", "cog", "cot", "caught"]
+        >>> prob_matrix = generate_prob_matrix(words)
+        >>> prob_matrix
+    {
+        'c': {'a': 0.4, 'u': 0.2, 'o': 0.4},
+        'a': {'t': 0.5, 'u': 0.5},
+        't': {},
+        'd': {'o': 1.0},
+        'o': {'g': 0.6666666666666666, 't': 0.3333333333333333},
+        'g': {'h': 1.0},
+        'u': {'t': 0.5, 'g': 0.5},
+        'h': {'t': 1.0}
+    }
+
+    Note that the probabilities for each output character are normalized so that they sum to 1.0.
+    """
+    # Create an empty dictionary to store the probability matrix
+    prob_matrix = {}
+
+    # Iterate over the words in the list
+    for word in words:
+        # Iterate over the characters in the word
+        for i in range(len(word)):
+            input_char = word[i]
+
+            # Get the dictionary of output characters and their counts for this input character
+            output_counts = prob_matrix.get(input_char, {})
+
+            # Increment the count for the next character in the word, if there is one
+            if i < len(word) - 1:
+                output_char = word[i + 1]
+                output_counts[output_char] = output_counts.get(output_char, 0) + 1
+
+            # Update the dictionary for this input character in the probability matrix
+            prob_matrix[input_char] = output_counts
+
+    # Convert the counts in the probability matrix to probabilities
+    for input_char, output_counts in prob_matrix.items():
+        total_count = sum(output_counts.values())
+        output_probs = {output_char: count / total_count for output_char, count in output_counts.items()}
+        prob_matrix[input_char] = output_probs
+
+    return prob_matrix
+
+
+def generate_word(prob_matrix, min_length=4, max_length=10):
+    """
+    Generate a random word using a probability matrix.
+
+    Parameters:
+        prob_matrix (dict): A dictionary representing the probability matrix for generating words.
+        min_length (int): The minimum length of the generated word. Default value is 4.
+        max_length (int): The maximum length of the generated word. Default value is 10.
+
+    Returns:
+        A string representing the generated word.
+
+    Algorithm:
+        1. Choose a random length between min_length and max_length.
+        2. Initialize the word with a random input character.
+        3. Generate the next characters based on the probabilities in the matrix.
+            a. Get the output probabilities for the current input character.
+            b. Create a list of possible next characters based on their probabilities.
+            c. Choose a random next character from the list.
+            d. Update the word and the input character for the next iteration.
+        4. Return the generated word.
+    """
+    # Choose a random length between min_length and max_length
+    length = random.randint(min_length, max_length)
+
+    # Initialize the word with a random input character
+    input_char = random.choice(list(prob_matrix.keys()))
+    while prob_matrix.get(input_char) is None or not prob_matrix.get(input_char):
+        # print(f"reloading {input_char}")
+        input_char = random.choice(list(prob_matrix.keys()))
+
+    # print(f"input_char: {input_char}")
+    word = input_char
+
+    # Generate the next (length - 1) characters based on the probabilities in the matrix
+    for i in range(length - 1):
+        output_probs = prob_matrix.get(input_char)
+
+        # print(f"output_probs: {output_probs}")
+        while output_probs is None or not output_probs:
+            # print(f"reloading {output_probs}")
+            os.system("sleep 1")
+            output_probs = prob_matrix.get(input_char)
+
+        # print(f"output_probs: {output_probs}")
+        temp_list = []
+        for possible_char in output_probs:
+            # print("{0} -> {1}".format(possible_char, output_probs[possible_char]))
+            for i in range(int(output_probs[possible_char] * 25)):  # 25 only pulls anything over 4%
+                temp_list.append(possible_char)
+
+        # print(f"temp_list: {temp_list}")
+        next_char = random.choice(temp_list)
+        output_probs = prob_matrix.get(next_char)
+
+        if len(word) + 1 == length:
+            return word + next_char
+        else:
+            while output_probs is None or not output_probs:
+                # print(f"reloading {next_char}")
+                next_char = random.choice(temp_list)
+                output_probs = prob_matrix.get(next_char)
+
+        # print(f"next char {next_char}")
+        word += next_char
+        input_char = next_char
+
+    return word
+
+
+class Generators:
+    def __init__(self):
+        self.current_prob_matrix = None
+        self.current_file = ""
+        self.current_list = []
+        self.characters_folder = ""
+        self.character_template_file = "characterTemplate.html"
+        self.set_character_folder(False)
+
+    def set_character_folder(self, npc=True):
+        for dirpath, dirnames, filenames in os.walk("../"):
+            if 'characters' in dirnames:
+                if not npc:
+                    self.characters_folder = os.path.join(dirpath, 'characters/player')
+                else:
+                    self.characters_folder = os.path.join(dirpath, 'characters/non-player')
+
+        print(f"Character folder set to: {self.characters_folder}")
+
+    def reset(self):
+        self.current_file = ""
+        self.current_list = []
+        self.current_prob_matrix = {}
+
+
+class Creator:
+    def __init__(self):
+        self.last_user_input = None
+        self.gui = tk.Tk()
+        self.gui.geometry("850x500")
+        self.gui.title("File Browser")
+
+        self.generator = Generators()
+
+        # Create the menu bar
+        menubar = tk.Menu(self.gui)
+        # Create a file menu and add it to the menu bar
+        filemenu = tk.Menu(menubar, tearoff=0)
+        filemenu.add_command(label="Exit", command=self.gui.quit)
+
+        # Create a frame for the file path display and edit box
+        path_frame = tk.Frame(self.gui)
+        path_frame.pack(fill=tk.X, padx=10, pady=10)
+
+        # Create a label for the file path display
+        path_label = tk.Label(path_frame, text="Input File:")
+        path_label.pack(side=tk.LEFT, padx=(0, 5))
+
+        # Create an editable text box for the file path display
+        self.path_text = tk.Entry(path_frame, width=82)
+        self.path_text.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+        # Bind a function to the Entry widget that is called whenever the text is modified
+        # self.path_text.bind('<KeyRelease>', self.path_text_updated)
+
+        # Create a button to open the file browser
+        browse_button = tk.Button(path_frame, text="Browse", command=self.browse_files)
+        browse_button.pack(side=tk.LEFT, padx=(5, 0))
+
+        # Create a frame for the yes and no buttons
+        top_button_frame = tk.Frame(self.gui)
+        top_button_frame.pack(side=tk.TOP, pady=10)
+
+        # Create a button to open the file browser
+        generate_word_button = tk.Button(top_button_frame, text="Generate Word", command=self.generate_word)
+        generate_word_button.pack(side=tk.LEFT, padx=10)
+
+        # Create a button to open the file browser
+        generate_char_button = tk.Button(top_button_frame, text="Generate Char", command=self.generate_char)
+        generate_char_button.pack(side=tk.LEFT, padx=10)
+
+        # Create a checkbox
+        self.checkbox_value = tk.BooleanVar()
+        checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.checkbox_value, command=self.checkbox_changed)
+        checkbox.pack(side=tk.LEFT, padx=1)
+
+        # Create a button to open the file browser
+        test_button = tk.Button(top_button_frame, text="Test Button", command=self.test)
+        test_button.pack(side=tk.LEFT, padx=10)
+
+        # Create a frame for the large text box and scrollbar
+        text_frame = tk.Frame(self.gui)
+        text_frame.pack(side=tk.TOP, fill=tk.BOTH, padx=(10, 0), pady=10, expand=True)
+        text_frame.pack_propagate(False)
+
+        # Create a text widget for the large text box
+        self.large_text = tk.Text(text_frame)
+        self.large_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Create a scrollbar and attach it to the text widget
+        scrollbar = tk.Scrollbar(text_frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y, padx=(0, 10))
+        self.large_text.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=self.large_text.yview)
+
+        # Create a frame for the yes and no buttons
+        button_frame = tk.Frame(self.gui)
+        button_frame.pack(side=tk.BOTTOM, pady=10)
+
+        # Create a button to store "yes"
+        self.yes_button = tk.Button(button_frame, text="Yes", command=self.yes)
+        self.yes_button.pack(side=tk.LEFT, padx=(10, 5))
+
+        # Create a button to store "no"
+        self.no_button = tk.Button(button_frame, text="No", command=self.no)
+        self.no_button.pack(side=tk.LEFT, padx=(5, 10))
+
+        # Create a button to store "reset"
+        self.reset_button = tk.Button(button_frame, text="Reset", command=self.reset)
+        self.reset_button.pack(side=tk.LEFT, padx=(5, 10))
+
+        self.no_button.config(state="disabled")
+        self.yes_button.config(state="disabled")
+        test_button.config(state="disabled")
+
+    def checkbox_changed(self):
+        npc = self.checkbox_value.get()
+        if npc:
+            print("Checkbox enabled")
+        else:
+            print("Checkbox disabled")
+
+        self.generator.set_character_folder(npc)
+
+    def generate_char(self):
+        self.update_input_file()
+        if not self.generator.current_file.endswith(".char"):
+            self.output_text(f"Wrong input file type: {self.generator.current_file}")
+            self.output_text(f"File should end with '.char'")
+            return
+
+        # Define the fields to replace in the template file
+        FIELDS = {}
+
+        with open(self.generator.current_file, 'r') as f:
+            contents = f.readlines()
+
+        for line in contents:
+            var = line.split('=')[0].strip()
+            val = line.split('=')[1].strip()
+            FIELDS[var] = val
+
+        # Generate the character file path
+        char_name = FIELDS['name']
+        filename = f'{char_name.lower().replace(" ", "_")}.html'
+        filepath = os.path.join(self.generator.characters_folder, filename)
+
+        # Read the template file and replace the fields with the character information
+        with open(self.generator.character_template_file, 'r') as f:
+            template = f.read()
+
+        proficiencies = FIELDS['proficiencies'].strip().split(', ')
+        level = int(FIELDS['level'])
+        proficiency_bonus = calculate_proficiency_bonus(level)
+        self.output_text("Proficiency bonus for level {0} is {1}".format(level, proficiency_bonus))
+
+        # Replace the appropriate fields.
+        for field, value in FIELDS.items():
+            temp_field = '[' + field + ']'
+            if "senses" in field:
+                if FIELDS['senses'].strip() != "" and "None" not in FIELDS['senses']:
+                    value += ", Passive Perception: {0}".format(10 + calculate_modifier(int(FIELDS['wisdom'])))
+                else:
+                    value = "Passive Perception = {0}".format(10 + calculate_modifier(int(FIELDS['wisdom'])))
+            template = template.replace(temp_field, value)
+            if value.isdigit():
+                temp_field_modifier = '[' + field + " modifier]"
+                modifier_value = calculate_modifier(int(value))
+                if "level" not in field:
+                    self.output_text("Modifier for {0} is {1}".format(field, modifier_value))
+
+                # Add the proficiency bonus to the modifier.
+                if field in proficiencies:
+                    modifier_value += proficiency_bonus
+
+                # Update the proficiency bonus to have a +.
+                if modifier_value >= 0:
+                    modifier_value_str = "+" + str(modifier_value)
+                else:
+                    modifier_value_str = str(modifier_value)
+                template = template.replace(temp_field_modifier, modifier_value_str)
+
+        for prof in proficiencies:
+            temp_field_proficient = '[' + prof + " proficiency]"
+            template = template.replace(temp_field_proficient, "<i class=\"fas fa-check\"></i>")
+
+        pattern = r'\[(.*?) modifier\]'
+        matches = re.findall(pattern, template)
+        for match in matches:
+            mod_val = 0
+            if "arcana" in match or "history" in match or "investigation" in match or "nature" in match or "religion" in match:
+                mod_val = calculate_modifier(int(FIELDS['intelligence']))
+            elif "animal handling" in match or "insight" in match or "medicine" in match or "perception" in match or "survival" in match:
+                mod_val = calculate_modifier(int(FIELDS['wisdom']))
+            elif "deception" in match or "intimidation" in match or "performance" in match or "persuasion" in match:
+                mod_val = calculate_modifier(int(FIELDS['charisma']))
+            elif "athletics" in match:
+                mod_val = calculate_modifier(int(FIELDS['strength']))
+            elif "acrobatics" in match or "sleight of hand" in match or "stealth" in match:
+                mod_val = calculate_modifier(int(FIELDS['dexterity']))
+
+            # Add the proficiency bonus if appropriate
+            if match in proficiencies:
+                mod_val += proficiency_bonus
+                self.output_text("Adding proficiency bonus {0} to skill {1}".format(proficiency_bonus, match))
+
+            # Set the values as string formatted.
+            if mod_val >= 0:
+                skill_modifier = '+' + str(mod_val)
+            else:
+                skill_modifier = str(mod_val)
+
+            # Update the template.
+            template = template.replace(f'[{match} modifier]', skill_modifier)
+
+        pattern_prof = r'\[(.*?) proficiency\]'
+        matches = re.findall(pattern_prof, template)
+        for match in matches:
+            empty_prof_modifier = "-"
+            template = template.replace(f'[{match} proficiency]', empty_prof_modifier)
+
+        info = FIELDS['information']
+        template = template.replace("[background information]", info)
+
+        notes = FIELDS['notes']
+        template = template.replace("[notes]", notes)
+
+        img_src = "img/" + FIELDS['image']
+        img_filepath = os.path.join(self.generator.characters_folder, img_src)
+        img_dir = self.generator.characters_folder + "/img"
+        img_desc = img_src.split('/')[1].split('.')[0] + "-image"
+        template = template.replace("[image-description]", img_desc)
+        template = template.replace("[image-url]", img_src)
+
+        copy_file_to_directory(img_src, img_dir)
+
+        # Update abilities
+        abilities = FIELDS['abilities'].split(',')
+        abilities_output = ""
+        for ability in abilities:
+            abilities_output += "<li><strong>"
+            abilities_output += ability.strip()
+            abilities_output += ":</strong>["
+            abilities_output += ability.strip()
+            abilities_output += " description]</li>"
+        template = template.replace("[abilities list]", abilities_output)
+
+        # Update equipment
+        equipment = FIELDS['equipment'].split(',')
+        equipment_output = ""
+        for equip in equipment:
+            equipment_output += "<li><strong>"
+            equipment_output += equip.strip()
+            equipment_output += ":</strong>["
+            equipment_output += equip.strip()
+            equipment_output += " description]</li>"
+        template = template.replace("[equipment list]", equipment_output)
+
+        # Write the new character file
+        with open(filepath, 'w') as f:
+            f.write(template)
+
+        print(f'Character file created: {filepath}')
+
+    def output_text(self, text):
+        print(text)
+        # Append the given text to the large_text widget
+        self.large_text.config(state="normal")
+        self.large_text.insert(tk.END, text + '\n')
+        self.large_text.config(state="disabled")
+
+        # Scroll to the bottom of the widget
+        self.large_text.see("end")
+
+    def test(self):
+        self.output_text("test text")
+
+    def get_user_choice(self):
+        # Disable the buttons
+        self.yes_button.config(state=tk.ACTIVE)
+        self.no_button.config(state=tk.ACTIVE)
+
+        # Create a BooleanVar to store the user's choice
+        user_choice = tk.BooleanVar()
+
+        # Define the functions that will be called when the buttons are clicked
+        def yes_button_callback():
+            self.yes()
+            nonlocal user_choice
+            user_choice.set(True)
+            self.gui.quit()
+
+        def no_button_callback():
+            self.no()
+            nonlocal user_choice
+            user_choice.set(False)
+            self.gui.quit()
+
+        def reset_button_callback():
+            self.reset()
+            nonlocal user_choice
+            user_choice.set(False)
+            self.gui.quit()
+
+        # Configure the buttons to call the appropriate functions
+        self.yes_button.config(command=yes_button_callback)
+        self.no_button.config(command=no_button_callback)
+        self.reset_button.config(command=reset_button_callback)
+
+        # Start the main event loop
+        self.gui.mainloop()
+
+        self.yes_button.config(state=tk.DISABLED)
+        self.no_button.config(state=tk.DISABLED)
+
+        # Return the user's choice
+        return user_choice.get()
+
+    def yes(self):
+        self.last_user_input = "yes"
+        print(f"last_user_input set to {self.last_user_input}")
+
+    def no(self):
+        self.last_user_input = "no"
+        print(f"last_user_input set to {self.last_user_input}")
+
+    def reset(self):
+        self.output_text("Resetting...")
+        self.last_user_input = "reset"
+        print(f"last_user_input set to {self.last_user_input}")
+
+    def browse_files(self):
+        # Use the file dialog to get a file path
+        file_path = filedialog.askopenfilename()
+
+        # Update the text in the editable box with the selected file path
+        self.path_text.delete(0, tk.END)
+        self.path_text.insert(0, file_path)
+
+    def update_input_file(self):
+        print("Updating input file.")
+        if self.path_text.get() is None:
+            self.output_text("No file input!")
+        else:
+            file = self.path_text.get()
+            if file == self.generator.current_file:
+                return
+            else:
+                self.generator.reset()
+                self.generator.current_file = file
+                self.output_text(f"Updated current work file to: {file}")
+                if file.endswith(".char") or file.endswith(".names"):
+                    self.generator.current_list = read_lines_from_file(file)
+
+    def generate_word(self):
+        print("Generating word.")
+        self.update_input_file()
+        self.generator.current_prob_matrix = generate_prob_matrix(self.generator.current_list)
+        print_prob_matrix(self.generator.current_prob_matrix)
+        while self.last_user_input != "reset":
+            word = "{0}".format(generate_word(self.generator.current_prob_matrix))
+            self.output_text(f"Generated word: {word}")
+            self.output_text("Do you want to append this word to the file? (y/n)")
+            # Get the user's choice
+            self.get_user_choice()
+            if self.last_user_input == "yes":
+                append_to_file(self.generator.current_file, word)
+            elif self.last_user_input == "no":
+                self.output_text("Word not appended to file.")
+                continue
+            else:
+                continue
+
+    def run(self):
+        self.gui.mainloop()
+
+
+if __name__ == '__main__':
+    app = Creator()
+    app.run()

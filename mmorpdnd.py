@@ -1,4 +1,4 @@
-#!/bin/phthon3
+#!/bin/python3
 import os
 import re
 import random
