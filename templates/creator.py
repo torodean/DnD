@@ -450,13 +450,15 @@ class Creator:
         generate_char_button.pack(side=tk.LEFT, padx=10)
 
         # Create an npc checkbox
-        self.npc_checkbox_value = tk.BooleanVar()
+        self.npc_checkbox_value = tk.BooleanVar(value=True)
+        self.npc_checkbox_value.set(True)  # Set the variable to True
         npc_checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.npc_checkbox_value,
                                   command=self.checkbox_changed)
         npc_checkbox.pack(side=tk.LEFT, padx=1)
 
         # Create a trash checkbox
-        self.trash_checkbox_value = tk.BooleanVar()
+        self.trash_checkbox_value = tk.BooleanVar(value=False)
+        self.trash_checkbox_value.set(False)  # Set the variable to False
         trash_checkbox = tk.Checkbutton(top_button_frame, text="Trash", variable=self.trash_checkbox_value,
                                       command=self.checkbox_changed)
         trash_checkbox.pack(side=tk.LEFT, padx=1)
@@ -636,7 +638,7 @@ class Creator:
 
         try:
             copy_file_to_directory(img_src, img_dir)
-            if self.trash_checkbox_value:
+            if self.trash_checkbox_value.get():
                 global_vars.trash_file(img_src)
         except ValueError as e:
             print(f"An error occurred: {e}")
@@ -670,7 +672,7 @@ class Creator:
         print(f'Character file created: {filepath}')
 
         # move the files to the trash if this option is selected.
-        if self.trash_checkbox_value:
+        if self.trash_checkbox_value.get():
             global_vars.trash_file(global_vars.current_file)
 
     def output_text(self, text):
