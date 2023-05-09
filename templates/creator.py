@@ -317,7 +317,31 @@ def generate_word(prob_matrix, min_length=4, max_length=10):
     return word
 
 
+def move_file(source_file_path, destination_folder_path):
+    """
+    Move a file from the source path to the destination folder.
+
+    Args:
+        source_file_path (str): The path to the file to be moved.
+        destination_folder_path (str): The path to the destination folder.
+
+    Returns:
+        None
+    """
+
+    # Create the destination folder if it doesn't exist
+    if not os.path.exists(destination_folder_path):
+        os.makedirs(destination_folder_path)
+
+    # Use shutil.move() to move the file to the destination folder
+    shutil.move(source_file_path, destination_folder_path)
+
+
 class Variables:
+    """
+    A class to store app wide variables.
+    """
+
     def __init__(self):
         self.current_prob_matrix = None
         self.current_file = ""
@@ -328,6 +352,7 @@ class Variables:
 
         # Define the root directory
         self.root_dir = os.getcwd()
+        self.trash_dir = self.root_dir + "/trash"
 
     def set_character_folder(self, npc=True):
         for dirpath, dirnames, filenames in os.walk("../"):
@@ -338,6 +363,9 @@ class Variables:
                     self.characters_folder = os.path.join(dirpath, 'characters/non-player')
 
         print(f"Character folder set to: {self.characters_folder}")
+
+    def trash_file(self, file):
+        move_file(file, self.trash_dir)
 
     def reset(self):
         self.current_file = ""
@@ -399,11 +427,17 @@ class Creator:
         generate_char_button = tk.Button(top_button_frame, text="Generate Char", command=self.generate_char)
         generate_char_button.pack(side=tk.LEFT, padx=10)
 
-        # Create a checkbox
-        self.checkbox_value = tk.BooleanVar()
-        checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.checkbox_value,
+        # Create an npc checkbox
+        self.npc_checkbox_value = tk.BooleanVar()
+        npc_checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.npc_checkbox_value,
                                   command=self.checkbox_changed)
-        checkbox.pack(side=tk.LEFT, padx=1)
+        npc_checkbox.pack(side=tk.LEFT, padx=1)
+
+        # Create a trash checkbox
+        self.trash_checkbox_value = tk.BooleanVar()
+        trash_checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.trash_checkbox_value,
+                                      command=self.checkbox_changed)
+        trash_checkbox.pack(side=tk.LEFT, padx=1)
 
         # Create a button to open the file browser
         test_button = tk.Button(top_button_frame, text="Test Button", command=self.test)
@@ -445,11 +479,17 @@ class Creator:
         test_button.config(state="disabled")
 
     def checkbox_changed(self):
-        npc = self.checkbox_value.get()
+        npc = self.npc_checkbox_value.get()
+        trash_files = self.trash_checkbox_value.get()
         if npc:
-            print("Checkbox enabled")
+            print("NPC Checkbox enabled")
         else:
-            print("Checkbox disabled")
+            print("NPC Checkbox disabled")
+
+        if trash_files:
+            print("trash_files Checkbox enabled")
+        else:
+            print("trash_files Checkbox disabled")
 
         global_vars.set_character_folder(npc)
 
