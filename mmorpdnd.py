@@ -510,7 +510,7 @@ class MMORPDND_GUI:
         self.gui.title("MMORPDND")
         self.gui.geometry("300x470")        
         
-        # set the background color to red
+        # set the background color to black
         self.gui.configure(bg="black")
 
         # Load icon image

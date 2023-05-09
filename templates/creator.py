@@ -1,6 +1,7 @@
 #!/bin/python3
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import PhotoImage
 import os
 import re
 import shutil
@@ -325,6 +326,9 @@ class Variables:
         self.character_template_file = "characterTemplate.html"
         self.set_character_folder(False)
 
+        # Define the root directory
+        self.root_dir = os.getcwd()
+
     def set_character_folder(self, npc=True):
         for dirpath, dirnames, filenames in os.walk("../"):
             if 'characters' in dirnames:
@@ -341,6 +345,11 @@ class Variables:
         self.current_prob_matrix = {}
 
 
+# Define a global variable containing the declared vars. Use this so they are all only defined once and can be
+# updated/stored throughout the applications lifetime.
+global_vars = Variables()
+
+
 class Creator:
     def __init__(self):
         self.last_user_input = None
@@ -348,7 +357,10 @@ class Creator:
         self.gui.geometry("850x500")
         self.gui.title("File Browser")
 
-        self.variables = Variables()
+        # Load icon image
+        icon = PhotoImage(file='{}/../mmorpdnd.png'.format(global_vars.root_dir))
+        # Set icon image
+        self.gui.tk.call('wm', 'iconphoto', self.gui._w, icon)
 
         # Create the menu bar
         menubar = tk.Menu(self.gui)
@@ -389,7 +401,8 @@ class Creator:
 
         # Create a checkbox
         self.checkbox_value = tk.BooleanVar()
-        checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.checkbox_value, command=self.checkbox_changed)
+        checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.checkbox_value,
+                                  command=self.checkbox_changed)
         checkbox.pack(side=tk.LEFT, padx=1)
 
         # Create a button to open the file browser
@@ -438,12 +451,12 @@ class Creator:
         else:
             print("Checkbox disabled")
 
-        self.variables.set_character_folder(npc)
+        global_vars.set_character_folder(npc)
 
     def generate_char(self):
         self.update_input_file()
-        if not self.variables.current_file.endswith(".char"):
-            self.output_text(f"Wrong input file type: {self.variables.current_file}")
+        if not global_vars.current_file.endswith(".char"):
+            self.output_text(f"Wrong input file type: {global_vars.current_file}")
             self.output_text(f"File should end with '.char'")
             return
 
@@ -451,7 +464,7 @@ class Creator:
         FIELDS = {}
 
         # Open the current file and read in the contents.
-        with open(self.variables.current_file, 'r') as f:
+        with open(global_vars.current_file, 'r') as f:
             contents = f.readlines()
 
         for line in contents:
@@ -473,15 +486,16 @@ class Creator:
         attributes = ["strength", "constitution", "wisdom", "charisma", "dexterity", "intelligence"]
         for attribute in attributes:
             if attribute not in FIELDS:
+                self.output_text(f"Generating value for {attribute} as {char_stats[attribute]}")
                 FIELDS[attribute] = str(char_stats[attribute])
 
         # Generate the character file path
         char_name = FIELDS['name']
         filename = f'{char_name.lower().replace(" ", "_")}.html'
-        filepath = os.path.join(self.variables.characters_folder, filename)
+        filepath = os.path.join(global_vars.characters_folder, filename)
 
         # Read the template file and replace the fields with the character information
-        with open(self.variables.character_template_file, 'r') as f:
+        with open(global_vars.character_template_file, 'r') as f:
             template = f.read()
 
         proficiencies = FIELDS['proficiencies'].strip().split(', ')
@@ -561,7 +575,7 @@ class Creator:
         template = template.replace("[notes]", notes)
 
         img_src = "img/" + FIELDS['image']
-        img_dir = self.variables.characters_folder + "/img"
+        img_dir = global_vars.characters_folder + "/img"
         img_desc = img_src.split('/')[1].split('.')[0] + "-image"
         template = template.replace("[image-description]", img_desc)
         template = template.replace("[image-url]", img_src)
@@ -680,30 +694,31 @@ class Creator:
             self.output_text("No file input!")
         else:
             file = self.path_text.get()
-            if file == self.variables.current_file:
+            if file == global_vars.current_file:
                 return
             else:
-                self.variables.reset()
-                self.variables.current_file = file
+                global_vars.reset()
+                global_vars.current_file = file
                 self.output_text(f"Updated current work file to: {file}")
                 if file.endswith(".char") or file.endswith(".names"):
-                    self.variables.current_list = read_lines_from_file(file)
+                    global_vars.current_list = read_lines_from_file(file)
 
     def generate_word(self):
         print("Generating word.")
         self.update_input_file()
-        self.variables.current_prob_matrix = generate_prob_matrix(self.variables.current_list)
-        print_prob_matrix(self.variables.current_prob_matrix)
+        global_vars.current_prob_matrix = generate_prob_matrix(global_vars.current_list)
+        print_prob_matrix(global_vars.current_prob_matrix)
         while self.last_user_input != "reset":
-            word = "{0}".format(generate_word(self.variables.current_prob_matrix))
+            word = "{0}".format(generate_word(global_vars.current_prob_matrix))
             self.output_text(f"Generated word: {word}")
             self.output_text("Do you want to append this word to the file? (y/n)")
             # Get the user's choice
             self.get_user_choice()
             if self.last_user_input == "yes":
-                append_to_file(self.variables.current_file, word)
+                append_to_file(global_vars.current_file, word)
+                self.output_text("Word appended to file.")
             elif self.last_user_input == "no":
-                self.output_text("Word not appended to file.")
+                self.output_text("Word NOT appended to file.")
                 continue
             else:
                 continue
