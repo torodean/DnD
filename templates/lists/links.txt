@@ -1084,9 +1084,9 @@ Wand of Wonder, https://roll20.net/compendium/dnd5e/Wand%20of%20Wonder
 Wand of the War Mage 1, https://roll20.net/compendium/dnd5e/Wand%20of%20the%20War%20Mage%201
 Wand of the War Mage 2, https://roll20.net/compendium/dnd5e/Wand%20of%20the%20War%20Mage%202
 Wand of the War Mage 3, https://roll20.net/compendium/dnd5e/Wand%20of%20the%20War%20Mage%203
-Wand of the War Mage, +1, https://roll20.net/compendium/dnd5e/Wand%20of%20the%20War%20Mage,%20+1
-Wand of the War Mage, +2, https://roll20.net/compendium/dnd5e/Wand%20of%20the%20War%20Mage,%20+2
-Wand of the War Mage, +3, https://roll20.net/compendium/dnd5e/Wand%20of%20the%20War%20Mage,%20+3
+Wand of the War Mage +1, https://roll20.net/compendium/dnd5e/Wand%20of%20the%20War%20Mage,%20+1
+Wand of the War Mage +2, https://roll20.net/compendium/dnd5e/Wand%20of%20the%20War%20Mage,%20+2
+Wand of the War Mage +3, https://roll20.net/compendium/dnd5e/Wand%20of%20the%20War%20Mage,%20+3
 War Pick, https://roll20.net/compendium/dnd5e/War%20Pick
 War Pick +1, https://roll20.net/compendium/dnd5e/War%20Pick%20+1
 War Pick +2, https://roll20.net/compendium/dnd5e/War%20Pick%20+2
