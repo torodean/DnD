@@ -43,6 +43,7 @@ for word in words_of_all_sounds:
         print(f"{word}: {phoneme_word} -> {ascii_chars}")
         combined_char = ''
         for index, char in enumerate(phoneme):
+            print(char)
             # check if the index is not out of bounds
             if index < len(phoneme)-1:
                 # check if the next character is a stress marker
@@ -61,9 +62,10 @@ for word in words_of_all_sounds:
                 phoneme_char_to_ascii[combined_char] = [ascii_convert(combined_char)[0], ascii_chars[index]]
                 print(f"added combined character {combined_char} with ASCII values {phoneme_char_to_ascii[combined_char]} to the dictionary")
                 combined_char = ''
-            elif char not in phoneme_char_to_ascii:
+            if char not in phoneme_char_to_ascii:
                 phoneme_char_to_ascii[char] = ascii_chars[index]
                 print(f"added character {char} with ASCII value {ascii_chars[index]} to the dictionary")
        
 print(phoneme_char_to_ascii)
+print(len(phoneme_char_to_ascii))
 print(len(phoneme_char_to_ascii))
