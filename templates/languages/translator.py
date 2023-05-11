@@ -33,9 +33,37 @@ for phoneme in phonemes:
     
 words_of_all_sounds = ['sheep', 'ship', 'good', 'shoot', 'here', 'wait', 'bed', 'teacher', 'bird', 'door', 'tourist', 'boy', 'show', 'cat', 'up', 'far', 'on', 'hair', 'my', 'cow', 'pea', 'boat', 'tea', 'dog', 'cheese', 'june', 'car', 'go', 'fly', 'video', 'think', 'thy', 'see', 'zoo', 'shall', 'television', 'man', 'now', 'sing', 'hat', 'love', 'red', 'wet', 'yes']
 
+phoneme_char_to_ascii = {}
+
 # Get all possible phonemes for each character in the alphabet
 for word in words_of_all_sounds:
     phoneme_word = get_phonemes(word)
     for phoneme in phoneme_word:
-        ascii_chars = ascii_convert(phoneme)        
+        ascii_chars = ascii_convert(phoneme)
         print(f"{word}: {phoneme_word} -> {ascii_chars}")
+        combined_char = ''
+        for index, char in enumerate(phoneme):
+            # check if the index is not out of bounds
+            if index < len(phoneme)-1:
+                # check if the next character is a stress marker
+                #print(repr(phoneme))
+                if phoneme[index+1] == 'ː':
+                    #print(f"stress marker detected!")
+                    # combine the current character with the stress marker
+                    combined_char = char + 'ː'
+                    continue
+                # Skip the stress marker.
+                if char == 'ː':
+                    #print("skipping stress marker")
+                    continue
+            # add the character to the dictionary with its corresponding ASCII value
+            if combined_char and combined_char not in phoneme_char_to_ascii:
+                phoneme_char_to_ascii[combined_char] = [ascii_convert(combined_char)[0], ascii_chars[index]]
+                print(f"added combined character {combined_char} with ASCII values {phoneme_char_to_ascii[combined_char]} to the dictionary")
+                combined_char = ''
+            elif char not in phoneme_char_to_ascii:
+                phoneme_char_to_ascii[char] = ascii_chars[index]
+                print(f"added character {char} with ASCII value {ascii_chars[index]} to the dictionary")
+       
+print(phoneme_char_to_ascii)
+print(len(phoneme_char_to_ascii))
