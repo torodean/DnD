@@ -1,3 +1,4 @@
+#!/bin/python3
 import os
 
 def print_directory_contents(path):
