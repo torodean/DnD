@@ -41,6 +41,49 @@ def read_lines_from_file(file_name):
             line = line.strip()
             lines.append(line)
     return lines
+    
+    
+def calculate_hp(class_type: str, level: int, constitution: int) -> int:
+    """
+    Calculate the hit points (hp) of a Dungeons & Dragons (DnD) 5th edition character
+    based on their class, level, and constitution modifier.
+
+    Args:
+        class_type (str): The character's class (e.g. 'fighter', 'wizard', 'rogue').
+        level (int): The character's level, between 1 and 20.
+        constitution (int): The character's constitution score, between 1 and 30.
+
+    Returns:
+        int: The character's hit points, based on their class and level, modified by their
+           constitution modifier.
+
+    Raises:
+        ValueError: If the given class_type is not recognized.
+    """
+    hit_die = 0
+    
+    # Determine hit die for the class
+    if class_type == 'barbarian':
+        hit_die = 12
+    elif class_type == 'fighter' or class_type == 'paladin' or class_type == 'ranger':
+        hit_die = 10
+    elif class_type == 'cleric' or class_type == 'druid' or class_type == 'monk' or class_type == 'rogue' or class_type == 'warlock':
+        hit_die = 8
+    elif class_type == 'sorcerer' or class_type == 'wizard':
+        hit_die = 6
+    
+    # Calculate base hit points
+    base_hp = hit_die + (constitution - 10) // 2
+    
+    additional_hp = 0
+    # Calculate additional hit points based on level
+    for i in range(2, level):
+        additional_hp += random.randint(1, hit_die) + ((constitution - 10) // 2)
+        
+    # Calculate total hit points
+    total_hp = base_hp + additional_hp
+    
+    return total_hp
 
 
 def calculate_proficiency_bonus(level):
@@ -102,6 +145,46 @@ def get_stat_priority(character_class):
     return stat_priorities.get(character_class.lower(), [])
 
 
+def adjust_stats_for_level(assigned_stats, level):
+    """
+    Adjust some stats for a leveled up character.
+    """
+    if level < 4:
+        return assigned_stats
+    elif level < 8:    
+        bonus_points = 2
+    elif level < 12:    
+        bonus_points = 4
+    elif level < 16:    
+        bonus_points = 6
+    elif level < 19:    
+        bonus_points = 8
+    else:    
+        bonus_points = 10
+        
+    print(f"level {level} awards {bonus_points} bonus attribute points")
+    print(f"Original attributes: {assigned_stats}")
+        
+    # Sort the dictionary by descending values   
+    sorted_dict = dict(sorted(assigned_stats.items(), key=lambda item: item[1], reverse=True))
+    print(sorted_dict)
+    
+    # Calculate the maximum possible value for each key, without exceeding 22
+    max_value = 22
+
+    # Distribute bonus_points among the highest keys without exceeding 22
+    for key in sorted_dict.keys():
+        if sorted_dict[key] == 22 or bonus_points == 0:
+            continue
+        else:        
+            add_value = min(bonus_points, max_value - sorted_dict[key])
+            sorted_dict[key] += add_value
+            bonus_points -= add_value
+        
+    print(f"Updated attributes: {sorted_dict}")
+
+    return sorted_dict
+
 def generate_character_stats(character_class, level=1):
     """
     Generates a list of six stats for a character based on their class and level.
@@ -122,6 +205,9 @@ def generate_character_stats(character_class, level=1):
         stat_value = max(stats)
         stats.remove(stat_value)
         assigned_stats[stat_name] = stat_value
+        
+    # Adjust for character level.
+    assigned_stats = adjust_stats_for_level(assigned_stats, level)
 
     return assigned_stats
 
@@ -348,7 +434,7 @@ class Variables:
         self.current_list = []
         self.characters_folder = ""
         self.character_template_file = "characterTemplate.html"
-        self.set_character_folder(False)
+        self.set_character_folder(True)
 
         # Define the root directory
         self.root_dir = os.getcwd()
@@ -361,6 +447,8 @@ class Variables:
                     self.characters_folder = os.path.join(dirpath, 'characters/player')
                 else:
                     self.characters_folder = os.path.join(dirpath, 'characters/non-player')
+            else:
+                self.characters_folder = '.' #used for testing mainly
 
         print(f"Character folder set to: {self.characters_folder}")
 
@@ -540,8 +628,12 @@ class Creator:
         attributes = ["strength", "constitution", "wisdom", "charisma", "dexterity", "intelligence"]
         for attribute in attributes:
             if attribute not in char_fields:
-                self.output_text(f"Generating value for {attribute} as {char_stats[attribute]}")
+                self.output_text(f"Generated value for {attribute} as {char_stats[attribute]}")
                 char_fields[attribute] = str(char_stats[attribute])
+                
+        if "hp" not in char_fields:
+            hp = calculate_hp(char_class, int(char_fields['level']), int(char_fields['constitution']))
+            self.output_text(f"Calculated hp as {hp}.")
 
         # Generate the character file path
         char_name = char_fields['name']

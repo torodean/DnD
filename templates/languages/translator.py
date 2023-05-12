@@ -33,6 +33,7 @@ for word in words:
 for phoneme in phonemes:
     ascii_word = ascii_convert(phoneme)
     print(ascii_word)
+<<<<<<< HEAD
 
 words_of_all_sounds = ['pit', 'tab', 'dill', 'bill', 'kill', 'mill', 'fill', 'gill', 'seal', 'real', 'zeal', 'veal',
                        'heal', 'leaf', 'nil', 'witch', 'shill', 'chill', 'thin', 'thy', 'ring', 'jog', 'you', 'beige',
@@ -50,8 +51,16 @@ words_of_all_sounds = ['pit', 'tab', 'dill', 'bill', 'kill', 'mill', 'fill', 'gi
                        'Esoteric', 'Otorhinolaryngology', 'Sphygmomanometer', 'Triskaidekaphobia', 'Obfuscate',
                        'Dichotomy', 'Anemone', 'Inchoate', 'Calliope', 'Archipelago', 'Macabre', 'Enervate',
                        'Pizzicato', 'Cacophony', 'Worcestershire sauce', 'Aphorism', 'Sesquipedalian']
+=======
+    
+words_of_all_sounds = ['sheep', 'ship', 'good', 'shoot', 'here', 'wait', 'bed', 'teacher', 'bird', 'door', 'tourist', 'boy', 'show', 'cat', 'up', 'far', 'on', 'my', 'cheese', 'june', 'fly', 'video', 'think', 'thy', 'television', 'yes', 'cat', 'thought', 'bird', 'a', 'Anemone', 'Epitome', 'button']
+
+
+>>>>>>> 1640e1219802143371d25d2464904c6db5dbfa58
 
 phoneme_char_to_ascii = {}
+all_info = []
+not_needed_words = []
 
 # Get all possible phonemes for each character in the alphabet
 for word in words_of_all_sounds:
@@ -61,6 +70,10 @@ for word in words_of_all_sounds:
         print(f"{word}: {phoneme_word} -> {ascii_chars}")
         combined_char = ''
         for index, char in enumerate(phoneme):
+<<<<<<< HEAD
+=======
+            #print(char)
+>>>>>>> 1640e1219802143371d25d2464904c6db5dbfa58
             # check if the index is not out of bounds
             if index < len(phoneme) - 1:
                 # check if the next character is a stress marker
@@ -69,17 +82,32 @@ for word in words_of_all_sounds:
                     # combine the current character with the stress marker
                     combined_char = char + 'ː'
                     continue
+<<<<<<< HEAD
                 # Skip the stress marker.
                 if char == 'ː':
                     continue
+=======
+            # Skip the stress marker.
+            if char == 'ː' or char == 'ː':
+                #print("skipping stress marker")
+                continue
+>>>>>>> 1640e1219802143371d25d2464904c6db5dbfa58
             # add the character to the dictionary with its corresponding ASCII value
             if combined_char and combined_char not in phoneme_char_to_ascii:
                 phoneme_char_to_ascii[combined_char] = [ascii_convert(combined_char)[0], ascii_chars[index]]
                 print(f"added combined character {combined_char} with ASCII values {phoneme_char_to_ascii[combined_char]} to the dictionary")
+                piece_of_info = [word, phoneme_word, ascii_chars, combined_char, phoneme_char_to_ascii[combined_char]]
+                all_info.append(piece_of_info)
                 combined_char = ''
             if char not in phoneme_char_to_ascii:
                 phoneme_char_to_ascii[char] = ascii_chars[index]
                 print(f"added character {char} with ASCII value {ascii_chars[index]} to the dictionary")
+<<<<<<< HEAD
 
+=======
+                piece_of_info = [word, phoneme_word, ascii_chars, char, phoneme_char_to_ascii[char]]
+                all_info.append(piece_of_info)
+       
+>>>>>>> 1640e1219802143371d25d2464904c6db5dbfa58
 print(phoneme_char_to_ascii)
 print(len(phoneme_char_to_ascii))
