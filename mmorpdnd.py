@@ -10,6 +10,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='MMORPDND Tools and apps.')
 parser.add_argument('-t', '--test', action='store_true', help='Runs the test-all feature then exit.')
+parser.add_argument('-u', '--update', action='store_true', help='Runs the update-all feature then exit.')
 
 args = parser.parse_args()
 
@@ -637,6 +638,9 @@ def main():
 
     if args.test:
         gui.test_all()
+        exit(1)
+    elif args.update:
+        gui.update_all()
         exit(1)
     else:
         parser.print_help()
