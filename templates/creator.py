@@ -7,6 +7,7 @@ import re
 import shutil
 import random
 import json
+from bs4 import BeautifulSoup
 
 
 def append_to_file(file_path, string_to_append):
@@ -41,8 +42,8 @@ def read_lines_from_file(file_name):
             line = line.strip()
             lines.append(line)
     return lines
-    
-    
+
+
 def calculate_hp(class_type: str, level: int, constitution: int) -> int:
     """
     Calculate the hit points (hp) of a Dungeons & Dragons (DnD) 5th edition character
@@ -61,7 +62,7 @@ def calculate_hp(class_type: str, level: int, constitution: int) -> int:
         ValueError: If the given class_type is not recognized.
     """
     hit_die = 0
-    
+
     # Determine hit die for the class
     if class_type == 'barbarian':
         hit_die = 12
@@ -71,18 +72,18 @@ def calculate_hp(class_type: str, level: int, constitution: int) -> int:
         hit_die = 8
     elif class_type == 'sorcerer' or class_type == 'wizard':
         hit_die = 6
-    
+
     # Calculate base hit points
     base_hp = hit_die + (constitution - 10) // 2
-    
+
     additional_hp = 0
     # Calculate additional hit points based on level
     for i in range(2, level):
         additional_hp += random.randint(1, hit_die) + ((constitution - 10) // 2)
-        
+
     # Calculate total hit points
     total_hp = base_hp + additional_hp
-    
+
     return total_hp
 
 
@@ -151,24 +152,24 @@ def adjust_stats_for_level(assigned_stats, level):
     """
     if level < 4:
         return assigned_stats
-    elif level < 8:    
+    elif level < 8:
         bonus_points = 2
-    elif level < 12:    
+    elif level < 12:
         bonus_points = 4
-    elif level < 16:    
+    elif level < 16:
         bonus_points = 6
-    elif level < 19:    
+    elif level < 19:
         bonus_points = 8
-    else:    
+    else:
         bonus_points = 10
-        
+
     print(f"level {level} awards {bonus_points} bonus attribute points")
     print(f"Original attributes: {assigned_stats}")
-        
+
     # Sort the dictionary by descending values   
     sorted_dict = dict(sorted(assigned_stats.items(), key=lambda item: item[1], reverse=True))
     print(sorted_dict)
-    
+
     # Calculate the maximum possible value for each key, without exceeding 22
     max_value = 22
 
@@ -176,14 +177,15 @@ def adjust_stats_for_level(assigned_stats, level):
     for key in sorted_dict.keys():
         if sorted_dict[key] == 22 or bonus_points == 0:
             continue
-        else:        
+        else:
             add_value = min(bonus_points, max_value - sorted_dict[key])
             sorted_dict[key] += add_value
             bonus_points -= add_value
-        
+
     print(f"Updated attributes: {sorted_dict}")
 
     return sorted_dict
+
 
 def generate_character_stats(character_class, level=1):
     """
@@ -205,7 +207,7 @@ def generate_character_stats(character_class, level=1):
         stat_value = max(stats)
         stats.remove(stat_value)
         assigned_stats[stat_name] = stat_value
-        
+
     # Adjust for character level.
     assigned_stats = adjust_stats_for_level(assigned_stats, level)
 
@@ -433,6 +435,7 @@ class Variables:
         self.current_file = ""
         self.current_list = []
         self.characters_folder = ""
+        self.output_file_folder = ""
         self.character_template_file = "characterTemplate.html"
         self.set_character_folder(True)
 
@@ -445,10 +448,12 @@ class Variables:
             if 'characters' in dirnames:
                 if not npc:
                     self.characters_folder = os.path.join(dirpath, 'characters/player')
+                    break
                 else:
                     self.characters_folder = os.path.join(dirpath, 'characters/non-player')
+                    break
             else:
-                self.characters_folder = '.' #used for testing mainly
+                self.characters_folder = '.'  # used for testing mainly
 
         print(f"Character folder set to: {self.characters_folder}")
 
@@ -541,15 +546,19 @@ class Creator:
         self.npc_checkbox_value = tk.BooleanVar(value=True)
         self.npc_checkbox_value.set(True)  # Set the variable to True
         npc_checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.npc_checkbox_value,
-                                  command=self.checkbox_changed)
+                                      command=self.checkbox_changed)
         npc_checkbox.pack(side=tk.LEFT, padx=1)
 
         # Create a trash checkbox
         self.trash_checkbox_value = tk.BooleanVar(value=False)
         self.trash_checkbox_value.set(False)  # Set the variable to False
         trash_checkbox = tk.Checkbutton(top_button_frame, text="Trash", variable=self.trash_checkbox_value,
-                                      command=self.checkbox_changed)
+                                        command=self.checkbox_changed)
         trash_checkbox.pack(side=tk.LEFT, padx=1)
+
+        # Create a button to open the file browser
+        create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_page)
+        create_page_button.pack(side=tk.LEFT, padx=10)
 
         # Create a button to open the file browser
         test_button = tk.Button(top_button_frame, text="Test Button", command=self.test)
@@ -590,7 +599,72 @@ class Creator:
         self.yes_button.config(state="disabled")
         test_button.config(state="disabled")
 
+    def create_page(self):
+        """
+        Reads the input file and generates an HTML file with elements containing the values from the input file. The output file is saved to the output_file_folder. Uses BeautifulSoup to parse the generated HTML file and prints the formatted HTML to the console.
+        :return: None
+        """
+        self.update_input_file()
+
+        if not global_vars.current_file.endswith(".input"):
+            self.output_text(f"Wrong input file type: {global_vars.current_file}")
+            self.output_text(f"File should end with '.input'")
+            return
+
+        # read input file
+        with open(input_file, 'r') as f:
+            lines = f.readlines()
+
+        folder = "."
+
+        for line in lines:
+            if "folder" in line:
+                folder = line.split('=')[1]
+
+        for dirpath, dirnames, filenames in os.walk("../"):
+            if folder in dirnames:
+                global_vars.output_file_folder = dirpath
+                break
+            else:
+                global_vars.output_file_folder = '.'  # used for testing mainly
+
+        print(f"Output file folder set to: {global_vars.output_file_folder}")
+
+        # create HTML file
+        with open(global_vars.current_file, 'w') as f:
+            # write HTML boilerplate
+            f.write('<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n')
+
+            # iterate over lines in input file
+            for line in lines:
+                # parse line
+                variable_class, value = line.strip().split('=')
+                variable = variable_class.split('[')[0]
+                class_name = variable_class.split('[')[1].split(']')[0]
+
+                # create HTML element
+                html_element = f'<div class="{class_name}"><h2>{variable}</h2><p>{value}</p></div>'
+
+                # write HTML element to file
+                f.write(html_element)
+
+            # close HTML file
+            f.write('</body>\n</html>')
+
+        # parse HTML file with BeautifulSoup
+        with open('output.html', 'r') as f:
+            html = f.read()
+            soup = BeautifulSoup(html, 'html.parser')
+
+        # print formatted HTML
+        print(soup.prettify())
+
     def checkbox_changed(self):
+        """
+        This method is called when either the NPC or trash_files checkboxes are checked or unchecked.
+        It retrieves the values of the checkboxes and prints a message indicating whether they are enabled or disabled.
+        If the NPC checkbox is enabled, it sets the character folder to the NPC folder using the `set_character_folder()` method in the `global_vars` module.
+        """
         npc = self.npc_checkbox_value.get()
         trash_files = self.trash_checkbox_value.get()
         if npc:
@@ -606,7 +680,9 @@ class Creator:
         global_vars.set_character_folder(npc)
 
     def generate_char(self):
+
         self.update_input_file()
+
         if not global_vars.current_file.endswith(".char"):
             self.output_text(f"Wrong input file type: {global_vars.current_file}")
             self.output_text(f"File should end with '.char'")
@@ -614,15 +690,15 @@ class Creator:
 
         # Define the fields to replace in the template file
         char_fields = get_character_fields(global_vars.current_file)
-        
+
         char_class = char_fields['class']
-        
+
         # Default to level 1 if none defined.
         if "level" not in char_fields:
             char_level = 1
         else:
             char_level = int(char_fields['level'])
-            
+
         # Create character stats to fill in if none are defined.
         char_stats = generate_character_stats(char_class, char_level)
         attributes = ["strength", "constitution", "wisdom", "charisma", "dexterity", "intelligence"]
@@ -630,7 +706,7 @@ class Creator:
             if attribute not in char_fields:
                 self.output_text(f"Generated value for {attribute} as {char_stats[attribute]}")
                 char_fields[attribute] = str(char_stats[attribute])
-                
+
         if "hp" not in char_fields:
             hp = calculate_hp(char_class, int(char_fields['level']), int(char_fields['constitution']))
             self.output_text(f"Calculated hp as {hp}.")
