@@ -453,6 +453,9 @@ class Variables:
             # Check if we are looking at a file in our exclude list.
             if any(exclude in dirnames for exclude in self.directories_to_exclude):
                 continue
+            # Check if we are looking at a file in our exclude list.
+            if any(exclude in dirpath for exclude in self.directories_to_exclude):
+                continue
 
             if 'characters' in dirnames:
                 if not npc:
@@ -624,7 +627,7 @@ class Creator:
 
         for line in lines:
             if "folder" in line:
-                folder = line.split('=')[1]
+                folder = line.split('=')[1].strip()
                 print(f"Destination folder set to {folder}")
 
         global_vars.output_file_folder = '.'  # used for testing mainly
@@ -633,11 +636,13 @@ class Creator:
             # Check if we are looking at a file in our exclude list.
             if any(exclude in dirnames for exclude in global_vars.directories_to_exclude):
                 continue
+            # Check if we are looking at a file in our exclude list.
+            if any(exclude in dirpath for exclude in global_vars.directories_to_exclude):
+                continue
 
-            print(dirpath)
-            print(folder)
             if folder in dirnames:
-                global_vars.output_file_folder = dirpath
+                global_vars.output_file_folder = dirpath + "/" + folder
+                break
 
         print(f"Output file folder set to: {global_vars.output_file_folder}")
 
