@@ -443,8 +443,16 @@ class Variables:
         self.root_dir = os.getcwd()
         self.trash_dir = self.root_dir + "/trash"
 
+        # Define directories to exclude
+        self.directories_to_exclude = ["templates", "css", ".git", ".idea"]
+
     def set_character_folder(self, npc=True):
         for dirpath, dirnames, filenames in os.walk("../"):
+
+            # Check if we are looking at a file in our exclude list.
+            if any(exclude in dirnames for exclude in self.directories_to_exclude):
+                continue
+
             if 'characters' in dirnames:
                 if not npc:
                     self.characters_folder = os.path.join(dirpath, 'characters/player')
@@ -600,10 +608,6 @@ class Creator:
         test_button.config(state="disabled")
 
     def create_page(self):
-        """
-        Reads the input file and generates an HTML file with elements containing the values from the input file. The output file is saved to the output_file_folder. Uses BeautifulSoup to parse the generated HTML file and prints the formatted HTML to the console.
-        :return: None
-        """
         self.update_input_file()
 
         if not global_vars.current_file.endswith(".input"):
@@ -612,7 +616,7 @@ class Creator:
             return
 
         # read input file
-        with open(input_file, 'r') as f:
+        with open(global_vars.current_file, 'r') as f:
             lines = f.readlines()
 
         folder = "."
@@ -620,27 +624,42 @@ class Creator:
         for line in lines:
             if "folder" in line:
                 folder = line.split('=')[1]
+                print(f"Destination folder set to {folder}")
 
+        global_vars.output_file_folder = '.'  # used for testing mainly
         for dirpath, dirnames, filenames in os.walk("../"):
+
+            # Check if we are looking at a file in our exclude list.
+            if any(exclude in dirnames for exclude in global_vars.directories_to_exclude):
+                continue
+
+            print(dirpath)
+            print(folder)
             if folder in dirnames:
                 global_vars.output_file_folder = dirpath
-                break
-            else:
-                global_vars.output_file_folder = '.'  # used for testing mainly
 
         print(f"Output file folder set to: {global_vars.output_file_folder}")
 
+        output_fn = os.path.basename(global_vars.current_file).split('.')[0]
+        output_file = global_vars.output_file_folder + "/" + output_fn + ".html"
+        print(output_file)
+
         # create HTML file
-        with open(global_vars.current_file, 'w') as f:
+        with open(output_file, 'w') as f:
             # write HTML boilerplate
             f.write('<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n')
 
             # iterate over lines in input file
             for line in lines:
+                print(line)
+                # Skip the line with folder in it.
+                if "folder" in line:
+                    continue
+
                 # parse line
-                variable_class, value = line.strip().split('=')
-                variable = variable_class.split('[')[0]
-                class_name = variable_class.split('[')[1].split(']')[0]
+                variable_class, value = line.split('=')
+                variable, class_name = variable_class.split('[')
+                class_name = class_name[0:-1]
 
                 # create HTML element
                 html_element = f'<div class="{class_name}"><h2>{variable}</h2><p>{value}</p></div>'
@@ -651,13 +670,11 @@ class Creator:
             # close HTML file
             f.write('</body>\n</html>')
 
-        # parse HTML file with BeautifulSoup
-        with open('output.html', 'r') as f:
-            html = f.read()
-            soup = BeautifulSoup(html, 'html.parser')
+            print(f'HTML file created: {output_file}')
 
-        # print formatted HTML
-        print(soup.prettify())
+        # move the files to the trash if this option is selected.
+        if self.trash_checkbox_value.get():
+            global_vars.trash_file(global_vars.current_file)
 
     def checkbox_changed(self):
         """

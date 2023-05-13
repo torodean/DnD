@@ -6,7 +6,12 @@ import tkinter as tk
 from tkinter import PhotoImage
 from cssbeautifier import beautify
 from bs4 import BeautifulSoup
+import argparse
 
+parser = argparse.ArgumentParser(description='MMORPDND Tools and apps.')
+parser.add_argument('-t', '--test', action='store_true', help='Runs the test-all feature then exit.')
+
+args = parser.parse_args()
 
 class MMORPDND_VARS:
     """
@@ -629,6 +634,14 @@ class MMORPDND_GUI:
 def main():
     # main method code here
     gui = MMORPDND_GUI()
+
+    if args.test:
+        gui.test_all()
+        exit(1)
+    else:
+        parser.print_help()
+        exit(1)
+
     gui.run()
 
 
