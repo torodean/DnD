@@ -437,14 +437,15 @@ class Variables:
         self.characters_folder = ""
         self.output_file_folder = ""
         self.character_template_file = "characterTemplate.html"
+
+        # Define directories to exclude
+        self.directories_to_exclude = ["templates", "css", ".git", ".idea"]
+
         self.set_character_folder(True)
 
         # Define the root directory
         self.root_dir = os.getcwd()
         self.trash_dir = self.root_dir + "/trash"
-
-        # Define directories to exclude
-        self.directories_to_exclude = ["templates", "css", ".git", ".idea"]
 
     def set_character_folder(self, npc=True):
         for dirpath, dirnames, filenames in os.walk("../"):
