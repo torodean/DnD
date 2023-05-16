@@ -644,7 +644,6 @@ def main():
         exit(1)
     else:
         parser.print_help()
-        exit(1)
 
     gui.run()
 
