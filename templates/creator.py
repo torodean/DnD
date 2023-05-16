@@ -148,7 +148,37 @@ def get_stat_priority(character_class):
 
 def adjust_stats_for_level(assigned_stats, level):
     """
-    Adjust some stats for a leveled up character.
+    Adjusts the stats for a character based on their level.
+
+    Args:
+        assigned_stats (dict): A dictionary representing the character's current stats, where keys are
+            the stat names and values are the corresponding stat values.
+        level (int): The level of the character.
+
+    Returns:
+        dict: A dictionary representing the adjusted stats based on the character's level.
+
+    Raises:
+        None.
+
+    This method takes the current stats of a character, represented by the `assigned_stats` dictionary,
+    and adjusts the stats based on the character's level. The adjusted stats are returned as a new dictionary.
+
+    The adjustment of stats is determined by the character's level:
+    - For levels below 4, no adjustments are made, and the original stats are returned.
+    - For levels 4 to 7, 2 bonus attribute points are awarded.
+    - For levels 8 to 11, 4 bonus attribute points are awarded.
+    - For levels 12 to 15, 6 bonus attribute points are awarded.
+    - For levels 16 to 18, 8 bonus attribute points are awarded.
+    - For levels 19 and above, 10 bonus attribute points are awarded.
+
+    The method prints the awarded bonus points and the original and updated attributes for informational purposes.
+
+    Note: The stats dictionary is assumed to have numeric values for each stat.
+
+    Example usage:
+        assigned_stats = {'strength': 10, 'dexterity': 12, 'intelligence': 14}
+        adjusted_stats = adjust_stats_for_level(assigned_stats, 8)
     """
     if level < 4:
         return assigned_stats
@@ -448,6 +478,35 @@ class Variables:
         self.trash_dir = self.root_dir + "/trash"
 
     def set_character_folder(self, npc=True):
+        """
+        Set the character folder path based on the presence of specific directories.
+
+        Args:
+            npc (bool, optional): Determines whether to set the folder for non-player characters (NPCs).
+                If False, the folder for player characters will be set. Default is True.
+
+        Returns:
+            None.
+
+        Raises:
+            None.
+
+        This method searches for specific directories within the project hierarchy to determine the
+        character folder path. It traverses through the directories using os.walk(), excluding any
+        directories specified in the `directories_to_exclude` list.
+
+        If the 'characters' directory is found, the character folder path is set accordingly, either to
+        the 'characters/player' directory if `npc` is False, or to the 'characters/non-player' directory
+        if `npc` is True.
+
+        If the 'characters' directory is not found, the character folder path is set to the current directory
+        (represented by '.').
+
+        The method also prints the final character folder path that has been set.
+
+        Example usage:
+            set_character_folder(npc=True)
+        """
         for dirpath, dirnames, filenames in os.walk("../"):
 
             # Check if we are looking at a file in our exclude list.
@@ -484,6 +543,29 @@ global_vars = Variables()
 
 
 def get_character_fields(file):
+    """
+    Read a file containing character fields and their values, and return a dictionary of the fields.
+
+    Args:
+        file (str): The path to the file containing character fields.
+
+    Returns:
+        dict: A dictionary mapping character fields to their corresponding values.
+
+    Raises:
+        None.
+
+    The method opens the specified file and reads its contents. Each line in the file is expected to
+    represent a character field and its value, separated by an equals sign (=). The method parses each
+    line, extracts the field name and value, converts them to lowercase, and stores them in a dictionary.
+    The resulting dictionary is returned.
+
+    If the 'class' field is not found in the character fields, an error message is printed, and an
+    empty dictionary is returned.
+
+    Example usage:
+        character_fields = get_character_fields('character_data.txt')
+    """
     char_fields = {}
     # Open the current file and read in the contents.
     with open(file, 'r') as f:
@@ -886,6 +968,37 @@ class Creator:
         self.output_text("test text")
 
     def get_user_choice(self):
+        """
+        Displays a graphical user interface with yes/no buttons and returns the user's choice.
+
+        Args:
+            None.
+
+        Returns:
+            bool: The user's choice. True represents "yes" and False represents "no".
+
+        Raises:
+            None.
+
+        This method displays a graphical user interface (GUI) with "yes" and "no" buttons and waits for the user to make a choice.
+        The GUI is implemented using a main event loop.
+
+        The method performs the following steps:
+        1. Enables the "yes" and "no" buttons.
+        2. Creates a BooleanVar to store the user's choice.
+        3. Defines the callback functions that will be called when the buttons are clicked. These functions call the appropriate
+           methods (e.g., `self.yes()`, `self.no()`, `self.reset()`) and set the user_choice variable accordingly.
+        4. Configures the buttons to call the respective callback functions.
+        5. Starts the main event loop using `self.gui.mainloop()`.
+        6. Disables the "yes" and "no" buttons after the user has made a choice.
+        7. Returns the user's choice as a boolean value.
+
+        Note: The specific details of the GUI implementation, such as the actual buttons and their configuration, may depend on
+        the underlying GUI framework used.
+
+        Example usage:
+            get_user_choice()
+        """
         # Disable the buttons
         self.yes_button.config(state=tk.ACTIVE)
         self.no_button.config(state=tk.ACTIVE)
@@ -963,6 +1076,41 @@ class Creator:
                     global_vars.current_list = read_lines_from_file(file)
 
     def generate_word(self):
+        """
+        Generates a word based on a probability matrix and offers the option to append it to a file.
+
+        Args:
+            None.
+
+        Returns:
+            None.
+
+        Raises:
+            None.
+
+        This method generates a word using a probability matrix and prompts the user whether to append the generated word
+        to a file.
+
+        The method performs the following steps:
+        1. Prints a message indicating that a word is being generated.
+        2. Updates the input file.
+        3. Generates a probability matrix based on the current list.
+        4. Prints the generated probability matrix.
+        5. Enters a loop that continues until the last user input is "reset".
+            a. Generates a word using the current probability matrix.
+            b. Outputs the generated word.
+            c. Asks the user if they want to append the word to the file.
+            d. Retrieves the user's choice.
+            e. If the user chooses "yes", the word is appended to the file.
+            f. If the user chooses "no", a message is outputted indicating that the word was not appended to the file.
+            g. If the user's choice is neither "yes" nor "no", the loop continues.
+
+        Note: The specific details of how the probability matrix is generated and how the word is outputted may depend on
+        the implementation of the methods used within this method.
+
+        Example usage:
+            generate_word()
+        """
         print("Generating word.")
         self.update_input_file()
         global_vars.current_prob_matrix = generate_prob_matrix(global_vars.current_list)

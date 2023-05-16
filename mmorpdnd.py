@@ -14,6 +14,7 @@ parser.add_argument('-u', '--update', action='store_true', help='Runs the update
 
 args = parser.parse_args()
 
+
 class MMORPDND_VARS:
     """
     This is a class for storing variables used by MMORPDND* classes.
@@ -27,6 +28,11 @@ class MMORPDND_VARS:
         self.directory_structure = {
             "campaign": {
                 "locations": {
+                    "planet": {
+                        "continents": {},
+                        "oceans": {},
+                        "seas": {}
+                    },
                     "regions": {},
                     "dungeons": {},
                     "cities": {},
@@ -104,6 +110,36 @@ class MMORPDND_VARS:
 global_vars = MMORPDND_VARS()
 
 
+def get_relative_path(from_file, to_file):
+    """
+    Returns the relative path from one file to another.
+
+    Args:
+        from_file (str): The path of the source file.
+        to_file (str): The path of the target file.
+
+    Returns:
+        str: The relative path from the source file to the target file.
+
+    Raises:
+        None.
+
+    This method takes two file paths, `from_file` and `to_file`, and calculates the relative path from `from_file`
+    to `to_file`. The relative path represents the path that, when followed from `from_file`, leads to `to_file`.
+
+    Example:
+        Assuming from_file = '/path/to/source/file.html' and to_file = '/path/to/target/image.jpg',
+        the method will return '../../target/image.jpg' as the relative path.
+
+    Note: The method uses the `os.path.relpath()` function to calculate the relative path.
+
+    Example usage:
+        get_relative_path('/path/to/source/file.html', '/path/to/target/image.jpg')
+        print(relative_path)  # Output: '../../target/image.jpg'
+    """
+    return os.path.relpath(to_file, os.path.dirname(from_file))
+
+
 class MMORPDND:
     """
     A class for all the main MMORPDND features.
@@ -136,7 +172,35 @@ class MMORPDND:
 
     def create_dummy_html_files(self, directory=global_vars.root_dir):
         """
-        Create dummy html files in all directories and sub-directories for testing. Each file will be randomly linked to another file.
+        Creates dummy HTML files in all directories and subdirectories for testing purposes.
+
+        Args:
+            directory (str): The directory path to start creating dummy HTML files from. Defaults to global_vars.root_dir.
+
+        Returns:
+            None.
+
+        Raises:
+            None.
+
+        This method recursively walks through the directory structure, creates an index.html file in each directory,
+        and creates additional HTML files with random links in each subdirectory.
+
+        The method performs the following steps:
+        1. Creates an index.html file in the specified directory with a basic HTML structure.
+        2. Recursively walks through the directory structure using `os.walk`.
+        3. For each subdirectory, excluding any directories listed in `global_vars.directories_to_exclude`:
+            - Creates an index.html file in the subdirectory with a basic HTML structure.
+            - Generates a specified number of dummy HTML files in the subdirectory, each containing a random link to another dummy file.
+            - Prints a message indicating the successful creation of each HTML file.
+        4. Creates additional dummy HTML files in the script directory (specified by the `directory` argument), each containing a random link to another dummy file.
+        5. Prints a message indicating the successful creation of all HTML files.
+
+        Note: The content of the generated HTML files consists of a basic HTML structure with a header and body.
+        Each dummy file includes a link to two randomly chosen dummy files, facilitating testing scenarios.
+
+        Example usage:
+            create_dummy_html_files()
         """
         all_dummy_files = []
         # Create an index.html file in the current directory
@@ -184,7 +248,33 @@ class MMORPDND:
 
     def create_index_files(self, directory=global_vars.root_dir):
         """
-        This will create index files for all subdirectories.
+        Creates index files for all subdirectories within the specified directory.
+
+        Args:
+            directory (str): The directory path to start creating index files from. Defaults to global_vars.root_dir.
+
+        Returns:
+            None.
+
+        Raises:
+            None.
+
+        This method traverses through all subdirectories and files starting from the specified directory and creates an
+        index file named "index.html" in each directory that doesn't already have one.
+
+        The method performs the following steps:
+        1. Loop through all directories and files using `os.walk` starting from the specified directory.
+        2. Check if an index file named "index.html" already exists in the current directory. If so, skip that directory.
+        3. Check if the current directory matches any of the excluded directories defined in `global_vars.directories_to_exclude`.
+           If so, skip that directory.
+        4. Create an index.html file in the current directory.
+        5. Write the HTML content to the index.html file, including the directory name in the title and header.
+        6. Print a message indicating the creation of the index file.
+
+        Note: The index.html file created contains a basic HTML structure with the title and header set to "Index of [directory_name]".
+
+        Example usage:
+            create_index_files()
         """
         # Loop through all directories and files starting from the specified directory.
         for root, dirnames, filenames in os.walk(directory):
@@ -207,9 +297,32 @@ class MMORPDND:
 
     def update_index_files(self):
         """
-        This will update all index files to include links to the other files in that directory.
-        """
+        Updates all index files in the directory and subdirectories to include links to other files in the same directory.
 
+        Returns:
+            None.
+
+        Raises:
+            None.
+
+        This method performs the following steps:
+        1. Prints a message indicating that index files are being updated.
+        2. Retrieves a list of all HTML index files in the current directory and subdirectories, excluding any directories listed in `global_vars.directories_to_exclude`.
+        3. For each index file found:
+            - Reads the file data.
+            - Identifies the HTML files present in the same directory as the current index file.
+            - If the index links div section does not exist in the file, it adds the div section just before the closing </body> tag.
+            - Updates the index links by generating HTML code for each HTML file in the directory (excluding the index.html file) and appending it to the index links div.
+            - Replaces the old index links section in the file with the updated index links div.
+            - Writes the updated file data back to the file.
+            - Prints a message indicating that the index file has been updated.
+        4. Prints a message indicating that all index.html files have been updated.
+
+        Note: The method relies on regular expressions for searching and updating the index links section in each index file.
+
+        Example usage:
+            update_index_files()
+        """
         print("Updating index files...")
 
         # Get list of all HTML index files in directory and subdirectories
@@ -270,7 +383,37 @@ class MMORPDND:
 
     def update_headers(self, directory=global_vars.root_dir):
         """
-        This will update the headers of the html files to match the template.
+        Updates the headers of HTML files in the specified directory and its subdirectories to match a predefined template.
+
+        Args:
+            directory (str): The directory path to update the HTML files in. Defaults to global_vars.root_dir.
+
+        Returns:
+            None.
+
+        Raises:
+            None.
+
+        This method performs the following steps:
+        1. Loop through all HTML files in the specified directory and its subdirectories.
+        2. For each HTML file found that does not contain "Template" in its filename:
+            - Read the contents of the HTML file.
+            - Check if the file is in the list of directories to exclude.
+            - Read the contents of the header template file.
+            - Replace the header section in the HTML file with the contents of the template.
+            - Generate a title based on the filename and replace the title section in the HTML file.
+            - Determine the relative path to the CSS file.
+            - Calculate the number of subdirectories between the HTML file and the CSS file.
+            - Create the correct link path for the CSS file.
+            - Replace the placeholder in the HTML file with the link to the CSS file.
+            - Overwrite the HTML file with the updated contents.
+            - Print a progress update indicating the file that has been updated.
+        3. Print a message indicating that the headers and CSS have been updated in all relevant HTML files.
+
+        Note: The method relies on regular expressions for pattern matching and modification.
+
+        Example usage:
+            update_headers()
         """
         # Loop through all HTML files in the current directory and its subdirectories
         for root, dirnames, filenames in os.walk(directory):
@@ -320,7 +463,39 @@ class MMORPDND:
 
     def update_navigation(self, directory=global_vars.root_dir):
         """
-        This will update the navigation block of the html files to match the template.
+        Updates the navigation block of HTML files in the specified directory and its subdirectories to match a predefined template.
+
+        Args:
+            directory (str): The directory path to update the HTML files in. Defaults to global_vars.root_dir.
+
+        Returns:
+            None.
+
+        Raises:
+            None.
+
+        This method performs the following steps:
+        1. Loop through all HTML files in the specified directory and its subdirectories.
+        2. For each HTML file found that does not contain "Template" in its filename:
+            - Read the contents of the HTML file.
+            - Check if the file is in the list of directories to exclude.
+            - Print a progress message indicating the file being processed.
+            - Read the contents of the navigation template file.
+            - Find the navigation block in the original HTML file using a regular expression.
+            - If a navigation block is found:
+                - Replace the navigation block in the HTML file with the contents of the template.
+                - Write the modified HTML back to the file.
+                - Print a message indicating that the navigation block has been replaced.
+            - If no navigation block is found:
+                - Print a message indicating that the navigation block was not found.
+                - Insert the navigation contents at the start of the body tag in the HTML file.
+                - Overwrite the file with the updated contents.
+                - Print a message indicating that the navigation contents have been inserted.
+
+        Note: The method relies on regular expressions for pattern matching and modification.
+
+        Example usage:
+            update_navigation()
         """
         # loop through all files in directory and subdirectories
         for root, dirnames, filenames in os.walk(directory):
@@ -371,8 +546,36 @@ class MMORPDND:
 
     def beautify_files(self, directory=global_vars.root_dir):
         """
+        Beautifies HTML and CSS files in the specified directory and its subdirectories.
 
-        :return:
+        Args:
+            directory (str): The directory path to beautify the files in. Defaults to global_vars.root_dir.
+
+        Returns:
+            None.
+
+        Raises:
+            None.
+
+        This method performs the following steps:
+        1. Modifies the directories_to_exclude list to include template and CSS files.
+        2. Loops through all files and subdirectories in the specified directory.
+        3. For each HTML or CSS file found (excluding those in the modified directories_to_exclude list):
+            - Constructs the file path.
+            - Checks if the file is an HTML or CSS file, and skips it if not.
+            - Reads the contents of the file.
+            - If the file is an HTML file:
+                - Uses BeautifulSoup to parse the HTML and prettify it.
+            - If the file is a CSS file:
+                - Uses cssbeautifier to prettify the CSS code.
+            - Writes the prettified code back to the file.
+            - Prints a message indicating that the file has been prettified.
+
+        Note: The method relies on BeautifulSoup for HTML parsing and prettifying, and cssbeautifier for CSS prettifying.
+
+        Example usage:
+            navigator = Navigator()
+            navigator.beautify_files()
         """
         # Modify our exclude list to include template and css files.
         modified_directories_to_exclude = global_vars.directories_to_exclude[:]
@@ -443,13 +646,15 @@ class MMORPDND:
                     })
         return html_files
 
-    def get_relative_path(self, from_file, to_file):
-        return os.path.relpath(to_file, os.path.dirname(from_file))
-
     def update_html_links(self, directory=global_vars.root_dir):
         """
-        This will update the links in the various html files to link to the appropriate file.
-        :return:
+        Update the links in the various HTML files to link to the appropriate file.
+
+        Args:
+            directory (str): The directory to search for HTML files. Defaults to global_vars.root_dir.
+
+        Returns:
+            None
         """
         html_files = self.find_all_html_files(directory)
         # Search the body text of each HTML file for the search strings
@@ -475,6 +680,15 @@ class MMORPDND:
 
                     # Define the patterns to search for.
                     patterns = []
+                    # Append a regular expression pattern to the `patterns` list
+                    # The pattern matches the exact word `search_string` as a standalone word, avoiding matches within HTML tags or attributes
+                    # The `(?ix)` flags enable case-insensitive and verbose mode for the regular expression
+                    # The `(?<![-/">])` negative lookbehind ensures that the word is not preceded by certain characters (-, /, ", or >)
+                    # The `(?<!>)` negative lookbehind ensures that the word is not preceded by the > character (to exclude matches within HTML tags)
+                    # The `\b` word boundary markers ensure that the word is not part of a larger word
+                    # The `re.escape(search_string)` escapes any special characters in the search_string to treat it literally
+                    # The `(?<![-/.])` negative lookbehind ensures that the word is not preceded by certain characters (-, /, or .) to exclude matches within URLs or file paths
+                    # The `(?![^<]*<\/a>)` negative lookahead ensures that the word is not followed by </a> to exclude matches within HTML anchor tags
                     patterns.append(
                         r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string)))
                     patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
@@ -485,7 +699,7 @@ class MMORPDND:
                         search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
                         if search_string_match:
                             print(" -- {0} found in {1}".format(search_string, file_path))
-                            link_path = self.get_relative_path(file_path, search_word['full_path'])
+                            link_path = get_relative_path(file_path, search_word['full_path'])
 
                             # Replace the search string with the new string
                             new_string = "<a href=\"{0}\">{1}</a>".format(link_path, search_string)
@@ -510,12 +724,13 @@ class MMORPDND_GUI:
     def __init__(self):
         """
         Initialization method.
+        Creates and configures the GUI window, sets up menu bar, and defines button styles.
         """
         self.mmorpdnd = MMORPDND()
         self.gui = tk.Tk()
         self.gui.title("MMORPDND")
-        self.gui.geometry("300x470")        
-        
+        self.gui.geometry("300x470")
+
         # set the background color to black
         self.gui.configure(bg="black")
 
@@ -523,7 +738,7 @@ class MMORPDND_GUI:
         icon = PhotoImage(file='{}/mmorpdnd.png'.format(global_vars.root_dir))
         # Set icon image
         self.gui.tk.call('wm', 'iconphoto', self.gui._w, icon)
-           
+
         # Create the menu bar
         menubar = tk.Menu(self.gui)
         # Create a file menu and add it to the menu bar   
@@ -567,7 +782,7 @@ class MMORPDND_GUI:
         update_navigation_button.pack(pady=5)
 
         update_html_links_button = tk.Button(self.gui, text="Update Links", command=self.update_html_links,
-                                          **blue_button_style)
+                                             **blue_button_style)
         update_html_links_button.pack(pady=5)
 
         beautify_files_button = tk.Button(self.gui, text="Beautify Files", command=self.beautify_files,
