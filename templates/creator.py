@@ -529,6 +529,11 @@ class Variables:
         print(f"Character folder set to: {self.characters_folder}")
 
     def trash_file(self, file):
+        """
+        Move a file to the trash folder.
+        :param file: The file to move.
+        :return: None
+        """
         move_file(file, self.trash_dir)
 
     def reset(self):
@@ -633,7 +638,7 @@ class Creator:
         generate_word_button.pack(side=tk.LEFT, padx=10)
 
         # Create a button to open the file browser
-        generate_char_button = tk.Button(top_button_frame, text="Generate Char", command=self.generate_char)
+        generate_char_button = tk.Button(top_button_frame, text="Generate Char", command=self.generate_chars)
         generate_char_button.pack(side=tk.LEFT, padx=10)
 
         # Create an npc checkbox
@@ -694,6 +699,16 @@ class Creator:
         test_button.config(state="disabled")
 
     def create_page(self):
+        """
+        Create an HTML page based on the input file.
+
+        Reads the input file specified by global_vars.current_file and extracts the content to generate an HTML page.
+        The input file should have a '.input' extension.
+        The output HTML file is created in the specified destination folder or the current directory if not specified.
+
+        Returns:
+            None
+        """
         self.update_input_file()
 
         if not global_vars.current_file.endswith(".input"):
@@ -784,17 +799,72 @@ class Creator:
 
         global_vars.set_character_folder(npc)
 
-    def generate_char(self):
+    def generate_chars(self):
+        """
+        Generate character files for a file or each file within a directory.
 
+        This method checks if the current file (global_vars.current_file) is a directory.
+        If it is a file, it calls the generate_char() method for that file.
+        If it is a directory, it iterates through each file within the directory and calls the generate_char() method
+        to generate a character file for each individual file with the .char extension.
+
+        Returns:
+            None
+        """
         self.update_input_file()
 
-        if not global_vars.current_file.endswith(".char"):
-            self.output_text(f"Wrong input file type: {global_vars.current_file}")
+        if os.path.isfile(global_vars.current_file):
+            self.generate_char(global_vars.current_file)
+        elif not os.path.isdir(global_vars.current_file):
+            # If the current file is not a file or directory, display an error message and return.
+            self.output_text(f"Error: {global_vars.current_file} is not a directory.")
+            return
+
+        directory = global_vars.current_file
+        for file_name in os.listdir(directory):
+            file_path = os.path.join(directory, file_name)
+            if os.path.isfile(file_path) and file_path.endswith('.char'):
+                # Call generate_char() for each file with the .char extension.
+                self.generate_char(file_path)
+
+        self.output_text(f"Character generation completed for all files in the directory: {directory}.")
+
+    def generate_char(self, file=global_vars.current_file):
+        """
+        Generate a character file based on the provided input file.
+
+        This method updates the input file, checks if it has the correct file type (.char),
+        generates character statistics and fields if they are not defined, replaces the fields
+        in the template file with the character information, and writes the new character file.
+
+        The process involves the following steps:
+        1. Verifies if the input file has the correct file type (.char). If not, it displays an error message and exits.
+        2. Retrieves the character fields from the input file.
+        3. Determines the character class and level.
+        4. If any fields are missing, generates default values for certain attributes and displays them.
+        5. Calculates the character's hit points (hp) if not already defined.
+        6. Generates the character file path and filename based on the character's name.
+        7. Reads the character template file.
+        8. Processes and replaces the fields in the template with the character information.
+           - Replaces general character fields.
+           - Calculates and inserts modifier values for certain attributes.
+           - Handles proficiencies and adds proficiency bonus to corresponding skills.
+           - Populates information, notes, and image blocks.
+           - Updates abilities and equipment lists.
+        9. Writes the new character file at the specified filepath.
+        10. If the option is selected, moves the input file to the trash.
+
+        Returns:
+            None
+        """
+
+        if not file.endswith(".char"):
+            self.output_text(f"Wrong input file type: {file}")
             self.output_text(f"File should end with '.char'")
             return
 
         # Define the fields to replace in the template file
-        char_fields = get_character_fields(global_vars.current_file)
+        char_fields = get_character_fields(file)
 
         char_class = char_fields['class']
 
@@ -946,7 +1016,7 @@ class Creator:
 
         # move the files to the trash if this option is selected.
         if self.trash_checkbox_value.get():
-            global_vars.trash_file(global_vars.current_file)
+            global_vars.trash_file(file)
 
     def output_text(self, text):
         print(text)
