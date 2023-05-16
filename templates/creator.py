@@ -656,7 +656,7 @@ class Creator:
         trash_checkbox.pack(side=tk.LEFT, padx=1)
 
         # Create a button to open the file browser
-        create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_page)
+        create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_pages)
         create_page_button.pack(side=tk.LEFT, padx=10)
 
         # Create a button to open the file browser
@@ -698,7 +698,37 @@ class Creator:
         self.yes_button.config(state="disabled")
         test_button.config(state="disabled")
 
-    def create_page(self):
+    def create_pages(self):
+        """
+        Generate page files for a file or each file within a directory.
+
+        This method checks if the current file (global_vars.current_file) is a directory.
+        If it is a file, it calls the create_page() method for that file.
+        If it is a directory, it iterates through each file within the directory and calls the create_page() method
+        to generate a file for each individual file.
+
+        Returns:
+            None
+        """
+        self.update_input_file()
+
+        if os.path.isfile(global_vars.current_file):
+            self.create_page(global_vars.current_file)
+        elif not os.path.isdir(global_vars.current_file):
+            # If the current file is not a file or directory, display an error message and return.
+            self.output_text(f"Error: {global_vars.current_file} is not a directory.")
+            return
+
+        directory = global_vars.current_file
+        for file_name in os.listdir(directory):
+            file_path = os.path.join(directory, file_name)
+            if os.path.isfile(file_path):
+                # Call generate_char() for each file with the .char extension.
+                self.create_page(file_path)
+
+        self.output_text(f"Character generation completed for all files in the directory: {directory}.")
+
+    def create_page(self, file=global_vars.current_file):
         """
         Create an HTML page based on the input file.
 
@@ -709,15 +739,13 @@ class Creator:
         Returns:
             None
         """
-        self.update_input_file()
-
-        if not global_vars.current_file.endswith(".input"):
-            self.output_text(f"Wrong input file type: {global_vars.current_file}")
+        if not file.endswith(".input"):
+            self.output_text(f"Wrong input file type: {file}")
             self.output_text(f"File should end with '.input'")
             return
 
         # read input file
-        with open(global_vars.current_file, 'r') as f:
+        with open(file, 'r') as f:
             lines = f.readlines()
 
         folder = "."
@@ -743,7 +771,7 @@ class Creator:
 
         print(f"Output file folder set to: {global_vars.output_file_folder}")
 
-        output_fn = os.path.basename(global_vars.current_file).split('.')[0]
+        output_fn = os.path.basename(file).split('.')[0]
         output_file = global_vars.output_file_folder + "/" + output_fn + ".html"
         print(output_file)
 
@@ -777,7 +805,7 @@ class Creator:
 
         # move the files to the trash if this option is selected.
         if self.trash_checkbox_value.get():
-            global_vars.trash_file(global_vars.current_file)
+            global_vars.trash_file(file)
 
     def checkbox_changed(self):
         """
@@ -806,7 +834,7 @@ class Creator:
         This method checks if the current file (global_vars.current_file) is a directory.
         If it is a file, it calls the generate_char() method for that file.
         If it is a directory, it iterates through each file within the directory and calls the generate_char() method
-        to generate a character file for each individual file with the .char extension.
+        to generate a character file for each individual file.
 
         Returns:
             None
@@ -823,7 +851,7 @@ class Creator:
         directory = global_vars.current_file
         for file_name in os.listdir(directory):
             file_path = os.path.join(directory, file_name)
-            if os.path.isfile(file_path) and file_path.endswith('.char'):
+            if os.path.isfile(file_path):
                 # Call generate_char() for each file with the .char extension.
                 self.generate_char(file_path)
 
@@ -857,7 +885,6 @@ class Creator:
         Returns:
             None
         """
-
         if not file.endswith(".char"):
             self.output_text(f"Wrong input file type: {file}")
             self.output_text(f"File should end with '.char'")
