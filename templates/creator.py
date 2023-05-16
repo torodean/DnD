@@ -10,6 +10,23 @@ import json
 from bs4 import BeautifulSoup
 
 
+def remove_numbers_at_start(string):
+    """
+    Remove numbers at the start of a string.
+
+    Args:
+        string (str): The input string.
+
+    Returns:
+        str: The string with numbers removed from the start.
+    """
+    index = 0
+    while index < len(string) and string[index].isdigit():
+        index += 1
+
+    return string[index:]
+
+
 def append_to_file(file_path, string_to_append):
     """
     Append a string to a file.
@@ -592,6 +609,28 @@ def get_character_fields(file):
     return char_fields
 
 
+def create_html_list(values):
+    """
+    Create an HTML list from a string of comma-separated values.
+
+    Args:
+        values (str): The string of comma-separated values.
+
+    Returns:
+        str: The HTML list generated from the values.
+    """
+    items = values.split(",")  # Split the values by comma
+    html_list = "<ul>\n"  # Start the HTML list
+
+    for item in items:
+        item = item.strip()  # Remove leading/trailing whitespace
+        html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
+
+    html_list += "</ul>"  # Close the HTML list
+
+    return html_list
+
+
 class Creator:
     def __init__(self):
         self.last_user_input = None
@@ -714,19 +753,19 @@ class Creator:
 
         if os.path.isfile(global_vars.current_file):
             self.create_page(global_vars.current_file)
-        elif not os.path.isdir(global_vars.current_file):
+        elif os.path.isdir(global_vars.current_file):
+            directory = global_vars.current_file
+            for file_name in os.listdir(directory):
+                file_path = os.path.join(directory, file_name)
+                if os.path.isfile(file_path):
+                    # Call generate_char() for each file with the .char extension.
+                    self.create_page(file_path)
+
+            self.output_text(f"Character generation completed for all files in the directory: {directory}.")
+        else:
             # If the current file is not a file or directory, display an error message and return.
-            self.output_text(f"Error: {global_vars.current_file} is not a directory.")
+            self.output_text(f"Error: {global_vars.current_file} is not a file or directory.")
             return
-
-        directory = global_vars.current_file
-        for file_name in os.listdir(directory):
-            file_path = os.path.join(directory, file_name)
-            if os.path.isfile(file_path):
-                # Call generate_char() for each file with the .char extension.
-                self.create_page(file_path)
-
-        self.output_text(f"Character generation completed for all files in the directory: {directory}.")
 
     def create_page(self, file=global_vars.current_file):
         """
@@ -790,10 +829,15 @@ class Creator:
                 # parse line
                 variable_class, value = line.split('=')
                 variable, class_name = variable_class.split('[')
-                class_name = class_name[0:-1]
+                class_name = class_name[0:-1].strip()
 
-                # create HTML element
-                html_element = f'<div class="{class_name}"><h2>{variable}</h2><p>{value}</p></div>'
+                if class_name == "dnd-list" and "," in value:
+                    # create HTML list element
+                    html_list = create_html_list(value)
+                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
+                else:
+                    # create generic HTML element
+                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
 
                 # write HTML element to file
                 f.write(html_element)
@@ -1031,7 +1075,7 @@ class Creator:
             equipment_output += "<li><strong>"
             equipment_output += equip.strip()
             equipment_output += ":</strong>["
-            equipment_output += equip.strip()
+            equipment_output += remove_numbers_at_start(equip.strip())
             equipment_output += " description]</li>"
         template = template.replace("[equipment list]", equipment_output)
 
