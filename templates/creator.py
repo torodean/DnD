@@ -630,6 +630,52 @@ def create_html_list(values):
 
     return html_list
 
+def create_html_table(input_line):
+    """
+    Convert a single line input to an HTML table format.
+
+    Args:
+        input_line (str): Single line input containing comma-separated values.
+
+    Returns:
+        str: HTML table structure representing the input values.
+
+    Example:
+        For a table of the form:
+
+        -----------
+        | a1 | a2 |
+        |---------|
+        | b1 | b2 |
+        |---------|
+        | c1 | c2 |
+        -----------
+
+        input: "2,a1,a2,b1,b2,c1,c2"
+        output: '<table><tr><td>Value 1</td><td>Value 2</td></tr><tr><td>Value 3</td><td>Value 4</td></tr><tr><td>Value 5</td><td>Value 6</td></tr></table>'
+
+    """
+    # Split the single line by commas
+    values = input_line.split(',')
+
+    # Extract the number of columns
+    num_columns = int(values[0])
+
+    # Prepare the HTML table structure
+    html_table = '<table>'
+
+    # Iterate over the values and construct the table rows
+    num_rows = int((len(values) - 1) / num_columns)
+    for i in range(0, num_rows):
+        html_table += '<tr>'
+        for j in range(num_columns):
+            html_table += f'<td>{values[i * num_columns + j + 1].strip()}</td>'
+        html_table += '</tr>'
+
+    # Close the HTML table structure
+    html_table += '</table>'
+
+    return html_table
 
 class Creator:
     def __init__(self):
@@ -834,6 +880,9 @@ class Creator:
                 if class_name == "dnd-list" and "," in value:
                     # create HTML list element
                     html_list = create_html_list(value)
+                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
+                elif class_name == "dnd-table" and "," in value:
+                    html_table = create_html_table(value)
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
                 else:
                     # create generic HTML element
