@@ -329,7 +329,6 @@ class MMORPDND:
         for root, dirnames, filenames in os.walk("."):
             for file in filenames:
 
-                print(global_vars.directories_to_exclude)
                 # Check if we are looking at a file in our exclude list.
                 if any(exclude in root for exclude in global_vars.directories_to_exclude):
                     continue
@@ -339,6 +338,12 @@ class MMORPDND:
 
         # Loop through each index file found
         for file in global_vars.all_index_files:
+        
+            # check if the file still exists.
+            if not os.path.isfile(file):
+                print(f"File no longer exists: {file}")
+                continue
+                
             with open(file, 'r+') as f:
                 file_data = f.read()
 

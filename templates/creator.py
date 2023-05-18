@@ -7,6 +7,7 @@ import re
 import shutil
 import random
 import json
+import requests
 from bs4 import BeautifulSoup
 
 
@@ -676,6 +677,87 @@ def create_html_table(input_line):
     html_table += '</table>'
 
     return html_table
+    
+
+def download_image(url, file_path):
+    """
+    Download an image from a URL and save it to a file path.
+
+    Args:
+        url (str): The URL of the image to download.
+        file_path (str): The file path to save the downloaded image.
+
+    Returns:
+        bool: True if the image was successfully downloaded and saved, False otherwise.
+    """
+    try:
+        # Send a GET request to the URL
+        response = requests.get(url)
+
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Create the directory if it doesn't exist
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+            # Save the image to the specified file path
+            with open(file_path, 'wb') as file:
+                file.write(response.content)
+            
+            print(f"Image downloaded and saved to: {file_path}")
+            return True
+        else:
+            print(f"Failed to download image. Status code: {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"An error occurred while downloading the image: {str(e)}")
+        return False
+
+def create_html_img(input_line):
+    """
+    Create an HTML block for an image section.
+
+    Args:
+        input_line (str): The input string of the form "image_file, image_source, caption".
+
+    Returns:
+        str: The HTML block representing the image section.
+
+    Notes:
+        - If the image file already exists, it will be used. Otherwise, the image will be downloaded from the provided image source URL.
+        - The image file, image source URL, and caption are extracted from the input line.
+
+    Example:
+        input_line = "image.jpg, https://www.example.com/image.jpg, A beautiful sunset"
+        html_block = create_html_img(input_line)
+
+    """
+    # Split the image data string by comma
+    input_line = input_line.split(',')
+
+    # Extract the image file, image source, and caption
+    image_file = input_line[0].strip()
+    image_source = input_line[1].strip()
+    image_caption = input_line[2].strip()
+    
+    if not os.path.isfile(image_file):
+        print(f"Image NOT found: {image_file}.")
+        if not download_image(image_source, image_file):
+            print(f"No image found: image section will be incomplete.")
+    else:
+        print(f"Image found: {image_file}.")
+
+    # Generate the HTML block
+    html_block = f'<div class="dnd-image-info">'
+    html_block += f'<img src="{image_file}" alt="Image">'
+    html_block += f'<div class="dnd-image-source">'
+    html_block += f'Source: <a href="{image_source}">{image_source}</a>'
+    html_block += f'</div>'
+    html_block += f'<div class="dnd-image-caption">'
+    html_block += f'Caption: {image_caption}'
+    html_block += f'</div></div>'
+
+    return html_block
+    
 
 class Creator:
     def __init__(self):
@@ -857,6 +939,7 @@ class Creator:
         print(f"Output file folder set to: {global_vars.output_file_folder}")
 
         output_fn = os.path.basename(file).split('.')[0]
+        output_images = []
         output_file = global_vars.output_file_folder + "/" + output_fn + ".html"
         print(output_file)
 
@@ -867,9 +950,9 @@ class Creator:
 
             # iterate over lines in input file
             for line in lines:
-                print(line)
-                # Skip the line with folder in it.
-                if "folder" in line:
+                print(line, end='')
+                # Skip the line with folder in it or a comment line.
+                if "folder" in line or line.startswith('#') or line.strip() == "":
                     continue
 
                 # parse line
@@ -878,14 +961,25 @@ class Creator:
                 class_name = class_name[0:-1].strip()
 
                 if class_name == "dnd-list" and "," in value:
-                    # create HTML list element
+                    # Create HTML list element.
                     html_list = create_html_list(value)
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
+                    
                 elif class_name == "dnd-table" and "," in value:
+                    # Create HTML table element.
                     html_table = create_html_table(value)
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
+                    
+                elif class_name == "dnd-image" and "," in value:
+                    # Create HTML image element.
+                    html_img = create_html_img(value)
+                    image_name = value.split(',')[0].strip()
+                    output_images.append(image_name)
+                    print(f"Processing {image_name}.")
+                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
+                    
                 else:
-                    # create generic HTML element
+                    # Create generic HTML element.
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
 
                 html_element += '<hr>'
@@ -897,6 +991,17 @@ class Creator:
             f.write('</body>\n</html>')
 
             print(f'HTML file created: {output_file}')
+            
+        # copy images to correct location.
+        if len(output_images) > 0:
+            for image in output_images:
+                output_image_dir = global_vars.output_file_folder + "/img"
+                copy_file_to_directory(image, output_image_dir)
+                
+                # trash image if needed.
+                if self.trash_checkbox_value.get():
+                    global_vars.trash_file(image)
+                
 
         # move the files to the trash if this option is selected.
         if self.trash_checkbox_value.get():

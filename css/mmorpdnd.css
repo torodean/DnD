@@ -229,7 +229,7 @@ footer a:hover {
 }
 
 .dnd-list ul {
-    list-style: none;
+    list-style: circle;
     padding: 0;
     margin: 0;
 }
@@ -260,6 +260,50 @@ footer a:hover {
 .dnd-info li {
     margin-bottom: 10px;
     font-size: 16px;
+}
+
+.dnd-image {
+    max-width: 500px;
+    /* Adjust the max-width as needed */
+    padding: 10px;
+    /* Add some padding for spacing */
+
+}
+
+.dnd-image h3 {
+    font-size: 1.4rem;
+    color: #00a8ff;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.dnd-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    /* Center the image horizontally */
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.dnd-image-info {
+    margin-top: 10px;
+    /* Add some space between the image and the info section */
+}
+
+.dnd-image-source a {
+    color: #00a8ff;
+    /* Customize the link color */
+    text-decoration: none;
+    /* Remove underline */
+}
+
+.dnd-image-caption {
+    font-style: italic;
+    /* Italicize the caption text */
+    margin-top: 5px;
+    /* Add some space below the image caption */
 }
 
 .container {
