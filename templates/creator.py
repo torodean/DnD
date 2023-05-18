@@ -883,10 +883,12 @@ class Creator:
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
                 elif class_name == "dnd-table" and "," in value:
                     html_table = create_html_table(value)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
+                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
                 else:
                     # create generic HTML element
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
+
+                html_element += '<hr>'
 
                 # write HTML element to file
                 f.write(html_element)
