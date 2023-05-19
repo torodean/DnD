@@ -305,6 +305,41 @@ class MMORPDND:
                 f.write(f"<h1>Index of {directory_name}</h1>\n</body>\n</html>\n")
             print(f"Created index file at {index_file_path}")
 
+    def alphabetize_links(self, list_of_links):
+        """
+        Alphabetizes the items in a list of links.
+
+        Args:
+            link_list (str): A multiline string representing a list of links in the format
+                "<li><a href="url">link_text</a></li>". Each link should be on a separate line.
+
+        Returns:
+            str: A multiline string representing the alphabetized list of links.
+
+        Example:
+            links = '''<li><a href="valen_shadowborn.html">valen_shadowborn</a></li>
+                       <li><a href="kaelar_stormcaller.html">kaelar_stormcaller</a></li>
+                       <li><a href="thorne_ironfist.html">thorne_ironfist</a></li>
+                       <li><a href="foobar.html">foobar</a></li>
+                       <li><a href="aria_thistlewood.html">aria_thistlewood</a></li>
+                       <li><a href="stoneshaper_golem.html">stoneshaper_golem</a></li>
+                       <li><a href="elara_nightshade.html">elara_nightshade</a></li>'''
+
+            sorted_list = alphabetize_links(links)
+
+            print(sorted_list)
+        """
+        link_pattern = r'<li><a href="([^"]+)">([^<]+)</a></li>'
+        matches = re.findall(link_pattern, list_of_links)
+
+        sorted_links = sorted(matches, key=lambda x: x[1])
+
+        sorted_list = ""
+        for link in sorted_links:
+            sorted_list += f'<li><a href="{link[0]}">{link[1]}</a></li>\n'
+
+        return sorted_list
+    
     def update_index_files(self):
         """
         Updates all index files in the directory and subdirectories to include links to other files in the same directory.
@@ -384,6 +419,8 @@ class MMORPDND:
                         link_text = html_file.replace('.html', '')
                         link = f'<li><a href="{html_file}">{link_text}</a></li>'
                         index_links += f'{link}\n'
+                        
+                index_links = self.alphabetize_links(index_links)
 
                 # Replace index links in file
                 updated_data = re.sub(index_links_pattern, index_links_div + '\n' + index_links + '</ul></div>',
