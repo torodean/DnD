@@ -37,18 +37,23 @@ class MMORPDND_VARS:
                     "dungeons": {},
                     "cities": {},
                     "landmarks": {},
-                    "towns": {}
+                    "towns": {},
+                    "maps": {},
+                    "planes": {}
                 },
                 "items": {
                     "consumables": {
                         "potions": {},
                         "food": {},
-                        "drink": {}
+                        "drink": {},
+                        "herbs": {}
                     },
                     "magic": {},
                     "weapons": {},
                     "armor": {},
-                    "trinkets": {}
+                    "trinkets": {},
+                    "quest": {},
+                    "treasure": {}
                 },
                 "notes": {},
                 "creatures": {
@@ -61,9 +66,13 @@ class MMORPDND_VARS:
                     "races": {},
                     "classes": {},
                     "backgrounds": {},
-                    "deities": {}
+                    "deities": {},
+                    "myths": {},
+                    "languages": {}
                 },
+                "puzzles": {},
                 "quests": {},
+                "encounters": {},
                 "characters": {
                     "player": {},
                     "non-player": {}
@@ -79,7 +88,8 @@ class MMORPDND_VARS:
                     "level_7": {},
                     "level_8": {},
                     "level_9": {},
-                }
+                },
+                "timeline": {}
             }
         }
 
