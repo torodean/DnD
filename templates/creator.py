@@ -25,7 +25,7 @@ def remove_numbers_at_start(string):
     while index < len(string) and string[index].isdigit():
         index += 1
 
-    return string[index:]
+    return string[index:].strip()
 
 
 def append_to_file(file_path, string_to_append):
@@ -304,10 +304,14 @@ def copy_file_to_directory(file_path, directory_path):
         print(f"Directory {directory_path} does not exist. Creating directory...")
         os.makedirs(directory_path)
 
-    # Copy the file to the directory
-    print(f"Copying {file_path} to {directory_path}")
-    shutil.copy(file_path, directory_path)
-    print(f"File {file_path} copied to {directory_path}")
+    new_file = directory_path + "/" + file_path.split('/')[-1].strip()
+    if not os.path.isfile(new_file):
+        # Copy the file to the directory
+        print(f"Copying {file_path} to {directory_path}")
+        shutil.copy(file_path, directory_path)
+        print(f"File {file_path} copied to {directory_path}")
+    else:
+        print(f"file {new_file} already exists!")
 
 
 def print_prob_matrix(prob_matrix):
@@ -525,8 +529,8 @@ class Variables:
         Example usage:
             set_character_folder(npc=True)
         """
+        self.characters_folder = '.'
         for dirpath, dirnames, filenames in os.walk("../"):
-
             # Check if we are looking at a file in our exclude list.
             if any(exclude in dirnames for exclude in self.directories_to_exclude):
                 continue
@@ -534,6 +538,7 @@ class Variables:
             if any(exclude in dirpath for exclude in self.directories_to_exclude):
                 continue
 
+            print(dirnames)
             if 'characters' in dirnames:
                 if not npc:
                     self.characters_folder = os.path.join(dirpath, 'characters/player')
@@ -541,8 +546,6 @@ class Variables:
                 else:
                     self.characters_folder = os.path.join(dirpath, 'characters/non-player')
                     break
-            else:
-                self.characters_folder = '.'  # used for testing mainly
 
         print(f"Character folder set to: {self.characters_folder}")
 
@@ -1043,6 +1046,7 @@ class Creator:
 
         if os.path.isfile(global_vars.current_file):
             self.generate_char(global_vars.current_file)
+            return
         elif not os.path.isdir(global_vars.current_file):
             # If the current file is not a file or directory, display an error message and return.
             self.output_text(f"Error: {global_vars.current_file} is not a directory.")
@@ -1214,25 +1218,39 @@ class Creator:
             print(f"An error occurred: {e}")
 
         # Update abilities
-        abilities = char_fields['abilities'].split(',')
+        abilities = char_fields['abilities'].split(';')
         abilities_output = ""
         for ability in abilities:
             abilities_output += "<li><strong>"
-            abilities_output += ability.strip()
-            abilities_output += ":</strong>["
-            abilities_output += ability.strip()
-            abilities_output += " description]</li>"
+            if ":" in ability:
+                abilities_output += ability.split(':')[0].strip()
+                ability_desc = ability.split(':')[1].strip()
+                abilities_output += ":</strong>"
+                abilities_output += ability_desc
+                abilities_output += "</li>"
+            else:
+                abilities_output += ability.strip()
+                abilities_output += ":</strong>["
+                abilities_output += ability.strip()
+                abilities_output += " description]</li>"
         template = template.replace("[abilities list]", abilities_output)
 
         # Update equipment
-        equipment = char_fields['equipment'].split(',')
+        equipment = char_fields['equipment'].split(';')
         equipment_output = ""
         for equip in equipment:
             equipment_output += "<li><strong>"
-            equipment_output += equip.strip()
-            equipment_output += ":</strong>["
-            equipment_output += remove_numbers_at_start(equip.strip())
-            equipment_output += " description]</li>"
+            if ":" in equip:
+                abilities_output += equip.split(':')[0].strip()
+                equipment_desc = equip.split(':')[1].strip()
+                equipment_output += ":</strong>"
+                equipment_output += equipment_desc
+                equipment_output += "</li>"
+            else:
+                equipment_output += equip.strip()
+                equipment_output += ":</strong>["
+                equipment_output += remove_numbers_at_start(equip.strip())
+                equipment_output += " description]</li>"
         template = template.replace("[equipment list]", equipment_output)
 
         # Write the new character file
