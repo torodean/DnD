@@ -1,4 +1,4 @@
-folder = characters/player
+folder = characters/non-player
 name = Aria Thistlewood
 ac = 12 (leather armor)
 hp = 22
