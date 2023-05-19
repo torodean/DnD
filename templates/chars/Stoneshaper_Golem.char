@@ -1,3 +1,4 @@
+folder = creatures/monsters
 name = Stoneshaper Golem
 ac = 18 (natural armor)
 hp = 200 (20d10 + 100)
