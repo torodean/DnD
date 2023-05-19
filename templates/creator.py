@@ -760,8 +760,8 @@ class Creator:
         create_page_button.pack(side=tk.LEFT, padx=10)
         
         # Create a trash checkbox
-        self.trash_checkbox_value = tk.BooleanVar(value=False)
-        self.trash_checkbox_value.set(False)  # Set the variable to False
+        self.trash_checkbox_value = tk.BooleanVar(value=True)
+        self.trash_checkbox_value.set(True)  # Set the variable to False
         trash_checkbox = tk.Checkbutton(top_button_frame, text="Trash", variable=self.trash_checkbox_value,
                                         command=self.checkbox_changed)
         trash_checkbox.pack(side=tk.LEFT, padx=1)
