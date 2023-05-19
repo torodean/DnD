@@ -486,68 +486,15 @@ class Variables:
         self.current_prob_matrix = None
         self.current_file = ""
         self.current_list = []
-        self.characters_folder = ""
         self.output_file_folder = ""
         self.character_template_file = "characterTemplate.html"
 
         # Define directories to exclude
         self.directories_to_exclude = ["templates", "css", ".git", ".idea"]
 
-        self.set_character_folder(True)
-
         # Define the root directory
         self.root_dir = os.getcwd()
         self.trash_dir = self.root_dir + "/trash"
-
-    def set_character_folder(self, npc=True):
-        """
-        Set the character folder path based on the presence of specific directories.
-
-        Args:
-            npc (bool, optional): Determines whether to set the folder for non-player characters (NPCs).
-                If False, the folder for player characters will be set. Default is True.
-
-        Returns:
-            None.
-
-        Raises:
-            None.
-
-        This method searches for specific directories within the project hierarchy to determine the
-        character folder path. It traverses through the directories using os.walk(), excluding any
-        directories specified in the `directories_to_exclude` list.
-
-        If the 'characters' directory is found, the character folder path is set accordingly, either to
-        the 'characters/player' directory if `npc` is False, or to the 'characters/non-player' directory
-        if `npc` is True.
-
-        If the 'characters' directory is not found, the character folder path is set to the current directory
-        (represented by '.').
-
-        The method also prints the final character folder path that has been set.
-
-        Example usage:
-            set_character_folder(npc=True)
-        """
-        self.characters_folder = '.'
-        for dirpath, dirnames, filenames in os.walk("../"):
-            # Check if we are looking at a file in our exclude list.
-            if any(exclude in dirnames for exclude in self.directories_to_exclude):
-                continue
-            # Check if we are looking at a file in our exclude list.
-            if any(exclude in dirpath for exclude in self.directories_to_exclude):
-                continue
-
-            print(dirnames)
-            if 'characters' in dirnames:
-                if not npc:
-                    self.characters_folder = os.path.join(dirpath, 'characters/player')
-                    break
-                else:
-                    self.characters_folder = os.path.join(dirpath, 'characters/non-player')
-                    break
-
-        print(f"Character folder set to: {self.characters_folder}")
 
     def trash_file(self, file):
         """
@@ -601,9 +548,6 @@ def get_character_fields(file):
         var = line.split('=')[0].strip().lower()
         val = line.split('=')[1].strip().lower()
         char_fields[var] = val
-
-    for field in char_fields:
-        print(field)
 
     # check to make sure class is defined.
     if "class" not in char_fields:
@@ -811,23 +755,16 @@ class Creator:
         generate_char_button = tk.Button(top_button_frame, text="Generate Char", command=self.generate_chars)
         generate_char_button.pack(side=tk.LEFT, padx=10)
 
-        # Create an npc checkbox
-        self.npc_checkbox_value = tk.BooleanVar(value=True)
-        self.npc_checkbox_value.set(True)  # Set the variable to True
-        npc_checkbox = tk.Checkbutton(top_button_frame, text="NPC", variable=self.npc_checkbox_value,
-                                      command=self.checkbox_changed)
-        npc_checkbox.pack(side=tk.LEFT, padx=1)
-
+        # Create a button to open the file browser
+        create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_pages)
+        create_page_button.pack(side=tk.LEFT, padx=10)
+        
         # Create a trash checkbox
         self.trash_checkbox_value = tk.BooleanVar(value=False)
         self.trash_checkbox_value.set(False)  # Set the variable to False
         trash_checkbox = tk.Checkbutton(top_button_frame, text="Trash", variable=self.trash_checkbox_value,
                                         command=self.checkbox_changed)
         trash_checkbox.pack(side=tk.LEFT, padx=1)
-
-        # Create a button to open the file browser
-        create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_pages)
-        create_page_button.pack(side=tk.LEFT, padx=10)
 
         # Create a button to open the file browser
         test_button = tk.Button(top_button_frame, text="Test Button", command=self.test)
@@ -944,7 +881,7 @@ class Creator:
         output_fn = os.path.basename(file).split('.')[0]
         output_images = []
         output_file = global_vars.output_file_folder + "/" + output_fn + ".html"
-        print(output_file)
+        print(f"Output file: {output_file}")
 
         # create HTML file
         with open(output_file, 'w') as f:
@@ -1012,23 +949,15 @@ class Creator:
 
     def checkbox_changed(self):
         """
-        This method is called when either the NPC or trash_files checkboxes are checked or unchecked.
+        This method is called when checkboxes are checked or unchecked.
         It retrieves the values of the checkboxes and prints a message indicating whether they are enabled or disabled.
-        If the NPC checkbox is enabled, it sets the character folder to the NPC folder using the `set_character_folder()` method in the `global_vars` module.
         """
-        npc = self.npc_checkbox_value.get()
         trash_files = self.trash_checkbox_value.get()
-        if npc:
-            print("NPC Checkbox enabled")
-        else:
-            print("NPC Checkbox disabled")
 
         if trash_files:
             print("trash_files Checkbox enabled")
         else:
             print("trash_files Checkbox disabled")
-
-        global_vars.set_character_folder(npc)
 
     def generate_chars(self):
         """
@@ -1096,6 +1025,31 @@ class Creator:
 
         # Define the fields to replace in the template file
         char_fields = get_character_fields(file)
+        
+        global_vars.output_file_folder = '.'  # used for testing mainly
+        
+        if "folder" in char_fields:
+            folder = char_fields['folder'].strip()
+            last_folder = folder.split('/')[-1]
+            print(last_folder)
+
+            print(f"Destination folder detected as {folder}")
+
+            for dirpath, dirnames, filenames in os.walk("../"):
+
+                # Check if we are looking at a file in our exclude list.
+                if any(exclude in dirnames for exclude in global_vars.directories_to_exclude):
+                    continue
+                # Check if we are looking at a file in our exclude list.
+                if any(exclude in dirpath for exclude in global_vars.directories_to_exclude):
+                    continue
+
+                print(f"dirpath: {dirpath}")
+                if folder in dirpath:
+                    global_vars.output_file_folder = dirpath + "/" + folder
+                    break
+
+            print(f"Output file folder set to: {global_vars.output_file_folder}")
 
         char_class = char_fields['class']
 
@@ -1120,7 +1074,7 @@ class Creator:
         # Generate the character file path
         char_name = char_fields['name']
         filename = f'{char_name.lower().replace(" ", "_")}.html'
-        filepath = os.path.join(global_vars.characters_folder, filename)
+        filepath = os.path.join(global_vars.output_file_folder, filename)
 
         # Read the template file and replace the fields with the character information
         with open(global_vars.character_template_file, 'r') as f:
@@ -1205,7 +1159,7 @@ class Creator:
 
         # Replace the image block.
         img_src = "img/" + char_fields['image']
-        img_dir = global_vars.characters_folder + "/img"
+        img_dir = global_vars.output_file_folder + "/img"
         img_desc = img_src.split('/')[1].split('.')[0] + "-image"
         template = template.replace("[image-description]", img_desc)
         template = template.replace("[image-url]", img_src)
