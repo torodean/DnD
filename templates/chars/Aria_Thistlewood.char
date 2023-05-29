@@ -1,5 +1,6 @@
 folder = characters/non-player
 name = Aria Thistlewood
+level = 2
 ac = 12 (leather armor)
 hp = 22
 size = medium
@@ -11,7 +12,6 @@ immunities = None
 senses = Normal vision
 languages = Common, Dwarvish
 image = ariathistlewood.jpg
-level = 2
 race = Human
 class = Ranger
 background = Hunter
