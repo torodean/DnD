@@ -567,7 +567,7 @@ def create_html_list(values):
     Returns:
         str: The HTML list generated from the values.
     """
-    items = values.split(",")  # Split the values by comma
+    items = values.split(";")  # Split the values by semi-colon
     html_list = "<ul>\n"  # Start the HTML list
 
     for item in items:
@@ -577,6 +577,7 @@ def create_html_list(values):
     html_list += "</ul>"  # Close the HTML list
 
     return html_list
+
 
 def create_html_table(input_line):
     """
@@ -603,8 +604,8 @@ def create_html_table(input_line):
         output: '<table><tr><td>Value 1</td><td>Value 2</td></tr><tr><td>Value 3</td><td>Value 4</td></tr><tr><td>Value 5</td><td>Value 6</td></tr></table>'
 
     """
-    # Split the single line by commas
-    values = input_line.split(',')
+    # Split the single line by semi-colon
+    values = input_line.split(';')
 
     # Extract the number of columns
     num_columns = int(values[0])
@@ -624,7 +625,7 @@ def create_html_table(input_line):
     html_table += '</table>'
 
     return html_table
-    
+
 
 def download_image(url, file_path):
     """
@@ -649,7 +650,7 @@ def download_image(url, file_path):
             # Save the image to the specified file path
             with open(file_path, 'wb') as file:
                 file.write(response.content)
-            
+
             print(f"Image downloaded and saved to: {file_path}")
             return True
         else:
@@ -658,6 +659,7 @@ def download_image(url, file_path):
     except Exception as e:
         print(f"An error occurred while downloading the image: {str(e)}")
         return False
+
 
 def create_html_img(input_line):
     """
@@ -674,18 +676,18 @@ def create_html_img(input_line):
         - The image file, image source URL, and caption are extracted from the input line.
 
     Example:
-        input_line = "image.jpg, https://www.example.com/image.jpg, A beautiful sunset"
+        input_line = "image.jpg; https://www.example.com/image.jpg; A beautiful sunset"
         html_block = create_html_img(input_line)
 
     """
-    # Split the image data string by comma
-    input_line = input_line.split(',')
+    # Split the image data string by semi-colon
+    input_line = input_line.split(';')
 
     # Extract the image file, image source, and caption
     image_file = input_line[0].strip()
     image_source = input_line[1].strip()
     image_caption = input_line[2].strip()
-    
+
     if not os.path.isfile(image_file):
         print(f"Image NOT found: {image_file}.")
         if not download_image(image_source, image_file):
@@ -704,7 +706,7 @@ def create_html_img(input_line):
     html_block += f'</div></div>'
 
     return html_block
-    
+
 
 class Creator:
     def __init__(self):
@@ -758,7 +760,7 @@ class Creator:
         # Create a button to open the file browser
         create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_pages)
         create_page_button.pack(side=tk.LEFT, padx=10)
-        
+
         # Create a trash checkbox
         self.trash_checkbox_value = tk.BooleanVar(value=True)
         self.trash_checkbox_value.set(True)  # Set the variable to False
@@ -900,24 +902,24 @@ class Creator:
                 variable, class_name = variable_class.split('[')
                 class_name = class_name[0:-1].strip()
 
-                if class_name == "dnd-list" and "," in value:
+                if class_name == "dnd-list" and ";" in value:
                     # Create HTML list element.
                     html_list = create_html_list(value)
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
-                    
-                elif class_name == "dnd-table" and "," in value:
+
+                elif class_name == "dnd-table" and ";" in value:
                     # Create HTML table element.
                     html_table = create_html_table(value)
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
-                    
-                elif class_name == "dnd-image" and "," in value:
+
+                elif class_name == "dnd-image" and ";" in value:
                     # Create HTML image element.
                     html_img = create_html_img(value)
-                    image_name = value.split(',')[0].strip()
+                    image_name = value.split(';')[0].strip()
                     output_images.append(image_name)
                     print(f"Processing {image_name}.")
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
-                    
+
                 else:
                     # Create generic HTML element.
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
@@ -931,17 +933,16 @@ class Creator:
             f.write('</body>\n</html>')
 
             print(f'HTML file created: {output_file}')
-            
+
         # copy images to correct location.
         if len(output_images) > 0:
             for image in output_images:
                 output_image_dir = global_vars.output_file_folder + "/img"
                 copy_file_to_directory(image, output_image_dir)
-                
+
                 # trash image if needed.
                 if self.trash_checkbox_value.get():
                     global_vars.trash_file(image)
-                
 
         # move the files to the trash if this option is selected.
         if self.trash_checkbox_value.get():
@@ -1025,9 +1026,9 @@ class Creator:
 
         # Define the fields to replace in the template file
         char_fields = get_character_fields(file)
-        
+
         global_vars.output_file_folder = '.'  # used for testing mainly
-        
+
         if "folder" in char_fields:
             folder = char_fields['folder'].strip()
             last_folder = folder.split('/')[-1]
