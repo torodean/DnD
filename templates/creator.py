@@ -559,10 +559,10 @@ def get_character_fields(file):
 
 def create_html_list(values):
     """
-    Create an HTML list from a string of comma-separated values.
+    Create an HTML list from a string of semi-colon-separated values.
 
     Args:
-        values (str): The string of comma-separated values.
+        values (str): The string of semi-colon-separated values.
 
     Returns:
         str: The HTML list generated from the values.
@@ -579,12 +579,50 @@ def create_html_list(values):
     return html_list
 
 
+def create_html_info(values):
+    """
+    Create an HTML list from a string of semi-colon-separated values.
+
+    Args:
+        values (str): The string of semi-colon-separated values.
+
+    Returns:
+        str: The HTML list generated from the values.
+    """
+    items = values.split(";")  # Split the values by semi-colon
+    html_info = ""  # Start the HTML list
+
+    item_list = ""
+    for item in items:
+        item = item.strip()  # Remove leading/trailing whitespace
+        if item.startswith('-'):
+            item_list += item.replace("-", "") + ";"
+            continue
+
+        # If we reach here, we've finished the "-" items.
+        if item_list != "":
+            item_list = item_list[:-1] # Remove the last semi-colon
+            html_list = create_html_list(item_list)
+            item_list = ""  # reset the list to be re-used if needed.
+            if html_info == "":
+                html_info += f"<p class=\"first-paragraph\">{html_list}</p>\n"
+            else:
+                html_info += f"<p>{html_list}</p>\n"
+
+        if html_info == "":
+            html_info += f"<p class=\"first-paragraph\">{item}</p>\n"
+        else:
+            html_info += f"<p>{item}</p>\n"
+
+    return html_info
+
+
 def create_html_table(input_line):
     """
     Convert a single line input to an HTML table format.
 
     Args:
-        input_line (str): Single line input containing comma-separated values.
+        input_line (str): Single line input containing semi-colon-separated values.
 
     Returns:
         str: HTML table structure representing the input values.
@@ -697,9 +735,12 @@ def create_html_img(input_line):
 
     # Generate the HTML block
     html_block = f'<div class="dnd-image-info">'
-    html_block += f'<img src="{image_file}" alt="Image">'
+    html_block += f'<a href="{image_file}"><img src="{image_file}" alt="Image"></a>'
     html_block += f'<div class="dnd-image-source">'
-    html_block += f'Source: <a href="{image_source}">{image_source}</a>'
+    if "www." in image_source or "https:" in image_source:
+        html_block += f'Source: <a href="{image_source}">{image_source}</a>'
+    else:
+        html_block += f'Source: {image_source}'
     html_block += f'</div>'
     html_block += f'<div class="dnd-image-caption">'
     html_block += f'Caption: {image_caption}'
@@ -890,6 +931,10 @@ class Creator:
             # write HTML boilerplate
             f.write('<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n')
 
+            file_name_val = output_file.split('/')[-1].split('.')[0]
+            header = f"<div class=\"dnd-header\"><h3>{file_name_val}</h3></div><hr/>"
+            f.write(header)
+
             # iterate over lines in input file
             for line in lines:
                 print(line, end='')
@@ -920,6 +965,11 @@ class Creator:
                     print(f"Processing {image_name}.")
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
 
+                elif class_name == "dnd-info" and ";" in value:
+                    # Create HTML info element.
+                    html_info = create_html_info(value)
+                    html_element = f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
+
                 else:
                     # Create generic HTML element.
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
@@ -937,12 +987,19 @@ class Creator:
         # copy images to correct location.
         if len(output_images) > 0:
             for image in output_images:
-                output_image_dir = global_vars.output_file_folder + "/img"
-                copy_file_to_directory(image, output_image_dir)
+                if os.path.isfile(image):
+                    output_image_dir = global_vars.output_file_folder + "/img"
+                    copy_file_to_directory(image, output_image_dir)
 
-                # trash image if needed.
-                if self.trash_checkbox_value.get():
-                    global_vars.trash_file(image)
+                    # trash image if needed.
+                    if self.trash_checkbox_value.get():
+                        global_vars.trash_file(image)
+                else:
+                    print(f'Image file does not exist: {image}')
+
+                    output_image_file = global_vars.output_file_folder + "/img/" + image
+                    if os.path.isfile(output_image_file):
+                        print(f'Image file exists in target directory: {output_image_file}')
 
         # move the files to the trash if this option is selected.
         if self.trash_checkbox_value.get():

@@ -155,8 +155,16 @@ footer a:hover {
     border: 3px solid #ddd;
 }
 
+/* Style for the header section */
+.dnd-header h3 {
+    font-size: 2rem;
+    color: #00a8ff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 15px;
+}
 
-/* Style for the skills section */
+/* Style for the tables section */
 .dnd-table h3 {
     font-size: 1.4rem;
     color: #00a8ff;
@@ -216,6 +224,7 @@ footer a:hover {
     font-weight: bold;
 }
 
+/* Style for the list section */
 .dnd-list {
     padding: 16px;
     margin-bottom: 16px;
@@ -240,6 +249,7 @@ footer a:hover {
     font-size: 16px;
 }
 
+/* Style for the info section */
 .dnd-info {
     padding: 16px;
     margin-bottom: 16px;
@@ -252,17 +262,34 @@ footer a:hover {
     margin-bottom: 15px;
 }
 
+.dnd-info p {
+    margin-top: 0;
+    /* Remove top margin */
+    margin-bottom: 0;
+    /* Set desired gap between paragraphs */
+    text-indent: 2em;
+    /* Add indentation at the start of each paragraph */
+}
+
+.dnd-info .first-paragraph {
+    text-indent: 0;
+    /* Remove indentation for the first paragraph */
+}
+
 .dnd-info ul {
-    list-style: none;
-    padding: 0;
+    list-style: circle;
+    padding-left: 3em;
+    /* Adjust padding to match paragraph indentation */
     margin: 0;
 }
 
 .dnd-info li {
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     font-size: 16px;
 }
 
+/* Style for the image section */
 .dnd-image {
     max-width: 500px;
     /* Adjust the max-width as needed */
