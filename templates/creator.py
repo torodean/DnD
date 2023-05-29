@@ -566,6 +566,10 @@ def create_html_list(values):
 
     Returns:
         str: The HTML list generated from the values.
+
+    Example:
+        >>> create_html_list("Item 1; Item 2; Item 3")
+        '<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n<li>Item 3</li>\n</ul>'
     """
     items = values.split(";")  # Split the values by semi-colon
     html_list = "<ul>\n"  # Start the HTML list
@@ -581,13 +585,17 @@ def create_html_list(values):
 
 def create_html_info(values):
     """
-    Create an HTML list from a string of semi-colon-separated values.
+    Create an HTML info block from a string of semi-colon-separated values.
 
     Args:
         values (str): The string of semi-colon-separated values.
 
     Returns:
-        str: The HTML list generated from the values.
+        str: The HTML info block generated from the values.
+
+    Example:
+        >>> create_html_info("Item 1; - Item 2; - Item 3; Item 4")
+        '<p class="first-paragraph">Item 1</p>\n<p><ul><li>Item 2</li>\n<li>Item 3</li>\n</ul></p>\n<p>Item 4</p>\n'
     """
     items = values.split(";")  # Split the values by semi-colon
     html_info = ""  # Start the HTML list

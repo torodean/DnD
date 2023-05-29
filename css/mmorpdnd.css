@@ -291,7 +291,7 @@ footer a:hover {
 
 /* Style for the image section */
 .dnd-image {
-    max-width: 500px;
+    max-width: 75%;
     /* Adjust the max-width as needed */
     padding: 10px;
     /* Add some padding for spacing */

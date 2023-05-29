@@ -120,6 +120,29 @@ class MMORPDND_VARS:
 global_vars = MMORPDND_VARS()
 
 
+def is_image_file(file_name):
+    """
+    Checks if a file name is an image file based on its extension.
+
+    Args:
+        file_name (str): The name of the file to check.
+
+    Returns:
+        bool: True if the file name has an image extension, False otherwise.
+
+    Example:
+        >>> is_image_file('myphoto.jpg')
+        True
+        >>> is_image_file('document.pdf')
+        False
+    """
+    image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
+    for ext in image_extensions:
+        if file_name.endswith(ext):
+            return True
+    return False
+
+
 def get_relative_path(from_file, to_file):
     """
     Returns the relative path from one file to another.
@@ -301,7 +324,7 @@ class MMORPDND:
             # Create the index.html file and write the HTML content to it
             directory_name = os.path.basename(root)
             with open(index_file_path, 'w') as f:
-                f.write(f"<html>\n<head>\n<title>Index of {directory_name}</title>\n</head>\n<body>\n")
+                f.write(f"<html>\n<head>\n<title>Index of {root}/{directory_name}</title>\n</head>\n<body>\n")
                 f.write(f"<h1>Index of {directory_name}</h1>\n</body>\n</html>\n")
             print(f"Created index file at {index_file_path}")
 
@@ -339,7 +362,7 @@ class MMORPDND:
             sorted_list += f'<li><a href="{link[0]}">{link[1]}</a></li>\n'
 
         return sorted_list
-    
+
     def update_index_files(self):
         """
         Updates all index files in the directory and subdirectories to include links to other files in the same directory.
@@ -383,23 +406,23 @@ class MMORPDND:
 
         # Loop through each index file found
         for file in global_vars.all_index_files:
-        
+
             # check if the file still exists.
             if not os.path.isfile(file):
                 print(f"File no longer exists: {file}")
                 continue
-                
+
             with open(file, 'r+') as f:
                 file_data = f.read()
 
                 # Find all HTML files in same directory as current file
                 dir_path = os.path.dirname(file)
-                html_files_in_dir = []
+                files_in_dir = []
 
                 # Add each html file to the list of html files in that directory.
                 for file_name in os.listdir(dir_path):
-                    if file_name.endswith(".html"):
-                        html_files_in_dir.append(file_name)
+                    if file_name.endswith(".html") or is_image_file(file_name):
+                        files_in_dir.append(file_name)
 
                 # Create index links div section if it does not exist
                 index_links_pattern = r'<div\s+class\s*=\s*["\']indexLinks["\']\s*>.*?</div>'
@@ -414,12 +437,12 @@ class MMORPDND:
                 index_links_div = index_links_div_match.group(
                     0) if index_links_div_match else '<div class="indexLinks"><ul>'
                 index_links = ''
-                for html_file in html_files_in_dir:
-                    if html_file != 'index.html':
-                        link_text = html_file.replace('.html', '')
-                        link = f'<li><a href="{html_file}">{link_text}</a></li>'
+                for file_n in files_in_dir:
+                    if file_n != 'index.html':
+                        link_text = file_n.replace('.html', '')
+                        link = f'<li><a href="{file_n}">{link_text}</a></li>'
                         index_links += f'{link}\n'
-                        
+
                 index_links = self.alphabetize_links(index_links)
 
                 # Replace index links in file
