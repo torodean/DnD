@@ -333,7 +333,7 @@ class MMORPDND:
         Alphabetizes the items in a list of links.
 
         Args:
-            link_list (str): A multiline string representing a list of links in the format
+            list_of_links (str): A multiline string representing a list of links in the format
                 "<li><a href="url">link_text</a></li>". Each link should be on a separate line.
 
         Returns:
@@ -421,7 +421,8 @@ class MMORPDND:
 
                 # Add each html file to the list of html files in that directory.
                 for file_name in os.listdir(dir_path):
-                    if file_name.endswith(".html") or is_image_file(file_name):
+                    file_path = os.path.join(dir_path, file_name)
+                    if file_name.endswith(".html") or is_image_file(file_name) or os.path.isdir(file_path):
                         files_in_dir.append(file_name)
 
                 # Create index links div section if it does not exist
@@ -440,7 +441,15 @@ class MMORPDND:
                 for file_n in files_in_dir:
                     if file_n != 'index.html':
                         link_text = file_n.replace('.html', '')
-                        link = f'<li><a href="{file_n}">{link_text}</a></li>'
+                        print(f"...file_n: {file_n}")
+                        file_path = os.path.join(dir_path, file_n)
+                        print(f"...file_path: {file_path}")
+                        if os.path.isdir(file_path):
+                            dir_link = file_n + "/index.html"
+                            print(f"...dir_link: {dir_link}")
+                            link = f'<li><a href="{dir_link}">{link_text}</a></li>'
+                        else:
+                            link = f'<li><a href="{file_n}">{link_text}</a></li>'
                         index_links += f'{link}\n'
 
                 index_links = self.alphabetize_links(index_links)
