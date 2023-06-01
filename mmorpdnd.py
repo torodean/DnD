@@ -441,13 +441,18 @@ class MMORPDND:
                 for file_n in files_in_dir:
                     if file_n != 'index.html':
                         link_text = file_n.replace('.html', '')
-                        print(f"...file_n: {file_n}")
                         file_path = os.path.join(dir_path, file_n)
-                        print(f"...file_path: {file_path}")
                         if os.path.isdir(file_path):
-                            dir_link = file_n + "/index.html"
-                            print(f"...dir_link: {dir_link}")
-                            link = f'<li><a href="{dir_link}">{link_text}</a></li>'
+                            if file_n == "img":
+                                for image in os.listdir(file_path):
+                                    if is_image_file(image):
+                                        img_link = "img/" + image
+                                        link = f'<li><a href="{img_link}">{img_link}</a></li>'
+                                        index_links += f'{link}\n'
+                                continue
+                            else:
+                                dir_link = file_n + "/index.html"
+                                link = f'<li><a href="{dir_link}">{link_text}</a></li>'
                         else:
                             link = f'<li><a href="{file_n}">{link_text}</a></li>'
                         index_links += f'{link}\n'
