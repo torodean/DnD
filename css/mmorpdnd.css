@@ -1,15 +1,14 @@
 /* General Styles */
 html {
     color: #fff;
-    background-color: #0d1117;
-}
-
-body {
-    font-family: 'Open Sans', sans-serif;
     background-image: url("bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
     margin: 0;
 }
 
