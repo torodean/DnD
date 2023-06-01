@@ -6,6 +6,10 @@ html {
 
 body {
     font-family: 'Open Sans', sans-serif;
+    background-image: url("bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     margin: 0;
 }
 
@@ -156,12 +160,13 @@ footer a:hover {
 }
 
 /* Style for the header section */
-.dnd-header h3 {
+.dnd-header h1 {
     font-size: 2rem;
     color: #00a8ff;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 15px;
+    font-style: bold;
 }
 
 /* Style for the tables section */
@@ -256,10 +261,19 @@ footer a:hover {
 }
 
 .dnd-info h3 {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     color: #00a8ff;
     margin-top: 0;
     margin-bottom: 15px;
+}
+
+.dnd-info h4 {
+    font-size: 1rem;
+    color: #00a8ff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-style: italic;
+    text-decoration: underline;
 }
 
 .dnd-info p {
@@ -268,6 +282,16 @@ footer a:hover {
     margin-bottom: 0;
     /* Set desired gap between paragraphs */
     text-indent: 2em;
+    /* Add indentation at the start of each paragraph */
+}
+
+.dnd-info .subsection {
+    margin-top: 0;
+    /* Remove top margin */
+    margin-bottom: 10px;
+    margin-left: 15px;
+    /* Set desired gap between paragraphs */
+    text-indent: 0em;
     /* Add indentation at the start of each paragraph */
 }
 

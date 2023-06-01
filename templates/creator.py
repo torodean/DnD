@@ -583,6 +583,29 @@ def create_html_list(values):
     return html_list
 
 
+def separate_header_and_info(string):
+    """
+    Separates the header value and information from a string in the format "*header* Information here".
+
+    Args:
+        string (str): The input string in the specified format.
+
+    Returns:
+        tuple: A tuple containing the title value and the information.
+
+    Example:
+        >>> separate_title_and_info("*header* Information here")
+        ('header', 'Information here')
+    """
+    start_index = string.find("*") + 1  # Find the index of the first "*"
+    end_index = string.rfind("*")  # Find the index of the last "*"
+
+    header = string[start_index:end_index].strip()  # Extract the title value
+    info = string[end_index + 1:].strip()  # Extract the information
+
+    return header, info
+
+
 def create_html_info(values):
     """
     Create an HTML info block from a string of semi-colon-separated values.
@@ -597,6 +620,8 @@ def create_html_info(values):
         >>> create_html_info("Item 1; - Item 2; - Item 3; Item 4")
         '<p class="first-paragraph">Item 1</p>\n<p><ul><li>Item 2</li>\n<li>Item 3</li>\n</ul></p>\n<p>Item 4</p>\n'
     """
+    # Stores whether a section including a header was used last.
+    header_section_last = False;
     items = values.split(";")  # Split the values by semi-colon
     html_info = ""  # Start the HTML list
 
@@ -607,21 +632,40 @@ def create_html_info(values):
             item_list += item.replace("-", "") + ";"
             continue
 
+        # These are the criteria for a subsection (section with a small header)
+        if item.startswith('*') and "*" in item[1:]:
+            header, info = separate_header_and_info(item)
+            html_info += f"<h4>{header}</h4><p class=\"subsection\">{info}</p>"
+            header_section_last = True
+            continue
+
         # If we reach here, we've finished the "-" items.
         if item_list != "":
-            item_list = item_list[:-1] # Remove the last semi-colon
+            item_list = item_list[:-1]  # Remove the last semi-colon
             html_list = create_html_list(item_list)
             item_list = ""  # reset the list to be re-used if needed.
-            if html_info == "":
+            if html_info == "" or header_section_last:
                 html_info += f"<p class=\"first-paragraph\">{html_list}</p>\n"
+                header_section_last = False
             else:
                 html_info += f"<p>{html_list}</p>\n"
 
-        if html_info == "":
+        if html_info == "" or header_section_last:
             html_info += f"<p class=\"first-paragraph\">{item}</p>\n"
+            header_section_last = False
         else:
             html_info += f"<p>{item}</p>\n"
 
+    # If we reach here, we've finished the ";" items. There still may be a list to populate though.
+    if item_list != "":
+        item_list = item_list[:-1]  # Remove the last semi-colon
+        html_list = create_html_list(item_list)
+        item_list = ""  # reset the list to be re-used if needed.
+        if html_info == "" or header_section_last:
+            html_info += f"<p class=\"first-paragraph\">{html_list}</p>\n"
+            header_section_last = False
+        else:
+            html_info += f"<p>{html_list}</p>\n"
     return html_info
 
 
@@ -939,8 +983,8 @@ class Creator:
             # write HTML boilerplate
             f.write('<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n')
 
-            file_name_val = output_file.split('/')[-1].split('.')[0]
-            header = f"<div class=\"dnd-header\"><h3>{file_name_val}</h3></div><hr/>"
+            file_name_val = output_file.split('/')[-1].split('.')[0].replace("_", " ")
+            header = f"<div class=\"dnd-header\"><h1>{file_name_val}</h1></div><hr/>"
             f.write(header)
 
             # iterate over lines in input file
