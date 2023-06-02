@@ -698,6 +698,10 @@ class MMORPDND:
                     soup = BeautifulSoup(contents, "html.parser")
                     prettified_content = soup.prettify()
 
+                    # This section fixes a bug with the newline and spaces on hte newline adding a space before the commas.
+                    prettified_content = re.sub(r'[\s\n]+,', ',', prettified_content)
+                    prettified_content = re.sub(r'[\s\n]+</a>,', '</a>,', prettified_content)
+
                 # html files.
                 elif file.endswith(".css"):
                     # Use cssbeautifier to prettify the CSS code
