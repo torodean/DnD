@@ -791,7 +791,7 @@ class MMORPDND:
                             link_path = get_relative_path(file_path, search_word['full_path'])
 
                             # Replace the search string with the new string
-                            new_string = "<a href=\"{0}\">{1}</a>".format(link_path, search_string)
+                            new_string = "<a href=\"{0}\">{1}</a>".format(link_path, search_string.replace('_', ' '))
                             new_body_text = re.sub(pattern, new_string, body_text)
                             body_text = new_body_text
                             body_tags = re.search("<body(.*?)>", content, flags=re.DOTALL)
