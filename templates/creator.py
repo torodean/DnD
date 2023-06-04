@@ -11,6 +11,32 @@ import requests
 from bs4 import BeautifulSoup
 
 
+def find_longest_and_shortest(words):
+    """
+    Find the lengths of the longest and shortest words in a given list.
+
+    Args:
+        words (list): A list of words.
+
+    Returns:
+        tuple: A tuple containing the lengths of the longest and shortest words.
+
+    Raises:
+        ValueError: If the input list is empty.
+
+    Examples:
+        >>> word_list = ["one", "two", "three", "four", "five"]
+        >>> longest_length, shortest_length = find_longest_and_shortest(word_list)
+        >>> print("Longest word length:", longest_length)
+        >>> print("Shortest word length:", shortest_length)
+        Longest word length: 5
+        Shortest word length: 3
+    """
+    longest_word_length = len(max(words, key=len))
+    shortest_word_length = len(min(words, key=len))
+    return shortest_word_length, longest_word_length
+
+
 def remove_numbers_at_start(string):
     """
     Remove numbers at the start of a string.
@@ -1100,7 +1126,6 @@ class Creator:
         else:
             print("trash_files Checkbox disabled")
 
-
     def generate_char(self, file=global_vars.current_file):
         """
         Generate a character file based on the provided input file.
@@ -1452,7 +1477,7 @@ class Creator:
                 global_vars.reset()
                 global_vars.current_file = file
                 self.output_text(f"Updated current work file to: {file}")
-                if file.endswith(".char") or file.endswith(".names"):
+                if file.endswith(".char") or file.endswith(".names") or file.endswith(".list"):
                     global_vars.current_list = read_lines_from_file(file)
 
     def generate_word(self):
@@ -1494,9 +1519,10 @@ class Creator:
         print("Generating word.")
         self.update_input_file()
         global_vars.current_prob_matrix = generate_prob_matrix(global_vars.current_list)
+        shortest, longest = find_longest_and_shortest(global_vars.current_list)
         print_prob_matrix(global_vars.current_prob_matrix)
         while self.last_user_input != "reset":
-            word = "{0}".format(generate_word(global_vars.current_prob_matrix))
+            word = "{0}".format(generate_word(global_vars.current_prob_matrix, shortest, longest))
             self.output_text(f"Generated word: {word}")
             self.output_text("Do you want to append this word to the file? (y/n)")
             # Get the user's choice
