@@ -801,6 +801,34 @@ def create_html_img(input_line):
     return html_block
 
 
+def update_all():
+    """
+    Updates all components of the MMORPDND system.
+
+    This function updates the MMORPDND system by performing the following steps:
+    1. Retrieves the current working directory.
+    2. Changes the current working directory to the parent directory.
+    3. Constructs a command to update the system by running './mmorpdnd.py -u'.
+    4. Executes the update command using the system shell.
+    5. Changes the current working directory back to the original directory.
+
+    Note: This function assumes that the 'mmorpdnd.py' script is located in the parent directory.
+
+    Example usage:
+    update_all()
+
+    """
+    current_dir = os.getcwd()
+    os.chdir("../")
+    if os.path.isfile("mmorpdnd.py"):
+        command = f"./mmorpdnd.py -u"
+    else:
+        print("Error: 'mmorpdnd.py' file not found.")
+        return
+    os.system(command)
+    os.chdir(current_dir)
+
+
 class Creator:
     def __init__(self):
         self.last_user_input = None
@@ -847,10 +875,6 @@ class Creator:
         generate_word_button.pack(side=tk.LEFT, padx=10)
 
         # Create a button to open the file browser
-        generate_char_button = tk.Button(top_button_frame, text="Generate Char", command=self.generate_chars)
-        generate_char_button.pack(side=tk.LEFT, padx=10)
-
-        # Create a button to open the file browser
         create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_pages)
         create_page_button.pack(side=tk.LEFT, padx=10)
 
@@ -862,8 +886,8 @@ class Creator:
         trash_checkbox.pack(side=tk.LEFT, padx=1)
 
         # Create a button to open the file browser
-        test_button = tk.Button(top_button_frame, text="Test Button", command=self.test)
-        test_button.pack(side=tk.LEFT, padx=10)
+        update_button = tk.Button(top_button_frame, text="Update All", command=update_all)
+        update_button.pack(side=tk.LEFT, padx=10)
 
         # Create a frame for the large text box and scrollbar
         text_frame = tk.Frame(self.gui)
@@ -898,33 +922,40 @@ class Creator:
 
         self.no_button.config(state="disabled")
         self.yes_button.config(state="disabled")
-        test_button.config(state="disabled")
 
     def create_pages(self):
         """
         Generate page files for a file or each file within a directory.
 
         This method checks if the current file (global_vars.current_file) is a directory.
-        If it is a file, it calls the create_page() method for that file.
-        If it is a directory, it iterates through each file within the directory and calls the create_page() method
-        to generate a file for each individual file.
+        If it is a file, it calls the generate_char() or create_page() method based on the file extension.
+        If it is a directory, it iterates through each file within the directory and calls the generate_char()
+        or create_page() method for each individual file.
 
         Returns:
+            None
+
+        Raises:
             None
         """
         self.update_input_file()
 
         if os.path.isfile(global_vars.current_file):
-            self.create_page(global_vars.current_file)
+            if global_vars.current_file.endswith(".char"):
+                self.generate_char(global_vars.current_file)
+            elif global_vars.current_file.endswith(".input"):
+                self.create_page(global_vars.current_file)
         elif os.path.isdir(global_vars.current_file):
             directory = global_vars.current_file
             for file_name in os.listdir(directory):
                 file_path = os.path.join(directory, file_name)
                 if os.path.isfile(file_path):
-                    # Call generate_char() for each file with the .char extension.
-                    self.create_page(file_path)
+                    if file_path.endswith(".char"):
+                        self.generate_char(file_path)
+                    elif file_path.endswith(".input"):
+                        self.create_page(file_path)
 
-            self.output_text(f"Character generation completed for all files in the directory: {directory}.")
+            self.output_text(f"Page generation completed for all files in the directory: {directory}.")
         else:
             # If the current file is not a file or directory, display an error message and return.
             self.output_text(f"Error: {global_vars.current_file} is not a file or directory.")
@@ -1069,36 +1100,6 @@ class Creator:
         else:
             print("trash_files Checkbox disabled")
 
-    def generate_chars(self):
-        """
-        Generate character files for a file or each file within a directory.
-
-        This method checks if the current file (global_vars.current_file) is a directory.
-        If it is a file, it calls the generate_char() method for that file.
-        If it is a directory, it iterates through each file within the directory and calls the generate_char() method
-        to generate a character file for each individual file.
-
-        Returns:
-            None
-        """
-        self.update_input_file()
-
-        if os.path.isfile(global_vars.current_file):
-            self.generate_char(global_vars.current_file)
-            return
-        elif not os.path.isdir(global_vars.current_file):
-            # If the current file is not a file or directory, display an error message and return.
-            self.output_text(f"Error: {global_vars.current_file} is not a directory.")
-            return
-
-        directory = global_vars.current_file
-        for file_name in os.listdir(directory):
-            file_path = os.path.join(directory, file_name)
-            if os.path.isfile(file_path):
-                # Call generate_char() for each file with the .char extension.
-                self.generate_char(file_path)
-
-        self.output_text(f"Character generation completed for all files in the directory: {directory}.")
 
     def generate_char(self, file=global_vars.current_file):
         """
@@ -1156,7 +1157,7 @@ class Creator:
 
                 print(f"dirpath: {dirpath}")
                 if folder in dirpath:
-                    global_vars.output_file_folder = dirpath + "/" + folder
+                    global_vars.output_file_folder = dirpath + "/"
                     break
 
             print(f"Output file folder set to: {global_vars.output_file_folder}")
