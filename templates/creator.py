@@ -340,6 +340,39 @@ def copy_file_to_directory(file_path, directory_path):
         print(f"file {new_file} already exists!")
 
 
+def move_file_to_directory(file_path, directory_path):
+    """
+    Move a file to a directory.
+
+    Args:
+        file_path (str): The path to the file to move.
+        directory_path (str): The path to the directory to move the file to.
+
+    Raises:
+        ValueError: If the file or directory doesn't exist.
+
+    Returns:
+        None
+    """
+    # Check if the file exists
+    if not os.path.isfile(file_path):
+        raise ValueError("File does not exist")
+
+    # Check if the directory exists
+    if not os.path.isdir(directory_path):
+        print(f"Directory {directory_path} does not exist. Creating directory...")
+        os.makedirs(directory_path)
+
+    new_file = os.path.join(directory_path, os.path.basename(file_path))
+    if not os.path.isfile(new_file):
+        # Move the file to the directory
+        print(f"Moving {file_path} to {directory_path}")
+        shutil.move(file_path, directory_path)
+        print(f"File {file_path} moved to {directory_path}")
+    else:
+        print(f"File {new_file} already exists!")
+
+
 def print_prob_matrix(prob_matrix):
     """
     Prints a probability matrix to the console in JSON format.
@@ -1027,6 +1060,9 @@ class Creator:
             if folder in dirnames:
                 global_vars.output_file_folder = dirpath + "/" + folder
                 break
+            elif dirpath.endswith(folder):
+                global_vars.output_file_folder = dirpath + "/"
+                break
 
         print(f"Output file folder set to: {global_vars.output_file_folder}")
 
@@ -1079,6 +1115,11 @@ class Creator:
                     html_info = create_html_info(value)
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
 
+                elif class_name == "dnd-info" and ";" not in value:
+                    # Create HTML info element.
+                    html_info = create_html_info(value)
+                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
+
                 else:
                     # Create generic HTML element.
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
@@ -1098,11 +1139,15 @@ class Creator:
             for image in output_images:
                 if os.path.isfile(image):
                     output_image_dir = global_vars.output_file_folder + "/img"
-                    copy_file_to_directory(image, output_image_dir)
 
                     # trash image if needed.
                     if self.trash_checkbox_value.get():
-                        global_vars.trash_file(image)
+                        move_file_to_directory(image, output_image_dir)
+                        if os.path.isfile(image):
+                            global_vars.trash_file(image)
+                    else:
+                        copy_file_to_directory(image, output_image_dir)
+
                 else:
                     print(f'Image file does not exist: {image}')
 
