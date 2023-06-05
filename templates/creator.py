@@ -888,6 +888,30 @@ def update_all():
     os.chdir(current_dir)
 
 
+def get_random_line(file_path):
+    """Return a random line from a file.
+
+    Args:
+        file_path (str): The path to the file.
+
+    Returns:
+        str: A random line from the file.
+
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        IOError: If there is an error reading the file.
+    """
+    try:
+        with open(file_path, "r") as file:
+            lines = file.readlines()
+            random_line = random.choice(lines)
+            return random_line.strip()
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File not found: {file_path}")
+    except IOError:
+        raise IOError(f"Error reading file: {file_path}")
+
+
 class Creator:
     def __init__(self):
         self.last_user_input = None
@@ -986,44 +1010,37 @@ class Creator:
         self.no_button.config(state="disabled")
         self.yes_button.config(state="disabled")
 
-    def get_random_line(self, file_path):
-        """Return a random line from a file.
+    def random_place(self, number=100):
+        """
+        Generates random place names along with their corresponding types.
 
         Args:
-            file_path (str): The path to the file.
+            number (int, optional): The number of random place names to generate. Defaults to 50.
 
         Returns:
-            str: A random line from the file.
-
-        Raises:
-            FileNotFoundError: If the file does not exist.
-            IOError: If there is an error reading the file.
+            None
         """
-        try:
-            with open(file_path, "r") as file:
-                lines = file.readlines()
-                random_line = random.choice(lines)
-                return random_line.strip()
-        except FileNotFoundError:
-            raise FileNotFoundError(f"File not found: {file_path}")
-        except IOError:
-            raise IOError(f"Error reading file: {file_path}")
-
-    def random_place(self):
         self.update_input_file()
 
+        random_places_file = "./lists/random_place.names"
+        random_places = []
         type_list = "./lists/location_types.list"
         if not os.path.isfile(type_list):
             self.output_text(f"List file not found or invalid: {type_list}")
             return
 
-        self.output_text(f"Generating 50 random place names!")
+        self.output_text(f"Generating {number} random place names!")
         self.output_text(f"---------------------------------")
         if os.path.isfile(global_vars.current_file):
-            for i in range(50):
-                place = self.get_random_line(global_vars.current_file)
-                place_type = self.get_random_line(type_list)
-                self.output_text(f"{place} {place_type}")
+            for i in range(number):
+                place = get_random_line(global_vars.current_file)
+                place_type = get_random_line(type_list)
+                place_combo = f"{place} {place_type}"
+                self.output_text(place_combo)
+                random_places.append(place_combo)
+        with open(random_places_file, 'a') as f:
+            for place in random_places:
+                f.write(place + '\n')
 
     def create_pages(self):
         """
