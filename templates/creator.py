@@ -937,6 +937,10 @@ class Creator:
         create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_pages)
         create_page_button.pack(side=tk.LEFT, padx=10)
 
+        # Create a button to open the file browser
+        random_place_button = tk.Button(top_button_frame, text="Random Places", command=self.random_place)
+        random_place_button.pack(side=tk.LEFT, padx=10)
+
         # Create a trash checkbox
         self.trash_checkbox_value = tk.BooleanVar(value=True)
         self.trash_checkbox_value.set(True)  # Set the variable to False
@@ -981,6 +985,45 @@ class Creator:
 
         self.no_button.config(state="disabled")
         self.yes_button.config(state="disabled")
+
+    def get_random_line(self, file_path):
+        """Return a random line from a file.
+
+        Args:
+            file_path (str): The path to the file.
+
+        Returns:
+            str: A random line from the file.
+
+        Raises:
+            FileNotFoundError: If the file does not exist.
+            IOError: If there is an error reading the file.
+        """
+        try:
+            with open(file_path, "r") as file:
+                lines = file.readlines()
+                random_line = random.choice(lines)
+                return random_line.strip()
+        except FileNotFoundError:
+            raise FileNotFoundError(f"File not found: {file_path}")
+        except IOError:
+            raise IOError(f"Error reading file: {file_path}")
+
+    def random_place(self):
+        self.update_input_file()
+
+        type_list = "./lists/location_types.list"
+        if not os.path.isfile(type_list):
+            self.output_text(f"List file not found or invalid: {type_list}")
+            return
+
+        self.output_text(f"Generating 50 random place names!")
+        self.output_text(f"---------------------------------")
+        if os.path.isfile(global_vars.current_file):
+            for i in range(50):
+                place = self.get_random_line(global_vars.current_file)
+                place_type = self.get_random_line(type_list)
+                self.output_text(f"{place} {place_type}")
 
     def create_pages(self):
         """
