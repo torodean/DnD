@@ -1038,6 +1038,8 @@ class Creator:
                 place_combo = f"{place} {place_type}"
                 self.output_text(place_combo)
                 random_places.append(place_combo)
+
+        # Store the random places in the random places file.
         with open(random_places_file, 'a') as f:
             for place in random_places:
                 f.write(place + '\n')
