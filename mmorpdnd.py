@@ -324,8 +324,8 @@ class MMORPDND:
             # Create the index.html file and write the HTML content to it
             directory_name = os.path.basename(root)
             with open(index_file_path, 'w') as f:
-                f.write(f"<html>\n<head>\n<title>Index of {root}/{directory_name}</title>\n</head>\n<body>\n")
-                f.write(f"<h1>Index of {directory_name}</h1>\n</body>\n</html>\n")
+                f.write(f"<html>\n<head>\n<title>Index of {directory_name}/{directory_name}</title>\n</head>\n<body>\n")
+                f.write(f"<h1>Index of {root}</h1>\n</body>\n</html>\n")
             print(f"Created index file at {index_file_path}")
 
     def alphabetize_links(self, list_of_links):
@@ -440,7 +440,7 @@ class MMORPDND:
                 index_links = ''
                 for file_n in files_in_dir:
                     if file_n != 'index.html':
-                        link_text = file_n.replace('.html', '')
+                        link_text = file_n.replace('.html', '').replace('_', " ")
                         file_path = os.path.join(dir_path, file_n)
                         if os.path.isdir(file_path):
                             if file_n == "img":
