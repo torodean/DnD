@@ -58,3 +58,5 @@ cmake-build-debug/**/*
 
 bin/Makefile
 bin/**/Makefile
+
+music

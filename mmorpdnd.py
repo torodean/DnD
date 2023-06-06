@@ -422,7 +422,7 @@ class MMORPDND:
                 # Add each html file to the list of html files in that directory.
                 for file_name in os.listdir(dir_path):
                     file_path = os.path.join(dir_path, file_name)
-                    if file_name.endswith(".html") or is_image_file(file_name) or os.path.isdir(file_path):
+                    if file_name.endswith(".html") or is_image_file(file_name) or os.path.isdir(file_path) or file_name.endswith(".mp3"):
                         files_in_dir.append(file_name)
 
                 # Create index links div section if it does not exist

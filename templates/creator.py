@@ -10,6 +10,119 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
+# Used for music
+from pytube import YouTube
+from moviepy.editor import *
+
+# Used for progress bars
+from tqdm import tqdm
+
+
+def get_youtube_video_name(url):
+    """
+    Retrieves the title of a YouTube video based on the provided URL.
+
+    Args:
+        url (str): The URL of the YouTube video.
+
+    Returns:
+        str or None: The title of the YouTube video if it can be retrieved successfully,
+                     None if there was an error.
+
+    Raises:
+        None
+
+    Example:
+        >>> url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        >>> title = get_youtube_video_name(url)
+        >>> print(title)
+        "Rick Astley - Never Gonna Give You Up (Official Music Video)"
+    """
+    try:
+        # Create a YouTube object with the provided URL
+        yt = YouTube(url)
+
+        # Get the video title
+        video_title = yt.title
+
+        return video_title
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+
+def download_youtube_video_as_mp3(url, output_path="../music"):
+    """
+    Downloads a YouTube video as a high-quality MP3 file.
+
+    Args:
+        url (str): The URL of the YouTube video.
+        output_path (str): The path to the directory where the MP3 file will be saved.
+
+    Returns:
+        str or None: The path of the downloaded MP3 file if the download and conversion
+                     are successful, None if there was an error.
+
+    Raises:
+        None
+
+    Example:
+        >>> url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        >>> output_path = "/path/to/output/directory"
+        >>> mp3_path = download_youtube_video_as_mp3(url, output_path)
+        >>> print(mp3_path)
+        "/path/to/output/directory/output.mp3"
+    """
+    try:
+        if "youtube" not in url:
+            print(f"Invalid Youtube url: {url}")
+            return None
+
+        output_name = get_youtube_video_name(url).replace("|", "").replace(":", "").replace("-", "").replace(" ", "_")
+        mp3_path = f"{output_path}/{output_name}.mp3"
+        if os.path.isfile(mp3_path):
+            print(f"File already exists: {mp3_path}")
+            return mp3_path
+
+        # Create a YouTube object with the provided URL
+        yt = YouTube(url)
+
+        # Get the video stream with the highest resolution
+        video_stream = yt.streams.get_highest_resolution()
+
+        if video_stream is None:
+            print("No suitable video stream found for the video.")
+            return None
+
+        # Download the video stream with progress bar
+        video_path = f"{output_path}/temp_video.{video_stream.subtype}"
+        response = requests.get(video_stream.url, stream=True)
+
+        total_size = int(response.headers.get('Content-Length', 0))
+        block_size = 1024  # 1 KB
+        progress_bar = tqdm(total=total_size, unit='B', unit_scale=True, ncols=80)
+
+        with open(video_path, 'wb') as file:
+            for data in response.iter_content(block_size):
+                file.write(data)
+                progress_bar.update(len(data))
+
+        progress_bar.close()
+
+        # Convert the downloaded video to MP3
+        video = VideoFileClip(video_path)
+        video.audio.write_audiofile(mp3_path)
+
+        # Delete the temporary video file
+        video.close()
+        os.remove(video_path)
+
+        print(f"Video downloaded as MP3: {mp3_path}")
+        return mp3_path
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
 
 def find_longest_and_shortest(words):
     """
@@ -1010,6 +1123,42 @@ class Creator:
         self.no_button.config(state="disabled")
         self.yes_button.config(state="disabled")
 
+    def create_html_music(self, urls):
+        """
+        Creates an HTML list with links to the provided URLs and a folder icon.
+
+        Args:
+            urls (str or list): The URL or list of URLs as a semicolon-delimited string or a list of strings.
+
+        Returns:
+            str: The HTML list portion with links and folder icons.
+
+        Example:
+            >>> urls = "https://www.youtube.com/watch?v=dQw4w9WgXcQ;https://www.youtube.com/watch?v=VIDEO2_ID"
+            >>> html_list = self.create_html_music(urls)
+            >>> print(html_list)
+            <ul>
+            <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Video 1</a><a href="local/path/video1.mp3"><i class="fas fa-folder"></i></a></li>
+            <li><a href="https://www.youtube.com/watch?v=VIDEO2_ID">Video 2</a><a href="local/path/video2.mp3"><i class="fas fa-folder"></i></a></li>
+            </ul>
+        """
+        # Split the URLs into a list
+        url_list = urls.split(";")
+
+        # Create the HTML list
+        html_list = '<ul>\n'
+        for url in url_list:
+            video_name = get_youtube_video_name(url)
+            self.output_text(f"Downloading {video_name}. See terminal for progress report!")
+            mp3_path = download_youtube_video_as_mp3(url)
+            print(f"output_file_folder: {global_vars.output_file_folder}")
+            rel_mp3_path = os.path.relpath(mp3_path, global_vars.output_file_folder)
+            print(f"rel_mp3_path: {rel_mp3_path}")
+            html_list += f'<li><a href="{url}">{video_name}</a><a href="{rel_mp3_path}"><i class="fas fa-folder"></i></a></li>\n'
+        html_list += '</ul>'
+
+        return html_list
+
     def random_place(self, number=100):
         """
         Generates random place names along with their corresponding types.
@@ -1150,7 +1299,7 @@ class Creator:
                     continue
 
                 # parse line
-                variable_class, value = line.split('=')
+                variable_class, value = line.split('=', 1)
                 variable, class_name = variable_class.split('[')
                 class_name = class_name[0:-1].strip()
 
@@ -1172,15 +1321,17 @@ class Creator:
                     print(f"Processing {image_name}.")
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
 
-                elif class_name == "dnd-info" and ";" in value:
-                    # Create HTML info element.
+                elif class_name == "dnd-info":
                     html_info = create_html_info(value)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
+                    if ";" in value:
+                        # Create HTML info element.
+                        html_element = f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
+                    else:
+                        html_element = f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
 
-                elif class_name == "dnd-info" and ";" not in value:
-                    # Create HTML info element.
-                    html_info = create_html_info(value)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
+                elif class_name == "dnd-music":
+                    html_music = self.create_html_music(value)
+                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_music}</p></div>'
 
                 else:
                     # Create generic HTML element.

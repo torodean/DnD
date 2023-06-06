@@ -253,6 +253,31 @@ footer a:hover {
     font-size: 16px;
 }
 
+/* Style for the list section */
+.dnd-music {
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.dnd-music h3 {
+    font-size: 1.6rem;
+    color: #00a8ff;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.dnd-music ul {
+    list-style: circle;
+    padding: 0;
+    margin: 0;
+}
+
+.dnd-music li {
+    margin-left: 15px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
 /* Style for the info section */
 .dnd-info {
     padding: 16px;
