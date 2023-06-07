@@ -1,3 +1,4 @@
+#!/bin/python3
 import argparse
 import re
 
@@ -12,7 +13,7 @@ def format_single_line(text):
         str: The formatted text in a single line.
     """
     # Remove newline characters and tabs
-    text = text.replace('\n', '').replace('\t', '')
+    text = text.replace('\n', ' ').replace('\t', ' ')
 
     # Add spaces after punctuations
     punctuations = ['.', ',', ';', ':', '!', '?']
@@ -41,4 +42,3 @@ with open(file_path, 'r') as file:
 # Format input text to a single line
 formatted_text = format_single_line(input_text)
 print(formatted_text)
-
