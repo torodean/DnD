@@ -78,7 +78,7 @@ def download_youtube_video_as_mp3(url, output_path="../music"):
             print(f"Invalid Youtube url: {url}")
             return None
 
-        output_name = get_youtube_video_name(url).replace("|", "").replace(":", "").replace("-", "").replace(" ", "_")
+        output_name = get_youtube_video_name(url).replace("|", "").replace("/", "").replace(":", "").replace("-", "").replace(" ", "_")
         mp3_path = f"{output_path}/{output_name}.mp3"
         if os.path.isfile(mp3_path):
             print(f"File already exists: {mp3_path}")
@@ -718,7 +718,10 @@ def get_character_fields(file):
 
     for line in contents:
         var = line.split('=')[0].strip().lower()
-        val = line.split('=')[1].strip().lower()
+        if "name" in var or "information" in var or "notes" in var:
+            val = line.split('=')[1].strip()
+        else:
+            val = line.split('=')[1].strip().lower()
         char_fields[var] = val
 
     # check to make sure class is defined.
@@ -1025,6 +1028,29 @@ def get_random_line(file_path):
         raise IOError(f"Error reading file: {file_path}")
 
 
+def extract_first_integer(string):
+    """
+    Extracts the first integer from a given string.
+
+    Args:
+        string (str): The input string.
+
+    Returns:
+        int or None: The first integer found in the string, or None if no integer is found.
+
+    Example:
+        >>> string = "'6 (barbarian 3, rogue 3)'"
+        >>> first_integer = extract_first_integer(string)
+        >>> print(first_integer)
+        6
+    """
+    match = re.search(r'\d+', string)
+    if match:
+        return int(match.group())
+    else:
+        return None
+
+
 class Creator:
     def __init__(self):
         self.last_user_input = None
@@ -1142,6 +1168,9 @@ class Creator:
             <li><a href="https://www.youtube.com/watch?v=VIDEO2_ID">Video 2</a><a href="local/path/video2.mp3"><i class="fas fa-folder"></i></a></li>
             </ul>
         """
+        if urls.strip() == "":
+            return ""
+
         # Split the URLs into a list
         url_list = urls.split(";")
 
@@ -1151,9 +1180,7 @@ class Creator:
             video_name = get_youtube_video_name(url)
             self.output_text(f"Downloading {video_name}. See terminal for progress report!")
             mp3_path = download_youtube_video_as_mp3(url)
-            print(f"output_file_folder: {global_vars.output_file_folder}")
             rel_mp3_path = os.path.relpath(mp3_path, global_vars.output_file_folder)
-            print(f"rel_mp3_path: {rel_mp3_path}")
             html_list += f'<li><a href="{url}">{video_name}</a><a href="{rel_mp3_path}"><i class="fas fa-folder"></i></a></li>\n'
         html_list += '</ul>'
 
@@ -1438,7 +1465,6 @@ class Creator:
                 if any(exclude in dirpath for exclude in global_vars.directories_to_exclude):
                     continue
 
-                print(f"dirpath: {dirpath}")
                 if folder in dirpath:
                     global_vars.output_file_folder = dirpath + "/"
                     break
@@ -1451,7 +1477,7 @@ class Creator:
         if "level" not in char_fields:
             char_level = 1
         else:
-            char_level = int(char_fields['level'])
+            char_level = extract_first_integer(char_fields['level'])
 
         # Create character stats to fill in if none are defined.
         char_stats = generate_character_stats(char_class, char_level)
@@ -1578,7 +1604,7 @@ class Creator:
                 abilities_output += "</li>"
             else:
                 abilities_output += ability.strip()
-                abilities_output += ":</strong>["
+                abilities_output += ":</strong> ["
                 abilities_output += ability.strip()
                 abilities_output += " description]</li>"
         template = template.replace("[abilities list]", abilities_output)
@@ -1596,7 +1622,7 @@ class Creator:
                 equipment_output += "</li>"
             else:
                 equipment_output += equip.strip()
-                equipment_output += ":</strong>["
+                equipment_output += ":</strong> ["
                 equipment_output += remove_numbers_at_start(equip.strip())
                 equipment_output += " description]</li>"
         template = template.replace("[equipment list]", equipment_output)
@@ -1620,6 +1646,9 @@ class Creator:
 
         # Scroll to the bottom of the widget
         self.large_text.see("end")
+
+        # Update the GUI window
+        self.large_text.update_idletasks()
 
     def test(self):
         """

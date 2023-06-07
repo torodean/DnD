@@ -327,6 +327,48 @@ class MMORPDND:
                 f.write(f"<html>\n<head>\n<title>Index of {directory_name}/{directory_name}</title>\n</head>\n<body>\n")
                 f.write(f"<h1>Index of {root}</h1>\n</body>\n</html>\n")
             print(f"Created index file at {index_file_path}")
+    def move_img_items_to_end(self, string):
+        """
+        Moves items containing "img/" to the end of the string while preserving their original order.
+
+        Args:
+            string (str): A string containing items in the format '<li><a href="url">link_text</a></li>'.
+
+        Returns:
+            str: A new string with items containing "img/" moved to the end while preserving their original order.
+
+        Example:
+            >>> string = '''<li><a href="valen_shadowborn.html">valen_shadowborn</a></li>
+            ...            <li><a href="kaelar_stormcaller.html">kaelar_stormcaller</a></li>
+            ...            <li><a href="thorne_ironfist.html">thorne_ironfist</a></li>
+            ...            <li><a href="foobar.html">img/foobar</a></li>
+            ...            <li><a href="aria_thistlewood.html">img/aria_thistlewood</a></li>
+            ...            <li><a href="stoneshaper_golem.html">stoneshaper_golem</a></li>
+            ...            <li><a href="elara_nightshade.html">elara_nightshade</a></li>'''
+            >>> new_string = move_img_items_to_end(string)
+            >>> print(new_string)
+            <li><a href="valen_shadowborn.html">valen_shadowborn</a></li>
+            <li><a href="kaelar_stormcaller.html">kaelar_stormcaller</a></li>
+            <li><a href="thorne_ironfist.html">thorne_ironfist</a></li>
+            <li><a href="aria_thistlewood.html">img/aria_thistlewood</a></li>
+            <li><a href="stoneshaper_golem.html">stoneshaper_golem</a></li>
+            <li><a href="elara_nightshade.html">elara_nightshade</a></li>
+            <li><a href="foobar.html">img/foobar</a></li>
+        """
+        lines = string.split('\n')
+        img_items = []
+        non_img_items = []
+
+        for line in lines:
+            if "img/" in line:
+                img_items.append(line)
+            else:
+                non_img_items.append(line)
+
+        new_lines = non_img_items + img_items
+        new_string = '\n'.join(new_lines)
+
+        return new_string
 
     def alphabetize_links(self, list_of_links):
         """
@@ -352,14 +394,17 @@ class MMORPDND:
 
             print(sorted_list)
         """
-        link_pattern = r'<li><a href="([^"]+)">([^<]+)</a></li>'
+        link_pattern = r'<li><a href="([^"]+)"(?:\sclass="[^"]*")?>([^<]+)</a></li>'
         matches = re.findall(link_pattern, list_of_links)
 
         sorted_links = sorted(matches, key=lambda x: x[1])
 
         sorted_list = ""
         for link in sorted_links:
-            sorted_list += f'<li><a href="{link[0]}">{link[1]}</a></li>\n'
+            if "img/" in link[1]:
+                sorted_list += f'<li><a href="{link[0]}" class="image-index-link">{link[1]}</a></li>\n'
+            else:
+                sorted_list += f'<li><a href="{link[0]}">{link[1]}</a></li>\n'
 
         return sorted_list
 
@@ -447,7 +492,7 @@ class MMORPDND:
                                 for image in os.listdir(file_path):
                                     if is_image_file(image):
                                         img_link = "img/" + image
-                                        link = f'<li><a href="{img_link}">{img_link}</a></li>'
+                                        link = f'<li><a href="{img_link}" class="image-index-link">{img_link}</a></li>'
                                         index_links += f'{link}\n'
                                 continue
                             else:
@@ -458,6 +503,9 @@ class MMORPDND:
                         index_links += f'{link}\n'
 
                 index_links = self.alphabetize_links(index_links)
+                print(index_links)
+                index_links = self.move_img_items_to_end(index_links)
+                print(index_links)
 
                 # Replace index links in file
                 updated_data = re.sub(index_links_pattern, index_links_div + '\n' + index_links + '</ul></div>',

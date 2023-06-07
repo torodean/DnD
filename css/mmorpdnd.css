@@ -17,6 +17,10 @@ a {
     text-decoration: none;
 }
 
+a.image-index-link {
+    color: #982dfc;
+}
+
 a:hover {
     color: #bfbfbf;
 }
