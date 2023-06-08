@@ -388,6 +388,28 @@ footer a:hover {
     /* Add some space below the image caption */
 }
 
+.dnd-image-list {
+    display: flex;
+}
+
+.dnd-image-list img {
+    flex: 1;
+
+    max-width: calc(100% / {
+            num_images
+        });
+}
+
+.dnd-image-list a {
+    margin-right: 5px;
+    /* Adjust the margin value to set the desired spacing between images */
+}
+
+.dnd-image-list a:last-child {
+    margin-right: 0;
+    /* Remove the right margin from the last image to avoid extra space */
+}
+
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;

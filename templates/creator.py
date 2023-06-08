@@ -820,7 +820,7 @@ def create_html_info(values):
                 header_section_last = False
             else:
                 html_info += f"<p>{html_list}</p>\n"
-                
+
         if '*' not in item:
             if html_info == "" or header_section_last:
                 html_info += f"<p class=\"first-paragraph\">{item}</p>\n"
@@ -932,6 +932,25 @@ def download_image(url, file_path):
         print(f"An error occurred while downloading the image: {str(e)}")
         return False
 
+def add_number_to_filename(filename, number):
+    """
+    Add a number to the filename before the extension.
+
+    Args:
+        filename (str): The original file name.
+
+    Returns:
+        str: The updated file name with a number added before the extension.
+
+    Example Usage:
+        >>> new_filename = add_number_to_filename("document.txt")
+        >>> print(new_filename)
+        document (1).txt
+    """
+    base_name, extension = os.path.splitext(filename)
+    new_filename = f"{base_name} ({number}){extension}"
+
+    return new_filename
 
 def create_html_img(input_line):
     """
@@ -960,16 +979,39 @@ def create_html_img(input_line):
     image_source = input_line[1].strip()
     image_caption = input_line[2].strip()
 
+    image_files = []
+    if " (1)" in image_file:
+        img_file_enum = image_file
+        count = 2
+        while os.path.isfile(img_file_enum):
+            image_files.append(img_file_enum)
+            img_file_enum = img_file_enum.replace(f" ({count-1})", f" ({count})")
+            count += 1
+    elif os.path.isfile(add_number_to_filename(image_file, 1)):
+        image_files.append(image_file)
+        img_file_enum = add_number_to_filename(image_file, 1)
+        count = 2
+        while os.path.isfile(img_file_enum):
+            image_files.append(img_file_enum)
+            img_file_enum = img_file_enum.replace(f" ({count-1})", f" ({count})")
+            count += 1
+    else:
+        image_files.append(image_file)
+
     if not os.path.isfile(image_file):
         print(f"Image NOT found: {image_file}.")
-        if not download_image(image_source, image_file):
-            print(f"No image found: image section will be incomplete.")
+        if "www." in image_source or "https:" in image_source:
+            if not download_image(image_source, image_file):
+                print(f"No image found: image section will be incomplete.")
     else:
         print(f"Image found: {image_file}.")
 
     # Generate the HTML block
     html_block = f'<div class="dnd-image-info">'
-    html_block += f'<a href="{image_file}"><img src="{image_file}" alt="Image"></a>'
+    html_block += f'<div class="dnd-image-list">'
+    for file in image_files:
+        html_block += f'<a href="{file}"><img src="{file}" alt="Image"></a>'
+    html_block += f'</div>'
     html_block += f'<div class="dnd-image-source">'
     if "www." in image_source or "https:" in image_source:
         html_block += f'Source: <a href="{image_source}">{image_source}</a>'
@@ -980,7 +1022,7 @@ def create_html_img(input_line):
     html_block += f'Caption: {image_caption}'
     html_block += f'</div></div>'
 
-    return html_block
+    return html_block, image_files
 
 
 def update_all():
@@ -1349,9 +1391,11 @@ class Creator:
 
                 elif class_name == "dnd-image" and ";" in value:
                     # Create HTML image element.
-                    html_img = create_html_img(value)
+                    html_img, image_files = create_html_img(value)
                     image_name = value.split(';')[0].strip()
                     output_images.append(image_name)
+                    for img in image_files:
+                        output_images.append(img)
                     print(f"Processing {image_name}.")
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
 
