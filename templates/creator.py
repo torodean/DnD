@@ -674,7 +674,14 @@ class Variables:
         :param file: The file to move.
         :return: None
         """
-        move_file(file, self.trash_dir)
+        if file.endswith(".char"):
+            destination = self.trash_dir + "/chars"
+        elif file.endswith(".py") or file.endswith(".sh"):
+            destination = self.trash_dir + "/scripts"
+        else:
+            destination = self.trash_dir
+
+        move_file(file, destination)
 
     def reset(self):
         self.current_file = ""
