@@ -802,20 +802,16 @@ def create_html_info(values):
 
     item_list = ""
     for item in items:
+        print(f"item: {item}")
         item = item.strip()  # Remove leading/trailing whitespace
         if item.startswith('-'):
+            print(f"List item detected in: {item}")
             item_list += item.replace("-", "") + ";"
-            continue
-
-        # These are the criteria for a subsection (section with a small header)
-        if item.startswith('*') and "*" in item[1:]:
-            header, info = separate_header_and_info(item)
-            html_info += f"<h4>{header}</h4><p class=\"subsection\">{info}</p>"
-            header_section_last = True
             continue
 
         # If we reach here, we've finished the "-" items.
         if item_list != "":
+            print(f"Creating list from: {item_list}")
             item_list = item_list[:-1]  # Remove the last semi-colon
             html_list = create_html_list(item_list)
             item_list = ""  # reset the list to be re-used if needed.
@@ -824,12 +820,24 @@ def create_html_info(values):
                 header_section_last = False
             else:
                 html_info += f"<p>{html_list}</p>\n"
+                
+        if '*' not in item:
+            if html_info == "" or header_section_last:
+                html_info += f"<p class=\"first-paragraph\">{item}</p>\n"
+                header_section_last = False
+            else:
+                html_info += f"<p>{item}</p>\n"
 
-        if html_info == "" or header_section_last:
-            html_info += f"<p class=\"first-paragraph\">{item}</p>\n"
-            header_section_last = False
-        else:
-            html_info += f"<p>{item}</p>\n"
+        # These are the criteria for a subsection (section with a small header)
+        if item.startswith('*') and "*" in item[1:]:
+            print(f"Header detected in: {item}")
+            header, info = separate_header_and_info(item)
+            if info.strip() == "":
+                html_info += f"<h4>{header}</h4>"
+            else:
+                html_info += f"<h4>{header}</h4><p class=\"subsection\">{info}</p>"
+                header_section_last = True
+            continue
 
     # If we reach here, we've finished the ";" items. There still may be a list to populate though.
     if item_list != "":
@@ -838,7 +846,6 @@ def create_html_info(values):
         item_list = ""  # reset the list to be re-used if needed.
         if html_info == "" or header_section_last:
             html_info += f"<p class=\"first-paragraph\">{html_list}</p>\n"
-            header_section_last = False
         else:
             html_info += f"<p>{html_list}</p>\n"
     return html_info
