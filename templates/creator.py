@@ -78,7 +78,9 @@ def download_youtube_video_as_mp3(url, output_path="../music"):
             print(f"Invalid Youtube url: {url}")
             return None
 
-        output_name = get_youtube_video_name(url).replace("|", "").replace("/", "").replace(":", "").replace("-", "").replace(" ", "_")
+        output_name = get_youtube_video_name(url).replace("|", "").replace("/", "").replace(":", "").replace("-",
+                                                                                                             "").replace(
+            " ", "_")
         mp3_path = f"{output_path}/{output_name}.mp3"
         if os.path.isfile(mp3_path):
             print(f"File already exists: {mp3_path}")
@@ -939,6 +941,7 @@ def download_image(url, file_path):
         print(f"An error occurred while downloading the image: {str(e)}")
         return False
 
+
 def add_number_to_filename(filename, number):
     """
     Add a number to the filename before the extension.
@@ -958,6 +961,7 @@ def add_number_to_filename(filename, number):
     new_filename = f"{base_name} ({number}){extension}"
 
     return new_filename
+
 
 def create_html_img(input_line):
     """
@@ -992,15 +996,16 @@ def create_html_img(input_line):
         count = 2
         while os.path.isfile(img_file_enum):
             image_files.append(img_file_enum)
-            img_file_enum = img_file_enum.replace(f" ({count-1})", f" ({count})")
+            img_file_enum = img_file_enum.replace(f" ({count - 1})", f" ({count})")
             count += 1
     elif os.path.isfile(add_number_to_filename(image_file, 1)):
-        image_files.append(image_file)
+        if os.path.isfile(image_file):
+            image_files.append(image_file)
         img_file_enum = add_number_to_filename(image_file, 1)
         count = 2
         while os.path.isfile(img_file_enum):
             image_files.append(img_file_enum)
-            img_file_enum = img_file_enum.replace(f" ({count-1})", f" ({count})")
+            img_file_enum = img_file_enum.replace(f" ({count - 1})", f" ({count})")
             count += 1
     else:
         image_files.append(image_file)
