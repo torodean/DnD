@@ -948,14 +948,15 @@ def add_number_to_filename(filename, number):
 
     Args:
         filename (str): The original file name.
+        number (int): The number to add.
 
     Returns:
         str: The updated file name with a number added before the extension.
 
     Example Usage:
         >>> new_filename = add_number_to_filename("document.txt")
-        >>> print(new_filename)
-        document (1).txt
+        >>> print(new_filename, 3)
+        document (3).txt
     """
     base_name, extension = os.path.splitext(filename)
     new_filename = f"{base_name} ({number}){extension}"
