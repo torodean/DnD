@@ -173,6 +173,122 @@ def get_relative_path(from_file, to_file):
     return os.path.relpath(to_file, os.path.dirname(from_file))
 
 
+def create_dummy_html_files(directory=global_vars.root_dir):
+    """
+    Creates dummy HTML files in all directories and subdirectories for testing purposes.
+
+    Args:
+        directory (str): The directory path to start creating dummy HTML files from. Defaults to global_vars.root_dir.
+
+    Returns:
+        None.
+
+    Raises:
+        None.
+
+    This method recursively walks through the directory structure, creates an index.html file in each directory,
+    and creates additional HTML files with random links in each subdirectory.
+
+    The method performs the following steps:
+    1. Creates an index.html file in the specified directory with a basic HTML structure.
+    2. Recursively walks through the directory structure using `os.walk`.
+    3. For each subdirectory, excluding any directories listed in `global_vars.directories_to_exclude`:
+        - Creates an index.html file in the subdirectory with a basic HTML structure.
+        - Generates a specified number of dummy HTML files in the subdirectory, each containing a random link to another dummy file.
+        - Prints a message indicating the successful creation of each HTML file.
+    4. Creates additional dummy HTML files in the script directory (specified by the `directory` argument), each containing a random link to another dummy file.
+    5. Prints a message indicating the successful creation of all HTML files.
+
+    Note: The content of the generated HTML files consists of a basic HTML structure with a header and body.
+    Each dummy file includes a link to two randomly chosen dummy files, facilitating testing scenarios.
+
+    Example usage:
+        create_dummy_html_files()
+    """
+    all_dummy_files = []
+    # Create an index.html file in the current directory
+    with open(os.path.join(directory, "index.html"), "w") as f:
+        f.write("<html><head></head><body><h1>Welcome to the index page!</h1></body></html>")
+
+    # Recursively walk through the directory structure and create HTML files in each subdirectory
+    for root, dirnames, filenames in os.walk(directory):
+        for dirname in dirnames:
+
+            # Check if we are looking at a file in our exclude list.
+            if any(exclude in root for exclude in global_vars.directories_to_exclude):
+                continue
+            if any(exclude in dirname for exclude in global_vars.directories_to_exclude):
+                continue
+
+            # Create an index.html file in each subdirectory
+            with open(os.path.join(root, dirname, "index.html"), "w") as f:
+                f.write("<html><head></head><body><h1>Welcome to the index page!</h1></body></html>")
+
+            for i in range(global_vars.num_dummy_files_per_subdir):
+                # Use the current directory name as part of the filename
+                filename = f"{dirname}_{i}.html"
+                all_dummy_files.append(filename.split('.html')[0])
+                random_one = random.choice(all_dummy_files)
+                random_two = random.choice(all_dummy_files)
+                with open(os.path.join(root, dirname, filename), "w") as f:
+                    f.write(
+                        f"<html><head></head><body><h1>This is {filename} in {dirname} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
+                    print(f"HTML file {directory}/{filename} created successfully!")
+
+    # Create additional HTML files in the script directory
+    for i in range(global_vars.num_dummy_files_per_subdir):
+        # Use the script directory name as part of the filename
+        filename = f"{os.path.basename(directory)}_{i}.html"
+        all_dummy_files.append(filename.split('.html')[0])
+        random_one = random.choice(all_dummy_files)
+        random_two = random.choice(all_dummy_files)
+        with open(os.path.join(directory, filename), "w") as f:
+            f.write(
+                f"<html><head></head><body><h1>This is {filename} in {directory} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
+            print(f"HTML file {directory}/{filename} created successfully!")
+
+    print("HTML files created successfully!")
+
+
+def alphabetize_links(list_of_links):
+    """
+    Alphabetizes the items in a list of links.
+
+    Args:
+        list_of_links (str): A multiline string representing a list of links in the format
+            "<li><a href="url">link_text</a></li>". Each link should be on a separate line.
+
+    Returns:
+        str: A multiline string representing the alphabetized list of links.
+
+    Example:
+        links = '''<li><a href="valen_shadowborn.html">valen_shadowborn</a></li>
+                   <li><a href="kaelar_stormcaller.html">kaelar_stormcaller</a></li>
+                   <li><a href="thorne_ironfist.html">thorne_ironfist</a></li>
+                   <li><a href="foobar.html">foobar</a></li>
+                   <li><a href="aria_thistlewood.html">aria_thistlewood</a></li>
+                   <li><a href="stoneshaper_golem.html">stoneshaper_golem</a></li>
+                   <li><a href="elara_nightshade.html">elara_nightshade</a></li>'''
+
+        sorted_list = alphabetize_links(links)
+
+        print(sorted_list)
+    """
+    link_pattern = r'<li><a href="([^"]+)"(?:\sclass="[^"]*")?>([^<]+)</a></li>'
+    matches = re.findall(link_pattern, list_of_links)
+
+    sorted_links = sorted(matches, key=lambda x: x[1])
+
+    sorted_list = ""
+    for link in sorted_links:
+        if "img/" in link[1]:
+            sorted_list += f'<li><a href="{link[0]}" class="image-index-link">{link[1]}</a></li>\n'
+        else:
+            sorted_list += f'<li><a href="{link[0]}">{link[1]}</a></li>\n'
+
+    return sorted_list
+
+
 class MMORPDND:
     """
     A class for all the main MMORPDND features.
@@ -202,82 +318,6 @@ class MMORPDND:
                 print(f"Created directory: {subpath}")
             if structure[key]:
                 self.create_directories(os.path.join(path, key), structure[key])
-
-    def create_dummy_html_files(self, directory=global_vars.root_dir):
-        """
-        Creates dummy HTML files in all directories and subdirectories for testing purposes.
-
-        Args:
-            directory (str): The directory path to start creating dummy HTML files from. Defaults to global_vars.root_dir.
-
-        Returns:
-            None.
-
-        Raises:
-            None.
-
-        This method recursively walks through the directory structure, creates an index.html file in each directory,
-        and creates additional HTML files with random links in each subdirectory.
-
-        The method performs the following steps:
-        1. Creates an index.html file in the specified directory with a basic HTML structure.
-        2. Recursively walks through the directory structure using `os.walk`.
-        3. For each subdirectory, excluding any directories listed in `global_vars.directories_to_exclude`:
-            - Creates an index.html file in the subdirectory with a basic HTML structure.
-            - Generates a specified number of dummy HTML files in the subdirectory, each containing a random link to another dummy file.
-            - Prints a message indicating the successful creation of each HTML file.
-        4. Creates additional dummy HTML files in the script directory (specified by the `directory` argument), each containing a random link to another dummy file.
-        5. Prints a message indicating the successful creation of all HTML files.
-
-        Note: The content of the generated HTML files consists of a basic HTML structure with a header and body.
-        Each dummy file includes a link to two randomly chosen dummy files, facilitating testing scenarios.
-
-        Example usage:
-            create_dummy_html_files()
-        """
-        all_dummy_files = []
-        # Create an index.html file in the current directory
-        with open(os.path.join(directory, "index.html"), "w") as f:
-            f.write("<html><head></head><body><h1>Welcome to the index page!</h1></body></html>")
-
-        # Recursively walk through the directory structure and create HTML files in each subdirectory
-        for root, dirnames, filenames in os.walk(directory):
-            for dirname in dirnames:
-
-                # Check if we are looking at a file in our exclude list.
-                if any(exclude in root for exclude in global_vars.directories_to_exclude):
-                    continue
-                if any(exclude in dirname for exclude in global_vars.directories_to_exclude):
-                    continue
-
-                # Create an index.html file in each subdirectory
-                with open(os.path.join(root, dirname, "index.html"), "w") as f:
-                    f.write("<html><head></head><body><h1>Welcome to the index page!</h1></body></html>")
-
-                for i in range(global_vars.num_dummy_files_per_subdir):
-                    # Use the current directory name as part of the filename
-                    filename = f"{dirname}_{i}.html"
-                    all_dummy_files.append(filename.split('.html')[0])
-                    random_one = random.choice(all_dummy_files)
-                    random_two = random.choice(all_dummy_files)
-                    with open(os.path.join(root, dirname, filename), "w") as f:
-                        f.write(
-                            f"<html><head></head><body><h1>This is {filename} in {dirname} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
-                        print(f"HTML file {directory}/{filename} created successfully!")
-
-        # Create additional HTML files in the script directory
-        for i in range(global_vars.num_dummy_files_per_subdir):
-            # Use the script directory name as part of the filename
-            filename = f"{os.path.basename(directory)}_{i}.html"
-            all_dummy_files.append(filename.split('.html')[0])
-            random_one = random.choice(all_dummy_files)
-            random_two = random.choice(all_dummy_files)
-            with open(os.path.join(directory, filename), "w") as f:
-                f.write(
-                    f"<html><head></head><body><h1>This is {filename} in {directory} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
-                print(f"HTML file {directory}/{filename} created successfully!")
-
-        print("HTML files created successfully!")
 
     def create_index_files(self, directory=global_vars.root_dir):
         """
@@ -369,44 +409,6 @@ class MMORPDND:
         new_string = '\n'.join(new_lines)
 
         return new_string
-
-    def alphabetize_links(self, list_of_links):
-        """
-        Alphabetizes the items in a list of links.
-
-        Args:
-            list_of_links (str): A multiline string representing a list of links in the format
-                "<li><a href="url">link_text</a></li>". Each link should be on a separate line.
-
-        Returns:
-            str: A multiline string representing the alphabetized list of links.
-
-        Example:
-            links = '''<li><a href="valen_shadowborn.html">valen_shadowborn</a></li>
-                       <li><a href="kaelar_stormcaller.html">kaelar_stormcaller</a></li>
-                       <li><a href="thorne_ironfist.html">thorne_ironfist</a></li>
-                       <li><a href="foobar.html">foobar</a></li>
-                       <li><a href="aria_thistlewood.html">aria_thistlewood</a></li>
-                       <li><a href="stoneshaper_golem.html">stoneshaper_golem</a></li>
-                       <li><a href="elara_nightshade.html">elara_nightshade</a></li>'''
-
-            sorted_list = alphabetize_links(links)
-
-            print(sorted_list)
-        """
-        link_pattern = r'<li><a href="([^"]+)"(?:\sclass="[^"]*")?>([^<]+)</a></li>'
-        matches = re.findall(link_pattern, list_of_links)
-
-        sorted_links = sorted(matches, key=lambda x: x[1])
-
-        sorted_list = ""
-        for link in sorted_links:
-            if "img/" in link[1]:
-                sorted_list += f'<li><a href="{link[0]}" class="image-index-link">{link[1]}</a></li>\n'
-            else:
-                sorted_list += f'<li><a href="{link[0]}">{link[1]}</a></li>\n'
-
-        return sorted_list
 
     def update_index_files(self):
         """
@@ -502,7 +504,7 @@ class MMORPDND:
                             link = f'<li><a href="{file_n}">{link_text}</a></li>'
                         index_links += f'{link}\n'
 
-                index_links = self.alphabetize_links(index_links)
+                index_links = alphabetize_links(index_links)
                 print(index_links)
                 index_links = self.move_img_items_to_end(index_links)
                 print(index_links)
@@ -834,6 +836,17 @@ class MMORPDND:
                         r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string)))
                     patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
                         re.escape(search_string.replace('_', ' '))))
+                    # Search for the plural strings too.
+                    if not search_string.endswith('s'):
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' ') + 's')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' ') + '\'s')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string + 's')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string + '\'s')))
+                    else:
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' ') + '\'')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' ') + 'es')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string + '\'')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string + 'es')))
 
                     # Search through all possible patterns.
                     for pattern in patterns:
@@ -967,7 +980,7 @@ class MMORPDND_GUI:
         self.mmorpdnd.create_directories(global_vars.root_dir, global_vars.directory_structure)
 
     def create_dummy_html_files(self):
-        self.mmorpdnd.create_dummy_html_files(global_vars.root_dir)
+        create_dummy_html_files(global_vars.root_dir)
 
     def create_index_files(self):
         self.mmorpdnd.create_index_files(global_vars.root_dir)
