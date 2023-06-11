@@ -1038,6 +1038,24 @@ def create_html_img(input_line):
     return html_block, image_files
 
 
+def fix_image_extensions():
+    """
+    Updates all image extensions.
+
+    Example usage:
+    fix_image_extensions()
+    """
+    current_dir = os.getcwd()
+    os.chdir("./img")
+    if os.path.isfile("fix_image_extensions.py"):
+        command = f"./fix_image_extensions.py"
+    else:
+        print("Error: 'fix_image_extensions.py' file not found.")
+        return
+    os.system(command)
+    os.chdir(current_dir)
+
+
 def update_all():
     """
     Updates all components of the MMORPDND system.
@@ -1298,6 +1316,7 @@ class Creator:
             None
         """
         self.update_input_file()
+        fix_image_extensions()
 
         if os.path.isfile(global_vars.current_file):
             if global_vars.current_file.endswith(".char"):

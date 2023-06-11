@@ -32,9 +32,13 @@ def replace_newlines(filename):
                 finalized_content += ';'
                 finalized_content += line
                 
-        print(finalized_content)
-        
         finalized_content.lstrip('\n')
+
+        # Remove the last semicolon.
+        if finalized_content.endswith(";"):
+            finalized_content = finalized_content[:-1]
+
+        print(finalized_content)
             
         with open(filename, 'w') as file:
             file.write(finalized_content)
