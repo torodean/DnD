@@ -64,6 +64,7 @@ class MMORPDND_VARS:
                 "lore": {
                     "history": {},
                     "factions": {},
+                    "guilds": {},
                     "races": {},
                     "classes": {},
                     "backgrounds": {},
