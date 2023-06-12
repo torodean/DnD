@@ -53,7 +53,8 @@ class MMORPDND_VARS:
                     "armor": {},
                     "trinkets": {},
                     "quest": {},
-                    "treasure": {}
+                    "treasure": {},
+                    "devices": {}
                 },
                 "notes": {},
                 "creatures": {
