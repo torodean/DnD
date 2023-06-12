@@ -501,7 +501,7 @@ class MMORPDND:
                                 continue
                             else:
                                 dir_link = file_n + "/index.html"
-                                link = f'<li><a href="{dir_link}">{link_text}</a></li>'
+                                link = f'<li><a href="{dir_link}" class="dir-index-link">{link_text}</a></li>'
                         else:
                             link = f'<li><a href="{file_n}">{link_text}</a></li>'
                         index_links += f'{link}\n'
