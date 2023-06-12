@@ -21,6 +21,10 @@ a.image-index-link {
     color: #982dfc;
 }
 
+a.dir-index-link {
+    color: #fc982d;
+}
+
 a:hover {
     color: #bfbfbf;
 }
