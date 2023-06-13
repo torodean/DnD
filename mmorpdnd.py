@@ -284,7 +284,9 @@ def alphabetize_links(list_of_links):
     sorted_list = ""
     for link in sorted_links:
         if "img/" in link[1]:
-            sorted_list += f'<li><a href="{link[0]}" class="image-index-link">{link[1]}</a></li>\n'
+            sorted_list += f'<li><a href="{link[0]}" class="image-index-link"><i class="fas fa-camera"></i> {link[1]}</a></li>\n'
+        elif "/" in link[0]:
+            sorted_list += f'<li><a href="{link[0]}" class="dir-index-link"><i class="fas fa-folder"></i> {link[1]}</a></li>\n'
         else:
             sorted_list += f'<li><a href="{link[0]}">{link[1]}</a></li>\n'
 
@@ -369,6 +371,26 @@ class MMORPDND:
                 f.write(f"<html>\n<head>\n<title>Index of {directory_name}/{directory_name}</title>\n</head>\n<body>\n")
                 f.write(f"<h1>Index of {root}</h1>\n</body>\n</html>\n")
             print(f"Created index file at {index_file_path}")
+
+    def move_dir_items_to_end(self, string):
+        """
+
+        """
+        lines = string.split('\n')
+        dir_items = []
+        non_dir_items = []
+
+        for line in lines:
+            if "/index.html" in line:
+                dir_items.append(line)
+            else:
+                non_dir_items.append(line)
+
+        new_lines = non_dir_items + dir_items
+        new_string = '\n'.join(new_lines)
+
+        return new_string
+
     def move_img_items_to_end(self, string):
         """
         Moves items containing "img/" to the end of the string while preserving their original order.
@@ -471,7 +493,8 @@ class MMORPDND:
                 # Add each html file to the list of html files in that directory.
                 for file_name in os.listdir(dir_path):
                     file_path = os.path.join(dir_path, file_name)
-                    if file_name.endswith(".html") or is_image_file(file_name) or os.path.isdir(file_path) or file_name.endswith(".mp3"):
+                    if file_name.endswith(".html") or is_image_file(file_name) or os.path.isdir(
+                            file_path) or file_name.endswith(".mp3"):
                         files_in_dir.append(file_name)
 
                 # Create index links div section if it does not exist
@@ -507,9 +530,8 @@ class MMORPDND:
                         index_links += f'{link}\n'
 
                 index_links = alphabetize_links(index_links)
-                print(index_links)
+                index_links = self.move_dir_items_to_end(index_links)
                 index_links = self.move_img_items_to_end(index_links)
-                print(index_links)
 
                 # Replace index links in file
                 updated_data = re.sub(index_links_pattern, index_links_div + '\n' + index_links + '</ul></div>',
@@ -840,15 +862,23 @@ class MMORPDND:
                         re.escape(search_string.replace('_', ' '))))
                     # Search for the plural strings too.
                     if not search_string.endswith('s'):
-                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' ') + 's')))
-                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' ') + '\'s')))
-                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string + 's')))
-                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string + '\'s')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
+                            re.escape(search_string.replace('_', ' ') + 's')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
+                            re.escape(search_string.replace('_', ' ') + '\'s')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
+                            re.escape(search_string + 's')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
+                            re.escape(search_string + '\'s')))
                     else:
-                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' ') + '\'')))
-                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string.replace('_', ' ') + 'es')))
-                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string + '\'')))
-                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(re.escape(search_string + 'es')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
+                            re.escape(search_string.replace('_', ' ') + '\'')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
+                            re.escape(search_string.replace('_', ' ') + 'es')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
+                            re.escape(search_string + '\'')))
+                        patterns.append(r'(?ix)(?<![-/">])(?<!>)\b{}\b(?<![-/.])(?![^<]*<\/a>)'.format(
+                            re.escape(search_string + 'es')))
 
                     # Search through all possible patterns.
                     for pattern in patterns:
