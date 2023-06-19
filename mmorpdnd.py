@@ -48,18 +48,22 @@ class MMORPDND_VARS:
                         "drink": {},
                         "herbs": {}
                     },
+                    "plants": {},
                     "magic": {},
                     "weapons": {},
                     "armor": {},
                     "trinkets": {},
                     "quest": {},
                     "treasure": {},
-                    "devices": {}
+                    "devices": {},
+                    "other": {}
                 },
                 "notes": {},
                 "creatures": {
                     "animals": {},
-                    "monsters": {}
+                    "monsters": {},
+                    "critters": {},
+                    "insects": {}
                 },
                 "lore": {
                     "history": {},
@@ -77,7 +81,16 @@ class MMORPDND_VARS:
                 "encounters": {},
                 "characters": {
                     "player": {},
-                    "non-player": {}
+                    "non-player": {
+                        "human": {},
+                        "elf": {},
+                        "halfling": {},
+                        "dwarf": {},
+                        "tiefling": {},
+                        "dragonborn": {},
+                        "half-elf": {},
+                        "genasi": {}
+                    }
                 },
                 "spells": {
                     "level_0": {},
