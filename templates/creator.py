@@ -724,14 +724,16 @@ def get_character_fields(file):
     # Open the current file and read in the contents.
     with open(file, 'r') as f:
         contents = f.readlines()
-
-    for line in contents:
-        var = line.split('=')[0].strip().lower()
-        if "name" in var or "information" in var or "notes" in var:
-            val = line.split('=')[1].strip()
-        else:
-            val = line.split('=')[1].strip().lower()
-        char_fields[var] = val
+    try:
+        for line in contents:
+            var = line.split('=')[0].strip().lower()
+            if "name" in var or "information" in var or "notes" in var:
+                val = line.split('=')[1].strip()
+            else:
+                val = line.split('=')[1].strip().lower()
+            char_fields[var] = val
+    except Exception:
+        print(f"ERROR: Incorrect file format: {file}")
 
     # check to make sure class is defined.
     if "class" not in char_fields:
@@ -1657,8 +1659,9 @@ class Creator:
         template = template.replace("[background information]", info)
 
         # Replace the notes block.
-        notes = char_fields['notes']
-        template = template.replace("[notes]", notes)
+        if "notes" in char_fields:
+            notes = char_fields['notes']
+            template = template.replace("[notes]", notes)
 
         # Replace the image block.
         img_src = "img/" + char_fields['image']
