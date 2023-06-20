@@ -680,6 +680,8 @@ class Variables:
             destination = self.trash_dir + "/chars"
         elif file.endswith(".py") or file.endswith(".sh"):
             destination = self.trash_dir + "/scripts"
+        elif is_image_file(file):
+            destination = self.trash_dir + "/img"
         else:
             destination = self.trash_dir
 
@@ -964,6 +966,28 @@ def add_number_to_filename(filename, number):
     new_filename = f"{base_name} ({number}){extension}"
 
     return new_filename
+
+def is_image_file(file_name):
+    """
+    Checks if a file name is an image file based on its extension.
+
+    Args:
+        file_name (str): The name of the file to check.
+
+    Returns:
+        bool: True if the file name has an image extension, False otherwise.
+
+    Example:
+        >>> is_image_file('myphoto.jpg')
+        True
+        >>> is_image_file('document.pdf')
+        False
+    """
+    image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
+    for ext in image_extensions:
+        if file_name.endswith(ext):
+            return True
+    return False
 
 
 def create_html_img(input_line):
