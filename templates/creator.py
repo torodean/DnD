@@ -51,81 +51,6 @@ def get_youtube_video_name(url):
         return None
 
 
-def download_youtube_video_as_mp3(url, output_path="../music"):
-    """
-    Downloads a YouTube video as a high-quality MP3 file.
-
-    Args:
-        url (str): The URL of the YouTube video.
-        output_path (str): The path to the directory where the MP3 file will be saved.
-
-    Returns:
-        str or None: The path of the downloaded MP3 file if the download and conversion
-                     are successful, None if there was an error.
-
-    Raises:
-        None
-
-    Example:
-        >>> url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-        >>> output_path = "/path/to/output/directory"
-        >>> mp3_path = download_youtube_video_as_mp3(url, output_path)
-        >>> print(mp3_path)
-        "/path/to/output/directory/output.mp3"
-    """
-    try:
-        if "youtube" not in url:
-            print(f"Invalid Youtube url: {url}")
-            return None
-
-        output_name = get_youtube_video_name(url).replace("|", "").replace("/", "").replace(":", "").replace("-",
-                                                                                                             "").replace(
-            " ", "_")
-        mp3_path = f"{output_path}/{output_name}.mp3"
-        if os.path.isfile(mp3_path):
-            print(f"File already exists: {mp3_path}")
-            return mp3_path
-
-        # Create a YouTube object with the provided URL
-        yt = YouTube(url)
-
-        # Get the video stream with the highest resolution
-        video_stream = yt.streams.get_highest_resolution()
-
-        if video_stream is None:
-            print("No suitable video stream found for the video.")
-            return None
-
-        # Download the video stream with progress bar
-        video_path = f"{output_path}/temp_video.{video_stream.subtype}"
-        response = requests.get(video_stream.url, stream=True)
-
-        total_size = int(response.headers.get('Content-Length', 0))
-        block_size = 1024  # 1 KB
-        progress_bar = tqdm(total=total_size, unit='B', unit_scale=True, ncols=80)
-
-        with open(video_path, 'wb') as file:
-            for data in response.iter_content(block_size):
-                file.write(data)
-                progress_bar.update(len(data))
-
-        progress_bar.close()
-
-        # Convert the downloaded video to MP3
-        video = VideoFileClip(video_path)
-        video.audio.write_audiofile(mp3_path)
-
-        # Delete the temporary video file
-        video.close()
-        os.remove(video_path)
-
-        print(f"Video downloaded as MP3: {mp3_path}")
-        return mp3_path
-    except Exception as e:
-        print(f"Error: {e}")
-        return None
-
-
 def find_longest_and_shortest(words):
     """
     Find the lengths of the longest and shortest words in a given list.
@@ -745,6 +670,38 @@ def get_character_fields(file):
     return char_fields
 
 
+def split_list(lst, n):
+    """
+    Split a list into n sublists of approximately equal size.
+
+    Args:
+        lst (list): The input list to be split.
+        n (int): The number of sublists to create.
+
+    Returns:
+        list: A list containing n sublists.
+
+    Example:
+        >>> my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        >>> sublists = split_list(my_list, 3)
+        >>> print(sublists)
+        [[1, 2, 3, 4], [5, 6, 7], [8, 9, 10]]
+    """
+    length = len(lst)
+    avg = length // n
+    remainder = length % n
+
+    result = []
+    start = 0
+
+    for i in range(n):
+        end = start + avg + (1 if i < remainder else 0)
+        result.append(lst[start:end])
+        start = end
+
+    return result
+
+
 def create_html_list(values):
     """
     Create an HTML list from a string of semi-colon-separated values.
@@ -760,13 +717,44 @@ def create_html_list(values):
         '<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n<li>Item 3</li>\n</ul>'
     """
     items = values.split(";")  # Split the values by semi-colon
-    html_list = "<ul>\n"  # Start the HTML list
 
-    for item in items:
-        item = item.strip()  # Remove leading/trailing whitespace
-        html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
+    # If we have between 20-40 elements, split into 2 columns.
+    if 20 <= len(items) <= 40:
+        html_list = "<div class=\"column-container\">\n"
+        item_lists = split_list(items, 2)
+        for item_list in item_lists:
+            html_list += "<div class=\"column\"><ul>\n"  # Start the HTML list
 
-    html_list += "</ul>"  # Close the HTML list
+            for item in item_list:
+                item = item.strip()  # Remove leading/trailing whitespace
+                html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
+
+            html_list += "</ul></div>"  # Close the HTML list
+        html_list += "</div>\n"
+
+    # If we have more than 40 elements, split into 3 columns.
+    elif len(items) > 40:
+        html_list = "<div class=\"column-container\">\n"
+        item_lists = split_list(items, 4)
+        for item_list in item_lists:
+            html_list += "<div class=\"column\"><ul>\n"  # Start the HTML list
+
+            for item in item_list:
+                item = item.strip()  # Remove leading/trailing whitespace
+                html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
+
+            html_list += "</ul></div>"  # Close the HTML list
+        html_list += "</div>\n"
+
+    # Normal list operations.
+    else:
+        html_list = "<ul>\n"  # Start the HTML list
+
+        for item in items:
+            item = item.strip()  # Remove leading/trailing whitespace
+            html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
+
+        html_list += "</ul>"  # Close the HTML list
 
     return html_list
 
@@ -966,6 +954,7 @@ def add_number_to_filename(filename, number):
     new_filename = f"{base_name} ({number}){extension}"
 
     return new_filename
+
 
 def is_image_file(file_name):
     """
@@ -1220,8 +1209,9 @@ class Creator:
         # Create a trash checkbox
         self.download_checkbox_value = tk.BooleanVar(value=True)
         self.download_checkbox_value.set(True)  # Set the variable to False
-        download_checkbox = tk.Checkbutton(top_button_frame, text="Download Files", variable=self.download_checkbox_value,
-                                        command=self.checkbox_changed)
+        download_checkbox = tk.Checkbutton(top_button_frame, text="Download Files",
+                                           variable=self.download_checkbox_value,
+                                           command=self.checkbox_changed)
         download_checkbox.pack(side=tk.LEFT, padx=1)
 
         # Create a button to open the file browser
@@ -1298,6 +1288,84 @@ class Creator:
         html_list += '</ul>'
 
         return html_list
+
+    def download_youtube_video_as_mp3(self, url, output_path="../music"):
+        """
+        Downloads a YouTube video as a high-quality MP3 file.
+
+        Args:
+            url (str): The URL of the YouTube video.
+            output_path (str): The path to the directory where the MP3 file will be saved.
+
+        Returns:
+            str or None: The path of the downloaded MP3 file if the download and conversion
+                         are successful, None if there was an error.
+
+        Raises:
+            None
+
+        Example:
+            >>> url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            >>> output_path = "/path/to/output/directory"
+            >>> mp3_path = download_youtube_video_as_mp3(url, output_path)
+            >>> print(mp3_path)
+            "/path/to/output/directory/output.mp3"
+        """
+        try:
+            if "youtube" not in url:
+                print(f"Invalid Youtube url: {url}")
+                return None
+
+            output_name = get_youtube_video_name(url).replace("|", "").replace("/", "").replace(":", "").replace("-",
+                                                                                                                 "").replace(
+                " ", "_")
+            mp3_path = f"{output_path}/{output_name}.mp3"
+            if os.path.isfile(mp3_path):
+                print(f"File already exists: {mp3_path}")
+                return mp3_path
+
+            if not self.download_checkbox_value.get():
+                print(f"Downloading option not checked: {mp3_path}")
+                return mp3_path
+
+            # Create a YouTube object with the provided URL
+            yt = YouTube(url)
+
+            # Get the video stream with the highest resolution
+            video_stream = yt.streams.get_highest_resolution()
+
+            if video_stream is None:
+                print("No suitable video stream found for the video.")
+                return None
+
+            # Download the video stream with progress bar
+            video_path = f"{output_path}/temp_video.{video_stream.subtype}"
+            response = requests.get(video_stream.url, stream=True)
+
+            total_size = int(response.headers.get('Content-Length', 0))
+            block_size = 1024  # 1 KB
+            progress_bar = tqdm(total=total_size, unit='B', unit_scale=True, ncols=80)
+
+            with open(video_path, 'wb') as file:
+                for data in response.iter_content(block_size):
+                    file.write(data)
+                    progress_bar.update(len(data))
+
+            progress_bar.close()
+
+            # Convert the downloaded video to MP3
+            video = VideoFileClip(video_path)
+            video.audio.write_audiofile(mp3_path)
+
+            # Delete the temporary video file
+            video.close()
+            os.remove(video_path)
+
+            print(f"Video downloaded as MP3: {mp3_path}")
+            return mp3_path
+        except Exception as e:
+            print(f"Error: {e}")
+            return None
 
     def random_place(self, number=100):
         """

@@ -418,3 +418,12 @@ footer a:hover {
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
 }
+
+.column-container {
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    margin: 0 10px;
+}
