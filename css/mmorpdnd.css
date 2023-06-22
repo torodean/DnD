@@ -399,9 +399,8 @@ footer a:hover {
 .dnd-image-list img {
     flex: 1;
 
-    max-width: calc(100% / {
-            num_images
-        });
+    max-width: calc(100% / num_images);
+    object-fit: cover;
 }
 
 .dnd-image-list a {

@@ -1217,6 +1217,13 @@ class Creator:
                                         command=self.checkbox_changed)
         trash_checkbox.pack(side=tk.LEFT, padx=1)
 
+        # Create a trash checkbox
+        self.download_checkbox_value = tk.BooleanVar(value=True)
+        self.download_checkbox_value.set(True)  # Set the variable to False
+        download_checkbox = tk.Checkbutton(top_button_frame, text="Download Files", variable=self.download_checkbox_value,
+                                        command=self.checkbox_changed)
+        download_checkbox.pack(side=tk.LEFT, padx=1)
+
         # Create a button to open the file browser
         update_button = tk.Button(top_button_frame, text="Update All", command=update_all)
         update_button.pack(side=tk.LEFT, padx=10)
@@ -1514,11 +1521,17 @@ class Creator:
         It retrieves the values of the checkboxes and prints a message indicating whether they are enabled or disabled.
         """
         trash_files = self.trash_checkbox_value.get()
+        download_files = self.download_checkbox_value.get()
 
         if trash_files:
             print("trash_files Checkbox enabled")
         else:
             print("trash_files Checkbox disabled")
+
+        if download_files:
+            print("download_files Checkbox enabled")
+        else:
+            print("download_files Checkbox disabled")
 
     def generate_char(self, file=global_vars.current_file):
         """
