@@ -1365,7 +1365,10 @@ class Creator:
             return mp3_path
         except Exception as e:
             print(f"Error: {e}")
-            return None
+
+            # Try again
+            mp3_path = self.download_youtube_video_as_mp3(url, output_path)
+            return mp3_path
 
     def random_place(self, number=100):
         """
