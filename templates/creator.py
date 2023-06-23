@@ -1282,7 +1282,7 @@ class Creator:
         for url in url_list:
             video_name = get_youtube_video_name(url)
             self.output_text(f"Downloading {video_name}. See terminal for progress report!")
-            mp3_path = download_youtube_video_as_mp3(url)
+            mp3_path = self.download_youtube_video_as_mp3(url)
             rel_mp3_path = os.path.relpath(mp3_path, global_vars.output_file_folder)
             html_list += f'<li><a href="{url}">{video_name}</a><a href="{rel_mp3_path}"><i class="fas fa-folder"></i></a></li>\n'
         html_list += '</ul>'
