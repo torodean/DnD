@@ -172,7 +172,7 @@ In response to their inquiry, Gnarls began his storytelling, recounting the infa
 
 As the adventurers laughed and listened to Gnarls' tales, a sense of camaraderie and trust began to form among them. They continued to converse, exchanging stories of their past adventures, sharing insights, and strategizing for the challenges that lay ahead. Unbeknownst to them, time was not on their side, and their destinies were hurtling towards an inevitable convergence with Milton Manastorm. But for now, in the heart of the ship, laughter and friendship filled the air as they sailed towards their shared destiny.
 
-As the voyage continued, a subtle undercurrent of wariness lingered within the party. While Gnarls Fizzlebronk's presence added a touch of whimsy and laughter to their journey, some adventurers couldn't shake the feeling of uncertainty. The embellishments and overemphasized claims raised questions about his trustworthiness. Whispers and glances exchanged between the party members hinted at their guarded thoughts, leaving a lingering sense of doubt in the air. But despite their reservations, they knew that in the vast unknown awaiting them in Vifavea, they would have to navigate not only the challenges ahead but also their own growing suspicions about Gnarls and the true nature of their intertwined destinies.
+As the voyage continued, a subtle undercurrent of wariness lingered within the party. While Gnarls Fizzlebronk's presence added a touch of whimsy and laughter to their journey, some adventurers couldn't shake the feeling of uncertainty. The embellishments and overemphasized claims raised questions about his trustworthiness. Whispers and glances exchanged between the party members hinted at their guarded thoughts, leaving a lingering sense of doubt in the air. But despite their reservations, they knew that in the vast unknown awaiting them in Vifavea, they would have to navigate not only the challenges ahead but also their own growing suspicions about Gnarls and the true nature of their intertwined destinies. Gnarls, feeling a bit tired said "I best be getting some rest before this ship lands. If any of you need me, I'll be staying at the Salty Sea Horse Inn," before retreating back to his part of the ship.
 
 As the laughter subsided, the adventurers found themselves drawn closer together, united by their shared quest and the humor that had woven their fates together. They continued to converse, exchanging stories of their past adventures, sharing insights, and strategizing for the challenges that lay ahead. In the midst of their banter and camaraderie, a sense of trust and companionship began to form, laying the foundation for a formidable team. The clock was ticking, and the adventurers' destinies were hurtling towards an inevitable convergence with Milton Manastorm, the grand wizard they had been unknowingly connected to. But for now, in the heart of the ship, laughter and camaraderie filled the air as they sailed towards their shared destiny.
 
@@ -291,6 +291,26 @@ With each step, the lively hum of conversation and laughter in the inn surrounde
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+They talk with gnarls for a few. question why he was there instead of at the salty seahorse inn where he said he would be. He says he got tired en route and decided to rest here for a few. 
+
+Gnarls heads out, feeling somewhat rejuvinated. The party heads back to their table and discusses. After a while, they are approached by a Wandering Wanderer. the bartender had mentioned to him that some travelers were looking for information. They begin to chat with him to get information. Asking his name, he replies with "Silas". He tells them he has much information he can give them but they would have to give him something in return. They ask him what. He says he is seeking out information regarding an artifact related to their case. If they give him all information pertaining to the artifact that they learn, he will answer whatever questions they have with the information he has. They are hesitent. The group questions if he even has any useful information since he doesn't have information on this artifact. They eventually agree to the terms and ask some questions regarding the case - what happened, who was involved, etc. He answers them to the best of his knowledge.
+
+After finishing up here, the party decides they should head to the local library and do some digging on their own before settling in for the night. They don't recall where the library in town was and are starting to wish they had a map. They scan the room and notice a small orchish creature devouring a plate of food, as if he was starving. They notice it is Grizzlegob. They approach him and ask him if he's still selling maps. He mentions how he's busy and not working at the moment but could potentially sell them one for 1 gold piece. They don't remember exactly but are pretty sure that's much more than they were offered for previously. He says, I'm busy and not working so would you like it or not. He says he'll even give them a deal and only charge 9 silver. Baldrak says "That's basically a gold." The party members seem to unanimously decide nevermind to the map and begin to walk away. Baldrak says "oh well, I'll buy us a map," and hands over a gold piece. Grizzlegob smiles and pulls out a map of the town for them, going right back to eating. The party heads out and locates the Palmside library on the map. It's getting late and they are unsure if it's open but they head there to check anyways. 
+
+To their surprise, it doesn't appear closed. They enter the front door and see a young lady holding a pile of books. She introduces herself as ariadne witwood, tells them they are free to look about, and asks if they need any assistance. 
 
 
 
