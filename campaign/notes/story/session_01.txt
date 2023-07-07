@@ -408,7 +408,7 @@ Resolute in their mission to seek justice and uncover the truth, the adventurers
 
 Milton Manastorm the Magnificent
 
-The adventurers, their determination unwavering, retraced their steps back to the courthouse of Eldara. As they arrived, they were met by Kaeler, a court official whom they hadn't had the opportunity to speak with the previous day. With a welcoming smile, Kaeler greeted them, recognizing their purpose. "Ah, welcome back. I assume you are all ready to speak with Milon?" The adventurers nodded in agreement, confirming their readiness.
+The adventurers, their determination unwavering, retraced their steps back to the courthouse of Eldara. As they arrived, they were met by Kaeler, a court official whom they hadn't had the opportunity to speak with the previous day. With a welcoming smile, Kaeler greeted them, recognizing their purpose. "Ah, welcome back. I assume you are all ready to speak with Milton?" The adventurers nodded in agreement, confirming their readiness.
 
 Kaeler, entrusted with their presence, requested to see their scrolls once more to verify their identities. Satisfied with their authenticity, he assumed the role of their guide and led them through the labyrinthine halls of the courthouse. While en route, he explained that the first court proceedings would take place in about an hour, where the testimonies would be given to the judge and jury. Passing by bustling courtrooms and echoing voices engaged in legal proceedings, they finally arrived at a room nestled towards the back.
 
@@ -416,13 +416,19 @@ Inside the room, they beheld the sight of a short gnome wizard, his wrist adorne
 
 The adventurers took notice of a peculiar sight in the room. Little Petrie, a small hawk-like bird donning tiny goggles and a backpack, sat perched nearby, seemingly serving as a faithful companion to the imprisoned gnome. Each member of the party recognized the bird, their previous encounters with the creature bringing a sense of familiarity.
 
-With a shared understanding, they expressed their desire to hear Milon's side of the story, urging him to recount the events from the very beginning. Milon, recognizing the importance of their inquiry, proceeded to unfold the tale of his misfortune, recounting the series of events that had led to his wrongful accusation. Aware of the limited time at their disposal, he kept his narration concise yet precise, ensuring that the essence of his plight was conveyed.
+With a shared understanding, they expressed their desire to hear Milton's side of the story, urging him to recount the events from the very beginning. Milton, recognizing the importance of their inquiry, proceeded to unfold the tale of his misfortune, recounting the series of events that had led to his wrongful accusation. Aware of the limited time at their disposal, he kept his narration concise yet precise, ensuring that the essence of his plight was conveyed.
 
-As Milon's voice resonated within the confines of the room, the adventurers listened attentively, their minds absorbing every detail. The weight of his words carried both the weight of his innocence and the urgency to unravel the truth. With each passing moment, the puzzle pieces of the case began to align, forming a clearer picture of the events that had unfolded.
+As Milton's voice resonated within the confines of the room, the adventurers listened attentively, their minds absorbing every detail. The weight of his words carried both the weight of his innocence and the urgency to unravel the truth. With each passing moment, the puzzle pieces of the case began to align, forming a clearer picture of the events that had unfolded.
 
-Enveloped in the silence of the room, the adventurers now possessed a crucial piece of the puzzle—one that would guide them further in their pursuit of justice. They thanked Milon for sharing his side of the story, assuring him that they would do everything in their power to prove his innocence and bring the true culprits to light. Baldrak questioned part of the story and inquired about the locations of Milton's ChronoLink Nexus Ethereal Pocket Portal that supposedly malfunctioned. Milton said that many of his items were confiscated and they'd have to seek out members of the court to view them.
+Enveloped in the silence of the room, the adventurers now possessed a crucial piece of the puzzle—one that would guide them further in their pursuit of justice. They thanked Milton for sharing his side of the story, assuring him that they would do everything in their power to prove his innocence and bring the true culprits to light. Baldrak questioned part of the story and inquired about the locations of Milton's ChronoLink Nexus Ethereal Pocket Portal that supposedly malfunctioned. Milton said that many of his items were confiscated and they'd have to seek out members of the court to view them.
 
-Milon, his voice filled with a renewed sense of hope, proclaimed that the key to understanding the malfunction of the ChronoLink device lay in the hands of Genji Tink. The adventurers immediately recognized the significance of this information, realizing that their journey may lead them to the town of Dessaquest, nestled in the neighboring province of The Ashenlands—the very province from which some of them had embarked on their current quest.
+Curiosity sparked within the party as they sought to explore all possible avenues of assistance. Malcator turned to Milton and asked, "By any chance, do you possess knowledge of the polymorph spell? We believe it might be instrumental in our endeavors."
+Milton, a sly smile playing on his lips, replied, "Indeed, I do. In fact, I have perfected the art of polymorph. It is a skill I've honed over time."
+The adventurers exchanged glances, their curiosity piqued. "How long can the polymorph last?" Malcator inquired, hoping for a temporary solution to aid in their investigation.
+Milton, sensing an opportunity to impress, embellished the truth. "I must say, I am so proficient at the polymorph spell that its effects could last indefinitely. A feat few can achieve."
+The party's eyes widened with amazement, impressed by Milton's claim. They contemplated the potential benefits this knowledge could bring to their quest, while a flicker of doubt lingered in the back of Malcator’s mind, knowing that such an extended duration was highly improbable. Nevertheless, they acknowledged Milton's proficiency and resolved to utilize his skills judiciously, as they recounted the questions surrounding Lollipop the chicken.
+
+Milton, his voice filled with a renewed sense of hope, proclaimed that the key to understanding the malfunction of the ChronoLink device lay in the hands of Genji Tink. The adventurers immediately recognized the significance of this information, realizing that their journey may lead them to the town of Dessaquest, nestled in the neighboring province of The Ashenlands—the very province from which some of them had embarked on their current quest.
 
 Eager to make contact with Genji Tink, they turned to Petrie, the faithful avian companion who had accompanied them thus far. With a sense of urgency, they shared their plan and requested Petrie's assistance in delivering a message to Genji. Malcator carefully rolled up the parchment containing their message and placed it within Petrie's small backpack, ensuring its safekeeping.
 
@@ -434,7 +440,7 @@ Finally, Petrie emerged from the grand entrance of the courthouse, his small for
 
 As the discussions with Milton came to a close, the adventurers exchanged glances, their resolve strengthened by the knowledge they had gained. The room seemed to hum with anticipation as they prepared to embark on the next leg of their journey—a journey that would unearth hidden truths, challenge their mettle, and ultimately deliver justice to the accused.
 
-Leaving the room behind, they bid farewell to Milon, his words echoing in their minds as they stepped back into the bustling corridors of the courthouse. The path ahead was rife with uncertainty, but armed with newfound information, they were ready to face whatever lay in store, inching ever closer to the truth that awaited them.
+Leaving the room behind, they bid farewell to Milton, his words echoing in their minds as they stepped back into the bustling corridors of the courthouse. The path ahead was rife with uncertainty, but armed with newfound information, they were ready to face whatever lay in store, inching ever closer to the truth that awaited them.
 
 The party asked Kaeler if the judge for the case had been selected yet. He said yes, it was Phineous Grenn. With a smile on some of their faces, others muttered "I hope that's the nice one." The adventurers, accompanied by Kaeler, traversed the halls of the courthouse, their footsteps echoing against the stone walls. As they approached Phineous's office, they couldn't help but notice the ornate wooden carvings that adorned the door, depicting scenes of justice and wisdom.
 
@@ -453,6 +459,8 @@ Finally, fortune smiled upon them as they encountered a room with the phrase "El
 Back in the examination chamber, Baldrak meticulously studied the ChronoLink device, his keen eyes tracing the intricate patterns etched into its surface. With a sense of anticipation, he scrutinized the internal mechanisms, searching for any signs of malfunction. Gradually, his analysis revealed a charred compartment within the device, indicating a severe malfunction that seemed irreparable without a replacement component. Satisfied with his findings, Baldrak made mental notes of his observations, confident that they would be valuable in their pursuit of justice for Milton.
 
 With the message dispatched through the wandering wanderer, the adventurers settled into an anxious yet hopeful wait, their thoughts consumed by the imminent arrival of Genji Tink. They found solace in their collective efforts, the threads of fate intertwining as they continued their journey towards unraveling the truth and redeeming their accused comrade.
+
+The Court Proceedings Begin
 
 The time of the court proceedings had arrived, and the adventurers found themselves in a grand courtroom filled with an air of anticipation. The room was adorned with polished oak panels, high ceilings, and rows of wooden benches where spectators and members of the jury were seated.
 
@@ -496,7 +504,17 @@ As Milton concluded his testimony, the adventurers seized the moment. They reque
 
 In a private chamber adjacent to the courtroom, the adventurers plead their case before the judge. They expressed their concerns about the witnesses' testimonies and the need to explore alternative leads that may unveil the truth behind the ambassador's potential murder. Phineous, a fair and astute judge, weighed their arguments and recognized the value of allowing them the opportunity to conduct further investigations.
 
-After intense negotiation, the adventurers managed to secure a one-month recess in the court proceedings. The judge agreed to reconvene after this period, granting them time to pursue their own leads, gather evidence, and present their findings before the court. The adventurers were grateful for this opportunity, understanding that it carried the weight of their comrade's fate. The court proceeding Adjourn.
+After intense negotiation, the adventurers managed to secure a one-month recess in the court proceedings. The judge agreed to reconvene after this period, granting them time to pursue their own leads, gather evidence, and present their findings before the court. The adventurers were grateful for this opportunity, understanding that it carried the weight of their comrade's fate. With the promise of an extended timeline, the adventurers seized the moment to discuss additional crucial matters with the judge. They knew they had to present their requests before leaving the courthouse.
+
+"In light of our ongoing investigation," one of the adventurers began, "we strongly believe that information from Genji Tink of Dessaquest may be pivotal to understanding the specifics of this case. We kindly request that the court send forth a request for Genji's presence. Their insights could shed light on the truth and aid our pursuit of justice."
+
+The judge nodded, acknowledging the importance of involving Genji Tink in the quest for truth. The adventurers continued, their determination unwavering.
+"Furthermore," another adventurer interjected, "we have reason to believe that Lollipop, the chicken at the Salty Seahorse Inn, may have been someone polymorphed in a similar manner to the events described in this case. We urge the court to investigate Lollipop, as it could provide us with valuable information that could uncover the truth."
+
+The judge considered their words, recognizing the significance of these leads. After a moment of contemplation, the judge responded, "Your requests hold merit, and I agree that exploring all possible avenues is crucial for a fair and just trial. I will arrange for a request to be sent to Genji Tink, and we will investigate Lollipop at the Salty Seahorse Inn."
+
+The adventurers breathed a sigh of relief, grateful for the judge's understanding and willingness to pursue these leads. They felt a renewed sense of hope, knowing that their additional requests had been heard and acknowledged. With these resources set in motion, they were one step closer to unraveling the intricate web of deceit surrounding the ambassador's alleged murder. The court proceeding Adjourn.
 
 With the promise of an extended timeline, the adventurers left the courthouse, their minds filled with a mix of determination and urgency. They knew they had to make the most of this respite, dedicating themselves to uncovering the truth that lay hidden beneath the surface. The journey ahead seemed arduous, but they were prepared to face the challenges, knowing that justice and their friend's freedom were at stake.
+
 
