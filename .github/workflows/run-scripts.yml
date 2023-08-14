@@ -3,7 +3,7 @@ name: Run Script
 on:
   push:
     branches:
-      - main  # Adjust this to your default branch
+      - main  # Default branch
 
 jobs:
   run-script:
@@ -16,8 +16,17 @@ jobs:
       - name: Set Up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14  # Choose the desired Node.js version
+          node-version: 14  # The desired Node.js version
 
       - name: Run Script
         run: |
           node templates/img/update_readme.js
+          
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add .
+          git commit -m "Automated README update"
+          git push
