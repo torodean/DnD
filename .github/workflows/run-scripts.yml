@@ -1,0 +1,23 @@
+name: Run Script
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to your default branch
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14  # Choose the desired Node.js version
+
+      - name: Run Script
+        run: |
+          node templates/img/update-readme.js
