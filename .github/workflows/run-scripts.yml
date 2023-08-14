@@ -20,4 +20,4 @@ jobs:
 
       - name: Run Script
         run: |
-          node templates/img/update-readme.js
+          node templates/img/update_readme.js
