@@ -21,7 +21,7 @@ jobs:
       - name: Run Script
         run: |
           node templates/img/update_readme.js
- 
+          
       - name: Commit and Push Changes
         run: |
           git config --local user.email "action@github.com"
@@ -29,6 +29,4 @@ jobs:
       
           git add .
           git commit -m "Automated README update"
-          git push origin HEAD:${{ github.ref }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
