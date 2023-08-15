@@ -1951,9 +1951,4 @@ svedka_manastorm.png
 svedka_manastorm_1.png
 </td>
 
-<td valign="bottom">
-<img src="./update_readme.js" width="200"><br>
-update_readme.js
-</td>
-
 </tr></table>
