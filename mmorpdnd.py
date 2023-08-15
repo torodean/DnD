@@ -116,7 +116,7 @@ class MMORPDND_VARS:
         self.root_dir = os.getcwd()
         self.script_dir = os.path.dirname(os.path.abspath(__file__))
 
-        self.directories_to_exclude = ["templates", "css", ".git", ".idea"]
+        self.directories_to_exclude = ["templates", "css", ".git", ".idea", ".github", "scripts"]
 
         # Define the regular expression to match the header section
         self.header_regex = re.compile(r"<head>.*?</head>", re.DOTALL)
