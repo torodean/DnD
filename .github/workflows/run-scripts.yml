@@ -23,7 +23,7 @@ jobs:
 
       - name: Run Script
         run: |
-          node scripts/update_readme.js
+          node scripts/update_readmes.js
           
       - name: Commit and Push Changes
         run: |
