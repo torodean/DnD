@@ -589,7 +589,7 @@ class Variables:
         self.character_template_file = "characterTemplate.html"
 
         # Define directories to exclude
-        self.directories_to_exclude = ["templates", "css", ".git", ".idea"]
+        self.directories_to_exclude = ["templates", "css", ".git", ".idea", ".github", "scripts"]
 
         # Define the root directory
         self.root_dir = os.getcwd()
