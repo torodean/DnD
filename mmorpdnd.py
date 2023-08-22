@@ -116,7 +116,7 @@ class MMORPDND_VARS:
         self.root_dir = os.getcwd()
         self.script_dir = os.path.dirname(os.path.abspath(__file__))
 
-        self.directories_to_exclude = ["templates", "css", ".git", ".idea", ".github", "scripts"]
+        self.directories_to_exclude = ["templates", "css", ".git", ".idea", ".github", "scripts", "docs"]
 
         # Define the regular expression to match the header section
         self.header_regex = re.compile(r"<head>.*?</head>", re.DOTALL)
@@ -387,7 +387,22 @@ class MMORPDND:
 
     def move_dir_items_to_end(self, string):
         """
+        Moves directory items (lines containing "/index.html") to the end of the input string.
 
+        This method takes a multi-line string as input and separates lines that contain "/index.html"
+        (directory items) from other lines (non-directory items). It then rearranges the lines by moving
+        the directory items to the end while maintaining the order of non-directory items.
+
+        Args:
+            string (str): The input multi-line string to be processed.
+
+        Returns:
+            str: A modified string with directory items moved to the end.
+
+        Example:
+            input_string = "Line 1\n/index.html\nLine 2\nLine 3\n/index.html"
+            result = move_dir_items_to_end(input_string)
+            # result will be "Line 1\nLine 2\nLine 3\n/index.html\n/index.html"
         """
         lines = string.split('\n')
         dir_items = []
@@ -804,8 +819,10 @@ class MMORPDND:
         """
         Finds all HTML files (not index.html files) in a directory and its subdirectories.
 
-        :param directory: The directory to search. Defaults to the current directory.
-        :return: A list of dictionaries containing the name (without extension), name (with extension), and full path
+        Args:
+            directory: The directory to search. Defaults to the current directory.
+        Return: 
+            A list of dictionaries containing the name (without extension), name (with extension), and full path
                  of each HTML file found.
         """
         html_files = []

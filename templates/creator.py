@@ -98,8 +98,9 @@ def append_to_file(file_path, string_to_append):
     """
     Append a string to a file.
 
-    :param file_path: The path to the file to append to.
-    :param string_to_append: The string to append to the file.
+    Parameters:
+        file_path: The path to the file to append to.
+        string_to_append: The string to append to the file.
     """
     with open(file_path, 'a') as file:
         file.write(string_to_append + '\n')
@@ -341,14 +342,14 @@ def calculate_modifier(attribute_value):
     Example:
         >>> calculate_modifier(15)
         2
-
     """
     modifier = (attribute_value - 10) // 2
     return modifier
 
 
 def copy_file_to_directory(file_path, directory_path):
-    """Copy a file to a directory.
+    """
+    Copy a file to a directory.
 
     Args:
         file_path (str): The path to the file to copy.
@@ -589,7 +590,7 @@ class Variables:
         self.character_template_file = "characterTemplate.html"
 
         # Define directories to exclude
-        self.directories_to_exclude = ["templates", "css", ".git", ".idea", ".github", "scripts"]
+        self.directories_to_exclude = ["templates", "css", ".git", ".idea", ".github", "scripts", "docs"]
 
         # Define the root directory
         self.root_dir = os.getcwd()
@@ -598,8 +599,12 @@ class Variables:
     def trash_file(self, file):
         """
         Move a file to the trash folder.
-        :param file: The file to move.
-        :return: None
+        
+        Parameters:
+            file: The file to move.
+            
+        Returns: 
+            None
         """
         if file.endswith(".char"):
             destination = self.trash_dir + "/chars"
@@ -613,6 +618,21 @@ class Variables:
         move_file(file, destination)
 
     def reset(self):
+        """
+        Reset the state of some objects to their initial values.
+        
+        This method resets the state of the object by clearing the values of the current_file, current_list,
+        and current_prob_matrix attributes. After calling this method, the object is restored to its initial
+        state, ready for new data to be processed and stored.
+
+        Example:
+            my_object = MyClass()
+            my_object.current_file = "data.txt"
+            my_object.current_list = [1, 2, 3]
+            my_object.current_prob_matrix = {"A": 0.2, "B": 0.3}
+            my_object.reset()
+            # After resetting, my_object's attributes are cleared and ready for new data.
+        """
         self.current_file = ""
         self.current_list = []
         self.current_prob_matrix = {}
@@ -875,7 +895,6 @@ def create_html_table(input_line):
 
         input: "2,a1,a2,b1,b2,c1,c2"
         output: '<table><tr><td>Value 1</td><td>Value 2</td></tr><tr><td>Value 3</td><td>Value 4</td></tr><tr><td>Value 5</td><td>Value 6</td></tr></table>'
-
     """
     # Split the single line by semi-colon
     values = input_line.split(';')
@@ -996,7 +1015,6 @@ def create_html_img(input_line):
     Example:
         input_line = "image.jpg; https://www.example.com/image.jpg; A beautiful sunset"
         html_block = create_html_img(input_line)
-
     """
     # Split the image data string by semi-colon
     input_line = input_line.split(';')
@@ -1055,10 +1073,10 @@ def create_html_img(input_line):
 
 def fix_image_extensions():
     """
-    Updates all image extensions.
+    Updates all image extensions by running the fix_image_extensions.py script.
 
     Example usage:
-    fix_image_extensions()
+        fix_image_extensions()
     """
     current_dir = os.getcwd()
     os.chdir("./img")
@@ -1076,17 +1094,16 @@ def update_all():
     Updates all components of the MMORPDND system.
 
     This function updates the MMORPDND system by performing the following steps:
-    1. Retrieves the current working directory.
-    2. Changes the current working directory to the parent directory.
-    3. Constructs a command to update the system by running './mmorpdnd.py -u'.
-    4. Executes the update command using the system shell.
-    5. Changes the current working directory back to the original directory.
+        1. Retrieves the current working directory.
+        2. Changes the current working directory to the parent directory.
+        3. Constructs a command to update the system by running './mmorpdnd.py -u'.
+        4. Executes the update command using the system shell.
+        5. Changes the current working directory back to the original directory.
 
     Note: This function assumes that the 'mmorpdnd.py' script is located in the parent directory.
 
     Example usage:
-    update_all()
-
+        update_all()
     """
     current_dir = os.getcwd()
     os.chdir("../")
@@ -1100,7 +1117,8 @@ def update_all():
 
 
 def get_random_line(file_path):
-    """Return a random line from a file.
+    """
+    Return a random line from a file.
 
     Args:
         file_path (str): The path to the file.
@@ -1832,6 +1850,21 @@ class Creator:
             global_vars.trash_file(file)
 
     def output_text(self, text):
+        """
+        Output the given text to the GUI window and the large_text widget.
+
+        This method displays the provided text in the GUI window and appends it to the large_text widget.
+        It also ensures that the text is visible by scrolling to the bottom of the widget and updates
+        the GUI window to reflect the changes.
+
+        Args:
+            text (str): The text to be displayed and appended to the large_text widget.
+
+        Example:
+            gui_instance = MyGUI()
+            gui_instance.output_text("Processing completed successfully.")
+            # The text "Processing completed successfully." is displayed in the GUI window.
+        """
         print(text)
         # Append the given text to the large_text widget
         self.large_text.config(state="normal")
@@ -1848,7 +1881,7 @@ class Creator:
         """
         Method for testing.
 
-        :return:
+        Returns:
             None
         """
         self.output_text("test text")
@@ -1926,19 +1959,61 @@ class Creator:
         return user_choice.get()
 
     def yes(self):
+        """
+        Set last_user_input to "yes".
+
+        This method updates the last_user_input attribute to "yes" and displays a message indicating the change.
+
+        Example:
+            gui_instance = MyGUI()
+            gui_instance.yes()
+            # The last_user_input attribute is updated to "yes".
+        """
         self.last_user_input = "yes"
         print(f"last_user_input set to {self.last_user_input}")
 
     def no(self):
+        """
+        Set last_user_input to "no".
+
+        This method updates the last_user_input attribute to "no" and displays a message indicating the change.
+
+        Example:
+            gui_instance = MyGUI()
+            gui_instance.no()
+            # The last_user_input attribute is updated to "no".
+        """
         self.last_user_input = "no"
         print(f"last_user_input set to {self.last_user_input}")
 
     def reset(self):
+        """
+        Reset last_user_input and provide status.
+
+        This method resets the last_user_input attribute to "reset", displays a reset message using the output_text
+        method, and confirms the change with a print statement.
+
+        Example:
+            gui_instance = MyGUI()
+            gui_instance.reset()
+            # The last_user_input attribute is reset to "reset", and the GUI provides a reset status.
+        """
         self.output_text("Resetting...")
         self.last_user_input = "reset"
         print(f"last_user_input set to {self.last_user_input}")
 
     def browse_files(self):
+        """
+        Open a file dialog to select a file path.
+
+        This method opens a file dialog to allow the user to select a file path. The selected file path is then
+        displayed in the editable box on the GUI.
+
+        Example:
+            gui_instance = MyGUI()
+            gui_instance.browse_files()
+            # The user selects a file path using the file dialog, and the selected path is displayed in the GUI.
+        """
         # Use the file dialog to get a file path
         file_path = filedialog.askopenfilename()
 
@@ -1947,6 +2022,22 @@ class Creator:
         self.path_text.insert(0, file_path)
 
     def update_input_file(self):
+        """
+        Update the current input file and associated data.
+
+        This method updates the current input file based on the path entered in the GUI. If no file path
+        is provided, an appropriate message is displayed using the output_text method. If the provided
+        file path is different from the current file path, the global_vars object is reset, and the new
+        file path is set as the current file. Additionally, if the file's extension matches certain
+        predefined extensions (such as '.char', '.names', or '.list'), the lines from the file are read
+        and stored in the current_list attribute.
+
+        Example:
+            gui_instance = MyGUI()
+            gui_instance.path_text.set("data.txt")
+            gui_instance.update_input_file()
+            # The current input file is updated to 'data.txt', and associated data is adjusted.
+        """
         print("Updating input file.")
         if self.path_text.get() is None:
             self.output_text("No file input!")
