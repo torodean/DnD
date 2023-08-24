@@ -214,8 +214,8 @@ _0d27ae0b-a06e-45a4-9fcd-d1f990911d57.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_0d5a6699-9e19-4482-beee-143009c1f516.jpeg" width="200"><br>
-_0d5a6699-9e19-4482-beee-143009c1f516.jpeg
+<img src="./_0d5a6699-9e19-4482-beee-143009c1f516.jpg" width="200"><br>
+_0d5a6699-9e19-4482-beee-143009c1f516.jpg
 </td>
 
 </tr>
@@ -226,8 +226,8 @@ _0d6b7b8d-33c6-44de-805c-394aeaad3edb.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_0e317290-8c17-46e7-afb1-9caf1552ac80.jpeg" width="200"><br>
-_0e317290-8c17-46e7-afb1-9caf1552ac80.jpeg
+<img src="./_0e317290-8c17-46e7-afb1-9caf1552ac80.jpg" width="200"><br>
+_0e317290-8c17-46e7-afb1-9caf1552ac80.jpg
 </td>
 
 <td valign="bottom">
@@ -346,8 +346,8 @@ _247bb0e1-f6ee-4db4-bbea-73b3b2356095.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_24d29638-f292-4767-92f6-09e66df906d5.jpeg" width="200"><br>
-_24d29638-f292-4767-92f6-09e66df906d5.jpeg
+<img src="./_24d29638-f292-4767-92f6-09e66df906d5.jpg" width="200"><br>
+_24d29638-f292-4767-92f6-09e66df906d5.jpg
 </td>
 
 </tr>
@@ -419,8 +419,8 @@ _2c243098-91d3-40ec-b2e8-e478da83f307.jpg
 </tr>
 <tr>
 <td valign="bottom">
-<img src="./_2c72bec2-d652-43b7-8cf5-82f472d56a00.jpeg" width="200"><br>
-_2c72bec2-d652-43b7-8cf5-82f472d56a00.jpeg
+<img src="./_2c72bec2-d652-43b7-8cf5-82f472d56a00.jpg" width="200"><br>
+_2c72bec2-d652-43b7-8cf5-82f472d56a00.jpg
 </td>
 
 <td valign="bottom">
@@ -507,8 +507,8 @@ _3973b6af-8435-4b92-88ac-18930fec3dd5.jpg
 </tr>
 <tr>
 <td valign="bottom">
-<img src="./_3a403fed-5968-4ab0-bf68-070beb5e2835.jpeg" width="200"><br>
-_3a403fed-5968-4ab0-bf68-070beb5e2835.jpeg
+<img src="./_3a403fed-5968-4ab0-bf68-070beb5e2835.jpg" width="200"><br>
+_3a403fed-5968-4ab0-bf68-070beb5e2835.jpg
 </td>
 
 <td valign="bottom">
@@ -573,8 +573,8 @@ _4040cce4-a337-47ae-ad62-f837978f50c3.jpg
 </tr>
 <tr>
 <td valign="bottom">
-<img src="./_41727c08-6573-4754-8784-830a2852436d.jpeg" width="200"><br>
-_41727c08-6573-4754-8784-830a2852436d.jpeg
+<img src="./_41727c08-6573-4754-8784-830a2852436d.jpg" width="200"><br>
+_41727c08-6573-4754-8784-830a2852436d.jpg
 </td>
 
 <td valign="bottom">
@@ -583,8 +583,8 @@ _41ac6bc3-5aad-4f25-8e29-57cfd0a06bbf.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_41b3506f-9dfc-439b-98b3-5cbb3f1848ef.jpeg" width="200"><br>
-_41b3506f-9dfc-439b-98b3-5cbb3f1848ef.jpeg
+<img src="./_41b3506f-9dfc-439b-98b3-5cbb3f1848ef.jpg" width="200"><br>
+_41b3506f-9dfc-439b-98b3-5cbb3f1848ef.jpg
 </td>
 
 <td valign="bottom">
@@ -639,8 +639,8 @@ _4a7b0a4a-4024-4112-ba8c-7046561fca1a.jpg
 </tr>
 <tr>
 <td valign="bottom">
-<img src="./_4ac53552-39b6-432f-92a3-791f889fb15c.jpeg" width="200"><br>
-_4ac53552-39b6-432f-92a3-791f889fb15c.jpeg
+<img src="./_4ac53552-39b6-432f-92a3-791f889fb15c.jpg" width="200"><br>
+_4ac53552-39b6-432f-92a3-791f889fb15c.jpg
 </td>
 
 <td valign="bottom">
@@ -705,8 +705,8 @@ _54e07bf6-4553-4056-b4e3-77b5239dc1e3.jpg
 </tr>
 <tr>
 <td valign="bottom">
-<img src="./_54f59bd0-f221-41b1-879f-d54f1b80c793.jpeg" width="200"><br>
-_54f59bd0-f221-41b1-879f-d54f1b80c793.jpeg
+<img src="./_54f59bd0-f221-41b1-879f-d54f1b80c793.jpg" width="200"><br>
+_54f59bd0-f221-41b1-879f-d54f1b80c793.jpg
 </td>
 
 <td valign="bottom">
@@ -749,8 +749,8 @@ _5ae4cf08-30ca-4aea-914c-fd0c23f862df.jpg
 </tr>
 <tr>
 <td valign="bottom">
-<img src="./_5b5ae957-39db-4d5c-98bc-2aff041fc220.jpeg" width="200"><br>
-_5b5ae957-39db-4d5c-98bc-2aff041fc220.jpeg
+<img src="./_5b5ae957-39db-4d5c-98bc-2aff041fc220.jpg" width="200"><br>
+_5b5ae957-39db-4d5c-98bc-2aff041fc220.jpg
 </td>
 
 <td valign="bottom">
@@ -852,8 +852,8 @@ _6cfbcad2-e63f-45f5-bfb4-c68e36b4e4e3.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_6f11abec-62fb-4333-95f3-d07927c086fa.jpeg" width="200"><br>
-_6f11abec-62fb-4333-95f3-d07927c086fa.jpeg
+<img src="./_6f11abec-62fb-4333-95f3-d07927c086fa.jpg" width="200"><br>
+_6f11abec-62fb-4333-95f3-d07927c086fa.jpg
 </td>
 
 </tr>
@@ -962,8 +962,8 @@ _7d4bfb02-1fa2-4b22-a3ce-f721f7a514c3.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_7d8b201c-f37c-41fa-9a22-70176cf2acd8.jpeg" width="200"><br>
-_7d8b201c-f37c-41fa-9a22-70176cf2acd8.jpeg
+<img src="./_7d8b201c-f37c-41fa-9a22-70176cf2acd8.jpg" width="200"><br>
+_7d8b201c-f37c-41fa-9a22-70176cf2acd8.jpg
 </td>
 
 </tr>
@@ -1128,8 +1128,8 @@ _914cbb49-9a15-40b9-b1b4-6cd448600146.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_921002b3-91f2-4bf8-90f0-39a19ab1a3d4.jpeg" width="200"><br>
-_921002b3-91f2-4bf8-90f0-39a19ab1a3d4.jpeg
+<img src="./_921002b3-91f2-4bf8-90f0-39a19ab1a3d4.jpg" width="200"><br>
+_921002b3-91f2-4bf8-90f0-39a19ab1a3d4.jpg
 </td>
 
 <td valign="bottom">
@@ -1167,8 +1167,8 @@ _9578495a-7967-4bee-9106-5c7f131f5475.jpg
 </tr>
 <tr>
 <td valign="bottom">
-<img src="./_971e6380-cee2-4847-b1ab-68cb5b524254.jpeg" width="200"><br>
-_971e6380-cee2-4847-b1ab-68cb5b524254.jpeg
+<img src="./_971e6380-cee2-4847-b1ab-68cb5b524254.jpg" width="200"><br>
+_971e6380-cee2-4847-b1ab-68cb5b524254.jpg
 </td>
 
 <td valign="bottom">
@@ -1238,8 +1238,8 @@ _a0f10349-5c7c-420b-9453-045e2c35a48c.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_a226d19d-c92f-44cd-a1a9-9e3d7abab066.jpeg" width="200"><br>
-_a226d19d-c92f-44cd-a1a9-9e3d7abab066.jpeg
+<img src="./_a226d19d-c92f-44cd-a1a9-9e3d7abab066.jpg" width="200"><br>
+_a226d19d-c92f-44cd-a1a9-9e3d7abab066.jpg
 </td>
 
 <td valign="bottom">
@@ -1441,8 +1441,8 @@ _c4f42e44-b296-4bd2-8ab6-2d15f82c4f39.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_c59419db-ff51-4b6a-852b-5a3db2d5fddd.jpeg" width="200"><br>
-_c59419db-ff51-4b6a-852b-5a3db2d5fddd.jpeg
+<img src="./_c59419db-ff51-4b6a-852b-5a3db2d5fddd.jpg" width="200"><br>
+_c59419db-ff51-4b6a-852b-5a3db2d5fddd.jpg
 </td>
 
 <td valign="bottom">
@@ -1578,8 +1578,8 @@ _dab1953a-a059-42e9-8b70-7b653b4245ce.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_dada2430-254e-4782-97d0-5b2f49d38974.jpeg" width="200"><br>
-_dada2430-254e-4782-97d0-5b2f49d38974.jpeg
+<img src="./_dada2430-254e-4782-97d0-5b2f49d38974.jpg" width="200"><br>
+_dada2430-254e-4782-97d0-5b2f49d38974.jpg
 </td>
 
 </tr>
@@ -1651,8 +1651,8 @@ _e15a4d48-0fa8-4ae9-ac95-433cb7cfeb2f.jpg
 </tr>
 <tr>
 <td valign="bottom">
-<img src="./_e2522bed-1481-4d8c-98bb-2fc52ba08429.jpeg" width="200"><br>
-_e2522bed-1481-4d8c-98bb-2fc52ba08429.jpeg
+<img src="./_e2522bed-1481-4d8c-98bb-2fc52ba08429.jpg" width="200"><br>
+_e2522bed-1481-4d8c-98bb-2fc52ba08429.jpg
 </td>
 
 <td valign="bottom">
@@ -1793,8 +1793,8 @@ _f6738427-e18d-4156-8cf0-b06c9a0523fc.jpg
 </td>
 
 <td valign="bottom">
-<img src="./_f6e6b4de-a5a2-4f9a-806c-5219b1db86aa.jpeg" width="200"><br>
-_f6e6b4de-a5a2-4f9a-806c-5219b1db86aa.jpeg
+<img src="./_f6e6b4de-a5a2-4f9a-806c-5219b1db86aa.jpg" width="200"><br>
+_f6e6b4de-a5a2-4f9a-806c-5219b1db86aa.jpg
 </td>
 
 <td valign="bottom">
@@ -1903,22 +1903,17 @@ a huge white ch 0.png
 </td>
 
 <td valign="bottom">
-<img src="./arinwynn_starling.jpg" width="200"><br>
-arinwynn_starling.jpg
-</td>
-
-<td valign="bottom">
 <img src="./asfaertaret.jpg" width="200"><br>
 asfaertaret.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./baby_coconatus_marmotta (1).jpg" width="200"><br>
 baby_coconatus_marmotta (1).jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./baby_coconatus_marmotta (2).jpg" width="200"><br>
 baby_coconatus_marmotta (2).jpg
@@ -1927,40 +1922,6 @@ baby_coconatus_marmotta (2).jpg
 <td valign="bottom">
 <img src="./baby_coconatus_marmotta (3).jpg" width="200"><br>
 baby_coconatus_marmotta (3).jpg
-</td>
-
-<td valign="bottom">
-<img src="./coconatus marmotta (1).jpg" width="200"><br>
-coconatus marmotta (1).jpg
-</td>
-
-</tr>
-<tr>
-<td valign="bottom">
-<img src="./coconatus marmotta (2).jpg" width="200"><br>
-coconatus marmotta (2).jpg
-</td>
-
-<td valign="bottom">
-<img src="./coconatus marmotta (3).jpg" width="200"><br>
-coconatus marmotta (3).jpg
-</td>
-
-<td valign="bottom">
-<img src="./coconatus marmotta (4).jpg" width="200"><br>
-coconatus marmotta (4).jpg
-</td>
-
-<td valign="bottom">
-<img src="./contract (1).jpg" width="200"><br>
-contract (1).jpg
-</td>
-
-</tr>
-<tr>
-<td valign="bottom">
-<img src="./contract (2).jpg" width="200"><br>
-contract (2).jpg
 </td>
 
 <td valign="bottom">
@@ -1973,13 +1934,13 @@ elsie_moonshadow.jpg
 fix_image_extensions.py
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./foobar.jpg" width="200"><br>
 foobar.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./genji_tink (2).jpg" width="200"><br>
 genji_tink (2).jpg
@@ -1995,13 +1956,13 @@ iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg
 iYZER0V5Ufnx0BV0uO7m--3--2sg5t.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./indigo dahlia, macro photography.jpg" width="200"><br>
 indigo dahlia, macro photography.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./svedka_manastorm.png" width="200"><br>
 svedka_manastorm.png
@@ -2010,16 +1971,6 @@ svedka_manastorm.png
 <td valign="bottom">
 <img src="./svedka_manastorm_1.png" width="200"><br>
 svedka_manastorm_1.png
-</td>
-
-<td valign="bottom">
-<img src="./yellowseed_village_1.jpg" width="200"><br>
-yellowseed_village_1.jpg
-</td>
-
-<td valign="bottom">
-<img src="./yellowseed_village_2.jpg" width="200"><br>
-yellowseed_village_2.jpg
 </td>
 
 </tr></table>

@@ -38,12 +38,17 @@ ariadne_witwood.jpg
 </td>
 
 <td valign="bottom">
-<img src="./arlo_ironheart.jpg" width="200"><br>
-arlo_ironheart.jpg
+<img src="./arinwynn_starling.jpg" width="200"><br>
+arinwynn_starling.jpg
 </td>
 
 </tr>
 <tr>
+<td valign="bottom">
+<img src="./arlo_ironheart.jpg" width="200"><br>
+arlo_ironheart.jpg
+</td>
+
 <td valign="bottom">
 <img src="./astrid_windrider.jpg" width="200"><br>
 astrid_windrider.jpg
@@ -59,13 +64,13 @@ aurelia_windweaver.jpg
 berinold_denko.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./bhomian_dessa.jpg" width="200"><br>
 bhomian_dessa.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./bre_gilhart.jpg" width="200"><br>
 bre_gilhart.jpg
@@ -81,13 +86,13 @@ bren_dessala.jpg
 captain_finnegan_osullivan.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./cedric_blackthorn.jpg" width="200"><br>
 cedric_blackthorn.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./celestia_starweave.jpg" width="200"><br>
 celestia_starweave.jpg
@@ -103,13 +108,13 @@ corvus_stormrider.jpg
 daenara_fhindre.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./damali_bekk.jpg" width="200"><br>
 damali_bekk.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./dariana_spellweaver.jpg" width="200"><br>
 dariana_spellweaver.jpg
@@ -125,13 +130,13 @@ davis_octavia_maximus.jpg
 decan_meaz.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./dentra_tult.jpg" width="200"><br>
 dentra_tult.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./draven_fireclaw.jpg" width="200"><br>
 draven_fireclaw.jpg
@@ -147,13 +152,13 @@ durk_hollingsworth.jpg
 eamon_fhindre.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./elara_nightshade.jpg" width="200"><br>
 elara_nightshade.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./eldrin_forestwalker.jpg" width="200"><br>
 eldrin_forestwalker.jpg
@@ -169,13 +174,13 @@ elric_nightingale.jpg
 elsharin_seacliff.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./elysia_moonwhisper.jpg" width="200"><br>
 elysia_moonwhisper.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./faerwen_grenleaf.jpg" width="200"><br>
 faerwen_grenleaf.jpg
@@ -191,13 +196,13 @@ genji_tink (1).jpg
 genji_tink (2).jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./gilb_dessalla.jpg" width="200"><br>
 gilb_dessalla.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./grizzlegob.jpg" width="200"><br>
 grizzlegob.jpg
@@ -213,13 +218,13 @@ index.html
 isabella_evergreen.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./isabella_shadowbrook.jpg" width="200"><br>
 isabella_shadowbrook.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./jonas_fisher.jpg" width="200"><br>
 jonas_fisher.jpg
@@ -235,13 +240,13 @@ kaelar_stormcaller.jpg
 kellan_stormtide.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./kendril_megatto.jpg" width="200"><br>
 kendril_megatto.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./kenneth_zud.jpg" width="200"><br>
 kenneth_zud.jpg
@@ -257,13 +262,13 @@ lexus_nerro.jpg
 lilyana_hearthwood.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./lirael_forestwind.jpg" width="200"><br>
 lirael_forestwind.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./lirael_willowleaf.jpg" width="200"><br>
 lirael_willowleaf.jpg
@@ -279,13 +284,13 @@ lyra_silverwind.jpg
 marius_stormrider.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./marla_hindesah.jpg" width="200"><br>
 marla_hindesah.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./martin_greenfield.jpg" width="200"><br>
 martin_greenfield.jpg
@@ -301,13 +306,13 @@ maximus_stormweaver.jpg
 maxwell_loren.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./maybell_declure.jpg" width="200"><br>
 maybell_declure.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./merrick_gearlock.jpg" width="200"><br>
 merrick_gearlock.jpg
@@ -323,13 +328,13 @@ mortimer_blackthorn.jpg
 nenyala_rindew.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./percival_gearlock.jpg" width="200"><br>
 percival_gearlock.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./phineous_grenn.jpg" width="200"><br>
 phineous_grenn.jpg
@@ -345,13 +350,13 @@ quintus_salwaither.jpg
 roderick_thornfield.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./roland_swiftwind.jpg" width="200"><br>
 roland_swiftwind.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./rosalind_scribeheart.jpg" width="200"><br>
 rosalind_scribeheart.jpg
@@ -367,13 +372,13 @@ sendri_meaz.jpg
 seraphina_lightbringer.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./seraphina_stormrider.jpg" width="200"><br>
 seraphina_stormrider.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./seraphina_thornvale.jpg" width="200"><br>
 seraphina_thornvale.jpg
@@ -389,13 +394,13 @@ silas_shadowvale.jpg
 telburn_himreich.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./telma_fhindre.jpg" width="200"><br>
 telma_fhindre.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./thaldir_windrider.jpg" width="200"><br>
 thaldir_windrider.jpg
@@ -411,13 +416,13 @@ thorin_stonehammer.jpg
 thorne_ironfist.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./tonya_dessala.jpg" width="200"><br>
 tonya_dessala.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./toshira_siljie.jpg" width="200"><br>
 toshira_siljie.jpg
