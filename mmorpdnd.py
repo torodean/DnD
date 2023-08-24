@@ -107,7 +107,7 @@ class MMORPDND_VARS:
                 "timeline": {}
             }
         }
-z
+
         # Define the number of HTML files to create in each subdirectory
         self.num_dummy_files_per_subdir = 3  # Stores all files created so far.
         self.all_index_files = []
