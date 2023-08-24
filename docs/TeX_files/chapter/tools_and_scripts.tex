@@ -19,11 +19,6 @@
 
 \section{mmorpdnd.py}
 
-
-
-
-
-
 \subsection{Purpose}
 
 This script serves as the backbone for an array of automatic linking and logistical features within MMORPDND. These functionalities typically operate on all files, encompassing crucial elements such as the generation of directories, HTML index files at the directory summits, establishment of uniform headers and navigation for all HTML documents, seamless interlinking between files, refinement of both HTML and CSS code, and an array of additional capabilities. When ran, this script will perform the following actions in the following order:
@@ -46,13 +41,34 @@ This script serves as the backbone for an array of automatic linking and logisti
 
 \subsection{Use}
 
+The mmorpdnd.py script can be ran as a gui window or using the command line options. The two main features are `test' and `update'. The `test' feature will create fake files and then perform the update command on them. This is useful for testing if the features and newly added features are working properly. The `update' feature will perform a combination of tasks which updates all appropriate files to do the steps mentioned in the list above.
+
 \subsubsection{GUI}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/mmorpdnd_gui.png}
+	\caption{The MMORPDND Main GUI}
+	\label{fig:mmorpdnd_gui}
+\end{figure}
+
+The GUI window is somewhat self explanatory. The two main features are represented by red buttons - the `test` and `update` features. There are also other buttons to simple perform and of the individual tasks using the appropriately associated button.
 
 \subsubsection{Command Line}
 
 The MMORPDND application supports some command line features.
 
+\begin{lstlisting}
+usage: mmorpdnd.py [-h] [-t] [-u]
 
+MMORPDND Tools and apps.
+
+optional arguments:
+	-h, --help    show this help message and exit
+	-t, --test    Runs the test-all feature then exit.
+	-u, --update  Runs the update-all feature then exit.
+
+\end{lstlisting}
 
 
 
@@ -565,20 +581,58 @@ Main method to start the gui and take optional arguments/parameters for running 
 \section{templates/creator.py}
 
 
+
 \subsection{Purpose}
 
 The creator tool is a practical solution for converting basic template text files into functional HTML pages. It takes care of the technical aspects by automatically creating HTML files and filling in missing details, like character stats or other content. The tool understands the structure of your template files, recognizes placeholders, and replaces them with accurate data. Whether you're building character profiles, story summaries, or any content with consistent formatting, this tool ensures your HTML documents are correctly formatted and ready for use. It simplifies the process, letting you focus on content creation while it handles the conversion from templates to HTML.
 
-
-
-
-
-
-
-
 \subsection{Use}
 
+The creator tool is a powerful tool that contains many subtle features. It is important to understand these subtleties before using the tool and therefore I encourage the reader to read this enture section before use. 
+
 \subsubsection{GUI}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/creator_gui.png}
+	\caption{The MMORPDND Main GUI}
+	\label{fig:creator_gui}
+\end{figure}
+
+SECTION IN PROGRESS!
+
+\subsubsection{Input Files (.input)}
+
+SECTION IN PROGRESS!
+
+\subsubsection{Character Files (.char)}
+
+SECTION IN PROGRESS!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \subsubsection{Command Line}
 
