@@ -1481,7 +1481,7 @@ class Creator:
         with open(file, 'r') as f:
             lines = f.readlines()
 
-        folder = "."
+        folder = global_vars.root_dir
 
         for line in lines:
             if "folder" in line:

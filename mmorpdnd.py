@@ -125,9 +125,9 @@ class MMORPDND_VARS:
         self.title_regex = re.compile(r"<title>.*?</title>", re.DOTALL)
 
         # Define the template file paths
-        self.header_template_file = "templates/headerTemplate.html"
-        self.nav_template_file = "templates/navTemplate.html"
-        self.css_path = "css/mmorpdnd.css"
+        self.header_template_file = f"{self.root_dir}/templates/headerTemplate.html"
+        self.nav_template_file = f"{self.root_dir}/templates/navTemplate.html"
+        self.css_path = f"{self.root_dir}/css/mmorpdnd.css"
 
 
 # Define a global variable containing the declared vars. Use this so they are all only defined once and can be
@@ -493,7 +493,7 @@ class MMORPDND:
         print("Updating index files...")
 
         # Get list of all HTML index files in directory and subdirectories
-        for root, dirnames, filenames in os.walk("."):
+        for root, dirnames, filenames in os.walk(global_vars.root_dir):
             for file in filenames:
 
                 # Check if we are looking at a file in our exclude list.
@@ -628,7 +628,7 @@ class MMORPDND:
                     # Replace the header section with the contents of the template
                     contents = re.sub(global_vars.header_regex, template, contents)
 
-                    title = "<title>" + filename.split('.')[0].replace('_', ' ') + "</title>"
+                    title = "<title>" + filename.split(global_vars.root_dir)[0].replace('_', ' ') + "</title>"
                     print(title)
 
                     # Replace the title section with the file name
