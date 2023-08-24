@@ -2012,4 +2012,14 @@ svedka_manastorm.png
 svedka_manastorm_1.png
 </td>
 
+<td valign="bottom">
+<img src="./yellowseed_village_1.jpg" width="200"><br>
+yellowseed_village_1.jpg
+</td>
+
+<td valign="bottom">
+<img src="./yellowseed_village_2.jpg" width="200"><br>
+yellowseed_village_2.jpg
+</td>
+
 </tr></table>
