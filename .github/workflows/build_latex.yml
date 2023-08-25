@@ -1,0 +1,38 @@
+name: Build LaTeX Documents
+
+on:
+  push:
+    branches:
+      - main  # Default Branch
+    paths:
+      - 'docs/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Setup TeX Live
+      uses: xu-cheng/latex-action@v2
+      with:      
+        working_directory: docs
+        root_file: Manual.tex  # You can adjust the TeX Live profile
+        
+    - name: Rename LaTeX document
+      run: |
+        cd docs  # Change directory to the subfolder
+        mv Manual.pdf Manual_autogen.pdf
+        
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name 'Antonius Torode'
+        git config --global user.email 'torodean@users.noreply.github.com'
+        git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
+        git checkout "${GITHUB_REF:11}"
+        cd docs  # Change directory to the subfolder
+        git add Manual_autogen.pdf
+        git commit -m "Automated LaTeX generation - updating PDF"
+        git push
