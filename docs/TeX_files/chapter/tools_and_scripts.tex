@@ -638,7 +638,7 @@ SECTION IN PROGRESS!
 
 For example input files, you can look inside the templates/trash folder. This is where input files get placed after they are finished processing. The following is an example input file with an example of many different elements. The associated image files `foobar.jpg', `foobars (1).jpg' and `foobars (2).jpg' should be located in the templates/img folder for the below file to process correctly.
 
-\begin{lstlisting}
+\begin{inputfile}
 folder=items
 
 A Single Image[dnd-image]=img/foobar.jpg;Created by Someone;A foobar image.
@@ -654,7 +654,7 @@ Multiple Images[dnd-image]=img/foobars.jpg;Created by Someone;Multiple foobar im
 Information Section with List[dnd-info]=Here is a paragraph of text followed by a list;-List_item_A;-List_item_B;-List_item_C;Followed by a paragraph.
 
 Music And Ambiance[dnd-music]=https://youtube_link_1;https://youtube_link_2;https://youtube_link_3
-\end{lstlisting}
+\end{inputfile}
 
 The above file will create a file in the `items' folder found in `campaign/items'. The file will start with a header "A Single Image", where the foobar.jpg image is displayed. A caption of "A foobar image." will be under the image. Next will be a heading "Information Section" That has two paragraphs. Next a similar section with a header "Information Section With Smaller Headers", a paragraph, then a smaller header "Small Header", followed by another paragraph. Next, another heading "A List Of Items" with 4 items in the list. Following this, a "Multiple Images" heading with 2 images `foobars (1).jpg' and `foobars (2).jpg'\footnote{If an image is not found, it will automatically search for files with that image name with an appended (1), (2), (3),... If `(1)' is found, this image will be used and the number incrememted until no other images are found.} with a caption "Multiple foobar images." Next, another heading ``Information Section with List", with a paragraph, a list, and then another paragraph. Finally, a heading "Music And Ambiance" with links to three youtube videos. If the "download links" checkbox is enabled, these video's will be downloaded as mp3 files and the fodler icon will link to the local files.
 
