@@ -20,23 +20,6 @@
 \lstdefinestyle{python}{language=Python, tabsize=3, backgroundcolor=\color{backcolour},breaklines=true, basicstyle=\footnotesize, showstringspaces=false, commentstyle=\color{commentcolour}, keywordstyle=\color{blue}}
 \lstset{style=python}
 
-% Define the inputfile environment
-\lstnewenvironment{inputfile}[1][]
-{
-    \lstset{
-        language=,
-        basicstyle=\ttfamily,
-        keywordstyle=\color{bluekeywords},
-        morekeywords={dnd-info,dnd-list,dnd-music,dnd-image},
-        literate=*{-}{\textcolor{redsymbols}{-}}{1}
-                 {=}{\textcolor{redsymbols}{=}}{1}
-                 {*}{\textcolor{redsymbols}{*}}{1}
-                 {;}{\textcolor{redsymbols}{;}}{1}
-                 {[}{\textcolor{redsymbols}{[}}{1}
-                 {]}{\textcolor{redsymbols}{]}}{1}
-    }
-}{}
-
 % Define a tcolorbox environment for code blocks
 \tcbuselibrary{listings,skins,breakable}
 \newtcblisting{codebox}[1][]{ % Add an optional argument for title
