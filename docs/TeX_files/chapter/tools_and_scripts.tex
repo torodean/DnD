@@ -598,7 +598,12 @@ The creator tool is a powerful tool that contains many subtle features. It is im
 	\label{fig:creator_gui}
 \end{figure}
 
-SECTION IN PROGRESS!
+The main GUI of the creator tool has a few components. These include text boxes, buttoms, and check boxes. 
+The ``Input File" textbox field is used to specify the input file that is to be processed by the tool. This file can be an `.input', `.char' or `.names' file. Ensure the file is in the proper format (see below sections) or unexpected behaviour may occur. The `Browse' button is used to open a file explorer window for selecting a file and will automatically populate the ``Input File" text field when a file is selected. The large text box in the center of the GUI is where output generated from the tool as well as status messages are displayed.
+
+The ``Generate Word" button is used for random word generation. This feature takes a list of words (whether names, places, or other) and generates a similar random word using the data in the input `.names' file. This is explained in more detail later in section \ref{section .names}. The ``Create Page'' button is used to generate an html file based on a `.input' or `.char' file and is explained in more details in the following sections. the ``Random Places'' file is used to generate place names based on an input `.names' file along with a `.list' file. These are explained mroe in later sections. The ``Yes", ``No", and ``Reset" buttons are used when user input is asked for.
+
+The ``Trash" checkbox will determine if processed files will be moved to the trash folder after processing and if duplicate files are to be deleted. Typically, the user will want this to be checked, but it is useful to leave unchecked for testing and if files will be processed multiple times. The ``Download Files" button determines if music files should be downloaded when `.input' files containing a dnd-music section are processed (this is explained mroe in later sections).
 
 \subsubsection{Input Files (.input)}
 
@@ -620,11 +625,21 @@ The various types determine the formatting and decoding of the input file, and e
 
 \subsubsection{dnd-image type}
 
-SECTION IN PROGRESS!
+The \textbf{dnd-image} type is used to display images specific to the file. The information text must contain three parameters separated by a semi-colon delimeter. These parameters are \textbf{img/image-name.jpg;image source;image caption}. The first parameter is simply the location of the image and the image name. These are typically placed in `templates/img'. The second is the source of the image, this is simply a string but is there to keep all images properly sourced. The third is a caption that will be displayed with an image. This caption is also a string and can be whatever the user desires. As an example, here's a proper dnd-image block:
+
+\begin{lstlisting}
+Coconatus Marmotta[dnd-image]=img/coconatus_marmotta.jpg;Created by Bing AI image creator;Coconatus Marmotta.
+\end{lstlisting}
+
+One unique feature of this is that if the image name does not exist (i.e. `img/coconatus_marmotta.jpg'), the tool will append a ` (1)' to the name and search again (i.e. `img/coconatus_marmotta (1).jpg'). If this new name is found, the tool will search for image names with the index incremented and include all such images (i.e. `img/coconatus_marmotta (2).jpg', `img/coconatus_marmotta (3).jpg', etc) in the output html block.  
 
 \subsubsection{dnd-list type}
 
-SECTION IN PROGRESS!
+The \textbf{dnd-list} type is used to display a simple list of items. The information text must contain one or more parameters separated by a semi-colon delimeter. As an example, here's a proper dnd-list block:
+
+\begin{lstlisting}
+Landmarks and Other Features[dnd-list]=Talleril: A small island far off the coast of Alderpine.;Enthilma: A small island off the coast of Alderpine.;Lomelindei: The large world tree deep within Alderpine.
+\end{lstlisting}
 
 \subsubsection{dnd-info type}
 
@@ -789,9 +804,25 @@ Once created, the file should be placed in the templates/input\_files folder and
 
 
 
-\subsubsection{List Files (.list)}
 
 
+
+
+
+\subsubsection{Name Files (.names) \label{section .names}}
+
+SECTION IN PROGRESS!
+
+
+
+
+
+
+
+
+\subsubsection{List Files (.list) \label{section .list}}
+
+SECTION IN PROGRESS!
 
 
 
