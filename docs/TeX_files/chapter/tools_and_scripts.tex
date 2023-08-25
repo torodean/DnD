@@ -636,66 +636,154 @@ SECTION IN PROGRESS!
 
 \subsubsection{Example Input File}
 
-SECTION IN PROGRESS!
+For example input files, you can look inside the templates/trash folder. This is where input files get placed after they are finished processing. The following is an example input file with an example of many different elements. The associated image files `foobar.jpg', `foobars (1).jpg' and `foobars (2).jpg' should be located in the templates/img folder for the below file to process correctly.
+
+\begin{lstlisting}
+folder=items
+
+A Single Image[dnd-image]=img/foobar.jpg;Created by Someone;A foobar image.
+
+Information Section[dnd-info]=Here is a paragraph of text.;Here is a second paragraph.
+
+Information Section With Smaller Headers[dnd-info]=Here is a paragraph of text.;*Small Header* Here is a second paragraph.
+
+A List Of Items[dnd-list]=item A; Item B; Item C; Item D
+
+Multiple Images[dnd-image]=img/foobars.jpg;Created by Someone;Multiple foobar images.
+
+Information Section with List[dnd-info]=Here is a paragraph of text followed by a list;-List_item_A;-List_item_B;-List_item_C;Followed by a paragraph.
+
+Music And Ambiance[dnd-music]=https://youtube_link_1;https://youtube_link_2;https://youtube_link_3
+\end{lstlisting}
+
+The above file will create a file in the `items' folder found in `campaign/items'. The file will start with a header "A Single Image", where the foobar.jpg image is displayed. A caption of "A foobar image." will be under the image. Next will be a heading "Information Section" That has two paragraphs. Next a similar section with a header "Information Section With Smaller Headers", a paragraph, then a smaller header "Small Header", followed by another paragraph. Next, another heading "A List Of Items" with 4 items in the list. Following this, a "Multiple Images" heading with 2 images `foobars (1).jpg' and `foobars (2).jpg'\footnote{If an image is not found, it will automatically search for files with that image name with an appended (1), (2), (3),... If `(1)' is found, this image will be used and the number incrememted until no other images are found.} with a caption "Multiple foobar images." Next, another heading ``Information Section with List", with a paragraph, a list, and then another paragraph. Finally, a heading "Music And Ambiance" with links to three youtube videos. If the "download links" checkbox is enabled, these video's will be downloaded as mp3 files and the fodler icon will link to the local files.
+
+
 
 
 
 
 \subsubsection{Character Files (.char)}
 
-SECTION IN PROGRESS!
-
 The character files are text files with the ".char" extension. These are a special type of input file that generates an html page specific for DnD character information. This was actually designed before the more general input file formatting outlined in the sections above and therefore lacks some of the versatility and extra features that can be included in the input files. Nevertheless, the character format creates an html page that should more than suffice for any npc characters and has many of its own unique features and capabilities. The .char file contains lines that define the various elements of a character. These lines to not currently support the types that are supported with the input files. Each line has a specific output format in the generated html file based on a template and the information itself. Some lines in the file are required while others are optional. The required lines must be present for the character file generated to be completed, while the optional lines will automatically be randomized and generated in the event that they are missing. Eahc line of the character file must be formatting in the following way:
 \begin{lstlisting}
-Keyword=Value
+Keyword = Value
 \end{lstlisting}
 The "Keyword" is used by the creator tool to determine which type of information is being input, and the "Value" is the value of the information. For example "level = 3" would let the creator know that the character level is 3, and it will use that information appropriately.
 
-\subsubsection{Required Fields}
+Once the character file is appropriately filled out and created, it should be saved/placed in the templates/input_files folder for processing by the creator tool just like the .input files. The creator tool will search the templates/img folder for any image references within the character files.
 
-SECTION IN PROGRESS!
 
-\subsubsection{Optional Fields}
 
-SECTION IN PROGRESS!
+
+
+
+\subsubsection{Required Keywords}
+
+The required keywords for a character file are the following:
+\begin{enumerate}
+	\item folder: This defines the folder that the output html character file will be placed. This should be a valid file path to a folder.
+	\item name: This defines the name of the character.
+	\item image: This is an image for the character. This should be just the image file name and extension (no path) and the image itself should be placed in the "templates/img" folder for automatic detection.
+	\item class: This defines the DnD class. This must be a valid class from the following list:
+		\begin{multicols}{3}
+		    \begin{itemize}
+		        \item barbarian
+		        \item bard
+		        \item cleric
+		        \item druid
+		        \item fighter
+		        \item monk
+		        \item paladin
+		        \item ranger
+		        \item rogue
+		        \item sorcerer
+		        \item warlock
+		        \item wizard
+		    \end{itemize}
+		\end{multicols}
+	\item abilities: The abilities of the character. This field is a list and should be entered using a comma (`,') as the delimeter.
+	\item equipment: The equipment of the character. This field is a list and should be entered using a comma (`,') as the delimeter.
+	\item proficiencies: These are the proficiencies of the character. This field is a list and should be entered using a comma (`,') as the delimeter. The proficiency bonus will automatically be calculated based on level and applied to proficiencies.
+	\item information: General information and description of the character.
+\end{enumerate}
+
+The above list of keywords are all required and if they are missing or ill-formatted, unexpected behavior can occur.
+
+
+
+
+
+
+\subsubsection{Optional Keywords}
+
+The optional keywords for a character file are the following:
+\begin{enumerate}
+	\item level: This is the level of the character. If the level is not defined, it will default to 1. This must be an integer.
+	\item hp: This will be generated automatically if not included based on the character class, level, and constitution\footnote{The constitution value is automatically generated based on the character class and level if not included.} value.
+	\item ac: The Armor class value.
+	\item size: The size of the character.
+	\item type: The type of the character (creature, humanoid, animal, etc)
+	\item alignment: The alignment of the character.
+	\item speed: The speed of the character.
+	\item resistances: The resistances the character has (if any).
+	\item immunities: The immunities the character has (if any)
+	\item senses: The senses. A ", Passive Perception: #" will automatically be appended to this value based on a calculated passive perception.
+	\item languages: Languages of the character.
+	\item race: The race of the character.
+	\item background: The background of the character.
+	\item strength: This represents the character's physical strength and ability to exert force. This must be an integer.
+	\item dexterity: This represents the character's agility, reflexes, and fine motor skills. This must be an integer.
+	\item constitution: This measures the character's health, stamina, and resistance to illness and fatigue. This must be an integer.
+	\item intelligence: This reflects the character's mental acuity, memory, and problem-solving skills. This must be an integer.
+	\item wisdom: This represents the character's perception, intuition, and common sense. This must be an integer.
+	\item charisma: This measures the character's charm, persuasion, and ability to influence others. This must be an integer.
+	\item notes: Notes to add about the character that aren't contained in the `information' section.
+\end{enumerate}
+
+It is recommended to include all values in the character file and just use "None" for any string values that are not needed. This will prevent any un-expected bugs. Many of the values replace a string in a template file based on the values input, so if they are not specified, a correlated `search string' will appear in the final html file that serves as a placeholder for the information.
+
+
+
 
 
 
 \subsubsection{Example Character File}
 
-SECTION IN PROGRESS!
+For example character files, you can look inside the templates/trash/chars folder. This is where input files get placed after they are finished processing. The following is an example character file. The associated image file foobar.jpg should be located in the templates/img folder for the below file to process correctly.
 
 \begin{lstlisting}
-folder = characters/non-player
-name = Lyra Nightshade
-level = 3
-ac = 15
-hp = 75
-size = Medium
-type = Humanoid
-alignment = Lawful Neutral
-speed = 30 feet
+folder = characters/player
+name = fooBar
+ac = 16 (natural armor)
+hp = 84
+level = 13
+size = small
+type = humanoid
+alignment = neutral good
+speed = 30 ft.
 resistances = None
 immunities = None
-senses = Passive Perception 14, Darkvision 60 ft.
+senses = Darkvision 60ft
 languages = Common, Elvish
-image = lyra_nightshade.jpg
-race = Half-Elf
-class = Ranger
-background = Outlander
-strength = 14
-dexterity = 18
-constitution = 13
-intelligence = 12
-wisdom = 16
-charisma = 10
-abilities = Favored Enemy, Natural Explorer
-equipment = Longbow, short sword, leather armor, explorer's pack, and a druidic focus - a carved wooden token from the heart of the Whispering Woods
-proficiencies = Survival, Perception, Nature
-information = Lyra Nightshade is a level 3 Half-Elf ranger.
-notes = Lyra's friends call her Ly ("Lee").
+image = foobar.jpg
+race = Fooling
+class = wizard
+background = Barber
+strength = 15
+dexterity = 13
+constitution = 18
+intelligence = 22
+wisdom = 4
+charisma = 14
+abilities = basic attack: A basic attack with nothing special; prestidigitation
+equipment = torch; small sword, a potato
+proficiencies = strength, acrobatics, history
+information = This is some info for foobar, the template character.
+notes = No notes needed for template dude.
 \end{lstlisting}
 
+Once created, the file should be placed in the templates/input_files folder and then processed via the creator.py tool.
 
 
 
