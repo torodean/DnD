@@ -18,6 +18,36 @@ from moviepy.editor import *
 from tqdm import tqdm
 
 
+def output_text(text, option = "text"):
+    """
+    Print text in different colors based on the provided option.
+
+    Args:
+        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
+        text (str): The text to be printed.
+
+    Returns:
+        None
+
+    Note:
+        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
+    """
+    color_codes = {
+        "text": "\033[0m",  # Reset color
+        "warning": "\033[93m",  # Yellow
+        "error": "\033[91m",  # Red
+        "note": "\033[94m",  # Blue
+        "success": "\033[92m"  # Green
+    }
+
+    if option in color_codes:
+        color_code = color_codes[option]
+        reset_code = color_codes["text"]
+        print(f"{color_code}{text}{reset_code}")
+    else:
+        print(text)
+
+
 def get_youtube_video_name(url):
     """
     Retrieves the title of a YouTube video based on the provided URL.
@@ -47,7 +77,7 @@ def get_youtube_video_name(url):
 
         return video_title
     except Exception as e:
-        print(f"Error: {e}")
+        output_text(f"Error: {e}", "error")
         return None
 
 
@@ -202,7 +232,7 @@ def roll_4d6_drop_lowest():
     """
     rolls = [random.randint(1, 6) for _ in range(4)]
     total = sum(sorted(rolls)[1:])
-    print("Rolling 4d6: {0} - Dropping lowest -> {1}".format(rolls, total))
+    output_text("Rolling 4d6: {0} - Dropping lowest -> {1}".format(rolls, total), "note")
     return total
 
 
@@ -278,12 +308,12 @@ def adjust_stats_for_level(assigned_stats, level):
     else:
         bonus_points = 10
 
-    print(f"level {level} awards {bonus_points} bonus attribute points")
-    print(f"Original attributes: {assigned_stats}")
+    output_text(f"level {level} awards {bonus_points} bonus attribute points", "note")
+    output_text(f"Original attributes: {assigned_stats}")
 
     # Sort the dictionary by descending values   
     sorted_dict = dict(sorted(assigned_stats.items(), key=lambda item: item[1], reverse=True))
-    print(sorted_dict)
+    output_text(sorted_dict)
 
     # Calculate the maximum possible value for each key, without exceeding 22
     max_value = 22
@@ -297,7 +327,7 @@ def adjust_stats_for_level(assigned_stats, level):
             sorted_dict[key] += add_value
             bonus_points -= add_value
 
-    print(f"Updated attributes: {sorted_dict}")
+    output_text(f"Updated attributes: {sorted_dict}", "note")
 
     return sorted_dict
 
@@ -368,17 +398,17 @@ def copy_file_to_directory(file_path, directory_path):
 
     # Check if the directory exists
     if not os.path.isdir(directory_path):
-        print(f"Directory {directory_path} does not exist. Creating directory...")
+        output_text(f"Directory {directory_path} does not exist. Creating directory...", "note")
         os.makedirs(directory_path)
 
     new_file = directory_path + "/" + file_path.split('/')[-1].strip()
     if not os.path.isfile(new_file):
         # Copy the file to the directory
-        print(f"Copying {file_path} to {directory_path}")
+        output_text(f"Copying {file_path} to {directory_path}", "note")
         shutil.copy(file_path, directory_path)
-        print(f"File {file_path} copied to {directory_path}")
+        output_text(f"File {file_path} copied to {directory_path}", "note")
     else:
-        print(f"file {new_file} already exists!")
+        output_text(f"file {new_file} already exists!", "warning")
 
 
 def move_file_to_directory(file_path, directory_path):
@@ -401,17 +431,17 @@ def move_file_to_directory(file_path, directory_path):
 
     # Check if the directory exists
     if not os.path.isdir(directory_path):
-        print(f"Directory {directory_path} does not exist. Creating directory...")
+        output_text(f"Directory {directory_path} does not exist. Creating directory...", "note")
         os.makedirs(directory_path)
 
     new_file = os.path.join(directory_path, os.path.basename(file_path))
     if not os.path.isfile(new_file):
         # Move the file to the directory
-        print(f"Moving {file_path} to {directory_path}")
+        output_text(f"Moving {file_path} to {directory_path}", "note")
         shutil.move(file_path, directory_path)
-        print(f"File {file_path} moved to {directory_path}")
+        output_text(f"File {file_path} moved to {directory_path}", "note")
     else:
-        print(f"File {new_file} already exists!")
+        output_text(f"File {new_file} already exists!", "warning")
 
 
 def print_prob_matrix(prob_matrix):
@@ -427,7 +457,7 @@ def print_prob_matrix(prob_matrix):
     json_str = json.dumps(prob_matrix, indent=4, sort_keys=True)
 
     # Print the JSON string
-    print(json_str)
+    output_text(json_str)
 
 
 def generate_prob_matrix(words):
@@ -680,11 +710,11 @@ def get_character_fields(file):
                 val = line.split('=')[1].strip().lower()
             char_fields[var] = val
     except Exception:
-        print(f"ERROR: Incorrect file format: {file}")
+        output_text(f"ERROR: Incorrect file format: {file}", "error")
 
     # check to make sure class is defined.
     if "class" not in char_fields:
-        print(f"ERROR: No 'class' value found in char_fields: {char_fields}")
+        output_text(f"ERROR: No 'class' value found in char_fields: {char_fields}", "error")
         return
 
     return char_fields
@@ -823,16 +853,16 @@ def create_html_info(values):
 
     item_list = ""
     for item in items:
-        print(f"item: {item}")
+        output_text(f"item: {item}")
         item = item.strip()  # Remove leading/trailing whitespace
         if item.startswith('-'):
-            print(f"List item detected in: {item}")
+            output_text(f"List item detected in: {item}")
             item_list += item.replace("-", "") + ";"
             continue
 
         # If we reach here, we've finished the "-" items.
         if item_list != "":
-            print(f"Creating list from: {item_list}")
+            output_text(f"Creating list from: {item_list}", "note")
             item_list = item_list[:-1]  # Remove the last semi-colon
             html_list = create_html_list(item_list)
             item_list = ""  # reset the list to be re-used if needed.
@@ -851,7 +881,7 @@ def create_html_info(values):
 
         # These are the criteria for a subsection (section with a small header)
         if item.startswith('*') and "*" in item[1:]:
-            print(f"Header detected in: {item}")
+            output_text(f"Header detected in: {item}")
             header, info = separate_header_and_info(item)
             if info.strip() == "":
                 html_info += f"<h4>{header}</h4>"
@@ -943,13 +973,13 @@ def download_image(url, file_path):
             with open(file_path, 'wb') as file:
                 file.write(response.content)
 
-            print(f"Image downloaded and saved to: {file_path}")
+            output_text(f"Image downloaded and saved to: {file_path}", "note")
             return True
         else:
-            print(f"Failed to download image. Status code: {response.status_code}")
+            output_text(f"Error: Failed to download image. Status code: {response.status_code}", "error")
             return False
     except Exception as e:
-        print(f"An error occurred while downloading the image: {str(e)}")
+        output_text(f"An error occurred while downloading the image: {str(e)}", "error")
         return False
 
 
@@ -1045,12 +1075,12 @@ def create_html_img(input_line):
         image_files.append(image_file)
 
     if not os.path.isfile(image_file):
-        print(f"Image NOT found: {image_file}.")
+        output_text(f"Image NOT found: {image_file}.", "error")
         if "www." in image_source or "https:" in image_source:
             if not download_image(image_source, image_file):
-                print(f"No image found: image section will be incomplete.")
+                output_text(f"No image found: image section will be incomplete.", "warning")
     else:
-        print(f"Image found: {image_file}.")
+        output_text(f"Image found: {image_file}.")
 
     # Generate the HTML block
     html_block = f'<div class="dnd-image-info">'
@@ -1083,7 +1113,7 @@ def fix_image_extensions():
     if os.path.isfile("fix_image_extensions.py"):
         command = f"./fix_image_extensions.py"
     else:
-        print("Error: 'fix_image_extensions.py' file not found.")
+        output_text("Error: 'fix_image_extensions.py' file not found.", "error")
         return
     os.system(command)
     os.chdir(current_dir)
@@ -1110,7 +1140,7 @@ def update_all():
     if os.path.isfile("mmorpdnd.py"):
         command = f"./mmorpdnd.py -u"
     else:
-        print("Error: 'mmorpdnd.py' file not found.")
+        output_text("Error: 'mmorpdnd.py' file not found.", "error")
         return
     os.system(command)
     os.chdir(current_dir)
@@ -1299,7 +1329,7 @@ class Creator:
         html_list = '<ul>\n'
         for url in url_list:
             video_name = get_youtube_video_name(url)
-            self.output_text(f"Downloading {video_name}. See terminal for progress report!")
+            self.output_text_to_gui(f"Downloading {video_name}. See terminal for progress report!")
             mp3_path = self.download_youtube_video_as_mp3(url)
             rel_mp3_path = os.path.relpath(mp3_path, global_vars.output_file_folder)
             html_list += f'<li><a href="{url}">{video_name}</a><a href="{rel_mp3_path}"><i class="fas fa-folder"></i></a></li>\n'
@@ -1331,7 +1361,7 @@ class Creator:
         """
         try:
             if "youtube" not in url:
-                print(f"Invalid Youtube url: {url}")
+                output_text(f"Invalid Youtube url: {url}", "error")
                 return None
 
             output_name = get_youtube_video_name(url).replace("|", "").replace("/", "").replace(":", "").replace("-",
@@ -1339,11 +1369,11 @@ class Creator:
                 " ", "_")
             mp3_path = f"{output_path}/{output_name}.mp3"
             if os.path.isfile(mp3_path):
-                print(f"File already exists: {mp3_path}")
+                output_text(f"File already exists: {mp3_path}", "warning")
                 return mp3_path
 
             if not self.download_checkbox_value.get():
-                print(f"Downloading option not checked: {mp3_path}")
+                output_text(f"Downloading option not checked: {mp3_path}")
                 return mp3_path
 
             # Create a YouTube object with the provided URL
@@ -1353,7 +1383,7 @@ class Creator:
             video_stream = yt.streams.get_highest_resolution()
 
             if video_stream is None:
-                print("No suitable video stream found for the video.")
+                output_text("No suitable video stream found for the video.", "error")
                 return None
 
             # Download the video stream with progress bar
@@ -1379,10 +1409,10 @@ class Creator:
             video.close()
             os.remove(video_path)
 
-            print(f"Video downloaded as MP3: {mp3_path}")
+            output_text(f"Video downloaded as MP3: {mp3_path}", "note")
             return mp3_path
         except Exception as e:
-            print(f"Error: {e}")
+            output_text(f"Error: {e}", "error")
 
             # Try again
             mp3_path = self.download_youtube_video_as_mp3(url, output_path)
@@ -1404,17 +1434,17 @@ class Creator:
         random_places = []
         type_list = "./lists/location_types.list"
         if not os.path.isfile(type_list):
-            self.output_text(f"List file not found or invalid: {type_list}")
+            self.output_text_to_gui(f"List file not found or invalid: {type_list}")
             return
 
-        self.output_text(f"Generating {number} random place names!")
-        self.output_text(f"---------------------------------")
+        self.output_text_to_gui(f"Generating {number} random place names!")
+        self.output_text_to_gui(f"---------------------------------")
         if os.path.isfile(global_vars.current_file):
             for i in range(number):
                 place = get_random_line(global_vars.current_file)
                 place_type = get_random_line(type_list)
                 place_combo = f"{place} {place_type}"
-                self.output_text(place_combo)
+                self.output_text_to_gui(place_combo)
                 random_places.append(place_combo)
 
         # Store the random places in the random places file.
@@ -1455,10 +1485,10 @@ class Creator:
                     elif file_path.endswith(".input"):
                         self.create_page(file_path)
 
-            self.output_text(f"Page generation completed for all files in the directory: {directory}.")
+            self.output_text_to_gui(f"Page generation completed for all files in the directory: {directory}.")
         else:
             # If the current file is not a file or directory, display an error message and return.
-            self.output_text(f"Error: {global_vars.current_file} is not a file or directory.")
+            self.output_text_to_gui(f"Error: {global_vars.current_file} is not a file or directory.")
             return
 
     def create_page(self, file=global_vars.current_file):
@@ -1473,8 +1503,8 @@ class Creator:
             None
         """
         if not file.endswith(".input"):
-            self.output_text(f"Wrong input file type: {file}")
-            self.output_text(f"File should end with '.input'")
+            self.output_text_to_gui(f"Wrong input file type: {file}")
+            self.output_text_to_gui(f"File should end with '.input'")
             return
 
         # read input file
@@ -1486,7 +1516,7 @@ class Creator:
         for line in lines:
             if "folder" in line:
                 folder = line.split('=')[1].strip()
-                print(f"Destination folder set to {folder}")
+                output_text(f"Destination folder set to {folder}", "note")
 
         global_vars.output_file_folder = '.'  # used for testing mainly
         for dirpath, dirnames, filenames in os.walk("../"):
@@ -1505,12 +1535,12 @@ class Creator:
                 global_vars.output_file_folder = dirpath + "/"
                 break
 
-        print(f"Output file folder set to: {global_vars.output_file_folder}")
+        output_text(f"Output file folder set to: {global_vars.output_file_folder}", "note")
 
         output_fn = os.path.basename(file).split('.')[0]
         output_images = []
         output_file = global_vars.output_file_folder + "/" + output_fn + ".html"
-        print(f"Output file: {output_file}")
+        output_text(f"Output file: {output_file}", "note")
 
         # create HTML file
         with open(output_file, 'w') as f:
@@ -1523,7 +1553,7 @@ class Creator:
 
             # iterate over lines in input file
             for line in lines:
-                print(line, end='')
+                output_text(line, end='')
                 # Skip the line with folder in it or a comment line.
                 if "folder" in line or line.startswith('#') or line.strip() == "":
                     continue
@@ -1550,7 +1580,7 @@ class Creator:
                     output_images.append(image_name)
                     for img in image_files:
                         output_images.append(img)
-                    print(f"Processing {image_name}.")
+                    output_text(f"Processing {image_name}.")
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
 
                 elif class_name == "dnd-info":
@@ -1577,7 +1607,7 @@ class Creator:
             # close HTML file
             f.write('</body>\n</html>')
 
-            print(f'HTML file created: {output_file}')
+            output_text(f'HTML file created: {output_file}', "note")
 
         # copy images to correct location.
         if len(output_images) > 0:
@@ -1594,11 +1624,11 @@ class Creator:
                         copy_file_to_directory(image, output_image_dir)
 
                 else:
-                    print(f'Image file does not exist: {image}')
+                    output_text(f'Image file does not exist: {image}', "error")
 
                     output_image_file = global_vars.output_file_folder + "/img/" + image
                     if os.path.isfile(output_image_file):
-                        print(f'Image file exists in target directory: {output_image_file}')
+                        output_text(f'Image file exists in target directory: {output_image_file}', "warning")
 
         # move the files to the trash if this option is selected.
         if self.trash_checkbox_value.get():
@@ -1613,14 +1643,14 @@ class Creator:
         download_files = self.download_checkbox_value.get()
 
         if trash_files:
-            print("trash_files Checkbox enabled")
+            output_text("trash_files Checkbox enabled")
         else:
-            print("trash_files Checkbox disabled")
+            output_text("trash_files Checkbox disabled")
 
         if download_files:
-            print("download_files Checkbox enabled")
+            output_text("download_files Checkbox enabled")
         else:
-            print("download_files Checkbox disabled")
+            output_text("download_files Checkbox disabled")
 
     def generate_char(self, file=global_vars.current_file):
         """
@@ -1651,8 +1681,8 @@ class Creator:
             None
         """
         if not file.endswith(".char"):
-            self.output_text(f"Wrong input file type: {file}")
-            self.output_text(f"File should end with '.char'")
+            self.output_text_to_gui(f"Wrong input file type: {file}")
+            self.output_text_to_gui(f"File should end with '.char'")
             return
 
         # Define the fields to replace in the template file
@@ -1663,9 +1693,9 @@ class Creator:
         if "folder" in char_fields:
             folder = char_fields['folder'].strip()
             last_folder = folder.split('/')[-1]
-            print(last_folder)
+            output_text(f"last_folder: {last_folder}")
 
-            print(f"Destination folder detected as {folder}")
+            output_text(f"Destination folder detected as {folder}", "note")
 
             for dirpath, dirnames, filenames in os.walk("../"):
 
@@ -1680,7 +1710,7 @@ class Creator:
                     global_vars.output_file_folder = dirpath + "/"
                     break
 
-            print(f"Output file folder set to: {global_vars.output_file_folder}")
+            output_text(f"Output file folder set to: {global_vars.output_file_folder}", "note")
 
         char_class = char_fields['class']
 
@@ -1695,12 +1725,12 @@ class Creator:
         attributes = ["strength", "constitution", "wisdom", "charisma", "dexterity", "intelligence"]
         for attribute in attributes:
             if attribute not in char_fields:
-                self.output_text(f"Generated value for {attribute} as {char_stats[attribute]}")
+                self.output_text_to_gui(f"Generated value for {attribute} as {char_stats[attribute]}")
                 char_fields[attribute] = str(char_stats[attribute])
 
         if "hp" not in char_fields:
             hp = calculate_hp(char_class, int(char_fields['level']), int(char_fields['constitution']))
-            self.output_text(f"Calculated hp as {hp}.")
+            self.output_text_to_gui(f"Calculated hp as {hp}.")
 
         # Generate the character file path
         char_name = char_fields['name']
@@ -1713,7 +1743,7 @@ class Creator:
 
         proficiencies = char_fields['proficiencies'].strip().split(', ')
         proficiency_bonus = calculate_proficiency_bonus(char_level)
-        self.output_text("Proficiency bonus for level {0} is {1}".format(char_level, proficiency_bonus))
+        self.output_text_to_gui("Proficiency bonus for level {0} is {1}".format(char_level, proficiency_bonus))
 
         # Replace the appropriate fields.
         for field, value in char_fields.items():
@@ -1728,7 +1758,7 @@ class Creator:
                 temp_field_modifier = '[' + field + " modifier]"
                 modifier_value = calculate_modifier(int(value))
                 if "level" not in field:
-                    self.output_text("Modifier for {0} is {1}".format(field, modifier_value))
+                    self.output_text_to_gui("Modifier for {0} is {1}".format(field, modifier_value))
 
                 # Add the proficiency bonus to the modifier.
                 if field in proficiencies:
@@ -1763,7 +1793,7 @@ class Creator:
             # Add the proficiency bonus if appropriate
             if match in proficiencies:
                 mod_val += proficiency_bonus
-                self.output_text("Adding proficiency bonus {0} to skill {1}".format(proficiency_bonus, match))
+                self.output_text_to_gui("Adding proficiency bonus {0} to skill {1}".format(proficiency_bonus, match))
 
             # Set the values as string formatted.
             if mod_val >= 0:
@@ -1801,7 +1831,7 @@ class Creator:
             if self.trash_checkbox_value.get():
                 global_vars.trash_file(img_src)
         except ValueError as e:
-            print(f"An error occurred: {e}")
+            output_text(f"An error occurred: {e}", "error")
 
         # Update abilities
         abilities = char_fields['abilities'].split(';')
@@ -1843,13 +1873,13 @@ class Creator:
         with open(filepath, 'w') as f:
             f.write(template)
 
-        print(f'Character file created: {filepath}')
+        output_text(f'Character file created: {filepath}', "note")
 
         # move the files to the trash if this option is selected.
         if self.trash_checkbox_value.get():
             global_vars.trash_file(file)
 
-    def output_text(self, text):
+    def output_text_to_gui(self, text):
         """
         Output the given text to the GUI window and the large_text widget.
 
@@ -1865,7 +1895,7 @@ class Creator:
             gui_instance.output_text("Processing completed successfully.")
             # The text "Processing completed successfully." is displayed in the GUI window.
         """
-        print(text)
+        output_text(text)
         # Append the given text to the large_text widget
         self.large_text.config(state="normal")
         self.large_text.insert(tk.END, text + '\n')
@@ -1884,7 +1914,7 @@ class Creator:
         Returns:
             None
         """
-        self.output_text("test text")
+        self.output_text_to_gui("test text")
 
     def get_user_choice(self):
         """
@@ -1970,7 +2000,7 @@ class Creator:
             # The last_user_input attribute is updated to "yes".
         """
         self.last_user_input = "yes"
-        print(f"last_user_input set to {self.last_user_input}")
+        output_text(f"last_user_input set to {self.last_user_input}", "note")
 
     def no(self):
         """
@@ -1984,7 +2014,7 @@ class Creator:
             # The last_user_input attribute is updated to "no".
         """
         self.last_user_input = "no"
-        print(f"last_user_input set to {self.last_user_input}")
+        output_text(f"last_user_input set to {self.last_user_input}", "note")
 
     def reset(self):
         """
@@ -1998,9 +2028,9 @@ class Creator:
             gui_instance.reset()
             # The last_user_input attribute is reset to "reset", and the GUI provides a reset status.
         """
-        self.output_text("Resetting...")
+        self.output_text_to_gui("Resetting...")
         self.last_user_input = "reset"
-        print(f"last_user_input set to {self.last_user_input}")
+        output_text(f"last_user_input set to {self.last_user_input}", "note")
 
     def browse_files(self):
         """
@@ -2038,9 +2068,9 @@ class Creator:
             gui_instance.update_input_file()
             # The current input file is updated to 'data.txt', and associated data is adjusted.
         """
-        print("Updating input file.")
+        output_text("Updating input file.")
         if self.path_text.get() is None:
-            self.output_text("No file input!")
+            self.output_text_to_gui("No file input!")
         else:
             file = self.path_text.get()
             if file == global_vars.current_file:
@@ -2048,7 +2078,7 @@ class Creator:
             else:
                 global_vars.reset()
                 global_vars.current_file = file
-                self.output_text(f"Updated current work file to: {file}")
+                self.output_text_to_gui(f"Updated current work file to: {file}")
                 if file.endswith(".char") or file.endswith(".names") or file.endswith(".list"):
                     global_vars.current_list = read_lines_from_file(file)
 
@@ -2088,22 +2118,22 @@ class Creator:
         Example usage:
             generate_word()
         """
-        print("Generating word.")
+        output_text("Generating word.")
         self.update_input_file()
         global_vars.current_prob_matrix = generate_prob_matrix(global_vars.current_list)
         shortest, longest = find_longest_and_shortest(global_vars.current_list)
         print_prob_matrix(global_vars.current_prob_matrix)
         while self.last_user_input != "reset":
             word = "{0}".format(generate_word(global_vars.current_prob_matrix, shortest, longest))
-            self.output_text(f"Generated word: {word}")
-            self.output_text("Do you want to append this word to the file? (y/n)")
+            self.output_text_to_gui(f"Generated word: {word}")
+            self.output_text_to_gui("Do you want to append this word to the file? (y/n)")
             # Get the user's choice
             self.get_user_choice()
             if self.last_user_input == "yes":
                 append_to_file(global_vars.current_file, word)
-                self.output_text("Word appended to file.")
+                self.output_text_to_gui("Word appended to file.")
             elif self.last_user_input == "no":
-                self.output_text("Word NOT appended to file.")
+                self.output_text_to_gui("Word NOT appended to file.")
                 continue
             else:
                 continue
