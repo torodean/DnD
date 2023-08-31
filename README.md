@@ -12,6 +12,8 @@ This application and software squite is designed for storage of DnD information 
 
 ## Installation
 
+See the manual located in docs/ for a more comprehensive set of instructions!
+
 Note: These installation instructions are for Linux based operating systems.
 
 - Clone the git repo.
@@ -26,9 +28,7 @@ The `chmod a+x app.py` command makes an app executable. The apps can then either
 
 ## Features
 
-- mmorpdnd.py
-- templates/creator.py
-- templates/check_link_validity.py
+See the manual located in docs/ for a list of features!
 
 
 ## Contributing
