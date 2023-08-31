@@ -406,7 +406,7 @@ SECTION IN PROGRESS!
 
 \subsubsection{List Files (.list) \label{section .list}}
 
-SECTION IN PROGRESS!
+The `.list' files are simple lists of information. These are similar to the `.names' files, with the difference that these list files are typically used internally within the various tools.
 
 
 
@@ -423,4 +423,148 @@ SECTION IN PROGRESS!
 \subsubsection{Command Line}
 
 The creator application does NOT currently support command line features.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{templates/lists/check\_link\_validity.py}
+
+
+This script will simply check the validity of the \textit{links.list} file.
+
+
+
+
+
+
+
+
+
+
+
+
+\section{templates/lists/organize\_random\_places.py}
+
+This script will sort the location names in the \textit{random\_place.names} file based on the last word in each item. The output will be saved to \textit{random\_place\_sorted.names} so that the original file will not be disturbed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{templates/lists/remove\_duplicates.py}
+
+This is a simple command line tool that will search through a file and remove any duplicate entries. This is useful when dealing with large name files or list files.
+
+\begin{lstlisting}
+usage: remove_duplicates.py [-h] [-f FILE] [-a]
+
+Remove duplicate lines from files
+
+optional arguments:
+-h, --help            show this help message and exit
+-f FILE, --file FILE  Path to the file
+-a, --all             Run against all files in the current folder
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{templates/img/fix\_image\_extensions.py}
+
+This tool will simply search through all files in the templates/img folder and replace all `.jpeg' extensions with `.jpg'. This is both for consistency and  functionality of the other apps.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{templates/languages/translator.py}
+
+This tool is still in development and not yet functioning.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{templates/reset\_all\_files.py}
+
+This tool is still in development and not yet functioning.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -2,7 +2,7 @@
 import requests
 from tqdm import tqdm
 
-filename = "links.txt"
+filename = "links.list"
 
 with open(filename, "r") as file:
     lines = file.read().splitlines()
