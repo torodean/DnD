@@ -1553,7 +1553,7 @@ class Creator:
 
             # iterate over lines in input file
             for line in lines:
-                output_text(line, end='')
+                print(line, end='')
                 # Skip the line with folder in it or a comment line.
                 if "folder" in line or line.startswith('#') or line.strip() == "":
                     continue

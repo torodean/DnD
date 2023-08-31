@@ -128,7 +128,7 @@ The ``Trash" checkbox will determine if processed files will be moved to the tra
 
 \subsubsection{Input Files (.input)}
 
-The input files are essentially just text files with the file extension `.input'. The main feature of the creator.py tool is to read in these input files, parse them, and generate the appropriate html files from them. These input files must follow a strict formatting but offer a few various helpful features. Each line of the input file represents a 'section' of the html file that will be generated. Each line follows the following format:
+The input files are essentially just text files with the file extension `.input'. The main feature of the creator.py tool is to read in these input files, parse them, and generate the appropriate html files from them. These input files must follow a strict formatting but offer a few various helpful features. The name and main heading of the generated HTML file will be created based on the name of the input file (underscores will be replaced by spaces for the heading). Each line of the input file represents a 'section' of the html file that will be generated. Each line follows the following format:
 \begin{lstlisting}
 Heading Text[type]=Information text
 \end{lstlisting}
@@ -146,35 +146,91 @@ The various types determine the formatting and decoding of the input file, and e
 
 \subsubsection{dnd-image type}
 
-The \textbf{dnd-image} type is used to display images specific to the file. The information text must contain three parameters separated by a semi-colon delimeter. These parameters are \textbf{img/image-name.jpg;image source;image caption}. The first parameter is simply the location of the image and the image name. These are typically placed in `templates/img'. The second is the source of the image, this is simply a string but is there to keep all images properly sourced. The third is a caption that will be displayed with an image. This caption is also a string and can be whatever the user desires. As an example, here's a proper dnd-image block:
+The \textbf{dnd-image} type is used to display images specific to the file. The information text must contain three parameters separated by a semi-colon delimeter. These parameters are \textbf{img/image-name.jpg;image source;image caption}. The first parameter is simply the location of the image and the image name. These are typically placed in `templates/img'. The second is the source of the image, this is simply a string but is there to keep all images properly sourced. The third is a caption that will be displayed with an image. This caption is also a string and can be whatever the user desires. As an example, here's a proper dnd-image block (see figure \ref{fig:dnd-image-fig}):
 
 \begin{lstlisting}
 Coconatus Marmotta[dnd-image]=img/coconatus_marmotta.jpg;Created by Bing AI image creator;Coconatus Marmotta.
 \end{lstlisting}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/dnd-image-section.png}
+	\caption{A dnd-image section generated using 4 images.}
+	\label{fig:dnd-image-fig}
+\end{figure}
+
 One unique feature of this is that if the image name does not exist (i.e. `img/coconatus\_marmotta.jpg'), the tool will append a ` (1)' to the name and search again (i.e. `img/coconatus\_marmotta (1).jpg'). If this new name is found, the tool will search for image names with the index incremented and include all such images (i.e. `img/coconatus\_marmotta (2).jpg', `img/coconatus\_marmotta (3).jpg', etc) in the output html block.  
 
 \subsubsection{dnd-list type}
 
-The \textbf{dnd-list} type is used to display a simple list of items. The information text must contain one or more parameters separated by a semi-colon delimeter. As an example, here's a proper dnd-list block:
+The \textbf{dnd-list} type is used to display a simple list of items. The information text must contain one or more parameters separated by a semi-colon delimeter. As an example, here's a proper dnd-list block (see figure \ref{fig:dnd-list-fig}):
 
 \begin{lstlisting}
 Landmarks and Other Features[dnd-list]=Talleril: A small island far off the coast of Alderpine.;Enthilma: A small island off the coast of Alderpine.;Lomelindei: The large world tree deep within Alderpine.
 \end{lstlisting}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/dnd-list-section.png}
+	\caption{A dnd-list section.}
+	\label{fig:dnd-list-fig}
+\end{figure}
+
 \subsubsection{dnd-info type}
 
-SECTION IN PROGRESS!
+The \textbf{dnd-info} type is used to display a section of text. The information text must contain one or more parameters separated by a delimeter. The delimeter for this type will define the format of the sections within this text. For writing normal paragraphs, simple use a semi-colon (`;') delimeter. The semi-colon delimeter will make the next parameter appear as a normal paragraph. As an example, here's a proper dnd-info block (see figure \ref{fig:dnd-info-fig-01}):
+
+\begin{lstlisting}
+Some Paragraphs[dnd-info]=This is a paragraph.;This is a second paragraph.;This is a third paragraph.;etc...
+\end{lstlisting}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/dnd-info-section-01.png}
+	\caption{A dnd-info section with only paragraphs. Note that the first paragraph will not be indented but all subsequent ones will be.}
+	\label{fig:dnd-info-fig-1}
+\end{figure}
+
+To add in a list element between paragraphs, you can use a semi-colon and dash (`;-') delimeter. The `;-' delimeter will tell the creator tool that a list has began and the it will use all subsequential parameters with a preceeding `;-' delimeter as the list items until a different delimeter is entered or there is no more parameters to read in. As an example, here's a proper dnd-info block (see figure \ref{fig:dnd-info-fig-02}):
+
+\begin{lstlisting}
+Some Paragraphs and a List[dnd-info]=This is a paragraph.;-Here's a list item 1.;-Here's another list item;-Here's a third list item;Here's an ending paragraph.
+\end{lstlisting}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/dnd-info-section-02.png}
+	\caption{A dnd-info section with a paragraph followed by a list, followed by a paragraph.}
+	\label{fig:dnd-info-fig-2}
+\end{figure}
+
+To add a subsection, you can use the semi-colon followed by an asterik (`;*') as the delimeter. This delimeter has a somewhat special formatting in that there needs to be a second asterik to mark the end of the subsection heading. For example, `;*heading text*normal content text'. The `heading text' will display as a subheading, while the `normal content text' will be the main content under that subsection. As an example, here's a proper dnd-info block (see figure \ref{fig:dnd-info-fig-03}):
+
+\begin{lstlisting}
+Some subsections[dnd-info]=Here is a paragraph;*Subheading*Some text;Here's another paragraph;*Subheading 2*More text;Here's an ending paragraph.
+\end{lstlisting}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/dnd-info-section-03.png}
+	\caption{A dnd-info section with some paragraphs and two subsections.}
+	\label{fig:dnd-info-fig-3}
+\end{figure}
 
 \subsubsection{dnd-music type}
 
-The \textbf{dnd-music} type is used to display a simple list of music items. The information text must contain one or more parameters separated by a semi-colon delimeter. Currently, this is primarily designed to work with youtube links. Given a simple youtube link, the code will find the name of the video and use that as the list information as well as keeping a link to the video itself. If the ``Download Links" checkbox in the GUI is enabled, the files will be downloaded as mp3 files and the folder next to the list item will be hyperlinked to the local file. These files will be located in a music folder. As an example, here's a proper dnd-music block (except with fake URL's):
+The \textbf{dnd-music} type is used to display a simple list of music items. The information text must contain one or more parameters separated by a semi-colon delimeter. Currently, this is primarily designed to work with youtube links. Given a simple youtube link, the code will find the name of the video and use that as the list information as well as keeping a link to the video itself. If the ``Download Links" checkbox in the GUI is enabled, the files will be downloaded as mp3 files and the folder next to the list item will be hyperlinked to the local file. These files will be located in a music folder. As an example, here's a proper dnd-music block using fake URL's (see figure \ref{fig:dnd-music-fig})::
 
 \begin{lstlisting}
 Music And Ambiance[dnd-music]=https://youtube_link_1;https://youtube_link_2;https://youtube_link_3
 \end{lstlisting}
 
-
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/dnd-music-section.png}
+	\caption{A dnd-music section with two songs linked to.}
+	\label{fig:dnd-music-fig}
+\end{figure}
 
 
 \subsubsection{Example Input File}
