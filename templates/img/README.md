@@ -126,6 +126,28 @@ A strong dwarf 1.png
 </td>
 
 <td valign="bottom">
+<img src="./Bedo_The_Frog (1).jpg" width="200"><br>
+Bedo_The_Frog (1).jpg
+</td>
+
+</tr>
+<tr>
+<td valign="bottom">
+<img src="./Bedo_The_Frog (2).jpg" width="200"><br>
+Bedo_The_Frog (2).jpg
+</td>
+
+<td valign="bottom">
+<img src="./Bedo_The_Frog (3).jpg" width="200"><br>
+Bedo_The_Frog (3).jpg
+</td>
+
+<td valign="bottom">
+<img src="./Bedo_The_Frog (4).jpg" width="200"><br>
+Bedo_The_Frog (4).jpg
+</td>
+
+<td valign="bottom">
 <img src="./Color_Chart.png" width="200"><br>
 Color_Chart.png
 </td>
