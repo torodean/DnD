@@ -1,5 +1,7 @@
 # [MMORPDND]
 
+# WARNING: If you are my DnD players, leave this repository now!
+
 This application and software squite is designed for storage of DnD information with capabilities for automatic linking and organization.
 
 ## Table of Contents
