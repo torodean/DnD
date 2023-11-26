@@ -20,7 +20,7 @@ from tqdm import tqdm
 
 def output_text(text, option = "text"):
     """
-    Print text in different colors based on the provided option.
+    Print text in different colors based on the provided option.`
 
     Args:
         option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
