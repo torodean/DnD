@@ -1,8 +1,8 @@
 # [MMORPDND]
 
-# WARNING: If you are my DnD players, leave this repository now!
+# WARNING: If you are one of my DnD players, leave this repository now!
 
-This application and software squite is designed for storage of DnD information with capabilities for automatic linking and organization.
+This application and software suite is designed for storage of DnD information with capabilities for automatic linking and organization.
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@ See the manual located in docs/ for a list of features!
 
 ## Contributing
 
-TODO - [Instructions on how to contribute to the project, including guidelines for submitting bug reports or feature requests]
+See the home page at https://mmorpdnd.github.io/ for information on how to contribute to this project!
 
 ## License
 
@@ -43,4 +43,4 @@ TODO - [Information about the license under which the application is released, a
 
 ## Contact
 
-TODO - [Optionally include contact information for the maintainer(s) of the project]
+Please send all comments or inquiries to mmorpdnd@gmail.com
