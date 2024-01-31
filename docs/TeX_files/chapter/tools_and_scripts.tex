@@ -219,7 +219,7 @@ Some subsections[dnd-info]=Here is a paragraph;*Subheading*Some text;Here's anot
 
 \subsubsection{dnd-music type}
 
-The \textbf{dnd-music} type is used to display a simple list of music items. The information text must contain one or more parameters separated by a semi-colon delimeter. Currently, this is primarily designed to work with youtube links. Given a simple youtube link, the code will find the name of the video and use that as the list information as well as keeping a link to the video itself. If the ``Download Links" checkbox in the GUI is enabled, the files will be downloaded as mp3 files and the folder next to the list item will be hyperlinked to the local file. These files will be located in a music folder. As an example, here's a proper dnd-music block using fake URL's (see figure \ref{fig:dnd-music-fig})::
+The \textbf{dnd-music} type is used to display a simple list of music items. The information text must contain one or more parameters separated by a semi-colon delimeter. Currently, this is primarily designed to work with youtube links. Given a simple youtube link, the code will find the name of the video and use that as the list information as well as keeping a link to the video itself. If the ``Download Links" checkbox in the GUI is enabled, the files will be downloaded as mp3 files and the folder next to the list item will be hyperlinked to the local file. These files will be located in a music folder. As an example, here's a proper dnd-music block using fake URL's (see figure \ref{fig:dnd-music-fig}):
 
 \begin{lstlisting}
 Music And Ambiance[dnd-music]=https://youtube_link_1;https://youtube_link_2;https://youtube_link_3
@@ -230,6 +230,22 @@ Music And Ambiance[dnd-music]=https://youtube_link_1;https://youtube_link_2;http
 	\includegraphics[width=0.6\textwidth]{images/dnd-music-section.png}
 	\caption{A dnd-music section with two songs linked to.}
 	\label{fig:dnd-music-fig}
+\end{figure}
+
+
+\subsubsection{dnd-table type}
+
+The \textbf{dnd-table} type is used to display a simple table. The information text must contain one or more parameters separated by a semi-colon delimeter. The first parameter determines how many elements there are in each row. The rest of the parameters will then be parsed and placed into the table from left to right (top to bottom). As an example, here's a proper dnd-table block which creates a 3x2 table:
+
+\begin{lstlisting}
+Attributes[dnd-table]=3;Strength;10;+0;Dexterity;12;+1
+\end{lstlisting}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/dnd-table-section.png}
+	\caption{A dnd-table section with 3 columns and 2 rows.}
+	\label{fig:dnd-table-fig}
 \end{figure}
 
 
