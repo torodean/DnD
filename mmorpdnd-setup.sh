@@ -11,6 +11,8 @@ if [[ $(uname) == Linux ]]; then
     pip3 install BeautifulSoup
     pip3 install cssbeautifier
     pip3 install tqdm
+    pip3 install pytube
+    pip3 install moviepy
 
 else
     echo "Setup not yet configured for your system!"
