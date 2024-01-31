@@ -923,7 +923,7 @@ def create_html_table(input_line):
         | c1 | c2 |
         -----------
 
-        input: "2,a1,a2,b1,b2,c1,c2"
+        input: "2;a1;a2;b1;b2;c1;c2"
         output: '<table><tr><td>Value 1</td><td>Value 2</td></tr><tr><td>Value 3</td><td>Value 4</td></tr><tr><td>Value 5</td><td>Value 6</td></tr></table>'
     """
     # Split the single line by semi-colon
