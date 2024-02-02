@@ -1,1 +1,31 @@
 \chapter{Design}
+
+\section{Main Features}
+
+The MMORPDND system at it's core relies on creating a D\&D universe. Within a D\&D universe are players, characters, stories, regions, maps, items, and more! Thereforethe MMORPDND system must accompany all of these. This project was initially conceived as a personal learning project and personal tool for managing D\&D campaigns (as a Dungeon Master tool). Because of this, much of this design was done AFTER many of the tools were already workin gand in development. This design will therefore correlate to that existing setup and explain some of the choices that were decided upon.
+
+\subsection{Mapping}
+
+At the heart of MMORPDND lies very in depth and large maps (initially starting with the Matella region). These maps represents only portions of the starting planet and can therefore easily be expanded upon in terms of new regions, continents, etc. Each map is to be created in sufficiently high resolution so that creators can zoom in and expand upon the finer details of the area needed for a campaign.
+
+For each campaign, a creator can select an area of the larger map, zoom into a smaller region, and develop the towns, cities, or surrounding areas that they will need for their campaign. Having the larger detailed map serves as a guide to keep locations and areas consistent as well as provide options for outside lore that is taking place simultaneously to the plaers campaign.
+
+within a large world, there are typically many regions, cities, towns, rivers, mountain ranges, etc. Each of these can get lost and forgotten if they are not used. Within the MMORPDND system, all of these areas (once designated and designed) will have an HTML file generated for it. Upon running the main tools of the system, every named place will automatically be linked to for quick reference - providing any already created information to anyone who needs it.
+
+\subsubsection{Wonderdraft and Dungeondraft}
+
+Wonderdraft is a mapmaking tool that has many different features for building larger map areas such as regions, islands, cities, etc. It has a plethora of tools such as custom symbol additions, brushes, paths, etc. The tool creates clean looking maps that can be converted into different styles with the click of a button. One nice feature of the Wonderdraft tool is the ability to zoom into a region and create a more focused map from a larger one. For all these reasons (especially that last one), Wonderdraft was chosen as the intitial map making software for all MMORPDND maps and areas.
+
+Dungeondraft is a close relative to Wonderdraft. It is designed primarily for smaller area's and building layouts. It is handy for making small battle maps and puzzle maps. It also has many unique features and supports custom symbols and objects. This was chosen as the MMORPDND battle map creator for its ease of use and large community containing many resources.
+
+\subsection{Characters and NPCs}
+
+A large part of D\&D is having characters and npc's. The MMORPDND system provides a quick and easy way to create nice looking NPC \textit{character sheets} (in the form of HTML pages) for quick reference or use. Many of the necessary parts of creating a character or NPC so that it is ready for gameplay can be automated. These include determining stats, health, bonuses, etc. The MMORPDND system can automate much of this process so that the user can create characters with only a fraction of the work normally needed.
+
+It is often the case that NPCs have set locations, jobs, duties, names, families, or more. It's not always easy to keep track of these things. Within the MMORPDND system, each character will have a generated HTML page with all this information on it. The system will automatically search for an NPC name and automatically link all references to this page for quick reference!
+
+\subsection{mmorpdnd.py}
+
+\section{Coding Choices}
+
+Although many programming languages could have been selected for this project, Python was chosen for a few reasons. The primary reason was the familiarity and opportunity to further learn Python that was presented to the original creator. Another was it's simple to use and modify nature. With Python scripts, end users can open the code, make changes, and run them seemlessly without having to worry about proper setups and build systems (simple just having the correct python environment installed). Python provides easy to use string and file manipulation which was very relavent for the plans in this project. 
