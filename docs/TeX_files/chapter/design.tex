@@ -24,7 +24,13 @@ A large part of D\&D is having characters and npc's. The MMORPDND system provide
 
 It is often the case that NPCs have set locations, jobs, duties, names, families, or more. It's not always easy to keep track of these things. Within the MMORPDND system, each character will have a generated HTML page with all this information on it. The system will automatically search for an NPC name and automatically link all references to this page for quick reference!
 
+\subsubsection{Other Game Glements}
+
+Outside of maps and characters, there are many other elements to a D\&D game that can bring life to the world. These include items, lore, quests, factions, and much more. The MMORPDND system will manage all of these similar to how maps and characters are managed. With each different object gettin gits own HTML file to store information, the system will parse and link all files together appropriately.
+
 \subsection{mmorpdnd.py}
+
+This mmorpdnd.py script was the first tool created in the MMORPDND system. It was full created before any of this design documentation. It performs the bulk of the \textit{behind the scenes} automation such as file linking, formatting, etc. This tool is designed to do all the main features that makes the MMORPDND system complete and connected without any user input. The tool can be run via command line but also has an optional GUI that provides more specific options to run the individual components of the tool for time saving convenience. 
 
 \section{Coding Choices}
 
