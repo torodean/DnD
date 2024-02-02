@@ -4,6 +4,8 @@
 
 The MMORPDND system at it's core relies on creating a D\&D universe. Within a D\&D universe are players, characters, stories, regions, maps, items, and more! Thereforethe MMORPDND system must accompany all of these. This project was initially conceived as a personal learning project and personal tool for managing D\&D campaigns (as a Dungeon Master tool). Because of this, much of this design was done AFTER many of the tools were already workin gand in development. This design will therefore correlate to that existing setup and explain some of the choices that were decided upon.
 
+It is my hope that I can maintain good design documentation and outline thoughts in design decisions to be a helpful reference or helpful for anyone who chooses to make additions or improvements. At the time I've started writing this, many of the tools have already been created, but some are still only in their contemplation phase. 
+
 \subsection{Mapping}
 
 At the heart of MMORPDND lies very in depth and large maps (initially starting with the Matella region). These maps represents only portions of the starting planet and can therefore easily be expanded upon in terms of new regions, continents, etc. Each map is to be created in sufficiently high resolution so that creators can zoom in and expand upon the finer details of the area needed for a campaign.
@@ -30,8 +32,41 @@ Outside of maps and characters, there are many other elements to a D\&D game tha
 
 \subsection{mmorpdnd.py}
 
-This mmorpdnd.py script was the first tool created in the MMORPDND system. It was full created before any of this design documentation. It performs the bulk of the \textit{behind the scenes} automation such as file linking, formatting, etc. This tool is designed to do all the main features that makes the MMORPDND system complete and connected without any user input. The tool can be run via command line but also has an optional GUI that provides more specific options to run the individual components of the tool for time saving convenience. 
+This mmorpdnd.py script was the first tool created in the MMORPDND system. It was full created before any of this design documentation. It performs the bulk of the \textit{behind the scenes} automation such as file linking, formatting, etc. This tool is designed to do all the main features that makes the MMORPDND system complete and connected without any user input. The tool can be run via command line but also has an optional GUI that provides more specific options to run the individual components of the tool for time saving convenience.
+
+Since the MMORPDND system relies on HTML files to store its data, there were a few considerations. since new files would be added constantly (as new data is created or added to the world), a mthod for keeping these files consistent was devised. The mmorpdnd.py script will use a template header and footer, scan for all html files (omitting some folders and files), and update these headers appropriately. This also makes modifying the headers and footers very simple as you only need to modify one file to then propogate the changes throughout the database.
+
+It was decided that having an index file in each directory would be a convenient way of listing all files within that directory (html files, images, folders, etc). This process was also automated so that an index file is automatically created in each folder which has links to all desired sub-files. This makes navigating through the database simple.
+
+Finally, the linking components were added to the mmorpdnd.py script. The idea behind this is to be able to quickly reference anything that is mentioned throughout the documents. The MMORPDND system will gather a compilation of all HTML file names. It then searches all the HTML files for references to those names. Upon finding them, the references are linked to the appropriate HTML files. It has been considered that this system will not function properly if multiple files with the same name are created. It is currently up to the creators to make sure file names are unique enough that this does not occur. As the world and system is still rather small, this is not an issue. A solution to this will likely be added as/if the system expands.
+
+\subsection{creator.py}
+
+The creator.py tool was the second tool in the MMORPDND system to be developed. This tool was also developed before these design documents. This tool is the one to take user-defined data and turn it into HTML files within the database. It was decided that simple text input would be best as input (as anyone will have access and ability to edit these) without any extra knowledge. These text files should be formatted properly for the system to understand the data being entered and properly turn it into the appropriate HTML files. 
+
+Items of all sorts were created in a desired format that would appear appropriate and nice. These formats were then broken down into their base and common components. These compoents were turned into elements the user can define within the data to determine how it will appear (list, item, table, image, audio, etc). These are further elaborated on in the below sections and each has a simple and similar way of inputting data.
+
+The \textit{character sheet} or character page is somewhat unique as it appears different than the other files. The .char file extension was used to generate these character files. This was the first type of input file to be created by the system. The user simply defines the needed parameters for a character and then the system wil fill in the rest and try to adapt appropriately given missing information. After this was completed, the approach turned to a more generic and versatile input type (.input files), which have much mroe flexibility. 
+
+These generic input files for the system allow the user to have control over what types of data to input. These generic files will format text in blocks that look nice based on the type the user sets. For objects that have accompanying images (creatures, towns, maps, etc), a system was also devised to automatically detect multiple images. When naming images on linux or windows, the OS typically adds a number at the end of each similarly named file ('(1)', '(2)', ...). This is automatic on Windows and optional in Linux based machines. This format was chosen as it is easy for both operating systems to modify files in this way. When images have multiple files with these numbers, the system will automatically detect the images and display them all. 
+
+The creator is setup and thoguth of as being the primary tool for new data/file creation. Therefore it is expected that new features will be added. It is a GUI application as it requires regular user input.
+
+\subsection{Stockpile.py}
+
+At the time of writing this document, this is currently the first undeveloped script/app that will have its design discussed. Since a large part of this project is self improvement and learning, this will also serve as a scenario to expore createing design documentation before coding - which is not something I'm use to. Please be aware of this in case it does not go well.
+
+
 
 \section{Coding Choices}
 
 Although many programming languages could have been selected for this project, Python was chosen for a few reasons. The primary reason was the familiarity and opportunity to further learn Python that was presented to the original creator. Another was it's simple to use and modify nature. With Python scripts, end users can open the code, make changes, and run them seemlessly without having to worry about proper setups and build systems (simple just having the correct python environment installed). Python provides easy to use string and file manipulation which was very relavent for the plans in this project. 
+
+
+\section{Gameplay Features}
+
+Since this system is ultimately for designing a D\&D universe, there are various new ideas relating to the gameplay itself that have also been developed alongside it. These include different styles of play, different ways to interact with characters, different managing techniques for Dungeon Masters, and more. I will attempt to outline some of these here but they may progress faster than this documentation does.
+
+\subsection{E.N.G.A.G.E. System}
+
+
