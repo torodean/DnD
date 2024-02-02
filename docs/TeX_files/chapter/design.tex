@@ -54,7 +54,11 @@ The creator is setup and thoguth of as being the primary tool for new data/file 
 
 \subsection{Stockpile.py}
 
-At the time of writing this document, this is currently the first undeveloped script/app that will have its design discussed. This application/script will be responsible for automating the S.T.O.C.K.P.I.L.E System (see section \ref{S.T.O.C.K.P.I.L.E}).
+At the time of writing this document, this is currently the first undeveloped script/app that will have its design discussed. This application/script will be responsible for automating the S.T.O.C.K.P.I.L.E.S (see section \ref{S.T.O.C.K.P.I.L.E}). Since the players will need access to the S.T.O.C.K.P.I.L.E.S (the list of items in the S.T.O.C.K.P.I.L.E Bazaar), this will have to be public and published somewhere for the players to view. 
+
+One option is to use a Google sheet, although this is not as custom/versatile as a self contained solution and relies entirely on a third party system. The benefits to this is that all of the features available to Google Sheets would be available. the downside would be that integration with the Google Sheets would need accomplished in order to automate this.
+
+Another option would be to host a page in the MMORPDND database for the players to access. This option would have the benefit of easy automation. It can be tied into a system that regularly pushes updates through Github actions. One downside is that only the features of html or that programmed into the system would be available. Another downside to this would be that the players would have a direct link to the MMORPDND database (and thus potentially DM notes). This could be somewhat remedied by removing the usual heading which linkes back to the other pages and simply being a self contained static page (although it would not be hard to go back a directory in the url).
 
 
 
@@ -110,7 +114,7 @@ At the end of each downtime period, characters declare their chosen financial ac
 
 \subsection{S.T.O.C.K.P.I.L.E System\label{S.T.O.C.K.P.I.L.E}}
 
-Within the bustling market district, your characters will encounter a dynamic array of stores collectively referred to as the Special Treasures, Ordinances, Collectibles, Knickknacks, Paraphernalia, Items, Limited Ephemerals (S.T.O.C.K.P.I.L.E.) Bazaar. It's important to note that this term isn't assigned to a single establishment but is rather a convenient label used by the Dungeon Master.
+the S.T.O.C.K.P.I.L.E System (or S.T.O.C.K.P.I.L.E.S for short) represent all of the market areas within the region that the players have access to during a period of time. Within the bustling market district, the characters will encounter a dynamic array of stores collectively referred to as the Special Treasures, Ordinances, Collectibles, Knickknacks, Paraphernalia, Items, Limited Ephemerals (S.T.O.C.K.P.I.L.E.) Bazaar (or sometimes simply called S.T.O.C.K.P.I.L.E.S). It's important to note that this term isn't assigned to a single establishment but is rather a convenient label used by the Dungeon Master.
 
 To simplify and enrich your shopping experience, the Dungeon Master will manage a master list or spreadsheet encompassing all the items scattered across the diverse stores within the S.T.O.C.K.P.I.L.E. Bazaar. This central document acts as a comprehensive resource, allowing you to effortlessly browse through the available Special Treasures, Ordinances, Collectibles, Knickknacks, Paraphernalia, Items, and Limited Ephemerals.;During downtime, your characters are free to explore the various stores, each boasting its own unique offerings. The master list serves as an organized overview of all items accessible in the expansive market district. Prices are subject to fluctuation as stocks rise and fall, and items can seamlessly appear or disappear from the list based on availability.
 
