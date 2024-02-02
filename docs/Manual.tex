@@ -6,7 +6,7 @@
 
 \title{\vspace{0.1cm}  \includegraphics[scale=0.18]{./images/man_cover.png} \vspace{.5cm} \\ Massively Multiplayer Online Role Playing Dungeons and Dragons (MMORPDND) \\  Manual \& Programming Documentation}
 \author{Developer: Antonius Torode}
-\date{Version -- 1.000 \\ Latest update: \today}
+\date{Version -- \Version \\ Latest update: \today}
 
 \makeindex
 %\addcontentsline{toc}{chapter}{Index}
@@ -18,23 +18,15 @@
 \maketitle
 \include{./TeX_files/frontmatter}
 \tableofcontents
-\newpage
-\vspace*{\fill}
-\begin{center}
-	\textit{This page intentionally left blank.}
-\end{center}
-\vspace*{\fill}
+%\newpage
+%\vspace*{\fill}
+%\begin{center}
+%	\textit{This page intentionally left blank.}
+%\end{center}
+%\vspace*{\fill}
 
 \mainmatter
 \pagestyle{fancy}
-\fancyhf{}
-\fancyhead[RO, LE]{\thepage}
-
-\fancypagestyle{plain}{%
-	%\fancyhf{} % clear all header and footer fields
-	\fancyhead[RO, LE]{\thepage}
-	\renewcommand{\headrulewidth}{0pt}
-	\renewcommand{\footrulewidth}{0pt}}
 
 \include{./TeX_files/chapter/introduction}
 

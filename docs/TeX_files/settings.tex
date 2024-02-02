@@ -1,3 +1,6 @@
+%%Version Number
+\newcommand{\Version}{1.001}
+
 \renewcommand{\chaptername}{}
 
 \titleformat{\chapter}[display]
@@ -12,7 +15,18 @@
 
 \renewcommand\bibname{References}
 
-\renewcommand{\headrulewidth}{0pt}
+%%% Header and Footer Info
+\pagestyle{fancy}
+\fancyhead[LO]{\small {\textbf{MMORPDND Documentation - Version \Version}}}
+\fancyhead[RE]{\small {\textbf{MMORPDND Documentation - Version \Version}}}
+\fancyhead[C]{}
+\fancyhead[RO]{\small \thepage}
+\fancyhead[LE]{\small \thepage}
+\fancyfoot[L]{}
+\fancyfoot[C]{}
+\fancyfoot[R]{}
+
+
 %\setcounter{chapter}{-1} %starts the chapter labels at 0 instead of 1
 
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
