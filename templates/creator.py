@@ -16,6 +16,12 @@ from moviepy.editor import *
 
 # Used for progress bars
 from tqdm import tqdm
+import argparse
+
+parser = argparse.ArgumentParser(description='MMORPDND Creator Tool.')
+parser.add_argument('-f', '--file', action='store', help='Run the creator for a single input file and update all files.')
+
+args = parser.parse_args()
 
 
 def output_text(text, option = "text"):
@@ -2144,4 +2150,8 @@ class Creator:
 
 if __name__ == '__main__':
     app = Creator()
-    app.run()
+    
+    if args.file == None:
+        app.run()
+    else:
+        print(f"Running crator processes for: {args.file}")
