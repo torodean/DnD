@@ -9,9 +9,71 @@ import argparse
 
 parser = argparse.ArgumentParser(description='S.T.O.C.K.P.I.L.E System Update.')
 parser.add_argument('-g', '--general', action='store', help='The file containing general store items.')
-parser.add_argument('-t', '--traders', action='store', help='The file contianing random and trade items.')
-    
+parser.add_argument('-t', '--trade', action='store', help='The file contianing random and trade items.')
+parser.add_argument('-o', '--output', action='store', help='The output file to compare to and update.")
+
 args = parser.parse_args()
+
+def convert_to_list(input):
+    """
+    This will take a string (raw list from the input file) formatted as "int,string,string,string,string,..." and convert it to a python list.
+
+    Args:
+        input (str): The input string to parse.
+
+    Returns:
+        list (list): The output list
+    """
+    if "," not in input:        
+        return None
+    elements = input.split(",")
+    num_columns = int(elements[0])
+    num_rows = int((size(elements)-1)/num_rows)
+
+    list = []
+    for i in range(0, num_rows):
+        list_item = []
+        for j in range (0, num_columns):
+            list_item.append(elements[i*num_rows + j + 1] #+1 to omit the first item.
+        list.append(list_item)
+                             
+    return list
+
+
+def get_old_list(output_file):
+    """
+    This will return the list of items contained in the secified output list (the current list to be updated).
+
+    Args:
+        output_file (str): The output file name to retrieve the data from.
+        
+    Returns:
+        old_general_list (list): A list of the old general items that were available.
+        old_trade_list (list): A list of the old trade items that were available.
+    """
+    try:
+        with open(output_file, 'r') as file:
+            # Read all lines into a list
+            lines = file.readlines()
+
+            # remove newline characters from the end of each line
+            lines = [line.strip() for line in lines]
+
+        for line in lines:
+            if "General Items[dnd-table]=" in line:
+                old_general_list = convert_to_list(line.split("=")[1])
+                
+            if "Specialty Items[dnd-table]=" in line:
+                old_trade_list = convert_to_list(line.split("=")[1])
+                
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return None
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        return None
+
+    return old_general_list, old_trade_list
 
 
 def output_text(text, option = "text"):
