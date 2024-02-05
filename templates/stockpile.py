@@ -578,10 +578,31 @@ def convert_prices_to_dnd_format(item_list):
         updated_list.append(updated_item)
 
     return updated_list
+    
+def convert_to_one_line(list_of_lists):
+    """
+    Convert a list of lists to a single line string with comma delimiters.
+
+    Args:
+        list_of_lists (list): The input list of lists.
+
+    Returns:
+        str: A single line string with comma delimiters.
+    """
+    result = ""
+
+    for sublist in list_of_lists:
+        line = ", ".join(sublist)
+        result += line + ", "
+
+    # Remove the trailing comma and space
+    result = result.rstrip(", ")
+
+    return result
 
 
 if __name__ == '__main__':
-    print("Running app (TESTS)")
+    print("Running app (TESTING methods for later use)")
     
     # Get old/current lists.
     print("Get old/current lists.")
@@ -640,11 +661,13 @@ if __name__ == '__main__':
     formatted_list = convert_prices_to_dnd_format(updated_new_list)
     #output_text(f"formatted_list: {formatted_list}", "note")
     print_table(formatted_list, ["item", "buy price", "sell price", "description"])
+    
+    print("Convert to .input file format:")
+    output_line = convert_to_one_line(formatted_list)
+    print(output_line)
             
     # Test usage:
     mean_value = 100  # mean value
     percent_variance = 5  # percentage variance
     num_values = 1000 # number of test values 
     #generate_and_plot_values(mean_value, percent_variance, num_values)
-    
-    
