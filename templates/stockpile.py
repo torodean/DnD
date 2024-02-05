@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 parser = argparse.ArgumentParser(description='S.T.O.C.K.P.I.L.E System Update.')
 parser.add_argument('-g', '--general', action='store', help='The file containing general store items.')
 parser.add_argument('-t', '--trade', action='store', help='The file contianing random and trade items.')
-parser.add_argument('-o', '--output', action='store', help='The output file to compare to and update.')
+parser.add_argument('-o', '--output', action='store', help='The output file to compare to and update. This should be a .input file with the lists formatted in the dnd-table format (see documentation).')
 
 args = parser.parse_args()
 
@@ -74,12 +74,14 @@ def convert_to_list(input_line):
     elements = input_line.split(",")
     num_columns = int(elements[0])
     num_rows = int((len(elements)-1) / num_columns)
+    print(f"num_columns: {num_columns}")
+    print(f"num_rows: {num_rows}")
 
     output_list = []
     for i in range(0, num_rows):
         list_item = []
         for j in range (0, num_columns):
-            list_item.append(elements[i*num_rows + j + 1]) #+1 to omit the first item.
+            list_item.append(elements[i*num_columns + j + 1]) #+1 to omit the first item.
         output_list.append(list_item)
                              
     return output_list
@@ -306,7 +308,7 @@ if __name__ == '__main__':
     print(old_trade_list)
         
     # Test usage:
-    mean_value = 17  # mean value
+    mean_value = 100  # mean value
     percent_variance = 5  # percentage variance
     num_values = 1000 # number of test values 
     generate_and_plot_values(mean_value, percent_variance, num_values)
