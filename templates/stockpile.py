@@ -444,8 +444,31 @@ def alphabetize_list(input_list):
         list: A new list alphabetized based on the first element.
     """
     return sorted(input_list, key=lambda x: x[0])
+    
 
+def adjust_buy_prices(items_list, variance=10):
+    """
+    Calculate the buy price as a variance from the base price. 
 
+    Args:
+        items_list (list): The input list containing items.
+        variance (int): The variance of the buy price to use (default is 10).
+
+    Returns:
+        list: A new list with buy prices calculated based on the base/original buy prices.
+    """
+    updated_list = []    
+
+    for item in items_list:
+        percentage = random_with_variance(100, 5) / 100
+        buy_price = float(item[1])
+        new_buy_price = buy_price * percentage
+        updated_item = [item[0], new_buy_price, item[2], item[3]]
+        updated_list.append(updated_item)
+
+    return updated_list
+    
+    
 def calculate_sell_percentage(items_list, percentage=75):
     """
     Calculate the sell price as a percentage of the buy price for each item in a list. The percentage will be somewhat randomized and a 10 percent variance from what is entered. 
@@ -458,13 +481,100 @@ def calculate_sell_percentage(items_list, percentage=75):
         list: A new list with sell prices calculated based on the buy prices.
     """
     updated_list = []
-    
-    percentage = random_with_variance(percentage, 10) / 100
 
-    for item in items_list:
+    for item in items_list:    
+        percent_multiplier = random_with_variance(percentage, 10) / 100
         buy_price = float(item[1])
-        sell_price = buy_price * percentage
+        sell_price = buy_price * percent_multiplier
         updated_item = [item[0], buy_price, sell_price, item[3]]
+        updated_list.append(updated_item)
+
+    return updated_list
+
+
+def convert_to_dnd_currency(value):
+    """
+    Convert a float value to a string in Dungeons and Dragons currency format.
+
+    Args:
+        value (float): The input value in gold units.
+
+    Returns:
+        str: A string representing the value in the format (##g ##s ##c).
+    """
+    # Ensure the value is non-negative
+    value = max(0, value)
+
+    # Calculate gold, silver, and copper amounts
+    gold_amount = int(value)
+    silver_amount = int((value - gold_amount) * 10)
+    copper_amount = int(((value - gold_amount) * 10 - silver_amount) * 10)
+
+    result_parts = []
+    
+    if gold_amount:
+        result_parts.append(f"{gold_amount}g")
+    if silver_amount:
+        result_parts.append(f"{silver_amount}s")
+    if copper_amount:
+        result_parts.append(f"{copper_amount}c")
+
+    result_string = " ".join(result_parts)
+
+    return result_string
+    
+    
+def convert_from_dnd_currency(currency_string):
+    """
+    Convert a Dungeons and Dragons currency string to a float value.
+
+    Args:
+        currency_string (str): The input string in Dungeons and Dragons currency format.
+
+    Returns:
+        float: The equivalent value in gold units.
+    """
+    parts = currency_string.split()
+
+    gold_amount = 0
+    silver_amount = 0
+    copper_amount = 0
+
+    for part in parts:
+        if 'g' in part:
+            gold_amount = int(part.replace('g', ''))
+        elif 's' in part:
+            silver_amount = int(part.replace('s', ''))
+        elif 'c' in part:
+            copper_amount = int(part.replace('c', ''))
+
+    total_value = gold_amount + (silver_amount / 10) + (copper_amount / 100)
+
+    return total_value
+
+
+def convert_prices_to_dnd_format(item_list):
+    """
+    Convert buy and sell prices in a list to Dungeons and Dragons currency format.
+
+    Args:
+        item_list (list): The input list containing items.
+
+    Returns:
+        list: A new list with buy and sell prices in Dungeons and Dragons currency format.
+    """
+    updated_list = []
+
+    for item in item_list:
+        item_name = item[0]
+        buy_price = item[1]
+        sell_price = item[2]
+        description = item[3]
+
+        dnd_buy_price = convert_to_dnd_currency(buy_price)
+        dnd_sell_price = convert_to_dnd_currency(sell_price)
+
+        updated_item = [item_name, dnd_buy_price, dnd_sell_price, description]
         updated_list.append(updated_item)
 
     return updated_list
@@ -521,9 +631,15 @@ if __name__ == '__main__':
     new_list = items_to_add + reduced_old_list
     #output_text(f"new_list: {new_list}", "note")
     updated_new_list = fix_combined_list(new_list)
-    updated_new_list = calculate_sell_percentage(new_list)
+    updated_new_list = adjust_buy_prices(updated_new_list)
+    updated_new_list = calculate_sell_percentage(updated_new_list)
     #output_text(f"updated_new_list: {new_list}", "note")
     print_table(updated_new_list, ["item", "buy price", "sell price", "description"])
+    
+    print("Convert to DnD values:")    
+    formatted_list = convert_prices_to_dnd_format(updated_new_list)
+    #output_text(f"formatted_list: {formatted_list}", "note")
+    print_table(formatted_list, ["item", "buy price", "sell price", "description"])
             
     # Test usage:
     mean_value = 100  # mean value
