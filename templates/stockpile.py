@@ -8,6 +8,7 @@ import argparse
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+from prettytable import PrettyTable
 
 parser = argparse.ArgumentParser(description='S.T.O.C.K.P.I.L.E System Update.')
 parser.add_argument('-g', '--general', action='store', help='The file containing general store items.')
@@ -74,8 +75,8 @@ def convert_to_list(input_line):
     elements = input_line.split(",")
     num_columns = int(elements[0])
     num_rows = int((len(elements)-1) / num_columns)
-    print(f"num_columns: {num_columns}")
-    print(f"num_rows: {num_rows}")
+    output_text(f"num_columns: {num_columns}", "note")
+    output_text(f"num_rows: {num_rows}", "note")
 
     output_list = []
     for i in range(0, num_rows):
@@ -86,6 +87,40 @@ def convert_to_list(input_line):
                              
     return output_list
 
+
+def get_master_list(input_file):
+    """
+    This will get the items from the master lists and convert them to python lists. These files should be formatted with a single item per line (csv like). They should have 3 elements, item name, price, and description separated by a comma delimiter.
+    
+    Args:
+        input_file (str): The file name of the items list.
+        
+    Returns:
+        output_list (list): The list of general items.
+    """
+    try:
+        output_list = []
+        with open(input_file, 'r') as file:
+            # Read all lines into a list
+            lines = file.readlines()
+
+            # remove newline characters from the end of each line
+            lines = [line.strip() for line in lines]
+
+        for line in lines:
+            if "," in line:
+                list_items = line.split(",")
+                output_list.append(list_items)                
+                
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return None
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        return None
+
+    return output_list
+    
 
 def get_old_lists(output_file):
     """
@@ -300,15 +335,200 @@ def get_random_line(file_path):
         raise IOError(f"Error reading file: {file_path}")
 
 
+def find_items_not_in_old_list(old_list, master_list):
+    """
+    Compare the old list to the master list and return items that are in the master list but not the old list.
+
+    Args:
+        old_list (list): The old list.
+        master_list (list): The current master list.
+
+    Returns:
+        list: Items from master_list that are not found in the old_list.
+    """
+    old_item_names = set(item[0] for item in old_list)
+    items_not_in_old_list = [item for item in master_list if item[0] not in old_item_names]
+
+    return items_not_in_old_list
+    
+
+def randomly_remove_elements(input_list, num_elements_to_remove):
+    """
+    Randomly remove a specified number of elements from a list.
+
+    Args:
+        input_list (list): The input list.
+        num_elements_to_remove (int): The number of elements to randomly remove.
+
+    Returns:
+        tuple: A tuple containing the modified list (without removed elements) and the removed elements.
+    """
+    if num_elements_to_remove >= len(input_list):
+        return input_list, []
+
+    random_indices = random.sample(range(len(input_list)), num_elements_to_remove)
+    removed_elements = [input_list.pop(index) for index in sorted(random_indices, reverse=True)]
+
+    return input_list, removed_elements
+    
+    
+def print_table(data, header):
+    """
+    Print a list in a nicely formatted table.
+
+    Args:
+        data (list): The list to be printed.
+        header (list): The header of the table.
+    """
+    table = PrettyTable()
+    table.field_names = header
+
+    for row in data:
+        table.add_row(row)
+
+    print(table)
+    
+
+def randomly_select_items(input_list, n):
+    """
+    Randomly select n items from a list and return a new list with those items.
+
+    Args:
+        input_list (list): The input list.
+        n (int): The number of items to randomly select.
+
+    Returns:
+        list: A new list containing the randomly selected items.
+    """
+    if n >= len(input_list):
+        return input_list
+
+    selected_items = random.sample(input_list, n)
+
+    return selected_items
+    
+    
+def fix_combined_list(items_list, default_sell_value='default_sell'):
+    """
+    Fixes some issues with combining the two types of lists. Also updates some values in that list.
+        - Add a sell spot to each item with only 3 elements in a list.
+        - Alphabetizes the list.
+
+    Args:
+        items_list (list): The input list containing items.
+        default_sell_value (str): The default value for the sell spot.
+
+    Returns:
+        list: A new list with sell spots added to items with only 3 elements.
+    """
+    updated_list = []
+
+    for item in items_list:
+        if len(item) == 3:
+            item.insert(2, default_sell_value)
+        updated_list.append(item)
+    
+    updated_list = alphabetize_list(updated_list)
+
+    return updated_list
+    
+    
+def alphabetize_list(input_list):
+    """
+    Alphabetize a list based on the first element.
+
+    Args:
+        input_list (list): The input list.
+
+    Returns:
+        list: A new list alphabetized based on the first element.
+    """
+    return sorted(input_list, key=lambda x: x[0])
+
+
+def calculate_sell_percentage(items_list, percentage=75):
+    """
+    Calculate the sell price as a percentage of the buy price for each item in a list. The percentage will be somewhat randomized and a 10 percent variance from what is entered. 
+
+    Args:
+        items_list (list): The input list containing items.
+        percentage (float): The percentage of the buy price to use for the sell price. Default is 95% (0.95).
+
+    Returns:
+        list: A new list with sell prices calculated based on the buy prices.
+    """
+    updated_list = []
+    
+    percentage = random_with_variance(percentage, 10) / 100
+
+    for item in items_list:
+        buy_price = float(item[1])
+        sell_price = buy_price * percentage
+        updated_item = [item[0], buy_price, sell_price, item[3]]
+        updated_list.append(updated_item)
+
+    return updated_list
+
+
 if __name__ == '__main__':
-    print("Running app")
+    print("Running app (TESTS)")
+    
+    # Get old/current lists.
+    print("Get old/current lists.")
     if args.output is not None:
         old_general_list, old_trade_list = get_old_lists(args.output)
-    print(old_general_list)
-    print(old_trade_list)
+        #output_text(f"old_general_list: {old_general_list}", "note")
+        #output_text(f"old_trade_list: {old_trade_list}", "note")
+        print_table(old_general_list, ["item", "buy price", "sell price", "description"])
+        print_table(old_trade_list, ["item", "buy price", "sell price", "description"])
         
+    # Get master list of general items.
+    print("Get master list of general items.")
+    if args.general is not None:
+        general_list = get_master_list(args.general)
+        #output_text(f"general_list: {general_list}", "note")
+        print_table(general_list, ["item", "price", "description"])
+        
+    # Get master list of trade/specialty items.
+    print("Get master list of trade/specialty items.")
+    if args.general is not None:
+        trade_list = get_master_list(args.trade)
+        #output_text(f"trade_list: {trade_list}", "note")
+        print_table(trade_list, ["item", "base price", "description"])
+        
+    # Update general list.
+    print("Update general list.")
+    items_not_in_old_list = find_items_not_in_old_list(old_general_list, general_list)
+    print("Potential items to add:")
+    #output_text(f"items_not_in_old_list: {items_not_in_old_list}", "note")
+    print_table(items_not_in_old_list, ["item", "price", "description"])
+    
+    num_to_remove = random_with_variance(len(old_general_list)*0.2, 10)
+    num_to_add = random_with_variance(num_to_remove, 5)
+    print("Items to add:")
+    print(f"Adding {int(num_to_add)} items.")    
+    items_to_add = randomly_select_items(items_not_in_old_list, int(num_to_add))    
+    #output_text(f"items_to_add: {items_to_add}", "note")
+    print_table(items_to_add, ["item", "price", "description"])
+    
+    print(f"Removing {int(num_to_remove)} items.")    
+    reduced_old_list, _ = randomly_remove_elements(old_general_list, int(num_to_remove))
+    reduced_master_list, _ = randomly_remove_elements(old_general_list, int(num_to_remove))
+    #output_text(f"reduced_old_list: {reduced_old_list}", "note")
+    print("Reducing old/current list to:")
+    print_table(reduced_old_list, ["item", "buy price", "sell price", "description"])
+    print("New list:")
+    new_list = items_to_add + reduced_old_list
+    #output_text(f"new_list: {new_list}", "note")
+    updated_new_list = fix_combined_list(new_list)
+    updated_new_list = calculate_sell_percentage(new_list)
+    #output_text(f"updated_new_list: {new_list}", "note")
+    print_table(updated_new_list, ["item", "buy price", "sell price", "description"])
+            
     # Test usage:
     mean_value = 100  # mean value
     percent_variance = 5  # percentage variance
     num_values = 1000 # number of test values 
-    generate_and_plot_values(mean_value, percent_variance, num_values)
+    #generate_and_plot_values(mean_value, percent_variance, num_values)
+    
+    
