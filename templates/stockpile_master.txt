@@ -1,0 +1,278 @@
+Abacus,2g,2 lb.
+Acid (vial),25g,1 lb.
+Alchemist’s fire (flask),50g,1 lb.
+Arrows (20),1g,1 lb.
+Blowgun Needles (50),1g,1 lb.
+Crossbow bolts (20),1g,1.5 lb.
+Sling bullets (20),4c,1½ lb.
+Antitoxin (vial),50g
+Backpack,2g,5 lb.
+"Ball bearings (bag of 1,000)",1g,2 lb.
+Barrel,2g,70 lb.
+Basket,4s,2 lb.
+Bedroll,1g,7 lb.
+Bell,1g,
+Blanket,5s,3 lb.
+Block and tackle,1g,5 lb.
+Book,25g,5 lb.
+"Bottle, glass",2g,2 lb.
+Bucket,5c,2 lb.
+Caltrops (bag of 20),1g,2 lb.
+Candle,1c,
+"Case, crossbow bolt",1g,1 lb.
+"Case, map or scroll",1g,1 lb.
+Chain (10 feet),5g,10 lb.
+Chalk (1 piece),1c,
+Chest,5g,25 lb.
+"Clothes, Common",5s,3 lb.
+"Clothes, costume",5g,4 lb.
+"Clothes, fine",15g,6 lb.
+"Clothes, traveler’s",2g,4 lb.
+Component pouch,25g,2 lb.
+Crowbar,2g,5 lb.
+Fishing tackle,1g,4 lb.
+Flask or Tankard,2c,1 lb.
+Grappling hook,2g,4 lb.
+Hammer,1g,3 lb.
+"Hammer, sledge",2g,10 lb.
+Holy Water (flask),25g,1 lb.
+Hourglass,25g,1 lb.
+Hunting trap,5g,25 lb.
+Ink (1 ounce bottle),10g,
+Ink pen,2c,
+Jug or Pitcher,2c,4 lb.
+"Kit, climber’s",25g,12 lb.
+"Kit, disguise",25g,3 lb.
+"Kit, forgery",15g,5 lb.
+"Kit, herbalism",5g,3 lb.
+"Kit, healer’s",5g,3 lb.
+"Kit, mess",2s,1 lb.
+"Kit, poisoner’s",50g,2 lb.
+Ladder (10-foot),1s,25 lb.
+Lamp,5s,1 lb.
+"Lantern, bullseye",10g,2 lb.
+"Lantern, hooded",5g,2 lb.
+Lock,10g,1 lb.
+Magnifying glass,100g,
+Manacles,2g,6 lb.
+"Mirror, steel",5g,1/2 lb.
+Oil (flask),1s,1 lb.
+Paper (one sheet),2s,
+Parchment (one sheet),1s,
+Perfume (vial),5g,
+"Pick, miner’s",2g,10 lb.
+Piton,5c,1/4 lb.
+"Poison, basic (vial)",100g,
+Pole (10-foot),5c,7 lb.
+"Pot, iron",2g,10 lb.
+Potion of Healing,50g,1/2 lb.
+Pouch,5s,1 lb.
+Quiver,1g,1 lb.
+"Ram, portable",4g,35 lb.
+Rations (1 day),5s,2 lb.
+Robes,1g,4 lb.
+"Rope, hempen (50 feet)",1g,10 lb.
+"Rope, silk (50 feet)",10g,5 lb.
+Sack,1c,1/2 lb.
+"Scale, merchant’s",5g,3 lb.
+Sealing wax,5s,
+Shovel,2g,5 lb.
+Signal whistle,5c,
+Signet ring,5g,
+Soap,2c,
+Spellbook,50g,3 lb.
+"Spikes, iron (10)",1g,5 lb.
+Spyglass,"1,000g",1 lb.
+"Tent, two-person",2g,20 lb.
+Tinderbox,5s,1 lb.
+Torch,1c,1 lb.
+Vial,1g,
+Waterskin,2s,5 lb. (full)
+Whetstone,1c,1 lb.
+Club,1s,2 lb. 1d4 bludgeoning,Light
+Dagger,2g,1 lb. 1d4 piercing,"Finesse, light, thrown (range 20/60)"
+Greatclub,2s,10 lb. 1d8 bludgeoning,Two-handed
+Handaxe,5g,2 lb. 1d6 slashing,"Light, thrown (range 20/60)"
+Javelin,5s,2 lb. 1d6 piercing,Thrown (range 30/120)
+Light Hammer,2g,2 lb. 1d4 bludgeoning,"Light, thrown (range 20/60)"
+Mace,5g,4 lb. 1d6 bludgeoning
+Quarterstaff,2s,4 lb. 1d6 bludgeoning,Versatile (1d8)
+Sickle,1g,2 lb. 1d4 slashing,Light
+Spear,1g,3 lb. 1d6 piercing,"Thrown (range 20/60), versatile (1d8)"
+Simple Ranged Weapons
+"Crossbow, light",25g,5 lb. 1d8 piercing,"Ammunition (range 80/320), loading, two-handed"
+Dart,5c,1/4 lb. 1d4 piercing,"Finesse, thrown (range 20/60)"
+Shortbow,25g,2 lb. 1d6 piercing,"Ammunition (range 80/320), two-handed"
+Sling,1s,—,1d4 bludgeoning,Ammunition (range 30/120)
+Martial Melee Weapons
+Battleaxe,10g,4 lb. 1d8 slashing,Versatile (1d10)
+Flail,10g,2 lb. 1d8 bludgeoning
+Glaive,20g,6 lb. 1d10 slashing,"Heavy, reach, two-handed"
+Greataxe,30g,7 lb. 1d12 slashing,"Heavy, two-handed"
+Greatsword,50g,6 lb. 2d6 slashing,"Heavy, two-handed"
+Halberd,20g,6 lb. 1d10 slashing,"Heavy, reach, two-handed"
+Lance,10g,6 lb. 1d12 piercing,"Reach,secial"
+Longsword,15g,3 lb. 1d8 slashing,Versatile (1d10)
+Maul,10g,10 lb. 2d6 bludgeoning,"Heavy, two-handed"
+Morningstar,15g,4 lb. 1d8 piercing
+Pike,5g,18 lb. 1d10 piercing,"Heavy, reach, two-handed"
+Rapier,25g,2 lb. 1d8 piercing,Finesse
+Scimitar,25g,3 lb. 1d6 slashing,"Finesse, light"
+Shortsword,10g,2 lb. 1d6 piercing,"Finesse, light"
+Trident,5g,4 lb. 1d6 piercing,"Thrown (range 20/60), versatile (1d8)"
+War Pick,5g,2 lb. 1d8 piercing
+Warhammer,15g,2 lb. 1d8 bludgeoning,Versatile (1d10)
+Whip,2g,3 lb. 1d4 slashing,"Finesse, reach"
+Martial Ranged Weapons
+Blowgun,10g,1 lb. 1 piercing,"Ammunition (range 25/100), loading"
+"Crossbow, hand",75g,3 lb. 1d6 piercing,"Ammunition (range 30/120), light, loading"
+"Crossbow, heavy",50g,18 lb. 1d10 piercing,"Ammunition (range 100/400), heavy, loading, two-handed"
+Longbow,50g,2 lb. 1d8 piercing,"Ammunition (range 150/600), heavy, two-handed"
+Net,1g,3 lb. "Special, thrown (range 5/15)"
+Alchemist’s supplies,50g,8 lb.
+Brewer’s supplies,20g,9 lb.
+Calligrapher's Supplies,10g,5 lb.
+Carpenter’s tools,8g,6 lb.
+Cartographer’s tools,15g.,6 lb.
+Cobbler’s tools,5g,5 lb.
+Cook’s utensils,1g,8 lb.
+Glassblower’s tools,30g,5 lb.
+Jeweler’s tools,25g,2 lb.
+Leatherworker’s tools,5g,5 lb.
+Mason’s tools,10g,8 lb.
+Painter’s supplies,10g,5 lb.
+Potter’s tools,10g,3 lb.
+Smith’s tools,20g,8 lb.
+Tinker’s tools,50g,10 lb.
+Weaver’s tools,1g,5 lb.
+Woodcarver’s tools,1g,5 lb.
+Gaming sets
+Dice set,1s,
+Playing card set,5s,
+Musical Instruments
+Bagpipes,30g,6 lb.
+Drum,6g,3 lb.
+Dulcimer,25g,10 lb.
+Flute,2g,1 lb.
+Lute,35g,2 lb.
+Lyre,30g,2 lb.
+Horn,3g,2 lb.
+Pan flute,12g,2 lb.
+Shawm,2g,1 lb.
+Viol,30g,1 lb.
+Navigator’s tools,25g,2 lb.
+Thieves’ tools,25g,1 lb.
+Padded,5g,8 lb. 11 + Dex modifier Stealth Disadvantage
+Leather,10g,10 lb. 11 + Dex modifier
+Studded leather,45g,13 lb. 12 + Dex modifier
+Medium Armors
+Hide,10g,12 lb. 12 + Dex modifier (max 2)
+Chain shirt,50g,20 lb. 13 + Dex modifier (max 2)
+Scale mail,50g,45 lb. 14 + Dex modifier (max 2). Stealth Disadvantage
+Breastplate,400g,20 lb. 14 + Dex modifier (max 2)
+Half plate,750g,40 lb. 15 + Dex modifier (max 2). Stealth Disadvantage
+Heavy Armors
+Ring mail,30g,40 lb. 14. Stealth Disadvantage
+Chain mail,75g,55 lb. 16. Stealth Disadvantage (req. Str 13)
+Splint,200g,60 lb. 17. Stealth Disadvantage (req. Str 15)
+Plate,"1,500g",65 lb. 18. Stealth Disadvantage (req. Str 15)
+Shields
+Shield,10g,6 lb. (+2)
+Trade Goods
+wheat,1c,1 lb.
+flour or one chicken,2c,1 lb.
+salt,5c,1 lb.
+iron or 1 sq. yd. of canvas,1s,1 lb.
+copper or 1 sq. yd. of cotton cloth,5s,1 lb.
+ginger or one goat,1g,1 lb.
+"cinnamon or pepper, or one sheep",2g,1 lb.
+cloves or one pig,3g,1 lb.
+silver or 1 sq. yd. of linen,5g,1 lb.
+silk or one cow,10g,1 sq. yd.
+saffron or one ox,15g,1 lb.
+gold,50g,1 lb.
+platinum,500g,1 lb.
+
+
+
+
+Headband of Intellect (+6),36000g
+Large Iron Box,2g,100 lb.
+Small Cask of Tobacco,2g,8 lb.
+Azurite,12ggem
+Blue Diamond,5000ggem
+Bag of Chestnuts,1g,1 lb.
+Wheel of Cheese,16g,80 lb.
+Red Garnet,110ggem
+Black Pearl,300ggem
+Bottle of Brandywine,5g.,4 lb.
+Light Catapult,550g
+Arcane Scroll (sleep),25g
+Arcane Scroll (Invisibility),150g
+Sack of Apples,5g.,50 lb.Can be bought in fractions. 1g = 10 lb.
+Skooma,41g"For 8 hours, gain advantage on all Charisma checks but disadvantage on all Intelligence, Dexterity, and Wisdom checks."
+Potion of Cat Agility,232gIncreases dexterity to 21 for 1 hour.
+Armor Potion (Standard),88gUser's AC cannot fall below 13 + dexterity mod for 1 day.
+Potion of Giant Strength,287gIncreases strength to 21 for 1 hour.
+Blade of Olympus,970g"Weapon (greatsword). Requires 16 strength to wield. If you hit a Huge or larger creature with this magic greatsword, you deal an extra 2d6 damage."
+Holy Arrow,10g"Weapon (arrow). These arrows shine with a holy brilliance. On hit, deals 1d8 radiant damage. An evil-aligned target must pass a DC15 wisdom saving throw or be frightened of the attacker for 10 rounds or until the line of sight is"
+True Wand,31500g"This wand can be used as an arcane focus. If you can castsells with an arcane focus and use this wand for yoursells, yoursells require no material components that cost less than 1000g. Additionally, when you cast asell using this wand as your arcane focus, roll an ability check with yoursellcasting ability score. If you roll higher than 11 + thesell's level, you cast thesell without using asellslot. This fails if you have nosellslots remaining of thesell's level and therefore couldn't cast without succeeding."
+Ring of Keys,3120g"This golden ring appears non-magical at first glance. While wearing it, you can use your action to touch an object andseak the command word to unlock any mundane lock."
+Bottle of Fine Wine,8g
+Ghost Fungus,1g/shroomA funnel shaped mushroom shining brightly enough in the dark to read by
+Flute,1g
+Book of Elementary Mathematics,25g
+Set of bagpipes,30g
+45 Gallons of ale,9 g"Comes in 5 Gallon Barrels, 9 different brews"
+yellow Quartz,50g
+Onyx Goblet,25g
+Bottle of Common Wine,1.4g
+Satin Robe,250g
+Kama (+3 weapon),18302g"This battered weapon once belonged to the legendary warrior Marget Yarren, who perished in the Whispering Woods."
+Ring of Climbing,2500gThis battered ring is said to grant a single wish once every score of years.
+Manual of Gainful Exercise (+1),27500g"This ornate item once belonged to the elf adventurer Dama, who vanished in the Lair of Poisonous Worms. (design provides clue to function)"
+Elixer of Truth,750gThis finely crafted item was created by the elf artificer Lella and 'improved' by Savaera from Yellowseed.
+Staff of Healing (25 of 50 charges),13875g"This heavy staff is said to be imbued with thesirit of the halfling artificer Ilin Derhin, who slew the Leviathan of the Sea of Thieves."
+Arcane Scroll (Detect Undead),25g
+Yello Quartz,50g
+Moonstone,50g
+White Onyx,50g
+Jade set of Animal figurines,250g
+Arcane Scroll,25gProtection from chaos
+Arcane Scroll,150gBull's strength
+Bastard Sword,50335g"(+3 weapon, shicking burst) Every strike by this weapon is accompanied by a monstrous snarl"
+Potion of Mage armor,50gThis glowing potion causes a burning sensation when used.
+Wand of Neutralize Poison,5460g(13 of 50 charges) This distinctive wand also grants the magical ability to endure extreme cold for one hour per day.
+Staff of Size Alteration,15660g"(27 of 50 charges) This elm staff once belonged to the legendary sorcerer Getema, who vanished in the Lair of the Wyrm Duke."
+Potion of Endure elements,50gThis green tincture causes the air to become warm and humid when used.
+Buckler,9165g(+3),(+3 shield)
+Potion of shield of faith,900g(+5)
+oil of bless weapon,100gThis white draught smells like mint.
+Ring of the Ram (26 of 50 charges),4472g"A faceted ring, inlaid with diamond (design provides clue to function)"
+Rod of extend metamagic (lesser),3000g"This heavy ash rod once belonged to the dwarf adventurer Rida Heredotr, who vanished in the Lost Chambers of the Wraith Countess."
+Rod of the Python,13000gThis heavy rod also emits a thin ray of red light upon command. (inscription provides clue to function)
+Rod of the Viper,19000gThis ash rod was created by a god of magic for his most loyal hero. (inscription provides clue to function)
+Staff of Abjuration (16 of 50 charges),20800g"This masterwork staff is said to be imbued with thesirit of the renowned wizard Amrad, who slew the Leviathan of the Sea of Lauce. (design provides clue to function)"
+Potion of Cure Light Wounds,50gThis smoky liquid smells like fresh bread.
+Potion of Darkvision,300gThis glowing elixir causes shadows to appear darker when used.
+Amulet of Health (+4),16000gThis finely crafted item was taken from the crypt of the vampire Andimus.
+Goggles of Night,12000gThis battered item was created by a god of magic for his most loyal champion.
+Potion of Blur,300g"A clear ichor, contained in a faceted phial sealed with wax."
+Potion of Jump,50g"A glowing ichor, contained in a crystal jar etched with holy symbols."
+Rod of Cancellation,17000g"(Lawful Evil, Int 12, Wis 12, Cha 10, Ego 3, Empathy, Vision (30 ft.) and hearing, Bluff 10 ranks) A heavy rod, inlaid with emerald."
+Rod of Flame Extinguishing,15000g"This thin blackthorn rod once belonged to the half-elf hero Gonerdhil, leader of the Council of the Emerald Bear."
+Siangham (Small),50303g"(+5 weapon) A finely crafted weapon, engraved with runes of death."
+Wand of Acid Arrow (12 of 50 charges),1080gThis heavy yew wand also repels small insects when held.
+Potion of Remove Fear,50This indigo draught causes a burning sensation when used.
+Yellow Topaz,500g
+Ashes of Al'ar,15000gThis box is magically sealed with 4 gem slots on each face. Legend has it that He who can imbue the case with the proper gem stones will be able to harness the power of Al'ar.
+Hematite,10g
+Saronite Bar,200g
+Amulet of the Planes,"120,000g"
+Book of elementary Mathematics,25gThird edition
+Elixer of swimming,250g
+Spined Shield,5580g"This finely crafted shield once belonged to the illustrious paladin Gerxup, who vanished in the Chambers of Dark Sorrows."
+Ring ofsell Turning,98280g(inscription provides clue to function) This polished ring also repels small insects when held.
+Potion of Invisibility,300gThis blue tincture smells sour.
+Ring of Kalecgos,14000gLegen has it that this ring was forged in the burning breathe of the legendary dragon Kalecgos in his last moments of existance.
+Dust of Disappearance,3500g"This ornate item once belonged to the legendary hero Cyne, leader of Athyer's Guild."
