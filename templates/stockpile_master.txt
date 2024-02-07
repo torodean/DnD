@@ -237,68 +237,46 @@ Ring of Climbing;2500g;This battered ring is said to grant a single wish once ev
 Manual of Gainful Exercise (+1);27500g;This ornate item once belonged to the elf adventurer Dama, who vanished in the Lair of Poisonous Worms. (design provides clue to function)
 Elixer of Truth;750g;This finely crafted item was created by the elf artificer Lella and 'improved' by Savaera from Yellowseed.
 Staff of Healing (25 of 50 charges);13875g;This heavy staff is said to be imbued with thesirit of the halfling artificer Ilin Derhin, who slew the Leviathan of the Sea of Thieves.
-
-
-
---------------------------
-Items above this line are formatted correctly
---------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Arcane Scroll (Detect Undead),25g;
-Yello Quartz,50g;
-Moonstone,50g;
-White Onyx,50g;
-Jade set of Animal figurines,250g;
-Arcane Scroll,25g;Protection from chaos
-Arcane Scroll,150g;Bull's strength
-Bastard Sword,50335g;(+3 weapon, shicking burst) Every strike by this weapon is accompanied by a monstrous snarl
-Potion of Mage armor,50g;This glowing potion causes a burning sensation when used.
-Wand of Neutralize Poison,5460g;(13 of 50 charges) This distinctive wand also grants the magical ability to endure extreme cold for one hour per day.
-Staff of Size Alteration,15660g;(27 of 50 charges) This elm staff once belonged to the legendary sorcerer Getema, who vanished in the Lair of the Wyrm Duke.
-Potion of Endure elements,50g;This green tincture causes the air to become warm and humid when used.
-Buckler,9165g;(+3),(+3 shield)
-Potion of shield of faith,900g;(+5)
-oil of bless weapon,100g;This white draught smells like mint.
-Ring of the Ram (26 of 50 charges),4472g;A faceted ring, inlaid with diamond (design provides clue to function)
-Rod of extend metamagic (lesser),3000g;"This heavy ash rod once belonged to the dwarf adventurer Rida Heredotr, who vanished in the Lost Chambers of the Wraith Countess."
-Rod of the Python,13000g;This heavy rod also emits a thin ray of red light upon command. (inscription provides clue to function)
-Rod of the Viper,19000g;This ash rod was created by a god of magic for his most loyal hero. (inscription provides clue to function)
-Staff of Abjuration (16 of 50 charges),20800g;This masterwork staff is said to be imbued with thesirit of the renowned wizard Amrad, who slew the Leviathan of the Sea of Lauce. (design provides clue to function)
-Potion of Cure Light Wounds,50g;This smoky liquid smells like fresh bread.
-Potion of Darkvision,300g;This glowing elixir causes shadows to appear darker when used.
-Amulet of Health (+4),16000g;This finely crafted item was taken from the crypt of the vampire Andimus.
-Goggles of Night,12000g;This battered item was created by a god of magic for his most loyal champion.
-Potion of Blur,300g;A clear ichor, contained in a faceted phial sealed with wax.
-Potion of Jump,50g;A glowing ichor, contained in a crystal jar etched with holy symbols.
-Rod of Cancellation,17000g;(Lawful Evil, Int 12, Wis 12, Cha 10, Ego 3, Empathy, Vision (30 ft.) and hearing, Bluff 10 ranks) A heavy rod, inlaid with emerald.
-Rod of Flame Extinguishing,15000g;This thin blackthorn rod once belonged to the half-elf hero Gonerdhil, leader of the Council of the Emerald Bear.
-Siangham (Small),50303g;(+5 weapon) A finely crafted weapon, engraved with runes of death.
-Wand of Acid Arrow (12 of 50 charges),1080g;This heavy yew wand also repels small insects when held.
-Potion of Remove Fear,50g;This indigo draught causes a burning sensation when used.
-Yellow Topaz,500g;
-Ashes of Al'ar,15000g;This box is magically sealed with 4 gem slots on each face. Legend has it that He who can imbue the case with the proper gem stones will be able to harness the power of Al'ar.
-Hematite,10g;
-Saronite Bar,200g;
-Amulet of the Planes,120000g;
-Book of elementary Mathematics,25g;Third edition
-Elixer of swimming,250g;
-Spined Shield,5580g;This finely crafted shield once belonged to the illustrious paladin Gerxup, who vanished in the Chambers of Dark Sorrows.
-Ring ofsell Turning,98280g;(inscription provides clue to function) This polished ring also repels small insects when held.
-Potion of Invisibility,300g;This blue tincture smells sour.
-Ring of Kalecgos,14000g;Legen has it that this ring was forged in the burning breathe of the legendary dragon Kalecgos in his last moments of existance.
-Dust of Disappearance,3500g;This ornate item once belonged to the legendary hero Cyne, leader of Athyer's Guild.
+Arcane Scroll (Detect Undead);25g;
+Yello Quartz;50g;
+Moonstone;50g;
+White Onyx;50g;
+Jade set of Animal figurines;250g;
+Arcane Scroll;25g;Protection from chaos
+Arcane Scroll;150g;Bull's strength
+Bastard Sword;50335g;(+3 weapon, shicking burst) Every strike by this weapon is accompanied by a monstrous snarl
+Potion of Mage armor;50g;This glowing potion causes a burning sensation when used.
+Wand of Neutralize Poison;5460g;(13 of 50 charges) This distinctive wand also grants the magical ability to endure extreme cold for one hour per day.
+Staff of Size Alteration;15660g;(27 of 50 charges) This elm staff once belonged to the legendary sorcerer Getema; who vanished in the Lair of the Wyrm Duke.
+Potion of Endure elements;50g;This green tincture causes the air to become warm and humid when used.
+Buckler;9165g;(+3),(+3 shield)
+Potion of shield of faith;900g;(+5)
+oil of bless weapon;100g;This white draught smells like mint.
+Ring of the Ram (26 of 50 charges),4472g;A faceted ring; inlaid with diamond (design provides clue to function)
+Rod of extend metamagic (lesser);3000g;"This heavy ash rod once belonged to the dwarf adventurer Rida Heredotr, who vanished in the Lost Chambers of the Wraith Countess."
+Rod of the Python;13000g;This heavy rod also emits a thin ray of red light upon command. (inscription provides clue to function)
+Rod of the Viper;19000g;This ash rod was created by a god of magic for his most loyal hero. (inscription provides clue to function)
+Staff of Abjuration (16 of 50 charges);20800g;This masterwork staff is said to be imbued with thesirit of the renowned wizard Amrad, who slew the Leviathan of the Sea of Lauce. (design provides clue to function)
+Potion of Cure Light Wounds;50g;This smoky liquid smells like fresh bread.
+Potion of Darkvision;300g;This glowing elixir causes shadows to appear darker when used.
+Amulet of Health (+4);16000g;This finely crafted item was taken from the crypt of the vampire Andimus.
+Goggles of Night;12000g;This battered item was created by a god of magic for his most loyal champion.
+Potion of Blur;300g;A clear ichor, contained in a faceted phial sealed with wax.
+Potion of Jump;50g;A glowing ichor, contained in a crystal jar etched with holy symbols.
+Rod of Cancellation;17000g;(Lawful Evil, Int 12, Wis 12, Cha 10, Ego 3, Empathy, Vision (30 ft.) and hearing, Bluff 10 ranks) A heavy rod, inlaid with emerald.
+Rod of Flame Extinguishing;15000g;This thin blackthorn rod once belonged to the half-elf hero Gonerdhil, leader of the Council of the Emerald Bear.
+Siangham (Small);50303g;(+5 weapon) A finely crafted weapon, engraved with runes of death.
+Wand of Acid Arrow (12 of 50 charges);1080g;This heavy yew wand also repels small insects when held.
+Potion of Remove Fear;50g;This indigo draught causes a burning sensation when used.
+Yellow Topaz;500g;
+Ashes of Al'ar;15000g;This box is magically sealed with 4 gem slots on each face. Legend has it that He who can imbue the case with the proper gem stones will be able to harness the power of Al'ar.
+Hematite;10g;
+Saronite Bar;200g;
+Amulet of the Planes;120000g;
+Book of elementary Mathematics;25g;Third edition
+Elixer of swimming;250g;
+Spined Shield;5580g;This finely crafted shield once belonged to the illustrious paladin Gerxup, who vanished in the Chambers of Dark Sorrows.
+Ring ofsell Turning;98280g;(inscription provides clue to function) This polished ring also repels small insects when held.
+Potion of Invisibility;300g;This blue tincture smells sour.
+Ring of Kalecgos;14000g;Legen has it that this ring was forged in the burning breathe of the legendary dragon Kalecgos in his last moments of existance.
+Dust of Disappearance;3500g;This ornate item once belonged to the legendary hero Cyne, leader of Athyer's Guild.
