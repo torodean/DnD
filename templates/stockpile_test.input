@@ -1,5 +1,5 @@
 folder=notes
 
-General Items[dnd-table]=4,item0,10,sell0,desc0,item1,1,sell1,desc1,item2,2,sell2,desc2,item3,3,sell3,desc3,item4,4,sell4,desc4,item5,5,sell5,desc5,item6,6,sell6,desc6,item7,7,sell7,desc7,item8,8,sell8,desc8,item9,9,sell9,desc9,item10,10,sell10,desc10,item11,11,sell11,desc11,item12,12,sell12,desc12,item13,13,sell13,desc13,item14,14,sell14,desc14,item15,15,sell15,desc15,item16,16,sell16,desc16,item17,17,sell17,desc17,item18,18,sell18,desc18,item19,19,sell19,desc19
+General Items[dnd-table]=4;item0;10;sell0;desc0;item1;1;sell1;desc1;item2;2;sell2;desc2;item3;3;sell3;desc3;item4;4;sell4;desc4;item5;5;sell5;desc5;item6;6;sell6;desc6;item7;7;sell7;desc7;item8;8;sell8;desc8;item9;9;sell9;desc9;item10;10;sell10;desc10;item11;11;sell11;desc11;item12;12;sell12;desc12;item13;13;sell13;desc13;item14;14;sell14;desc14;item15;15;sell15;desc15;item16;16;sell16;desc16;item17;17;sell17;desc17;item18;18;sell18;desc18;item19;19;sell19;desc19
 
-Specialty Items[dnd-table]=4,item20,20,sell20,desc20,item21,21,sell21,desc21,item22,22,sell22,desc22,item23,23,sell23,desc23,item24,24,sell24,desc24,item25,25,sell25,desc25,item26,26,sell26,desc26
+Specialty Items[dnd-table]=4;item20;20;sell20;desc20;item21;21;sell21;desc21;item22;22;sell22;desc22;item23;23;sell23;desc23;item24;24;sell24;desc24;item25;25;sell25;desc25;item26;26;sell26;desc26
