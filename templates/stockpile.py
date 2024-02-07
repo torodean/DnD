@@ -70,9 +70,9 @@ def convert_to_list(input_line):
     Returns:
         output_list (list): The output list
     """
-    if "," not in input_line:        
+    if ";" not in input_line:        
         return None
-    elements = input_line.split(",")
+    elements = input_line.split(";")
     num_columns = int(elements[0])
     num_rows = int((len(elements)-1) / num_columns)
     output_text(f"num_columns: {num_columns}", "note")
@@ -108,8 +108,8 @@ def get_master_list(input_file):
             lines = [line.strip() for line in lines]
 
         for line in lines:
-            if "," in line:
-                list_items = line.split(",")
+            if ";" in line:
+                list_items = line.split(";")
                 output_list.append(list_items)                
                 
     except FileNotFoundError:
