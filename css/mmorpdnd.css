@@ -242,6 +242,13 @@ footer a:hover {
     margin-bottom: 16px;
 }
 
+.dnd-table .top-row {
+  background-color: #303050; /* Gray background color */
+  border-bottom: 1px solid #ffffff; /* Black border */
+  color: #ffffff; /* Text color */
+  font-weight: bold; /* Bold text */
+}
+
 .dnd-list h3 {
     font-size: 1.6rem;
     color: #00a8ff;

@@ -28,6 +28,62 @@ parser.add_argument('-o', '--output',
 args = parser.parse_args()
 
 
+def file_exists(file_path):
+    """
+    Check if a file exists at the specified path.
+
+    Args:
+        file_path (str): The path to the file.
+
+    Returns:
+        bool: True if the file exists, False otherwise.
+    """
+    return os.path.exists(file_path)
+
+
+def create_empty_file(file_path):
+    """
+    Create an empty file if it does not exist.
+
+    Args:
+        file_path (str): The path to the file.
+
+    Returns:
+        bool: True if the file is created or already exists, False if there was an error.
+    """
+    try:
+        # Open the file in append mode ('a') which creates the file if it doesn't exist
+        with open(file_path, 'a'):
+            pass  # No need to do anything, just create the file
+        return True
+    except Exception as e:
+        print(f"Error creating the file: {e}")
+        return False
+
+
+def write_to_file(file_path, text):
+    """
+    Write text to a file, overwriting the existing content. This will create the file if it does not exist.
+
+    Args:
+        file_path (str): The path to the file.
+        text (str): The text to write to the file.
+
+    Returns:
+        bool: True if the text is written successfully, False if there was an error.
+    """
+    try:
+        if not file_exists(file_path):
+            create_empty_file(file_path)
+        # Open the file in write mode ('w') which overwrites existing content
+        with open(file_path, 'w') as file:
+            file.write(text)
+        return True
+    except Exception as e:
+        print(f"Error writing to the file: {e}")
+        return False
+
+
 def generate_and_plot_values(mean, percent_variance, num_values):
     """
     Generate a specified number of random values using the random_with_variance method and plot them.
@@ -159,7 +215,7 @@ def get_old_lists(output_file):
             if "General Items[dnd-table]=" in line:
                 old_general_list = convert_to_list(line.split("=")[1])
 
-            if "Specialty Items[dnd-table]=" in line:
+            if "Specialty/Trade Items[dnd-table]=" in line:
                 old_trade_list = convert_to_list(line.split("=")[1])
 
         return old_general_list, old_trade_list
@@ -451,6 +507,8 @@ def fix_list(items_list, default_sell_value='default_sell'):
     for item in items_list:
         if len(item) == 3:
             item.insert(2, default_sell_value)
+        if not item[3] or item[2].strip() == "":  # Check if description is blank
+            item[3] = "--"
         updated_list.append(item)
 
     updated_list = alphabetize_list(updated_list)
@@ -609,7 +667,7 @@ def convert_prices_to_dnd_format(item_list):
 
 def convert_to_one_line(list_of_lists):
     """
-    Convert a list of lists to a single line string with comma delimiters.
+    Convert a list of lists to a single line string with semicolon delimiters.
 
     Args:
         list_of_lists (list): The input list of lists.
@@ -619,12 +677,14 @@ def convert_to_one_line(list_of_lists):
     """
     result = ""
 
+    num_of_columns = len(list_of_lists[0])
+
     for sublist in list_of_lists:
-        line = ", ".join(sublist)
-        result += line + ", "
+        line = ";".join(sublist)
+        result += line + ";"
 
     # Remove the trailing comma and space
-    result = result.rstrip(", ")
+    result = f"{num_of_columns};Item;Base Price;Sell Price;Description;" + result.strip(";")
 
     return result
 
@@ -795,6 +855,7 @@ def generate_initial_list(percent_general, percent_trade):
     Returns:
         None
     """
+    input_file_output = "folder=notes/stockpile\n\n"
     print("Running generate_initial_list() to generate base .input list.")
 
     # Get master list of general items.
@@ -811,6 +872,14 @@ def generate_initial_list(percent_general, percent_trade):
     general_list = calculate_sell_percentage(general_list)
     print_table(general_list)
 
+    print("Convert to DnD values:")
+    general_list = convert_prices_to_dnd_format(general_list)
+    # output_text(f"formatted_list: {formatted_list}", "note")
+    print_table(general_list)
+
+    general_list_input_format = convert_to_one_line(general_list)
+    input_file_output += f"General Items[dnd-table]={general_list_input_format}"
+
     # Get master list of trade/specialty items.
     print("Get master list of trade/specialty items.")
     check_semicolons_in_file(args.trade)
@@ -824,6 +893,18 @@ def generate_initial_list(percent_general, percent_trade):
     trade_list = convert_second_value_to_float(trade_list)
     trade_list = calculate_sell_percentage(trade_list)
     print_table(trade_list)
+
+    print("Convert to DnD values:")
+    trade_list = convert_prices_to_dnd_format(trade_list)
+    # output_text(f"formatted_list: {formatted_list}", "note")
+    print_table(trade_list)
+
+    trade_list_input_format = convert_to_one_line(trade_list)
+    input_file_output += f"\n\nSpecialty/Trade Items[dnd-table]={trade_list_input_format}"
+
+    print(input_file_output)
+
+    write_to_file(args.output, input_file_output)
 
 
 def general_update():
@@ -860,4 +941,4 @@ def full_update():
 
 
 if __name__ == '__main__':
-    generate_initial_list(0.2, 0.2)
+    generate_initial_list(0.90, 0.2)

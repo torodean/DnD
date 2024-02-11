@@ -944,7 +944,10 @@ def create_html_table(input_line):
     # Iterate over the values and construct the table rows
     num_rows = int((len(values) - 1) / num_columns)
     for i in range(0, num_rows):
-        html_table += '<tr>'
+        if i == 0:
+            html_table += '<tr class="top-row">'
+        else:
+            html_table += '<tr>'
         for j in range(num_columns):
             html_table += f'<td>{values[i * num_columns + j + 1].strip()}</td>'
         html_table += '</tr>'
@@ -1545,7 +1548,7 @@ class Creator:
 
         output_fn = os.path.basename(file).split('.')[0]
         output_images = []
-        output_file = global_vars.output_file_folder + "/" + output_fn + ".html"
+        output_file = global_vars.output_file_folder + output_fn + ".html"
         output_text(f"Output file: {output_file}", "note")
 
         # create HTML file
