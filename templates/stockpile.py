@@ -386,15 +386,21 @@ def randomly_remove_elements(input_list, num_elements_to_remove):
     return input_list, removed_elements
 
 
-def print_table(data, header, max_width=60):
+def print_table(data, header=None, max_width=60):
     """
-    Print a list in a nicely formatted table with word wrap.
+    Print a list in a nicely formatted table with word wrap. This will automatically set the header for tables of
+    length 3 or 4 based on the expected headers of ["item", "base price", "description"] or ["item", "base price",
+    "sell price", "description"] respectively.
 
     Args:
         data (list): The list to be printed.
         header (list): The header of the table.
         max_width (int): The maximum width for each column. Default is 20.
     """
+    if len(data[0]) == 3:
+        header = ["item", "base price", "description"]
+    elif len(data[0]) == 4:
+        header = ["item", "base price", "sell price", "description"]
     table = PrettyTable()
     table.field_names = header
 
@@ -427,7 +433,7 @@ def randomly_select_items(input_list, n):
     return selected_items
 
 
-def fix_combined_list(items_list, default_sell_value='default_sell'):
+def fix_list(items_list, default_sell_value='default_sell'):
     """
     Fixes some issues with combining the two types of lists. Also updates some values in that list.
         - Add a sell spot to each item with only 3 elements in a list.
@@ -686,8 +692,8 @@ def test():
         old_general_list, old_trade_list = get_old_lists(args.output)
         # output_text(f"old_general_list: {old_general_list}", "note")
         # output_text(f"old_trade_list: {old_trade_list}", "note")
-        print_table(old_general_list, ["item", "buy price", "sell price", "description"])
-        print_table(old_trade_list, ["item", "buy price", "sell price", "description"])
+        print_table(old_general_list)
+        print_table(old_trade_list)
     else:
         exit(1)
 
@@ -697,7 +703,7 @@ def test():
         check_semicolons_in_file(args.general)
         general_list = get_master_list(args.general)
         # output_text(f"general_list: {general_list}", "note")
-        print_table(general_list, ["item", "price", "description"])
+        print_table(general_list)
     else:
         exit(1)
 
@@ -707,14 +713,16 @@ def test():
         check_semicolons_in_file(args.trade)
         trade_list = get_master_list(args.trade)
         # output_text(f"trade_list: {trade_list}", "note")
-        print_table(trade_list, ["item", "base price", "description"])
+        print_table(trade_list)
+    else:
+        exit(1)
 
     # Update general list.
     print("Update general list.")
     items_not_in_old_list = find_items_not_in_old_list(old_general_list, general_list)
     print("Potential items to add:")
     # output_text(f"items_not_in_old_list: {items_not_in_old_list}", "note")
-    print_table(items_not_in_old_list, ["item", "price", "description"])
+    print_table(items_not_in_old_list)
 
     num_to_remove = random_with_variance(len(old_general_list) * 0.2, 10)
     num_to_add = random_with_variance(num_to_remove, 5)
@@ -722,27 +730,27 @@ def test():
     print(f"Adding {int(num_to_add)} items.")
     items_to_add = randomly_select_items(items_not_in_old_list, int(num_to_add))
     # output_text(f"items_to_add: {items_to_add}", "note")
-    print_table(items_to_add, ["item", "price", "description"])
+    print_table(items_to_add)
 
     print(f"Removing {int(num_to_remove)} items.")
     reduced_old_list, _ = randomly_remove_elements(old_general_list, int(num_to_remove))
     reduced_master_list, _ = randomly_remove_elements(old_general_list, int(num_to_remove))
     # output_text(f"reduced_old_list: {reduced_old_list}", "note")
     print("Reducing old/current list to:")
-    print_table(reduced_old_list, ["item", "buy price", "sell price", "description"])
+    print_table(reduced_old_list)
     print("New list:")
     new_list = items_to_add + reduced_old_list
     # output_text(f"new_list: {new_list}", "note")
-    updated_new_list = fix_combined_list(new_list)
+    updated_new_list = fix_list(new_list)
     updated_new_list = adjust_buy_prices(updated_new_list)
     updated_new_list = calculate_sell_percentage(updated_new_list)
     # output_text(f"updated_new_list: {new_list}", "note")
-    print_table(updated_new_list, ["item", "buy price", "sell price", "description"])
+    print_table(updated_new_list)
 
     print("Convert to DnD values:")
     formatted_list = convert_prices_to_dnd_format(updated_new_list)
     # output_text(f"formatted_list: {formatted_list}", "note")
-    print_table(formatted_list, ["item", "buy price", "sell price", "description"])
+    print_table(formatted_list)
 
     print("Convert to .input file format:")
     output_line = convert_to_one_line(formatted_list)
@@ -755,26 +763,101 @@ def test():
     # generate_and_plot_values(mean_value, percent_variance, num_values)
 
 
+def convert_second_value_to_float(item_list):
+    """
+    Convert the second value of each sublist in the list to a float using convert_from_dnd_currency method.
+
+    Args:
+        item_list (list): The list of sublists.
+
+    Returns:
+        list: The list with the second value of each sublist converted to a float.
+    """
+    converted_list = []
+    for sublist in item_list:
+        # Assuming the second value is at index 1
+        price = sublist[1]
+        float_price = convert_from_dnd_currency(price)
+        sublist[1] = float_price
+        converted_list.append(sublist)
+    return converted_list
+
+
+def generate_initial_list(percent_general, percent_trade):
+    """
+    This method will generate an initial list from the master lists. IT should only need to be called once and will
+    populate the output file in the appropriate format.
+
+    Args:
+        percent_general (float): The percentage of items to use from the general list.
+        percent_trade (float): The percentage of items to use from the trade list.
+
+    Returns:
+        None
+    """
+    print("Running generate_initial_list() to generate base .input list.")
+
+    # Get master list of general items.
+    print("Get master list of general items.")
+    check_semicolons_in_file(args.general)
+    general_list = get_master_list(args.general)
+    print_table(general_list)
+
+    print(f"Update general items based on percentage {percent_general} of initial list size.")
+    num_to_remove = len(general_list) * (1 - percent_general)
+    general_list, removed_items = randomly_remove_elements(general_list, int(num_to_remove))
+    general_list = fix_list(general_list)
+    general_list = convert_second_value_to_float(general_list)
+    general_list = calculate_sell_percentage(general_list)
+    print_table(general_list)
+
+    # Get master list of trade/specialty items.
+    print("Get master list of trade/specialty items.")
+    check_semicolons_in_file(args.trade)
+    trade_list = get_master_list(args.trade)
+    print_table(trade_list)
+
+    print(f"Update general items based on percentage {percent_trade} of initial list size.")
+    num_to_remove = len(trade_list) * (1 - percent_trade)
+    trade_list, removed_items = randomly_remove_elements(trade_list, int(num_to_remove))
+    trade_list = fix_list(trade_list)
+    trade_list = convert_second_value_to_float(trade_list)
+    trade_list = calculate_sell_percentage(trade_list)
+    print_table(trade_list)
+
+
 def general_update():
     """
     This method will update teh list of general items.
-    :return: None
+
+    Args:
+
+    Returns:
+        None
     """
 
 
 def trade_update():
     """
     This method will update the list of trade items.
-    :return: None
+
+    Args:
+
+    Returns:
+        None
     """
 
 
 def full_update():
     """
     This method will update both the general items and the trade items list.
-    :return: None
+
+    Args:
+
+    Returns:
+        None
     """
 
 
 if __name__ == '__main__':
-    test()
+    generate_initial_list(0.2, 0.2)
