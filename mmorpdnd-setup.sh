@@ -13,6 +13,8 @@ if [[ $(uname) == Linux ]]; then
     pip3 install tqdm
     pip3 install pytube
     pip3 install moviepy
+    pip3 install matplotlib
+    pip3 install prettytable
 
 else
     echo "Setup not yet configured for your system!"

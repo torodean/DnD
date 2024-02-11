@@ -11,11 +11,22 @@ import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 
 parser = argparse.ArgumentParser(description='S.T.O.C.K.P.I.L.E System Update.')
-parser.add_argument('-g', '--general', action='store', help='The file containing general store items.')
-parser.add_argument('-t', '--trade', action='store', help='The file contianing random and trade items.')
-parser.add_argument('-o', '--output', action='store', help='The output file to compare to and update. This should be a .input file with the lists formatted in the dnd-table format (see documentation).')
+parser.add_argument('-g', '--general',
+                    required=True,
+                    action='store',
+                    help='The file containing general store items.')
+parser.add_argument('-t', '--trade',
+                    required=True,
+                    action='store',
+                    help='The file containing random and trade items.')
+parser.add_argument('-o', '--output',
+                    required=True,
+                    action='store',
+                    help='The output file to compare to and update. This should be a .input file with the lists '
+                         'formatted in the dnd-table format (see documentation).')
 
 args = parser.parse_args()
+
 
 def generate_and_plot_values(mean, percent_variance, num_values):
     """
@@ -35,7 +46,7 @@ def generate_and_plot_values(mean, percent_variance, num_values):
     plt.ylabel("Frequency")
     plt.grid(True)
     plt.show()
-    
+
 
 def random_with_variance(mean, percent_variance):
     """
@@ -58,7 +69,7 @@ def random_with_variance(mean, percent_variance):
     random_value = np.random.normal(mean, std_deviation)
 
     return random_value
-    
+
 
 def convert_to_list(input_line):
     """
@@ -70,21 +81,21 @@ def convert_to_list(input_line):
     Returns:
         output_list (list): The output list
     """
-    if ";" not in input_line:        
+    if ";" not in input_line:
         return None
     elements = input_line.split(";")
     num_columns = int(elements[0])
-    num_rows = int((len(elements)-1) / num_columns)
+    num_rows = int((len(elements) - 1) / num_columns)
     output_text(f"num_columns: {num_columns}", "note")
     output_text(f"num_rows: {num_rows}", "note")
 
     output_list = []
     for i in range(0, num_rows):
         list_item = []
-        for j in range (0, num_columns):
-            list_item.append(elements[i*num_columns + j + 1]) #+1 to omit the first item.
+        for j in range(0, num_columns):
+            list_item.append(elements[i * num_columns + j + 1])  # +1 to omit the first item.
         output_list.append(list_item)
-                             
+
     return output_list
 
 
@@ -110,8 +121,8 @@ def get_master_list(input_file):
         for line in lines:
             if ";" in line:
                 list_items = line.split(";")
-                output_list.append(list_items)                
-                
+                output_list.append(list_items)
+
     except FileNotFoundError:
         print(f"File not found: {file_path}")
         return None
@@ -120,7 +131,7 @@ def get_master_list(input_file):
         return None
 
     return output_list
-    
+
 
 def get_old_lists(output_file):
     """
@@ -134,6 +145,9 @@ def get_old_lists(output_file):
         old_trade_list (list): A list of the old trade items that were available.
     """
     try:
+        old_general_list = ""
+        old_trade_list = ""
+
         with open(output_file, 'r') as file:
             # Read all lines into a list
             lines = file.readlines()
@@ -144,21 +158,21 @@ def get_old_lists(output_file):
         for line in lines:
             if "General Items[dnd-table]=" in line:
                 old_general_list = convert_to_list(line.split("=")[1])
-                
+
             if "Specialty Items[dnd-table]=" in line:
                 old_trade_list = convert_to_list(line.split("=")[1])
-                
+
+        return old_general_list, old_trade_list
+
     except FileNotFoundError:
-        print(f"File not found: {file_path}")
+        print(f"File not found: {output_file}")
         return None
     except Exception as e:
         print(f"Error reading file: {e}")
         return None
 
-    return old_general_list, old_trade_list
 
-
-def output_text(text, option = "text"):
+def output_text(text, option="text"):
     """
     Print text in different colors based on the provided option.`
 
@@ -350,7 +364,7 @@ def find_items_not_in_old_list(old_list, master_list):
     items_not_in_old_list = [item for item in master_list if item[0] not in old_item_names]
 
     return items_not_in_old_list
-    
+
 
 def randomly_remove_elements(input_list, num_elements_to_remove):
     """
@@ -370,24 +384,29 @@ def randomly_remove_elements(input_list, num_elements_to_remove):
     removed_elements = [input_list.pop(index) for index in sorted(random_indices, reverse=True)]
 
     return input_list, removed_elements
-    
-    
-def print_table(data, header):
+
+
+def print_table(data, header, max_width=60):
     """
-    Print a list in a nicely formatted table.
+    Print a list in a nicely formatted table with word wrap.
 
     Args:
         data (list): The list to be printed.
         header (list): The header of the table.
+        max_width (int): The maximum width for each column. Default is 20.
     """
     table = PrettyTable()
     table.field_names = header
+
+    # Set max width for each column
+    for col in header:
+        table.max_width[col] = max_width
 
     for row in data:
         table.add_row(row)
 
     print(table)
-    
+
 
 def randomly_select_items(input_list, n):
     """
@@ -406,8 +425,8 @@ def randomly_select_items(input_list, n):
     selected_items = random.sample(input_list, n)
 
     return selected_items
-    
-    
+
+
 def fix_combined_list(items_list, default_sell_value='default_sell'):
     """
     Fixes some issues with combining the two types of lists. Also updates some values in that list.
@@ -427,12 +446,12 @@ def fix_combined_list(items_list, default_sell_value='default_sell'):
         if len(item) == 3:
             item.insert(2, default_sell_value)
         updated_list.append(item)
-    
+
     updated_list = alphabetize_list(updated_list)
 
     return updated_list
-    
-    
+
+
 def alphabetize_list(input_list):
     """
     Alphabetize a list based on the first element.
@@ -444,7 +463,7 @@ def alphabetize_list(input_list):
         list: A new list alphabetized based on the first element.
     """
     return sorted(input_list, key=lambda x: x[0])
-    
+
 
 def adjust_buy_prices(items_list, variance=10):
     """
@@ -457,7 +476,7 @@ def adjust_buy_prices(items_list, variance=10):
     Returns:
         list: A new list with buy prices calculated based on the base/original buy prices.
     """
-    updated_list = []    
+    updated_list = []
 
     for item in items_list:
         percentage = random_with_variance(100, 5) / 100
@@ -467,8 +486,8 @@ def adjust_buy_prices(items_list, variance=10):
         updated_list.append(updated_item)
 
     return updated_list
-    
-    
+
+
 def calculate_sell_percentage(items_list, percentage=75):
     """
     Calculate the sell price as a percentage of the buy price for each item in a list. The percentage will be somewhat randomized and a 10 percent variance from what is entered. 
@@ -482,7 +501,7 @@ def calculate_sell_percentage(items_list, percentage=75):
     """
     updated_list = []
 
-    for item in items_list:    
+    for item in items_list:
         percent_multiplier = random_with_variance(percentage, 10) / 100
         buy_price = float(item[1])
         sell_price = buy_price * percent_multiplier
@@ -503,7 +522,9 @@ def convert_to_dnd_currency(value):
         str: A string representing the value in the format (##g ##s ##c).
     """
     # Ensure the value is non-negative
-    value = max(0, value)
+    if value < 0.0:
+        output_text(f"ERROR: value {value} is negative! in convert_to_dnd_currency({value}) method!", option='error')
+        return
 
     # Calculate gold, silver, and copper amounts
     gold_amount = int(value)
@@ -511,7 +532,7 @@ def convert_to_dnd_currency(value):
     copper_amount = int(((value - gold_amount) * 10 - silver_amount) * 10)
 
     result_parts = []
-    
+
     if gold_amount:
         result_parts.append(f"{gold_amount}g")
     if silver_amount:
@@ -522,8 +543,8 @@ def convert_to_dnd_currency(value):
     result_string = " ".join(result_parts)
 
     return result_string
-    
-    
+
+
 def convert_from_dnd_currency(currency_string):
     """
     Convert a Dungeons and Dragons currency string to a float value.
@@ -578,7 +599,8 @@ def convert_prices_to_dnd_format(item_list):
         updated_list.append(updated_item)
 
     return updated_list
-    
+
+
 def convert_to_one_line(list_of_lists):
     """
     Convert a list of lists to a single line string with comma delimiters.
@@ -601,73 +623,158 @@ def convert_to_one_line(list_of_lists):
     return result
 
 
-if __name__ == '__main__':
+def check_semicolons_in_file(filename):
+    """
+    Check a file to ensure each line has only two semicolons.
+
+    Args:
+        filename (str): The name of the file to check.
+
+    Returns:
+        None
+    """
+    try:
+        print(f"-------------------------------------------------------")
+        print(f"Searching for inconsistencies in {filename} formatting:")
+        with open(filename, 'r') as file:
+            for line_number, line in enumerate(file, start=1):
+                if line.count(';') != 2:
+                    print(f"Line {line_number}: {line.rstrip()}")
+        print(f"-------------------------------------------------------")
+
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.")
+    except IOError:
+        print(f"Error reading file '{filename}'.")
+
+
+def detect_currency_format(input_str):
+    """
+    Detect the format of a currency input.
+
+    Args:
+        input_str (str): The currency input string.
+
+    Returns:
+        str: The detected format ('dnd_currency', 'float', or 'unknown').
+    """
+    # Regular expressions for different currency formats
+    dnd_currency_pattern = r'^(\d+g)?\s*(\d+s)?\s*(\d+c)?$'
+    float_pattern = r'^\d+(\.\d+)?$'
+
+    # Check if the input matches the D&D currency pattern
+    if re.match(dnd_currency_pattern, input_str):
+        return 'dnd_currency'
+    # Check if the input matches the float pattern
+    elif re.match(float_pattern, input_str):
+        return 'float'
+    else:
+        return 'unknown'
+
+
+def test():
+    """
+    A method for testing.
+    :return: 
+    """
     print("Running app (TESTING methods for later use)")
-    
+
     # Get old/current lists.
     print("Get old/current lists.")
     if args.output is not None:
+        check_semicolons_in_file(args.output)
         old_general_list, old_trade_list = get_old_lists(args.output)
-        #output_text(f"old_general_list: {old_general_list}", "note")
-        #output_text(f"old_trade_list: {old_trade_list}", "note")
+        # output_text(f"old_general_list: {old_general_list}", "note")
+        # output_text(f"old_trade_list: {old_trade_list}", "note")
         print_table(old_general_list, ["item", "buy price", "sell price", "description"])
         print_table(old_trade_list, ["item", "buy price", "sell price", "description"])
-        
+    else:
+        exit(1)
+
     # Get master list of general items.
     print("Get master list of general items.")
     if args.general is not None:
+        check_semicolons_in_file(args.general)
         general_list = get_master_list(args.general)
-        #output_text(f"general_list: {general_list}", "note")
+        # output_text(f"general_list: {general_list}", "note")
         print_table(general_list, ["item", "price", "description"])
-        
+    else:
+        exit(1)
+
     # Get master list of trade/specialty items.
     print("Get master list of trade/specialty items.")
     if args.general is not None:
+        check_semicolons_in_file(args.trade)
         trade_list = get_master_list(args.trade)
-        #output_text(f"trade_list: {trade_list}", "note")
+        # output_text(f"trade_list: {trade_list}", "note")
         print_table(trade_list, ["item", "base price", "description"])
-        
+
     # Update general list.
     print("Update general list.")
     items_not_in_old_list = find_items_not_in_old_list(old_general_list, general_list)
     print("Potential items to add:")
-    #output_text(f"items_not_in_old_list: {items_not_in_old_list}", "note")
+    # output_text(f"items_not_in_old_list: {items_not_in_old_list}", "note")
     print_table(items_not_in_old_list, ["item", "price", "description"])
-    
-    num_to_remove = random_with_variance(len(old_general_list)*0.2, 10)
+
+    num_to_remove = random_with_variance(len(old_general_list) * 0.2, 10)
     num_to_add = random_with_variance(num_to_remove, 5)
     print("Items to add:")
-    print(f"Adding {int(num_to_add)} items.")    
-    items_to_add = randomly_select_items(items_not_in_old_list, int(num_to_add))    
-    #output_text(f"items_to_add: {items_to_add}", "note")
+    print(f"Adding {int(num_to_add)} items.")
+    items_to_add = randomly_select_items(items_not_in_old_list, int(num_to_add))
+    # output_text(f"items_to_add: {items_to_add}", "note")
     print_table(items_to_add, ["item", "price", "description"])
-    
-    print(f"Removing {int(num_to_remove)} items.")    
+
+    print(f"Removing {int(num_to_remove)} items.")
     reduced_old_list, _ = randomly_remove_elements(old_general_list, int(num_to_remove))
     reduced_master_list, _ = randomly_remove_elements(old_general_list, int(num_to_remove))
-    #output_text(f"reduced_old_list: {reduced_old_list}", "note")
+    # output_text(f"reduced_old_list: {reduced_old_list}", "note")
     print("Reducing old/current list to:")
     print_table(reduced_old_list, ["item", "buy price", "sell price", "description"])
     print("New list:")
     new_list = items_to_add + reduced_old_list
-    #output_text(f"new_list: {new_list}", "note")
+    # output_text(f"new_list: {new_list}", "note")
     updated_new_list = fix_combined_list(new_list)
     updated_new_list = adjust_buy_prices(updated_new_list)
     updated_new_list = calculate_sell_percentage(updated_new_list)
-    #output_text(f"updated_new_list: {new_list}", "note")
+    # output_text(f"updated_new_list: {new_list}", "note")
     print_table(updated_new_list, ["item", "buy price", "sell price", "description"])
-    
-    print("Convert to DnD values:")    
+
+    print("Convert to DnD values:")
     formatted_list = convert_prices_to_dnd_format(updated_new_list)
-    #output_text(f"formatted_list: {formatted_list}", "note")
+    # output_text(f"formatted_list: {formatted_list}", "note")
     print_table(formatted_list, ["item", "buy price", "sell price", "description"])
-    
+
     print("Convert to .input file format:")
     output_line = convert_to_one_line(formatted_list)
     print(output_line)
-            
+
     # Test usage:
     mean_value = 100  # mean value
     percent_variance = 5  # percentage variance
-    num_values = 1000 # number of test values 
-    #generate_and_plot_values(mean_value, percent_variance, num_values)
+    num_values = 1000  # number of test values
+    # generate_and_plot_values(mean_value, percent_variance, num_values)
+
+
+def general_update():
+    """
+    This method will update teh list of general items.
+    :return: None
+    """
+
+
+def trade_update():
+    """
+    This method will update the list of trade items.
+    :return: None
+    """
+
+
+def full_update():
+    """
+    This method will update both the general items and the trade items list.
+    :return: None
+    """
+
+
+if __name__ == '__main__':
+    test()
