@@ -77,3 +77,63 @@ Ring ofsell Turning;98280g;(inscription provides clue to function) This polished
 Potion of Invisibility;300g;This blue tincture smells sour.
 Ring of Kalecgos;14000g;Legen has it that this ring was forged in the burning breathe of the legendary dragon Kalecgos in his last moments of existance.
 Dust of Disappearance;3500g;This ornate item once belonged to the legendary hero Cyne, leader of Athyer's Guild.
+Ring of Resilience;8000g;This ring grants resistance to poison damage when worn.
+Cloak of Invisibility;50000g;This enchanted cloak renders the wearer invisible at will.
+Amulet of Vitality;15000g;While worn, this amulet grants its wearer increased vitality and resistance to disease.
+Scroll of Fireball;1000g;This arcane scroll contains the Fireball spell, allowing its user to cast it once.
+Dagger of Venom;7000g;This finely crafted dagger is coated with a potent venom that poisons its victims.
+Wand of Lightning Bolts;20000g;This wand can unleash powerful bolts of lightning upon command.
+Potion of Healing;100g;This potion restores a moderate amount of hit points when consumed.
+Boots of Striding and Springing;12000g;These magical boots grant enhanced mobility and jumping ability.
+Ring of Protection;6000g;This ring bestows magical protection upon its wearer, increasing their defenses.
+Wand of Magic Missiles;5000g;This wand can cast Magic Missile, sending forth a barrage of arcane missiles.
+Potion of Flying;750g;This potion grants the ability to fly for a limited duration when consumed.
+Cape of the Mountebank;18000g;This cape allows its wearer to teleport short distances at will.
+Gloves of Dexterity;4000g;These gloves enhance the wearer's manual dexterity and agility.
+Amulet of the Mage;10000g;This amulet enhances the wearer's spellcasting abilities, increasing their potency.
+Horn of Blasting;30000g;This horn can produce a deafening blast when blown, capable of stunning foes.
+Potion of Invisibility;300g;This potion renders the user invisible for a short duration when consumed.
+Staff of Power;50000g;This staff is imbued with formidable magical energies, capable of unleashing devastating spells.
+Bracers of Defense;8000g;These bracers grant magical protection to their wearer, enhancing their armor class.
+Potion of Greater Healing;500g;This potent potion restores a significant amount of hit points when consumed.
+Rod of Absorption;25000g;This rod can absorb and store magical energy, allowing its wielder to harness it later.
+Crystal Orb of Fortune Telling; 50g; A mesmerizing crystal orb used by skilled fortune tellers to peer into the future.
+Feathered Quill of Endless Ink; 20g; A magical quill that never runs out of ink, perfect for prolific writers and scholars.
+Whispering Amulet; 100g; An enchanted amulet that allows the wearer to communicate telepathically with nearby allies.
+Dancing Flame Lantern; 30g; A lantern that emits colorful, dancing flames, providing both light and entertainment.
+Trinket of Elemental Control; 150g; A small trinket that grants the wielder limited control over elemental forces.
+Mask of Illusion; 80g; A mysterious mask that can alter the wearer's appearance, perfect for masquerade parties or covert operations.
+Harmonic Harp; 200g; A magical harp that produces enchanting melodies capable of soothing troubled souls.
+Whispering Blade; 120g; A finely crafted sword that whispers secrets and advice to its wielder during combat.
+Lens of Truth; 70g; A magnifying lens that reveals hidden truths and illusions when viewed through.
+Chalice of Life; 250g; A sacred chalice said to possess the power to heal wounds and cure diseases when filled with water.
+Cursed Coin Purse; 50g; A seemingly ordinary coin purse that curses anyone who attempts to steal from it.
+Mask of Deception; 90g; A deceptive mask that obscures the wearer's true intentions and emotions.
+Melodious Music Box; 180g; A music box that plays hauntingly beautiful melodies, capable of enchanting listeners.
+Shard of the Stars; 300g; A shimmering crystal shard said to contain the essence of the cosmos, capable of enhancing magical abilities.
+Flask of Eternity; 160g; A flask that never runs out of its contents, providing endless refreshment to the drinker.
+Mirror of Reflection; 120g; A magical mirror that reflects not only one's physical appearance but also their innermost thoughts and desires.
+Tome of Arcane Secrets; 400g; A tome filled with forbidden knowledge and powerful spells, guarded by ancient enchantments.
+Whispering Wind Chime; 80g; A set of wind chimes that emit soothing whispers when stirred by the breeze.
+Crystal Eye Pendant; 150g; An enchanted pendant that grants the wearer enhanced perception and insight into the world around them.
+Elixir of Transformation; 250g; A potent elixir that temporarily transforms the drinker into a different creature or form.
+Mask of the Veil; 90g; A mask that grants the wearer the ability to blend seamlessly into their surroundings, becoming nearly invisible.
+Everburning Torch; 40g; A magical torch that burns endlessly without the need for fuel, casting a steady light in dark places.
+Echoing Conch Shell; 60g; A conch shell that amplifies and echoes sounds when blown into, perfect for signaling over long distances.
+Amulet of Serenity; 120g; An amulet that calms the wearer's mind and soothes their emotions, providing inner peace and clarity.
+Quicksilver Vial; 70g; A vial filled with liquid mercury that grants the drinker enhanced agility and reflexes for a short duration.
+Satchel of Holding; 180g; A small satchel enchanted with extra-dimensional space, capable of holding far more than its size suggests.
+Whispersilk Cloak; 150g; A cloak made of enchanted silk that muffles sound and grants the wearer increased stealth.
+Lantern of Flickering Shadows; 100g; A lantern that projects shifting shadow patterns, creating illusions and distractions.
+Enigmatic Puzzle Box; 200g; A mysterious puzzle box that reveals hidden compartments and secrets when solved.
+Orb of Timekeeping; 80g; A crystal orb that accurately measures time, perfect for keeping track of hours and days.
+Celestial Compass; 130g; A compass that always points towards the nearest celestial body, aiding travelers in navigation.
+Flask of Liquid Courage; 50g; A flask containing a potent liquid that temporarily boosts the drinker's confidence and bravery.
+Veil of Concealment; 110g; A shimmering veil that obscures the wearer's features, granting them anonymity and protection.
+Echo Stone; 65g; A smooth stone that absorbs and echoes sounds, allowing the holder to create convincing auditory illusions.
+Featherfall Amulet; 140g; An amulet that slows the wearer's descent, granting them the ability to safely fall from great heights.
+Rune-etched Gauntlets; 160g; Gauntlets inscribed with ancient runes that enhance the wearer's strength and combat prowess.
+Chalice of Dreamweaving; 220g; A chalice filled with enchanted liquid that induces vivid and prophetic dreams when consumed.
+Mirage Cloak; 180g; A cloak that shimmers and shifts, creating illusions of the wearer's surroundings to confuse attackers.
+Key of Passage; 250g; A mystical key that unlocks hidden doors and passages, revealing secret chambers and treasures.
+Mirror of Memory; 120g; A mirror that reflects memories instead of images, allowing the viewer to relive past experiences and moments.
