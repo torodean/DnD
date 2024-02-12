@@ -371,6 +371,30 @@ def get_old_lists(output_file):
         return None
 
 
+def find_and_print_duplicates(item_list):
+    """
+    Find and print possible duplicate items in a list based on the first value (item name).
+
+    Args:
+        item_list (list): A list of items where each item is represented as a list.
+    """
+    # Create a dictionary to store items based on their names
+    item_dict = {}
+
+    # Iterate over each item in the list
+    for item in item_list:
+        name = item[0].lower()  # Get the name of the item
+
+        # If the name is not in the dictionary, add it as a new key
+        if name not in item_dict:
+            item_dict[name] = [item]
+        else:
+            # If the name is already in the dictionary, print the duplicate item
+            output_text(f"Possible duplicate item: {item}", "warning")
+
+    output_text("Duplicate search complete.")
+
+
 def append_to_file(file_path, string_to_append):
     """
     Append a string to a file.
@@ -976,6 +1000,7 @@ def generate_initial_list(percent_general, percent_trade):
     check_semicolons_in_file(args.general)
     general_list = get_master_list(args.general)
     print_table(general_list)
+    find_and_print_duplicates(general_list)
 
     print(f"Update general items based on percentage {percent_general} of initial list size.")
     num_to_remove = len(general_list) * (1 - percent_general)
@@ -998,6 +1023,7 @@ def generate_initial_list(percent_general, percent_trade):
     check_semicolons_in_file(args.trade)
     trade_list = get_master_list(args.trade)
     print_table(trade_list)
+    find_and_print_duplicates(trade_list)
 
     print(f"Update general items based on percentage {percent_trade} of initial list size.")
     num_to_remove = len(trade_list) * (1 - percent_trade)
