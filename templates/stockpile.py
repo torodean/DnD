@@ -10,7 +10,144 @@ import numpy as np
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 
-parser = argparse.ArgumentParser(description='S.T.O.C.K.P.I.L.E System Update.')
+
+def output_text(text, option="text"):
+    """
+    Print text in different colors based on the provided option.`
+
+    Args:
+        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
+        text (str): The text to be printed.
+
+    Returns:
+        None
+
+    Note:
+        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
+    """
+    color_codes = {
+        "text": "\033[0m",  # Reset color
+        "warning": "\033[93m",  # Yellow
+        "error": "\033[91m",  # Red
+        "note": "\033[94m",  # Blue
+        "success": "\033[92m"  # Green
+    }
+
+    if option in color_codes:
+        color_code = color_codes[option]
+        reset_code = color_codes["text"]
+        print(f"{color_code}{text}{reset_code}")
+    else:
+        print(text)
+
+
+class Config:
+    """
+    A class to manage configuration parameters.
+
+    Attributes:
+        config_file (str): Path to the configuration file.
+        cadence (int): The frequency in seconds at which the configuration parameters are updated.
+        general_price_variance (float): The variance factor for general item prices.
+        trade_price_variance (float): The variance factor for trade item prices.
+        general_items_percent_stock (float): The base percentage of general items that are in stock at any given time.
+        trade_items_percent_stock (float): The base percentage of trade items that are in stock at any given time.
+        sell_item_percentage (float): The base percentage of the buy price to determine sell prices for items.
+        sell_item_percentage_variance (float): The variance of the sell prices.
+    """
+    def __init__(self, config_file=None):
+        self.config_file = config_file
+        self.cadence = 60                         # Default value for cadence (seconds).
+        self.general_price_variance = 0.1         # Default value for general price variance.
+        self.trade_price_variance = 0.2           # Default value for trade price variance.
+        self.general_items_percent_stock = 0.85   # Default value for general items percent stock.
+        self.trade_items_percent_stock = 0.2      # Default value for trade items percent stock.
+        self.sell_item_percentage = 0.75          # Default value for sell item percentage.
+        self.sell_item_percentage_variance = 0.1  # Default value for sell item percentage.
+        
+        if self.config_file:
+            self.load_config()
+        else:
+            output_text(f"WARNING: No config file specified. Using default values. See help message below for constructing a config file.", "warning")
+            self.help()
+            
+        self.print_config()
+
+
+    def load_config(self):
+        """
+        Load configuration parameters from a file.
+
+        Reads the specified configuration file line by line. Each line should be formatted as "variable=value".
+        Parses each line, extracts the variable name and its corresponding value, and assigns the value to the
+        appropriate attribute of the Config object.
+
+        Raises:
+            FileNotFoundError: If the specified configuration file is not found.
+        """
+        if self.config_file is not None:
+            try:
+                with open(self.config_file, 'r') as file:
+                    for line in file:
+                        if '=' in line:
+                            variable, value = line.strip().split('=')
+                            variable = variable.strip()
+                            value = value.strip()
+                            if variable == 'cadence':
+                                self.cadence = int(value)
+                            elif variable == 'general_price_variance':
+                                self.general_price_variance = float(value)
+                            elif variable == 'trade_price_variance':
+                                self.trade_price_variance = float(value)
+                            elif variable == 'general_items_percent_stock':
+                                self.general_items_percent_stock = float(value)
+                            elif variable == 'trade_items_percent_stock':
+                                self.trade_items_percent_stock = float(value)
+                            elif variable == 'sell_item_percentage':
+                                self.sell_item_percentage = float(value)
+                            elif variable == 'sell_item_percentage_variance':
+                                self.sell_item_percentage_variance = float(value)
+            except FileNotFoundError:
+                output_text("ERROR: Config file not found.", "error")
+
+
+    def help(self):
+        """
+        Output information needed to construct a config file.
+
+        Provides a summary of the configuration parameters and their descriptions, guiding the user on how to construct
+        a configuration file with appropriate variable=value pairs.
+        """
+        output_text("...To construct a config file, use the following format:", "note")
+        output_text("...variable=value", "note")
+        output_text("...Available variables and their descriptions:", "note")
+        output_text("...cadence (int): The frequency in seconds at which the configuration parameters are updated.", "note")
+        output_text("...general_price_variance (float): The variance factor for general item prices.", "note")
+        output_text("...trade_price_variance (float): The variance factor for trade item prices.", "note")
+        output_text("...general_items_percent_stock (float): The base percentage of general items that are in stock at any given time.", "note")
+        output_text("...trade_items_percent_stock (float): The base percentage of trade items that are in stock at any given time.", "note")
+        output_text("...sell_item_percentage (float): The base percentage of the buy price to determine sell prices for items.", "note")
+        output_text("...sell_item_percentage_variance (float): The variance of the sell prices.", "note")
+        
+        
+    def print_config(self):
+        """
+        Print all configuration parameters and their values.
+        """
+        output_text("\nCurrent configuration parameters and their values:")
+        output_text(f"Cadence: {self.cadence} seconds")
+        output_text(f"General price variance: {self.general_price_variance}")
+        output_text(f"Trade price variance: {self.trade_price_variance}")
+        output_text(f"General items percent stock: {self.general_items_percent_stock}")
+        output_text(f"Trade items percent stock: {self.trade_items_percent_stock}")
+        output_text(f"Sell item percentage: {self.sell_item_percentage}")
+        output_text(f"Sell item percentage variance: {self.sell_item_percentage_variance}\n")
+                
+
+parser = argparse.ArgumentParser(description='S.T.O.C.K.P.I.L.E System Interface and Database Updater.')
+parser.add_argument('-c', '--config',
+                    action='store',
+                    help='The config file containing key-value pairs representing configuration parameters, each line formatted as \'variable=value.\'')
 parser.add_argument('-g', '--general',
                     required=True,
                     action='store',
@@ -26,6 +163,12 @@ parser.add_argument('-o', '--output',
                          'formatted in the dnd-table format (see documentation).')
 
 args = parser.parse_args()
+
+# Read in config file.
+if args.config == None:
+    config = Config()
+else:
+    config = Config(args.config)    
 
 
 def file_exists(file_path):
@@ -226,36 +369,6 @@ def get_old_lists(output_file):
     except Exception as e:
         print(f"Error reading file: {e}")
         return None
-
-
-def output_text(text, option="text"):
-    """
-    Print text in different colors based on the provided option.`
-
-    Args:
-        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
-        text (str): The text to be printed.
-
-    Returns:
-        None
-
-    Note:
-        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
-    """
-    color_codes = {
-        "text": "\033[0m",  # Reset color
-        "warning": "\033[93m",  # Yellow
-        "error": "\033[91m",  # Red
-        "note": "\033[94m",  # Blue
-        "success": "\033[92m"  # Green
-    }
-
-    if option in color_codes:
-        color_code = color_codes[option]
-        reset_code = color_codes["text"]
-        print(f"{color_code}{text}{reset_code}")
-    else:
-        print(text)
 
 
 def append_to_file(file_path, string_to_append):
@@ -845,7 +958,7 @@ def convert_second_value_to_float(item_list):
 
 def generate_initial_list(percent_general, percent_trade):
     """
-    This method will generate an initial list from the master lists. IT should only need to be called once and will
+    This method will generate an initial list from the master lists. It should only need to be called once and will
     populate the output file in the appropriate format.
 
     Args:
