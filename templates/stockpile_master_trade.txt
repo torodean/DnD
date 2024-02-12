@@ -36,7 +36,6 @@ Manual of Gainful Exercise (+1);27500g;This ornate item once belonged to the elf
 Elixer of Truth;750g;This finely crafted item was created by the elf artificer Lella and 'improved' by Savaera from Yellowseed.
 Staff of Healing (25 of 50 charges);13875g;This heavy staff is said to be imbued with thesirit of the halfling artificer Ilin Derhin, who slew the Leviathan of the Sea of Thieves.
 Arcane Scroll (Detect Undead);25g;
-Yello Quartz;50g;
 Moonstone;50g;
 White Onyx;50g;
 Jade set of Animal figurines;250g;
