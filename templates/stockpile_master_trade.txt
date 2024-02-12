@@ -23,7 +23,7 @@ Ring of Keys;3120g;This golden ring appears non-magical at first glance. While w
 Bottle of Fine Wine;8g;
 Ghost Fungus (1 shroom);1g;A funnel shaped mushroom shining brightly enough in the dark to read by
 Flute;1g;
-Book of Elementary Mathematics;25g;
+Book of Elementary Mathematics;25g;Second Edition
 Set of bagpipes;30g;
 45 Gallons of ale;9g;Comes in 5 Gallon Barrels, 9 different brews
 yellow Quartz;50g;
