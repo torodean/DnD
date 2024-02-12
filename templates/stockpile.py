@@ -60,7 +60,7 @@ class Config:
         self.cadence = 60                         # Default value for cadence (seconds).
         self.general_price_variance = 0.1         # Default value for general price variance.
         self.trade_price_variance = 0.2           # Default value for trade price variance.
-        self.general_items_percent_stock = 0.85   # Default value for general items percent stock.
+        self.general_items_percent_stock = 0.9    # Default value for general items percent stock.
         self.trade_items_percent_stock = 0.2      # Default value for trade items percent stock.
         self.sell_item_percentage = 0.75          # Default value for sell item percentage.
         self.sell_item_percentage_variance = 0.1  # Default value for sell item percentage.
@@ -980,14 +980,13 @@ def convert_second_value_to_float(item_list):
     return converted_list
 
 
-def generate_initial_list(percent_general, percent_trade):
+def generate_initial_list():
     """
     This method will generate an initial list from the master lists. It should only need to be called once and will
     populate the output file in the appropriate format.
 
     Args:
-        percent_general (float): The percentage of items to use from the general list.
-        percent_trade (float): The percentage of items to use from the trade list.
+        None
 
     Returns:
         None
@@ -1002,8 +1001,8 @@ def generate_initial_list(percent_general, percent_trade):
     print_table(general_list)
     find_and_print_duplicates(general_list)
 
-    print(f"Update general items based on percentage {percent_general} of initial list size.")
-    num_to_remove = len(general_list) * (1 - percent_general)
+    print(f"Update general items based on percentage {config.general_items_percent_stock} of initial list size.")
+    num_to_remove = len(general_list) * (1 - config.general_items_percent_stock)
     general_list, removed_items = randomly_remove_elements(general_list, int(num_to_remove))
     general_list = fix_list(general_list)
     general_list = convert_second_value_to_float(general_list)
@@ -1025,8 +1024,8 @@ def generate_initial_list(percent_general, percent_trade):
     print_table(trade_list)
     find_and_print_duplicates(trade_list)
 
-    print(f"Update general items based on percentage {percent_trade} of initial list size.")
-    num_to_remove = len(trade_list) * (1 - percent_trade)
+    print(f"Update general items based on percentage {config.trade_items_percent_stock} of initial list size.")
+    num_to_remove = len(trade_list) * (1 - config.trade_items_percent_stock)
     trade_list, removed_items = randomly_remove_elements(trade_list, int(num_to_remove))
     trade_list = fix_list(trade_list)
     trade_list = convert_second_value_to_float(trade_list)
@@ -1048,7 +1047,7 @@ def generate_initial_list(percent_general, percent_trade):
 
 def general_update():
     """
-    This method will update teh list of general items.
+    This method will update the list of general items.
 
     Args:
 
@@ -1080,4 +1079,4 @@ def full_update():
 
 
 if __name__ == '__main__':
-    generate_initial_list(0.90, 0.2)
+    generate_initial_list()
