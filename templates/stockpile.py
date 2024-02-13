@@ -143,9 +143,14 @@ class Config:
         output_text("...general_price_variance (float): The variance factor for general item prices.", "note")
         output_text("...trade_price_variance (float): The variance factor for trade item prices.", "note")
         output_text("...general_items_percent_in_stock (float): The base percentage of general items that are in stock at any given time.", "note")
+        output_text("...general_items_percent_in_stock_variance (float): The variance on the general_items_percent_in_stock value.")
         output_text("...trade_items_percent_in_stock (float): The base percentage of trade items that are in stock at any given time.", "note")
+        output_text("...trade_items_percent_in_stock_variance (float): The variance on the trade_items_percent_in_stock value.")
         output_text("...sell_price_percentage (float): The base percentage of the buy price to determine sell prices for items.", "note")
         output_text("...sell_price_percentage_variance (float): The variance of the sell prices.", "note")
+        output_text("...general_items_input_tag (str): The tags that appear as the header for the dnd-table lines in the .input files for general items.")
+        output_text("...trade_items_input_tag (str): The tags that appear as the header for the dnd-table lines in the .input files for trade items.")
+
         
         
     def print_config(self):
@@ -824,7 +829,7 @@ def convert_from_dnd_currency(currency_string):
         elif 'c' in part:
             copper_amount = int(part.replace('c', ''))
 
-    total_value = gold_amount + (silver_amount / 10) + (copper_amount / 100)
+    total_value = round(gold_amount + (silver_amount / 10) + (copper_amount / 100),3)
 
     return total_value
 
@@ -1150,7 +1155,97 @@ def generate_initial_list():
     output_text(input_file_output)
 
     write_to_file(args.output, input_file_output)
+    
+    
+def convert_string_to_price_history_list(string_data):
+    """
+    Convert a string with specified format to a list of lists.
 
+    Args:
+        string_data (str): A string with items separated by newline characters
+                           and elements within each line separated by semicolons.
+
+    Returns:
+        list: A list of lists where each inner list contains a string followed by floats.
+
+    Example:
+        Input: "Item1;1.5;2.7;3.8\nItem2;4.2;5.3;6.1\n"
+        Output: [["Item1", 1.5, 2.7, 3.8], ["Item2", 4.2, 5.3, 6.1]]
+    """
+    list_of_lists = []
+    rows = string_data.strip().split('\n')
+    for row in rows:
+        elements = row.split(';')
+        string_item = elements[0]
+        float_items = [float(item) for item in elements[1:]]
+        list_of_lists.append([string_item] + float_items)
+    return list_of_lists
+    
+    
+def convert_price_history_list_to_string(list_of_lists):
+    """
+    Convert a list of lists to a list of strings with specified format.
+
+    Args:
+        list_of_lists (list): A list of lists where each inner list contains a string
+                              followed by floats.
+
+    Returns:
+        list: A list of strings with the specified format.
+
+    Example:
+        Input: [["Item1", 1.5, 2.7, 3.8], ["Item2", 4.2, 5.3, 6.1]]
+        Output: ["Item1;1.5;2.7;3.8", "Item2;4.2;5.3;6.1"]
+    """
+    return '\n'.join([';'.join(map(str, sublist)) for sublist in list_of_lists])
+    
+    
+def append_price_history(item_price_list, updates):
+    """
+    Update the price history for multiple items in the list or add new lines for items that don't exist.
+
+    Args:
+        item_price_list (list): The list of items and their price histories.
+        updates (list): A list of tuples where each tuple contains the item name and new price.
+
+    Returns:
+        list: The updated list of items and their price histories.
+    """
+    updated_list = []
+
+    # Iterate over each item in the list
+    for item in item_price_list:
+        item_name = item[0]
+        updated = False
+
+        # Iterate over each update
+        for update in updates:
+            # Check if the item name matches the update
+            if item_name == update[0]:
+                # Append the new price to the item's price history
+                item.append(update[1])
+                updated_list.append(item)
+                updated = True
+                break
+
+        # If the item was not updated, add it to the updated list as is
+        if not updated:
+            updated_list.append(item)
+
+    # Check for new items to add to the updated list
+    for update in updates:
+        item_name = update[0]
+        price = update[1]
+        if not any(item[0] == item_name for item in item_price_list):
+            updated_list.append([item_name, price])
+
+    return updated_list
+    
+    
+def update_price_history():
+    """
+    """
+    
 
 def general_update():
     """
@@ -1220,6 +1315,18 @@ def general_update():
     
     # Log new price data to rice monitoring charts.
     # @TODO
+    price_history = []
+    new_general_list_floats = convert_second_value_to_float(new_general_list)
+    price_history = append_price_history(price_history, new_general_list)
+    print(price_history)
+    print()
+    price_history_string = convert_price_history_list_to_string(price_history)
+    print(price_history_string)
+    print()
+    price_history = convert_string_to_price_history_list(price_history_string)
+    print(price_history)
+    print()
+    
 
 def trade_update():
     """
@@ -1237,6 +1344,8 @@ def trade_update():
     trade_list = get_master_list(args.trade)
     print_table(trade_list)
     find_and_print_duplicates(trade_list)
+    
+    # @TODO
 
 
 def full_update():
