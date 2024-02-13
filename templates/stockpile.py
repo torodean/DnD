@@ -1155,13 +1155,15 @@ def generate_initial_list():
 def general_update():
     """
     This method will update the list of general items. The following steps are performed.
-        - Get the master list and current list.
-        - Determine which items are not already on our current list.
-        - Determine how many items to remove and add.
-            - The size of the master list * general items percent (the master list can change so this needs calculated each time.
-        - Remove a percentage of items on current list.
-        - Replace removed items with items from list of items not found on current list (add back some removed items if more are needed).
-        - Calculate new prices (buy/sell), format, and output.
+        - Get master list of general items.
+        - Get old/current lists.
+        - Find items that are not on the current list.
+        - Get the size for our new output list and how many items to remove to get to that size.
+        - Create new list by adding all missing elements then removing {num_items_to_remove}.
+        - Fix formatting of the list.
+        - Adjust buy and sell prices accordingly. Format, Fix, etc.
+        - Update output file with new list.
+        - Log new price data to rice monitoring charts.
 
     Args:
         None
@@ -1170,7 +1172,7 @@ def general_update():
         None
     """
     # Get master list of general items.
-    output_text("Get master list of general items.")
+    #output_text("Getting master list of general items.")
     check_semicolons_in_file(args.general)
     general_list = get_master_list(args.general)
     #print_table(general_list)
@@ -1181,7 +1183,7 @@ def general_update():
     current_general_list, _ = get_old_lists(args.output)
     print_table(current_general_list)
     
-    # find items that are not on the current list.
+    # Find items that are not on the current list.
     items_not_in_old_list = find_items_not_in_old_list(current_general_list, general_list)
     #output_text("Items not in current list:")
     #print_table(items_not_in_old_list)
@@ -1215,7 +1217,9 @@ def general_update():
     new_general_list_input_format = convert_to_one_line(new_general_list)
     update_general_items_in_input_file(new_general_list_input_format)
     #output_text(new_general_list_input_format)
-
+    
+    # Log new price data to rice monitoring charts.
+    # @TODO
 
 def trade_update():
     """
@@ -1228,7 +1232,7 @@ def trade_update():
         None
     """
     # Get master list of trade items.
-    output_text("Get master list of trade items.")
+    output_text("Getting master list of trade items.")
     check_semicolons_in_file(args.trade)
     trade_list = get_master_list(args.trade)
     print_table(trade_list)
@@ -1245,6 +1249,8 @@ def full_update():
     Returns:
         None
     """
+    general_update()
+    trade_update()
 
 
 if __name__ == '__main__':
