@@ -53,20 +53,27 @@ class Config:
         general_items_percent_in_stock (float): The base percentage of general items that are in stock at any given time.
         general_items_percent_in_stock_variance (float): The variance on the general_items_percent_in_stock value.
         trade_items_percent_in_stock (float): The base percentage of trade items that are in stock at any given time.
-        sell_item_percentage (float): The base percentage of the buy price to determine sell prices for items.
-        sell_item_percentage_variance (float): The variance of the sell prices.
+        trade_items_percent_in_stock_variance (float): The variance on the trade_items_percent_in_stock value.
+        sell_price_percentage (float): The base percentage of the buy price to determine sell prices for items.
+        sell_price_percentage_variance (float): The variance of the sell prices.
+        self.general_items_input_tag (str): The tags that appear as the header for the dnd-table lines in the .input files for general items.
+        self.trade_items_input_tag (str): The tags that appear as the header for the dnd-table lines in the .input files for trade items.
     """
     def __init__(self, config_file=None):
         self.config_file = config_file
-        self.cadence = 60                                   # Default value for cadence (seconds).
-        self.general_price_variance = 0.1                   # Default value for general price variance.
+        self.cadence = 86400                                # Default value for cadence (seconds).
+        self.general_price_variance = 0.05                  # Default value for general price variance.
         self.trade_price_variance = 0.2                     # Default value for trade price variance.
         self.general_items_percent_in_stock = 0.9           # Default value for percent of general items in stock.
         self.general_items_percent_in_stock_variance = 0.05 # Default value for variance on general items in stock.
         self.trade_items_percent_in_stock = 0.2             # Default value for percent of trade items in stock.
         self.trade_items_percent_in_stock_variance = 0.1    # Default value for variance on trade items in stock.
-        self.sell_item_percentage = 0.75                    # Default value for sell item percentage.
-        self.sell_item_percentage_variance = 0.1            # Default value for sell item percentage variance.
+        self.sell_price_percentage = 0.75                   # Default value for sell item percentage.
+        self.sell_price_percentage_variance = 0.1           # Default value for sell item percentage variance.
+        
+        # The tags that appear as the headers for the dnd-table lines in the .input files.
+        self.general_items_input_tag = "General Items"        
+        self.trade_items_input_tag = "Specialty/Trade Items"
         
         if self.config_file:
             self.load_config()
@@ -110,10 +117,14 @@ class Config:
                                 self.trade_items_percent_in_stock = float(value)
                             elif variable == 'trade_items_percent_in_stock_variance':
                                 self.trade_items_percent_in_stock_variance = float(value)
-                            elif variable == 'sell_item_percentage':
-                                self.sell_item_percentage = float(value)
-                            elif variable == 'sell_item_percentage_variance':
-                                self.sell_item_percentage_variance = float(value)
+                            elif variable == 'sell_price_percentage':
+                                self.sell_price_percentage = float(value)
+                            elif variable == 'sell_price_percentage_variance':
+                                self.sell_price_percentage_variance = float(value)
+                            elif variable == 'general_items_input_tag':
+                                self.general_items_input_tag = value
+                            elif variable == 'sell_price_percentage_variance':
+                                self.trade_items_input_tag = value
             except FileNotFoundError:
                 output_text("ERROR: Config file not found.", "error")
 
@@ -133,8 +144,8 @@ class Config:
         output_text("...trade_price_variance (float): The variance factor for trade item prices.", "note")
         output_text("...general_items_percent_in_stock (float): The base percentage of general items that are in stock at any given time.", "note")
         output_text("...trade_items_percent_in_stock (float): The base percentage of trade items that are in stock at any given time.", "note")
-        output_text("...sell_item_percentage (float): The base percentage of the buy price to determine sell prices for items.", "note")
-        output_text("...sell_item_percentage_variance (float): The variance of the sell prices.", "note")
+        output_text("...sell_price_percentage (float): The base percentage of the buy price to determine sell prices for items.", "note")
+        output_text("...sell_price_percentage_variance (float): The variance of the sell prices.", "note")
         
         
     def print_config(self):
@@ -147,8 +158,8 @@ class Config:
         output_text(f"Trade price variance: {self.trade_price_variance}")
         output_text(f"General items percent stock: {self.general_items_percent_in_stock}")
         output_text(f"Trade items percent stock: {self.trade_items_percent_in_stock}")
-        output_text(f"Sell item percentage: {self.sell_item_percentage}")
-        output_text(f"Sell item percentage variance: {self.sell_item_percentage_variance}\n")
+        output_text(f"Sell item percentage: {self.sell_price_percentage}")
+        output_text(f"Sell item percentage variance: {self.sell_price_percentage_variance}\n")
                 
 
 parser = argparse.ArgumentParser(description='S.T.O.C.K.P.I.L.E System Interface and Database Updater.')
@@ -341,6 +352,28 @@ def get_master_list(input_file):
     return output_list
 
 
+def remove_header(data):
+    """
+    Removes the header row from a list of items if it exists.
+
+    Args:
+        data (list): The list of items.
+
+    Returns:
+        list: The list with the header row removed, if present.
+    """
+    header_index = -1
+    for i, item in enumerate(data):
+        if "Item" in item[0] in item:
+            header_index = i
+            break
+
+    if header_index != -1:
+        del data[header_index]
+
+    return data
+    
+
 def get_old_lists(output_file):
     """
     This will return the list of items contained in the secified output list (the current list to be updated).
@@ -364,12 +397,18 @@ def get_old_lists(output_file):
             lines = [line.strip() for line in lines]
 
         for line in lines:
-            if "General Items[dnd-table]=" in line:
+            full_tag_line = f"{config.general_items_input_tag}[dnd-table]="
+            if full_tag_line in line:
                 old_general_list = convert_to_list(line.split("=")[1])
-
-            if "Specialty/Trade Items[dnd-table]=" in line:
-                old_trade_list = convert_to_list(line.split("=")[1])
-
+                
+            full_tag_line = f"{config.trade_items_input_tag}[dnd-table]="
+            if full_tag_line in line:
+                old_trade_list = convert_to_list(line.split("=")[1])                
+        
+        # Remove the headers from the data.
+        old_general_list = remove_header(old_general_list)
+        old_trade_list = remove_header(old_trade_list)
+        
         return old_general_list, old_trade_list
 
     except FileNotFoundError:
@@ -689,16 +728,18 @@ def adjust_buy_prices(items_list, variance=10):
     updated_list = []
 
     for item in items_list:
-        percentage = random_with_variance(100, 5) / 100
+        percentage = random_with_variance(100, config.general_price_variance * 100) / 100
         buy_price = float(item[1])
         new_buy_price = buy_price * percentage
+        if new_buy_price < 0.01: # less than 1 copper.
+            new_buy_price = 0.01
         updated_item = [item[0], new_buy_price, item[2], item[3]]
         updated_list.append(updated_item)
 
     return updated_list
 
 
-def calculate_sell_percentage(items_list, percentage=75):
+def calculate_sell_percentage(items_list, percentage=config.sell_price_percentage):
     """
     Calculate the sell price as a percentage of the buy price for each item in a list. The percentage will be somewhat randomized and a 10 percent variance from what is entered. 
 
@@ -712,9 +753,11 @@ def calculate_sell_percentage(items_list, percentage=75):
     updated_list = []
 
     for item in items_list:
-        percent_multiplier = random_with_variance(percentage, 10) / 100
+        percent_multiplier = random_with_variance(percentage * 100, config.sell_price_percentage_variance * 100) / 100
         buy_price = float(item[1])
         sell_price = buy_price * percent_multiplier
+        if sell_price < 0.01: # less than 1 copper.
+            sell_price = 0.01
         updated_item = [item[0], buy_price, sell_price, item[3]]
         updated_list.append(updated_item)
 
@@ -830,7 +873,7 @@ def convert_to_one_line(list_of_lists):
         result += line + ";"
 
     # Remove the trailing comma and space
-    result = f"{num_of_columns};Item;Base Price;Sell Price;Description;" + result.strip(";")
+    result = f"{num_of_columns};Item;Buy Price;Sell Price;Description;" + result.strip(";")
 
     return result
 
@@ -894,7 +937,6 @@ def test():
     # Get old/current lists.
     output_text("Get old/current lists.")
     if args.output is not None:
-        check_semicolons_in_file(args.output)
         old_general_list, old_trade_list = get_old_lists(args.output)
         # output_text(f"old_general_list: {old_general_list}", "note")
         # output_text(f"old_trade_list: {old_trade_list}", "note")
@@ -987,6 +1029,60 @@ def convert_second_value_to_float(item_list):
         sublist[1] = float_price
         converted_list.append(sublist)
     return converted_list
+    
+
+def replace_line_in_file(file_path, text_to_match, new_line):
+    """
+    Replace a line in a file with another line based on the start of the line matching some text.
+
+    Args:
+        file_path (str): The path to the file.
+        text_to_match (str): The text to match at the start of the line.
+        new_line (str): The new line to replace the matching line.
+
+    Returns:
+        None
+    """
+    # Read the contents of the file
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+
+    # Replace the line if it starts with the specified text
+    for i, line in enumerate(lines):
+        if line.startswith(text_to_match):
+            lines[i] = new_line + '\n'
+
+    # Write the modified contents back to the file
+    with open(file_path, 'w') as file:
+        file.writelines(lines)
+        
+        
+def update_general_items_in_input_file(new_list_to_add):
+    """
+    Update the list of general items in the input file with a new list.
+
+    Args:
+        new_list_to_add (list): The new list of general items to add. Should be in single line format.
+
+    Returns:
+        None
+    """
+    new_line_to_add = f"{config.general_items_input_tag}[dnd-table]={new_list_to_add}"
+    replace_line_in_file(args.output, f"{config.general_items_input_tag}[dnd-table]=", new_line_to_add)
+    
+    
+def update_trade_items_in_input_file(new_list_to_add):
+    """
+    Update the list of trade items in the input file with a new list.
+
+    Args:
+        new_list_to_add (list): The new list of general items to add. Should be in single line format.
+
+    Returns:
+        None
+    """
+    new_line_to_add = f"{config.trade_items_input_tag}[dnd-table]={new_list_to_add}"
+    replace_line_in_file(args.output, f"{config.trade_items_input_tag}[dnd-table]=", new_line_to_add)
 
 
 def generate_initial_list():
@@ -1024,7 +1120,7 @@ def generate_initial_list():
     print_table(general_list)
 
     general_list_input_format = convert_to_one_line(general_list)
-    input_file_output += f"General Items[dnd-table]={general_list_input_format}"
+    input_file_output += f"{config.general_items_input_tag}[dnd-table]={general_list_input_format}"
 
     # Get master list of trade/specialty items.
     output_text("Get master list of trade/specialty items.")
@@ -1047,7 +1143,7 @@ def generate_initial_list():
     print_table(trade_list)
 
     trade_list_input_format = convert_to_one_line(trade_list)
-    input_file_output += f"\n\nSpecialty/Trade Items[dnd-table]={trade_list_input_format}"
+    input_file_output += f"\n\n{config.trade_items_input_tag}[dnd-table]={trade_list_input_format}"
 
     output_text(input_file_output)
 
@@ -1066,6 +1162,7 @@ def general_update():
         - Calculate new prices (buy/sell), format, and output.
 
     Args:
+        None
 
     Returns:
         None
@@ -1074,19 +1171,48 @@ def general_update():
     output_text("Get master list of general items.")
     check_semicolons_in_file(args.general)
     general_list = get_master_list(args.general)
-    print_table(general_list)
+    #print_table(general_list)
     find_and_print_duplicates(general_list)
     
     # Get old/current lists.
     output_text("Getting old/current lists.")
-    check_semicolons_in_file(args.output)
     current_general_list, _ = get_old_lists(args.output)
     print_table(current_general_list)
     
     # find items that are not on the current list.
     items_not_in_old_list = find_items_not_in_old_list(current_general_list, general_list)
-    output_text("Items not in current list:")
-    print_table(items_not_in_old_list)
+    #output_text("Items not in current list:")
+    #print_table(items_not_in_old_list)
+    
+    # Get the size for our new output list.
+    output_list_size = int(random_with_variance(len(general_list)*config.general_items_percent_in_stock, config.general_items_percent_in_stock_variance))
+    num_items_to_remove = int(len(general_list) - output_list_size)
+    output_text(f"Update general items based on percentage {config.general_items_percent_in_stock} of initial list size with {config.general_items_percent_in_stock_variance} variance.")
+    output_text(f"general master list size:  {len(general_list)}", "note")
+    output_text(f"current general list size: {len(current_general_list)}", "note")
+    output_text(f"new general list size:     {output_list_size}", "note")
+    output_text(f"Number of items to remove: {num_items_to_remove}", "note")
+    
+    # Create new list by adding all missing elements then removing {num_items_to_remove}.
+    new_general_list = current_general_list + items_not_in_old_list
+    new_general_list, _ = randomly_remove_elements(new_general_list, int(num_items_to_remove))
+    
+    # Fix formatting of the list.
+    new_general_list = fix_list(new_general_list)
+    #print_table(new_general_list)
+    
+    # Adjust buy and sell prices accordingly.
+    new_general_list = convert_second_value_to_float(new_general_list)
+    new_general_list = adjust_buy_prices(new_general_list)
+    new_general_list = calculate_sell_percentage(new_general_list)
+    new_general_list = convert_prices_to_dnd_format(new_general_list)
+    output_text("New/updated list:")
+    print_table(new_general_list)
+    
+    # Update output file with new list.
+    new_general_list_input_format = convert_to_one_line(new_general_list)
+    update_general_items_in_input_file(new_general_list_input_format)
+    #output_text(new_general_list_input_format)
 
 
 
@@ -1095,6 +1221,7 @@ def trade_update():
     This method will update the list of trade items.
 
     Args:
+        None
 
     Returns:
         None
@@ -1112,6 +1239,7 @@ def full_update():
     This method will update both the general items and the trade items list.
 
     Args:
+        None
 
     Returns:
         None
