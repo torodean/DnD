@@ -1215,7 +1215,6 @@ def general_update():
     #output_text(new_general_list_input_format)
 
 
-
 def trade_update():
     """
     This method will update the list of trade items.
