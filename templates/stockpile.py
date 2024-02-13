@@ -758,6 +758,8 @@ def calculate_sell_percentage(items_list, percentage=config.sell_price_percentag
         sell_price = buy_price * percent_multiplier
         if sell_price < 0.01: # less than 1 copper.
             sell_price = 0.01
+        if sell_price > buy_price:
+            sell_price = buy_price
         updated_item = [item[0], buy_price, sell_price, item[3]]
         updated_list.append(updated_item)
 
@@ -1186,7 +1188,7 @@ def general_update():
     
     # Get the size for our new output list.
     output_list_size = int(random_with_variance(len(general_list)*config.general_items_percent_in_stock, config.general_items_percent_in_stock_variance))
-    num_items_to_remove = int(len(general_list) - output_list_size)
+    num_items_to_remove = abs(int(len(general_list) - output_list_size))
     output_text(f"Update general items based on percentage {config.general_items_percent_in_stock} of initial list size with {config.general_items_percent_in_stock_variance} variance.")
     output_text(f"general master list size:  {len(general_list)}", "note")
     output_text(f"current general list size: {len(current_general_list)}", "note")
