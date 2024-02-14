@@ -150,7 +150,6 @@ class Config:
         output_text("...sell_price_percentage_variance (float): The variance of the sell prices.", "note")
         output_text("...general_items_input_tag (str): The tags that appear as the header for the dnd-table lines in the .input files for general items.")
         output_text("...trade_items_input_tag (str): The tags that appear as the header for the dnd-table lines in the .input files for trade items.")
-
         
         
     def print_config(self):
@@ -179,9 +178,12 @@ parser.add_argument('-t', '--trade',
                     required=True,
                     action='store',
                     help='The file containing random and trade items.')
-parser.add_argument('-H', '--history',
+parser.add_argument('-b', '--buy',
                     action='store',
-                    help='The file containing the price history of the various items. Including this option will update this.')
+                    help='The file containing the buy price history of the various items. Including this option will update this.')
+parser.add_argument('-s', '--sell',
+                    action='store',
+                    help='The file containing the sell price history of the various items. Including this option will update this.')
 parser.add_argument('-o', '--output',
                     required=True,
                     action='store',
@@ -189,6 +191,21 @@ parser.add_argument('-o', '--output',
                          'formatted in the dnd-table format (see documentation).')
 
 args = parser.parse_args()
+
+# check if the buy history file exists.
+if args.buy:
+    # Create the file if it doesn't exist
+    if not os.path.exists(args.buy):
+        with open(args.buy, 'w'):
+            pass  # Empty block just to create the file
+            
+# check if the sell history file exists.
+if args.sell:
+    # Create the file if it doesn't exist
+    if not os.path.exists(args.sell):
+        with open(args.sell, 'w'):
+            pass  # Empty block just to create the file
+
 
 # Read in config file.
 if args.config == None:
@@ -1021,22 +1038,22 @@ def test():
     # generate_and_plot_values(mean_value, percent_variance, num_values)
 
 
-def convert_second_value_to_float(item_list):
+def convert_value_to_float(item_list, index=1):
     """
     Convert the second value of each sublist in the list to a float using convert_from_dnd_currency method.
 
     Args:
         item_list (list): The list of sublists.
+        index (int): The index of the column to convert.
 
     Returns:
         list: The list with the second value of each sublist converted to a float.
     """
     converted_list = []
     for sublist in item_list:
-        # Assuming the second value is at index 1
-        price = sublist[1]
+        price = sublist[index]
         float_price = convert_from_dnd_currency(price)
-        sublist[1] = float_price
+        sublist[index] = float_price
         converted_list.append(sublist)
     return converted_list
     
@@ -1120,7 +1137,7 @@ def generate_initial_list():
     num_to_remove = len(general_list) * (1 - config.general_items_percent_in_stock)
     general_list, removed_items = randomly_remove_elements(general_list, int(num_to_remove))
     general_list = fix_list(general_list)
-    general_list = convert_second_value_to_float(general_list)
+    general_list = convert_value_to_float(general_list)
     general_list = calculate_sell_percentage(general_list)
     print_table(general_list)
 
@@ -1143,7 +1160,7 @@ def generate_initial_list():
     num_to_remove = len(trade_list) * (1 - config.trade_items_percent_in_stock)
     trade_list, removed_items = randomly_remove_elements(trade_list, int(num_to_remove))
     trade_list = fix_list(trade_list)
-    trade_list = convert_second_value_to_float(trade_list)
+    trade_list = convert_value_to_float(trade_list)
     trade_list = calculate_sell_percentage(trade_list)
     print_table(trade_list)
 
@@ -1203,13 +1220,14 @@ def convert_price_history_list_to_string(list_of_lists):
     return '\n'.join([';'.join(map(str, sublist)) for sublist in list_of_lists])
     
     
-def append_price_history(item_price_list, updates):
+def append_price_history(item_price_list, updates, index=1):
     """
     Update the price history for multiple items in the list or add new lines for items that don't exist.
 
     Args:
         item_price_list (list): The list of items and their price histories.
         updates (list): A list of tuples where each tuple contains the item name and new price.
+        index (int): The index of the row to use for appending history values.
 
     Returns:
         list: The updated list of items and their price histories.
@@ -1226,7 +1244,7 @@ def append_price_history(item_price_list, updates):
             # Check if the item name matches the update
             if item_name == update[0]:
                 # Append the new price to the item's price history
-                item.append(update[1])
+                item.append(update[index])
                 updated_list.append(item)
                 updated = True
                 break
@@ -1238,7 +1256,7 @@ def append_price_history(item_price_list, updates):
     # Check for new items to add to the updated list
     for update in updates:
         item_name = update[0]
-        price = update[1]
+        price = update[index]
         if not any(item[0] == item_name for item in item_price_list):
             updated_list.append([item_name, price])
 
@@ -1255,27 +1273,43 @@ def update_price_history(update_list):
     Returns:
         None
     """
-    if args.history is None:
+    if args.buy is None and args.sell is None:
         return
         
     if detect_currency_format(update_list[0][1]) == 'dnd_currency':
-        update_list = convert_second_value_to_float(update_list)
+        update_list = convert_value_to_float(update_list, 1)
+    if detect_currency_format(update_list[0][2]) == 'dnd_currency':
+        update_list = convert_value_to_float(update_list, 2)
         
     try:
-        with open(args.history, 'r') as history_file:
-            history = history_file.read()
-            history_file.close()
+        if args.buy:
+            with open(args.buy, 'r') as buy_history_file:
+                history = buy_history_file.read()
+                buy_history_file.close()
 
-        history_list = convert_string_to_price_history_list(history)
-        history_list = append_price_history(history_list, update_list)
-        price_history_string = convert_price_history_list_to_string(history_list)
-    
-        with open(args.history, 'w') as history_file:
-            history_file.write(price_history_string)
-            history_file.close()
+            history_list = convert_string_to_price_history_list(history)
+            history_list = append_price_history(history_list, update_list, 1)
+            price_history_string = convert_price_history_list_to_string(history_list)
+        
+            with open(args.buy, 'w') as buy_history_file:
+                buy_history_file.write(price_history_string)
+                buy_history_file.close()
+                
+        if args.sell:
+            with open(args.sell, 'r') as sell_history_file:
+                history = sell_history_file.read()
+                sell_history_file.close()
+
+            history_list = convert_string_to_price_history_list(history)
+            history_list = append_price_history(history_list, update_list, 2)
+            price_history_string = convert_price_history_list_to_string(history_list)
+        
+            with open(args.sell, 'w') as sell_history_file:
+                sell_history_file.write(price_history_string)
+                sell_history_file.close()
     
     except FileNotFoundError:
-        output_text(f"ERROR: History file not found: {args.history}", "error")
+        output_text(f"ERROR: History file(s) not found: {args.buy} or {args.sell}", "error")
 
 
 def general_update():
@@ -1332,7 +1366,7 @@ def general_update():
     #print_table(new_general_list)
     
     # Adjust buy and sell prices accordingly.
-    new_general_list = convert_second_value_to_float(new_general_list)
+    new_general_list = convert_value_to_float(new_general_list)
     new_general_list = adjust_buy_prices(new_general_list)
     new_general_list = calculate_sell_percentage(new_general_list)
     new_general_list = convert_prices_to_dnd_format(new_general_list)
