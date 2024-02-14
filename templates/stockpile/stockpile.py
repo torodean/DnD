@@ -739,7 +739,7 @@ def alphabetize_list(input_list):
     return sorted(input_list, key=lambda x: x[0])
 
 
-def adjust_buy_prices(items_list, variance=10):
+def adjust_buy_prices(items_list, variance=0.1):
     """
     Calculate the buy price as a variance from the base price. 
 
@@ -753,7 +753,7 @@ def adjust_buy_prices(items_list, variance=10):
     updated_list = []
 
     for item in items_list:
-        percentage = random_with_variance(100, config.general_price_variance * 100) / 100
+        percentage = random_with_variance(100, variance * 100) / 100
         buy_price = float(item[1])
         new_buy_price = buy_price * percentage
         if new_buy_price < 0.01: # less than 1 copper.
@@ -1339,7 +1339,7 @@ def general_update():
     find_and_print_duplicates(general_list)
     
     # Get old/current lists.
-    output_text("Getting old/current lists.")
+    output_text("Getting old/current general lists.")
     current_general_list, _ = get_old_lists(args.output)
     print_table(current_general_list)
     
@@ -1359,7 +1359,7 @@ def general_update():
     
     # Create new list by adding all missing elements then removing {num_items_to_remove}.
     new_general_list = current_general_list + items_not_in_old_list
-    new_general_list, _ = randomly_remove_elements(new_general_list, int(num_items_to_remove))
+    new_general_list, _ = randomly_remove_elements(new_general_list, num_items_to_remove)
     
     # Fix formatting of the list.
     new_general_list = fix_list(new_general_list)
@@ -1367,7 +1367,7 @@ def general_update():
     
     # Adjust buy and sell prices accordingly.
     new_general_list = convert_value_to_float(new_general_list)
-    new_general_list = adjust_buy_prices(new_general_list)
+    new_general_list = adjust_buy_prices(new_general_list, config.general_price_variance)
     new_general_list = calculate_sell_percentage(new_general_list)
     new_general_list = convert_prices_to_dnd_format(new_general_list)
     output_text("New/updated list:")
@@ -1378,7 +1378,7 @@ def general_update():
     update_general_items_in_input_file(new_general_list_input_format)
     #output_text(new_general_list_input_format)
     
-    # Log new price data to rice monitoring charts.
+    # Log new price data to price monitoring charts.
     update_price_history(new_general_list)
     
 
@@ -1396,10 +1396,54 @@ def trade_update():
     output_text("Getting master list of trade items.")
     check_semicolons_in_file(args.trade)
     trade_list = get_master_list(args.trade)
-    print_table(trade_list)
+    #print_table(trade_list)
     find_and_print_duplicates(trade_list)
     
-    # @TODO
+    # Get old/current lists.
+    output_text("Getting old/current trade lists.")
+    _, current_trade_list = get_old_lists(args.output)
+    print_table(current_trade_list)
+    
+    # Find items that are not on the current list.
+    items_not_in_old_list = find_items_not_in_old_list(current_trade_list, trade_list)
+    #output_text("Items not in current list:")
+    #print_table(items_not_in_old_list)    
+    
+    # Get the size for our new output list.
+    output_list_size = int(random_with_variance(len(trade_list)*config.trade_items_percent_in_stock, config.trade_items_percent_in_stock_variance))
+    num_items_to_remove = int(random_with_variance(len(current_trade_list)/2, 15))
+    num_items_to_add = abs(output_list_size - (len(current_trade_list) - num_items_to_remove))
+    output_text(f"Update general items based on percentage {config.general_items_percent_in_stock} of initial list size with {config.general_items_percent_in_stock_variance} variance.")
+    output_text(f"general master list size:  {len(trade_list)}", "note")
+    output_text(f"current general list size: {len(current_trade_list)}", "note")
+    output_text(f"new general list size:     {output_list_size}", "note")
+    output_text(f"Number of items to remove: {num_items_to_remove}", "note")
+    output_text(f"Number of items to add:    {num_items_to_add}", "note")    
+    
+    # Create new list by removing {num_items_to_remove} items and adding {num_items_to_add} items.
+    new_trade_list, _ = randomly_remove_elements(current_trade_list, num_items_to_remove)
+    trade_items_to_add, _  = randomly_remove_elements(items_not_in_old_list, len(items_not_in_old_list) - num_items_to_add)
+    new_trade_list = new_trade_list + trade_items_to_add    
+    
+    # Fix formatting of the list.
+    new_trade_list = fix_list(new_trade_list)
+    #print_table(new_trade_list)
+    
+    # Adjust buy and sell prices accordingly.
+    new_trade_list = convert_value_to_float(new_trade_list)
+    new_trade_list = adjust_buy_prices(new_trade_list, config.trade_price_variance)
+    new_trade_list = calculate_sell_percentage(new_trade_list)
+    new_trade_list = convert_prices_to_dnd_format(new_trade_list)
+    output_text("New/updated list:")
+    print_table(new_trade_list)
+    
+    # Update output file with new list.
+    new_trade_list_input_format = convert_to_one_line(new_trade_list)
+    update_trade_items_in_input_file(new_trade_list_input_format)
+    #output_text(new_trade_list_input_format)
+    
+    # Log new price data to price monitoring charts.
+    update_price_history(new_trade_list)
 
 
 def full_update():
@@ -1418,4 +1462,4 @@ def full_update():
 
 if __name__ == '__main__':
     #generate_initial_list()
-    general_update()
+    trade_update()
