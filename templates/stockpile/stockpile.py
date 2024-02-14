@@ -1384,7 +1384,17 @@ def general_update():
 
 def trade_update():
     """
-    This method will update the list of trade items.
+    This method will update the list of trade items. The following steps are performed.
+        - Get master list of trade items.
+        - Get old/current lists.
+        - Find items that are not on the current list.
+        - Determine how many items to remove, this will be the average with 15% variance.
+        - Get the size for our new output list.
+        - Remove random items and replace with new items until desired size is reached. 
+        - Fix formatting of the list.
+        - Adjust buy and sell prices accordingly. Format, Fix, etc.
+        - Update output file with new list.
+        - Log new price data to rice monitoring charts.
 
     Args:
         None
