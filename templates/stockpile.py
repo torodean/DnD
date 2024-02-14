@@ -179,6 +179,9 @@ parser.add_argument('-t', '--trade',
                     required=True,
                     action='store',
                     help='The file containing random and trade items.')
+parser.add_argument('-H', '--history',
+                    action='store',
+                    help='The file containing the price history of the various items. Including this option will update this.')
 parser.add_argument('-o', '--output',
                     required=True,
                     action='store',
@@ -191,7 +194,7 @@ args = parser.parse_args()
 if args.config == None:
     config = Config()
 else:
-    config = Config(args.config)    
+    config = Config(args.config)
 
 
 def file_exists(file_path):
@@ -1242,10 +1245,38 @@ def append_price_history(item_price_list, updates):
     return updated_list
     
     
-def update_price_history():
+def update_price_history(update_list):
     """
-    """
+    This method will perform the various tasks to update the price history of a list of items.
     
+    Args:
+        update_list (list): The list to use for updating price history.
+        
+    Returns:
+        None
+    """
+    if args.history is None:
+        return
+        
+    if detect_currency_format(update_list[0][1]) == 'dnd_currency':
+        update_list = convert_second_value_to_float(update_list)
+        
+    try:
+        with open(args.history, 'r') as history_file:
+            history = history_file.read()
+            history_file.close()
+
+        history_list = convert_string_to_price_history_list(history)
+        history_list = append_price_history(history_list, update_list)
+        price_history_string = convert_price_history_list_to_string(history_list)
+    
+        with open(args.history, 'w') as history_file:
+            history_file.write(price_history_string)
+            history_file.close()
+    
+    except FileNotFoundError:
+        output_text(f"ERROR: History file not found: {args.history}", "error")
+
 
 def general_update():
     """
@@ -1314,18 +1345,7 @@ def general_update():
     #output_text(new_general_list_input_format)
     
     # Log new price data to rice monitoring charts.
-    # @TODO
-    price_history = []
-    new_general_list_floats = convert_second_value_to_float(new_general_list)
-    price_history = append_price_history(price_history, new_general_list)
-    print(price_history)
-    print()
-    price_history_string = convert_price_history_list_to_string(price_history)
-    print(price_history_string)
-    print()
-    price_history = convert_string_to_price_history_list(price_history_string)
-    print(price_history)
-    print()
+    update_price_history(new_general_list)
     
 
 def trade_update():
