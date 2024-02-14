@@ -1462,4 +1462,4 @@ def full_update():
 
 if __name__ == '__main__':
     #generate_initial_list()
-    trade_update()
+    full_update()
