@@ -20,7 +20,7 @@ Note: These installation instructions are for Linux based operating systems.
 
 - Clone the git repo.
 - Run the setup.sh script (sudo required for installations)
-    - The `chmod a+x setup.sh` command makes the script executable, and `./setup.sh` runs the script.
+    - The `chmod a+x mmorpdnd-setup.sh` command makes the script executable, and `./mmorpdnd-setup.sh` runs the script.
 - Run the desired application or sub-program.
     - The `chmod a+x app.py` command makes the script executable, and `./app.py` or `python3 app.py` runs the script.
 
