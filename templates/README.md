@@ -5,7 +5,23 @@
 This folder contains various apps that are used within the MMORPDND system. View the official docs for more information about these apps.
 ## Table of Contents
 
+- [Folders](#folders)
 - [Apps](#apps)
+
+## Folders
+
+The various folders in this directory server purposes for the various MMORPDND apps and features.
+
+- img
+  - This folder is for storing images that will be detected by the creator.py app.
+- input_files
+  - This folder is where all .char and .input files are located for the creator app.
+- lists
+  - This folder contians various lists that are used for various features of the MMORPDND system.
+- languages
+  - This folder is a place to store custom languages. These often contain many files (fonts, docs, and applications for assitance in translating or creating puzzles).
+- trash
+  - This is a folder to store files that have already been 'finished' or converted using the creator.py app but are to be kept around in case future additions or changes are made. 
 
 ## Apps
 
