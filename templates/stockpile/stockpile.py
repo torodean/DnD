@@ -26,11 +26,11 @@ def output_text(text, option="text"):
         This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
     """
     color_codes = {
-        "text": "\033[0m",  # Reset color
+        "text": "\033[0m",      # Reset color
         "warning": "\033[93m",  # Yellow
-        "error": "\033[91m",  # Red
-        "note": "\033[94m",  # Blue
-        "success": "\033[92m"  # Green
+        "error": "\033[91m",    # Red
+        "note": "\033[94m",     # Blue
+        "success": "\033[92m"   # Green
     }
 
     if option in color_codes:
@@ -1417,7 +1417,7 @@ def trade_update():
     # Find items that are not on the current list.
     items_not_in_old_list = find_items_not_in_old_list(current_trade_list, trade_list)
     #output_text("Items not in current list:")
-    #print_table(items_not_in_old_list)    
+    #print_table(items_not_in_old_list)
     
     # Get the size for our new output list.
     output_list_size = int(random_with_variance(len(trade_list)*config.trade_items_percent_in_stock, config.trade_items_percent_in_stock_variance))
@@ -1428,12 +1428,12 @@ def trade_update():
     output_text(f"current general list size: {len(current_trade_list)}", "note")
     output_text(f"new general list size:     {output_list_size}", "note")
     output_text(f"Number of items to remove: {num_items_to_remove}", "note")
-    output_text(f"Number of items to add:    {num_items_to_add}", "note")    
+    output_text(f"Number of items to add:    {num_items_to_add}", "note")
     
     # Create new list by removing {num_items_to_remove} items and adding {num_items_to_add} items.
     new_trade_list, _ = randomly_remove_elements(current_trade_list, num_items_to_remove)
     trade_items_to_add, _  = randomly_remove_elements(items_not_in_old_list, len(items_not_in_old_list) - num_items_to_add)
-    new_trade_list = new_trade_list + trade_items_to_add    
+    new_trade_list = new_trade_list + trade_items_to_add
     
     # Fix formatting of the list.
     new_trade_list = fix_list(new_trade_list)
