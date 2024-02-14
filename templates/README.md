@@ -33,7 +33,7 @@ The apps in this folder are sub-apps of the MMORPDND system and each serve a spe
   - The main MMORPDND creator tool for adding input files to the HTML database and performing various other tasks.
 - stockpile.py
   - The main app for running and updating the stockpile system (see docs for description) 
-- stockpile_plot.py
+- stockpile/stockpile_plot.py
   - This app will plot the data generated using the stockpile system over time.
 - char_maker.py
   - This app is a tool for making characters with the assistance of AI. 
