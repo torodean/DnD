@@ -3,6 +3,7 @@
 #TODO - This is just a mock script. Paths and things need finalized.
 
 # Ensure we have the latest changes.
+cd ~/DnD/templates/stockpile
 git pull
 
 # Run the stockpile updates.
@@ -21,7 +22,7 @@ git push origin main
 
 # Update the public MMORPDND database to reflect changes
 # TODO
-cd /MMORPDND.github.io/repo/location
+cd ~/MMORPDND.github.io/
 git pull
 ./updateSubmodules.sh
 git add -A
