@@ -176,8 +176,8 @@ flour;2c;1 lb.
 salt;5c;1 lb.
 iron;1s;1 lb.
 copper;5s;1 lb.
-1 sq. yd. of canvas;1s;1 lb.
-1 sq. yd. of cotton cloth;5s;1 lb.
+canvas;1s;1 sq. yd.
+cotton cloth;5s;1 sq. yd.
 ginger;1g;1 lb.
 one baby goat;1g;
 pepper;2g;1 lb.
@@ -186,7 +186,7 @@ one baby sheep;2g;
 cloves;3g;1 lb.
 one baby pig;3g;
 silver;5g;1 lb.
-1 sq. yd. of linen;5g;
+linen;5g;1 sq. yd.
 silk;10g;1 sq. yd.
 saffron;15g;1 lb.
 one baby cow;10g;
