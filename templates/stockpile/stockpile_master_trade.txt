@@ -137,3 +137,36 @@ Chalice of Dreamweaving; 220g; A chalice filled with enchanted liquid that induc
 Mirage Cloak; 180g; A cloak that shimmers and shifts, creating illusions of the wearer's surroundings to confuse attackers.
 Key of Passage; 250g; A mystical key that unlocks hidden doors and passages, revealing secret chambers and treasures.
 Mirror of Memory; 120g; A mirror that reflects memories instead of images, allowing the viewer to relive past experiences and moments.
+Musical Instrument (Flute); 2g; A handheld woodwind instrument that produces melodious tones when blown into.
+Musical Instrument (Lute); 35g; A stringed instrument with a resonating body and fretted neck, used for playing music.
+Musical Instrument (Drum); 3g; A percussion instrument consisting of a hollow shell covered with a stretched membrane, played by striking with hands or drumsticks.
+Musical Instrument (Violin); 30g; A bowed string instrument with four strings and a curved body, used for playing classical music.
+Musical Instrument (Harp); 75g; A large, stringed instrument with a triangular frame and multiple strings, played by plucking or strumming.
+Musical Instrument (Bagpipes); 30g; A wind instrument with a bag attached to pipes, played by squeezing the bag and blowing air through the pipes.
+Musical Instrument (Horn); 3g; A brass instrument with a flared bell and tubing, played by buzzing the lips into a mouthpiece.
+Musical Instrument (Cymbals); 2g; A pair of metal plates that produce a crashing sound when struck together, used for rhythmic accompaniment.
+Musical Instrument (Tambourine); 1g; A handheld percussion instrument with a circular frame and jingling metal discs, shaken or struck for rhythmic effect.
+Musical Instrument (Triangle); 1g; A small metal instrument shaped like a triangle, played by striking with a metal beater.
+Musical Instrument (Xylophone); 10g; A percussion instrument with wooden bars of different lengths, played by striking with mallets.
+Musical Instrument (Pan Flute); 12g; A wind instrument consisting of pipes of varying lengths tied together, played by blowing across the top.
+Musical Instrument (Accordion); 50g; A portable wind instrument with a keyboard and bellows, producing sound by pressing keys and squeezing the bellows.
+Musical Instrument (Mandolin); 30g; A stringed instrument with a rounded body and fretted neck, played by plucking or strumming.
+Musical Instrument (Clarinet); 40g; A woodwind instrument with a cylindrical bore and single reed mouthpiece, played by blowing air through the reed.
+Musical Instrument (Trumpet); 25g; A brass instrument with a narrow tube and flared bell, played by buzzing the lips into a mouthpiece.
+Musical Instrument (Saxophone); 80g; A woodwind instrument with a conical bore and single reed mouthpiece, played by blowing air through the reed.
+Musical Instrument (Trombone); 60g; A brass instrument with a long slide for changing pitch, played by buzzing the lips into a mouthpiece.
+Musical Instrument (Flugelhorn); 70g; A brass instrument similar to a trumpet but with a wider, conical bore, played by buzzing the lips into a mouthpiece.
+Musical Instrument (Ukulele); 15g; A small, four-stringed instrument resembling a guitar, played by plucking or strumming.
+Musical Instrument (Banjo); 45g; A stringed instrument with a circular body and several strings, played by plucking or strumming.
+Musical Instrument (Harmonica); 3g; A small, handheld wind instrument with reed plates inside, played by blowing and drawing air through the holes.
+Musical Instrument (Oboe); 60g; A woodwind instrument with a conical bore and double reed mouthpiece, played by blowing air through the reeds.
+Musical Instrument (Bassoon); 150g; A large woodwind instrument with a double reed mouthpiece and long, folded tube, played by blowing air through the reeds.
+Musical Instrument (Piccolo); 40g; A small, high-pitched woodwind instrument resembling a flute, played by blowing air across a mouthpiece.
+Musical Instrument (Tuba); 200g; A large brass instrument with a wide tube and flared bell, played by buzzing the lips into a mouthpiece.
+Musical Instrument (Concertina); 50g; A small, hexagonal accordion-like instrument with buttons on both ends, producing sound by pressing buttons and squeezing the bellows.
+Musical Instrument (Sitar); 100g; A stringed instrument with a long neck and pear-shaped body, played by plucking or strumming.
+Musical Instrument (Tabla); 80g; A pair of small, hand drums used in traditional Indian music, played by tapping with the fingers or palms.
+Musical Instrument (Baglamas); 20g; A small, pear-shaped stringed instrument used in Greek music, played by plucking or strumming.
+Musical Instrument (Koto); 150g; A traditional Japanese stringed instrument with a long, rectangular body and moveable bridges, played by plucking with picks on the fingers.
+Musical Instrument (Balalaika); 40g; A triangular, three-stringed instrument used in Russian folk music, played by plucking or strumming.
+Musical Instrument (Didgeridoo); 25g; A long, tubular wind instrument originating from Indigenous Australian cultures, played by blowing air through the mouthpiece while vibrating the lips.
