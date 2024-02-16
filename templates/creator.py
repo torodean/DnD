@@ -1,7 +1,4 @@
 #!/bin/python3
-import tkinter as tk
-from tkinter import filedialog
-from tkinter import PhotoImage
 import os
 import re
 import shutil
@@ -10,18 +7,28 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-# Used for music
-from pytube import YouTube
-from moviepy.editor import *
-
-# Used for progress bars
-from tqdm import tqdm
 import argparse
 
 parser = argparse.ArgumentParser(description='MMORPDND Creator Tool.')
 parser.add_argument('-f', '--file', action='store', help='Run the creator for a single input file and update all files.')
 
 args = parser.parse_args()
+
+# Sets terminal mode.
+terminal_mode = False
+if args.file != None:
+    terminal_mode = True
+
+if not terminal_mode:
+    import tkinter as tk
+    from tkinter import filedialog
+    from tkinter import PhotoImage
+    # Used for music
+    from pytube import YouTube
+    from moviepy.editor import *
+
+    # Used for progress bars
+    from tqdm import tqdm
 
 
 def output_text(text, option = "text"):
@@ -53,6 +60,24 @@ def output_text(text, option = "text"):
     else:
         print(text)
 
+
+def ensure_directory_exists(directory_path):
+    """
+    Checks if the specified directory exists. If not, creates it.
+
+    Args:
+    directory_path (str): The path of the directory to check/create.
+    """
+    if not os.path.exists(directory_path):
+        try:
+            output_text(f"Directory {directory_path} does not exist. Creating directory...", "note")
+            os.makedirs(directory_path)
+            output_text(f"Directory created: {directory_path}", "note")
+        except OSError as e:
+            output_text(f"Error: Failed to create directory: {e}", "error")
+    else:
+        output_text(f"Directory already exists: {directory_path}", "note")
+        
 
 def get_youtube_video_name(url):
     """
@@ -403,9 +428,7 @@ def copy_file_to_directory(file_path, directory_path):
         raise ValueError("File does not exist")
 
     # Check if the directory exists
-    if not os.path.isdir(directory_path):
-        output_text(f"Directory {directory_path} does not exist. Creating directory...", "note")
-        os.makedirs(directory_path)
+    ensure_directory_exists(directory_path)
 
     new_file = directory_path + "/" + file_path.split('/')[-1].strip()
     if not os.path.isfile(new_file):
@@ -1118,14 +1141,17 @@ def fix_image_extensions():
         fix_image_extensions()
     """
     current_dir = os.getcwd()
+    ensure_directory_exists("./img")
     os.chdir("./img")
     if os.path.isfile("fix_image_extensions.py"):
         command = f"./fix_image_extensions.py"
+        os.system(command)
     else:
         output_text("Error: 'fix_image_extensions.py' file not found.", "error")
-        return
-    os.system(command)
+        
+    # Return to the original directory 
     os.chdir(current_dir)
+    return
 
 
 def update_all():
@@ -1206,108 +1232,111 @@ def extract_first_integer(string):
 class Creator:
     def __init__(self):
         self.last_user_input = None
-        self.gui = tk.Tk()
-        self.gui.geometry("850x500")
-        self.gui.title("File Browser")
 
-        # Load icon image
-        icon = PhotoImage(file='{}/../mmorpdnd.png'.format(global_vars.root_dir))
-        # Set icon image
-        self.gui.tk.call('wm', 'iconphoto', self.gui._w, icon)
+        if not terminal_mode:
+            self.gui = tk.Tk()
+            self.gui.geometry("850x500")
+            self.gui.title("File Browser")
+            
+            # Load icon image
+            icon = PhotoImage(file='{}/../mmorpdnd.png'.format(global_vars.root_dir))
+            # Set icon image
+            self.gui.tk.call('wm', 'iconphoto', self.gui._w, icon)
 
-        # Create the menu bar
-        menubar = tk.Menu(self.gui)
-        # Create a file menu and add it to the menu bar
-        filemenu = tk.Menu(menubar, tearoff=0)
-        filemenu.add_command(label="Exit", command=self.gui.quit)
+            # Create the menu bar
+            menubar = tk.Menu(self.gui)
+            # Create a file menu and add it to the menu bar
+            filemenu = tk.Menu(menubar, tearoff=0)
+            filemenu.add_command(label="Exit", command=self.gui.quit)
 
-        # Create a frame for the file path display and edit box
-        path_frame = tk.Frame(self.gui)
-        path_frame.pack(fill=tk.X, padx=10, pady=10)
+            # Create a frame for the file path display and edit box
+            path_frame = tk.Frame(self.gui)
+            path_frame.pack(fill=tk.X, padx=10, pady=10)
 
-        # Create a label for the file path display
-        path_label = tk.Label(path_frame, text="Input File:")
-        path_label.pack(side=tk.LEFT, padx=(0, 5))
+            # Create a label for the file path display
+            path_label = tk.Label(path_frame, text="Input File:")
+            path_label.pack(side=tk.LEFT, padx=(0, 5))
 
-        # Create an editable text box for the file path display
-        self.path_text = tk.Entry(path_frame, width=82)
-        self.path_text.pack(side=tk.LEFT, fill=tk.X, expand=True)
+            # Create an editable text box for the file path display
+            self.path_text = tk.Entry(path_frame, width=82)
+            self.path_text.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
-        # Bind a function to the Entry widget that is called whenever the text is modified
-        # self.path_text.bind('<KeyRelease>', self.path_text_updated)
+            # Bind a function to the Entry widget that is called whenever the text is modified
+            # self.path_text.bind('<KeyRelease>', self.path_text_updated)
 
-        # Create a button to open the file browser
-        browse_button = tk.Button(path_frame, text="Browse", command=self.browse_files)
-        browse_button.pack(side=tk.LEFT, padx=(5, 0))
+            # Create a button to open the file browser
+            browse_button = tk.Button(path_frame, text="Browse", command=self.browse_files)
+            browse_button.pack(side=tk.LEFT, padx=(5, 0))
 
-        # Create a frame for the yes and no buttons
-        top_button_frame = tk.Frame(self.gui)
-        top_button_frame.pack(side=tk.TOP, pady=10)
+            # Create a frame for the yes and no buttons
+            top_button_frame = tk.Frame(self.gui)
+            top_button_frame.pack(side=tk.TOP, pady=10)
 
-        # Create a button to open the file browser
-        generate_word_button = tk.Button(top_button_frame, text="Generate Word", command=self.generate_word)
-        generate_word_button.pack(side=tk.LEFT, padx=10)
+            # Create a button to open the file browser
+            generate_word_button = tk.Button(top_button_frame, text="Generate Word", command=self.generate_word)
+            generate_word_button.pack(side=tk.LEFT, padx=10)
 
-        # Create a button to open the file browser
-        create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_pages)
-        create_page_button.pack(side=tk.LEFT, padx=10)
+            # Create a button to open the file browser
+            create_page_button = tk.Button(top_button_frame, text="Create Page", command=self.create_pages)
+            create_page_button.pack(side=tk.LEFT, padx=10)
 
-        # Create a button to open the file browser
-        random_place_button = tk.Button(top_button_frame, text="Random Places", command=self.random_place)
-        random_place_button.pack(side=tk.LEFT, padx=10)
+            # Create a button to open the file browser
+            random_place_button = tk.Button(top_button_frame, text="Random Places", command=self.random_place)
+            random_place_button.pack(side=tk.LEFT, padx=10)
 
-        # Create a trash checkbox
-        self.trash_checkbox_value = tk.BooleanVar(value=True)
-        self.trash_checkbox_value.set(True)  # Set the variable to False
-        trash_checkbox = tk.Checkbutton(top_button_frame, text="Trash", variable=self.trash_checkbox_value,
-                                        command=self.checkbox_changed)
-        trash_checkbox.pack(side=tk.LEFT, padx=1)
+            # Create a trash checkbox
+            self.trash_checkbox_value = tk.BooleanVar(value=False)
+            self.trash_checkbox_value.set(False)  # Set the variable to False
+            trash_checkbox = tk.Checkbutton(top_button_frame, text="Trash", variable=self.trash_checkbox_value,
+                                            command=self.checkbox_changed)
+            trash_checkbox.pack(side=tk.LEFT, padx=1)
 
-        # Create a trash checkbox
-        self.download_checkbox_value = tk.BooleanVar(value=True)
-        self.download_checkbox_value.set(True)  # Set the variable to False
-        download_checkbox = tk.Checkbutton(top_button_frame, text="Download Files",
-                                           variable=self.download_checkbox_value,
-                                           command=self.checkbox_changed)
-        download_checkbox.pack(side=tk.LEFT, padx=1)
+            # Create a download checkbox
+            self.download_checkbox_value = tk.BooleanVar(value=False)
+            self.download_checkbox_value.set(False)  # Set the variable to False
+            download_checkbox = tk.Checkbutton(top_button_frame, text="Download Files",
+                                               variable=self.download_checkbox_value,
+                                               command=self.checkbox_changed)
+            download_checkbox.pack(side=tk.LEFT, padx=1)
 
-        # Create a button to open the file browser
-        update_button = tk.Button(top_button_frame, text="Update All", command=update_all)
-        update_button.pack(side=tk.LEFT, padx=10)
+            # Create a button to open the file browser
+            update_button = tk.Button(top_button_frame, text="Update All", command=update_all)
+            update_button.pack(side=tk.LEFT, padx=10)
 
-        # Create a frame for the large text box and scrollbar
-        text_frame = tk.Frame(self.gui)
-        text_frame.pack(side=tk.TOP, fill=tk.BOTH, padx=(10, 0), pady=10, expand=True)
-        text_frame.pack_propagate(False)
+            # Create a frame for the large text box and scrollbar
+            text_frame = tk.Frame(self.gui)
+            text_frame.pack(side=tk.TOP, fill=tk.BOTH, padx=(10, 0), pady=10, expand=True)
+            text_frame.pack_propagate(False)
 
-        # Create a text widget for the large text box
-        self.large_text = tk.Text(text_frame)
-        self.large_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            # Create a text widget for the large text box
+            self.large_text = tk.Text(text_frame)
+            self.large_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        # Create a scrollbar and attach it to the text widget
-        scrollbar = tk.Scrollbar(text_frame)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y, padx=(0, 10))
-        self.large_text.config(yscrollcommand=scrollbar.set)
-        scrollbar.config(command=self.large_text.yview)
+            # Create a scrollbar and attach it to the text widget
+            scrollbar = tk.Scrollbar(text_frame)
+            scrollbar.pack(side=tk.RIGHT, fill=tk.Y, padx=(0, 10))
+            self.large_text.config(yscrollcommand=scrollbar.set)
+            scrollbar.config(command=self.large_text.yview)
 
-        # Create a frame for the yes and no buttons
-        button_frame = tk.Frame(self.gui)
-        button_frame.pack(side=tk.BOTTOM, pady=10)
+            # Create a frame for the yes and no buttons
+            button_frame = tk.Frame(self.gui)
+            button_frame.pack(side=tk.BOTTOM, pady=10)
 
-        # Create a button to store "yes"
-        self.yes_button = tk.Button(button_frame, text="Yes", command=self.yes)
-        self.yes_button.pack(side=tk.LEFT, padx=(10, 5))
+            # Create a button to store "yes"
+            self.yes_button = tk.Button(button_frame, text="Yes", command=self.yes)
+            self.yes_button.pack(side=tk.LEFT, padx=(10, 5))
 
-        # Create a button to store "no"
-        self.no_button = tk.Button(button_frame, text="No", command=self.no)
-        self.no_button.pack(side=tk.LEFT, padx=(5, 10))
+            # Create a button to store "no"
+            self.no_button = tk.Button(button_frame, text="No", command=self.no)
+            self.no_button.pack(side=tk.LEFT, padx=(5, 10))
 
-        # Create a button to store "reset"
-        self.reset_button = tk.Button(button_frame, text="Reset", command=self.reset)
-        self.reset_button.pack(side=tk.LEFT, padx=(5, 10))
+            # Create a button to store "reset"
+            self.reset_button = tk.Button(button_frame, text="Reset", command=self.reset)
+            self.reset_button.pack(side=tk.LEFT, padx=(5, 10))
 
-        self.no_button.config(state="disabled")
-        self.yes_button.config(state="disabled")
+            self.no_button.config(state="disabled")
+            self.yes_button.config(state="disabled")
+            
 
     def create_html_music(self, urls):
         """
@@ -1345,6 +1374,7 @@ class Creator:
         html_list += '</ul>'
 
         return html_list
+        
 
     def download_youtube_video_as_mp3(self, url, output_path="../music"):
         """
@@ -1426,6 +1456,7 @@ class Creator:
             # Try again
             mp3_path = self.download_youtube_video_as_mp3(url, output_path)
             return mp3_path
+            
 
     def random_place(self, number=100):
         """
@@ -1460,8 +1491,9 @@ class Creator:
         with open(random_places_file, 'a') as f:
             for place in random_places:
                 f.write(place + '\n')
+                
 
-    def create_pages(self):
+    def create_pages(self, input_file=None):
         """
         Generate page files for a file or each file within a directory.
 
@@ -1476,7 +1508,7 @@ class Creator:
         Raises:
             None
         """
-        self.update_input_file()
+        self.update_input_file(input_file)
         fix_image_extensions()
 
         if os.path.isfile(global_vars.current_file):
@@ -1499,6 +1531,7 @@ class Creator:
             # If the current file is not a file or directory, display an error message and return.
             self.output_text_to_gui(f"Error: {global_vars.current_file} is not a file or directory.")
             return
+            
 
     def create_page(self, file=global_vars.current_file):
         """
@@ -1525,9 +1558,11 @@ class Creator:
         for line in lines:
             if "folder" in line:
                 folder = line.split('=')[1].strip()
-                output_text(f"Destination folder set to {folder}", "note")
+                output_text(f"Destination folder set to: {folder}", "note")
+                
+        print(os.getcwd())
 
-        global_vars.output_file_folder = '.'  # used for testing mainly
+        global_vars.output_file_folder = os.getcwd()  # used for testing mainly
         for dirpath, dirnames, filenames in os.walk("../"):
 
             # Check if we are looking at a file in our exclude list.
@@ -1538,7 +1573,8 @@ class Creator:
                 continue
 
             if folder in dirnames:
-                global_vars.output_file_folder = dirpath + "/" + folder
+                output_text(f"Matching folder found: {folder} in {dirpath}", "note")                
+                global_vars.output_file_folder = dirpath + "/" + folder + "/"
                 break
             elif dirpath.endswith(folder):
                 global_vars.output_file_folder = dirpath + "/"
@@ -1548,7 +1584,10 @@ class Creator:
 
         output_fn = os.path.basename(file).split('.')[0]
         output_images = []
-        output_file = global_vars.output_file_folder + output_fn + ".html"
+        if global_vars.output_file_folder == ".":
+            output_file = "./" + output_fn + ".html"
+        else:
+            output_file = global_vars.output_file_folder + output_fn + ".html"
         output_text(f"Output file: {output_file}", "note")
 
         # create HTML file
@@ -1615,6 +1654,7 @@ class Creator:
 
             # close HTML file
             f.write('</body>\n</html>')
+            f.close()
 
             output_text(f'HTML file created: {output_file}', "note")
 
@@ -1622,6 +1662,7 @@ class Creator:
         if len(output_images) > 0:
             for image in output_images:
                 if os.path.isfile(image):
+                    ensure_directory_exists(output_image_dir)
                     output_image_dir = global_vars.output_file_folder + "/img"
 
                     # trash image if needed.
@@ -1640,8 +1681,10 @@ class Creator:
                         output_text(f'Image file exists in target directory: {output_image_file}', "warning")
 
         # move the files to the trash if this option is selected.
-        if self.trash_checkbox_value.get():
-            global_vars.trash_file(file)
+        if not terminal_mode:
+            if self.trash_checkbox_value.get():
+                global_vars.trash_file(file)
+            
 
     def checkbox_changed(self):
         """
@@ -1660,6 +1703,7 @@ class Creator:
             output_text("download_files Checkbox enabled")
         else:
             output_text("download_files Checkbox disabled")
+            
 
     def generate_char(self, file=global_vars.current_file):
         """
@@ -1887,6 +1931,7 @@ class Creator:
         # move the files to the trash if this option is selected.
         if self.trash_checkbox_value.get():
             global_vars.trash_file(file)
+            
 
     def output_text_to_gui(self, text):
         """
@@ -1904,7 +1949,11 @@ class Creator:
             gui_instance.output_text("Processing completed successfully.")
             # The text "Processing completed successfully." is displayed in the GUI window.
         """
+        # Output to terminal first.
         output_text(text)
+        if terminal_mode:
+            return
+            
         # Append the given text to the large_text widget
         self.large_text.config(state="normal")
         self.large_text.insert(tk.END, text + '\n')
@@ -1915,6 +1964,7 @@ class Creator:
 
         # Update the GUI window
         self.large_text.update_idletasks()
+        
 
     def test(self):
         """
@@ -1924,6 +1974,7 @@ class Creator:
             None
         """
         self.output_text_to_gui("test text")
+        
 
     def get_user_choice(self):
         """
@@ -1996,6 +2047,7 @@ class Creator:
 
         # Return the user's choice
         return user_choice.get()
+        
 
     def yes(self):
         """
@@ -2010,6 +2062,7 @@ class Creator:
         """
         self.last_user_input = "yes"
         output_text(f"last_user_input set to {self.last_user_input}", "note")
+        
 
     def no(self):
         """
@@ -2024,6 +2077,7 @@ class Creator:
         """
         self.last_user_input = "no"
         output_text(f"last_user_input set to {self.last_user_input}", "note")
+        
 
     def reset(self):
         """
@@ -2040,6 +2094,7 @@ class Creator:
         self.output_text_to_gui("Resetting...")
         self.last_user_input = "reset"
         output_text(f"last_user_input set to {self.last_user_input}", "note")
+        
 
     def browse_files(self):
         """
@@ -2059,8 +2114,9 @@ class Creator:
         # Update the text in the editable box with the selected file path
         self.path_text.delete(0, tk.END)
         self.path_text.insert(0, file_path)
+        
 
-    def update_input_file(self):
+    def update_input_file(self, input_file=None):
         """
         Update the current input file and associated data.
 
@@ -2078,6 +2134,15 @@ class Creator:
             # The current input file is updated to 'data.txt', and associated data is adjusted.
         """
         output_text("Updating input file.")
+        if input_file != None:
+            global_vars.reset()
+            global_vars.current_file = input_file
+            output_text(f"Updated current work file to: {input_file}")
+            if input_file.endswith(".char") or input_file.endswith(".names") or input_file.endswith(".list"):
+                global_vars.current_list = read_lines_from_file(input_file)
+            return
+            
+        
         if self.path_text.get() is None:
             self.output_text_to_gui("No file input!")
         else:
@@ -2090,6 +2155,7 @@ class Creator:
                 self.output_text_to_gui(f"Updated current work file to: {file}")
                 if file.endswith(".char") or file.endswith(".names") or file.endswith(".list"):
                     global_vars.current_list = read_lines_from_file(file)
+                    
 
     def generate_word(self):
         """
@@ -2146,6 +2212,7 @@ class Creator:
                 continue
             else:
                 continue
+                
 
     def run(self):
         self.gui.mainloop()
@@ -2157,4 +2224,6 @@ if __name__ == '__main__':
     if args.file == None:
         app.run()
     else:
-        print(f"Running crator processes for: {args.file}")
+        print(f"Running crator processes in single file mode for: {args.file}")
+        app.create_pages(args.file)
+        update_all()
