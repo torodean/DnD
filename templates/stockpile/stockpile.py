@@ -189,7 +189,10 @@ parser.add_argument('-o', '--output',
                     action='store',
                     help='The output file to compare to and update. This should be a .input file with the lists '
                          'formatted in the dnd-table format (see documentation).')
-
+parser.add_argument('-i', '--initial',
+                    action='store_true',
+                    help='Generates an initial .input file for processing.')
+                         
 args = parser.parse_args()
 
 # check if the buy history file exists.
@@ -1471,5 +1474,7 @@ def full_update():
 
 
 if __name__ == '__main__':
-    #generate_initial_list()
-    full_update()
+    if args.initial:
+        generate_initial_list()
+    else:
+        full_update()
