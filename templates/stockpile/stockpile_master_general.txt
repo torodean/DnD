@@ -88,7 +88,6 @@ Tinderbox;5s;1 lb.
 Torch;1c;1 lb.
 Vial;1g;
 Waterskin;2s;5 lb. (full)
-Whetstone;1c;1 lb.
 Club;1s;2 lb. 1d4 bludgeoning, Light
 Dagger;2g;1 lb. 1d4 piercing, "Finesse, light, thrown (range 20/60)"
 Greatclub;2s;10 lb. 1d8 bludgeoning, Two-handed
@@ -197,8 +196,6 @@ Healing Potion; 50g; A vial of red liquid that accelerates natural healing, mend
 Traveler's Rations; 1g; A bundle of dried meats, bread, and cheese, providing sustenance for a day's journey.
 Rope, 50 feet; 1g; A length of sturdy hemp rope, useful for climbing, tying, and securing objects.
 Lantern; 5g; A metal lantern with glass panels, fueled by oil and equipped with a handle for easy carrying.
-Waterskin; 2g; A leather pouch lined with wax, designed to hold water and keep it cool during travel.
-Grappling Hook; 2g; A metal hook attached to a length of rope, used for climbing and scaling walls.
 Lockpicks; 25g; A set of delicate tools used for picking locks and bypassing security mechanisms.
 Ink and Quill; 1s; A small vial of ink and a quill pen, essential for writing letters, maps, and contracts.
 Tents; 10g; A portable shelter made of canvas, supported by collapsible poles and pegs.
@@ -206,10 +203,9 @@ Trail Rations; 5s; A pre-packaged assortment of dried fruits, nuts, and jerky, p
 Map of the Region; 10g; A detailed map depicting local landmarks, roads, and geographical features.
 Hammer and Nails; 5s; A sturdy hammer and a handful of iron nails, useful for repairs and construction.
 Cooking Pot; 2g; A metal pot with a lid, suitable for cooking meals over an open flame or campfire.
-Backpack; 2g; A durable canvas backpack with multiple compartments and adjustable straps.
 Saddlebags; 4g; Large leather bags designed to hang from a saddle, ideal for carrying supplies while riding.
 Fishing Rod; 1g; A simple rod with a line and hook, used for catching fish in rivers, lakes, and ponds.
-Whetstone; 1s; A small stone used for sharpening blades and keeping weapons and tools in good condition.
+Whetstone; 5c; A small stone used for sharpening blades and keeping weapons and tools in good condition.
 Traveler's Clothes; 1g; A set of practical clothing suitable for long journeys, made of durable fabrics.
 Lantern Oil; 1s; A flask of flammable oil used to fuel lanterns and torches, providing illumination in the dark.
-Bedroll; 1s; A thick, padded blanket rolled up for easy carrying, providing a comfortable place to rest while camping.
+Bedroll; 1g; A thick, padded blanket rolled up for easy carrying, providing a comfortable place to rest while camping.

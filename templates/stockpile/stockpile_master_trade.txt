@@ -74,7 +74,6 @@ Book of elementary Mathematics;25g;Third edition
 Elixer of swimming;250g;
 Spined Shield;5580g;This finely crafted shield once belonged to the illustrious paladin Gerxup, who vanished in the Chambers of Dark Sorrows.
 Ring ofsell Turning;98280g;(inscription provides clue to function) This polished ring also repels small insects when held.
-Potion of Invisibility;300g;This blue tincture smells sour.
 Ring of Kalecgos;14000g;Legen has it that this ring was forged in the burning breathe of the legendary dragon Kalecgos in his last moments of existance.
 Dust of Disappearance;3500g;This ornate item once belonged to the legendary hero Cyne, leader of Athyer's Guild.
 Ring of Resilience;8000g;This ring grants resistance to poison damage when worn.
@@ -92,7 +91,7 @@ Cape of the Mountebank;18000g;This cape allows its wearer to teleport short dist
 Gloves of Dexterity;4000g;These gloves enhance the wearer's manual dexterity and agility.
 Amulet of the Mage;10000g;This amulet enhances the wearer's spellcasting abilities, increasing their potency.
 Horn of Blasting;30000g;This horn can produce a deafening blast when blown, capable of stunning foes.
-Potion of Invisibility;300g;This potion renders the user invisible for a short duration when consumed.
+Potion of Invisibility;300g;This blue tincture smells sour. This potion renders the user invisible for a short duration when consumed.
 Staff of Power;50000g;This staff is imbued with formidable magical energies, capable of unleashing devastating spells.
 Bracers of Defense;8000g;These bracers grant magical protection to their wearer, enhancing their armor class.
 Potion of Greater Healing;500g;This potent potion restores a significant amount of hit points when consumed.
