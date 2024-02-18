@@ -1,0 +1,237 @@
+Abacus;2.37
+Acid (vial);27.95
+Alchemist’s fire (flask);61.39
+Antitoxin (vial);49.47
+Arrows (20);0.79
+Backpack;1.85
+Backpack;2.24
+Bagpipes;29.56
+Ball bearings (bag of 1,000);0.86
+Barrel;2.24
+Basket;0.44
+Battleaxe;13.49
+Bedroll;0.97
+Bedroll;0.08
+Bell;0.96
+Blanket;0.49
+Block and tackle;0.7
+Blowgun;9.28
+Blowgun Needles (50);0.97
+Book;24.73
+Bottle, glass;1.8
+Brewer’s supplies;19.92
+Bucket;0.01
+Calligrapher's Supplies;9.93
+Caltrops (bag of 20);1.1
+Candle;0.01
+Carpenter’s tools;8.95
+Cartographer’s tools;16.74
+Case, crossbow bolt;0.99
+Case, map or scroll;0.75
+Chain (10 feet);3.89
+Chain shirt;42.41
+Chalk (1 piece);0.01
+Chest;5.27
+Clothes, Common;0.43
+Clothes, costume;5.18
+Clothes, fine;14.93
+Clothes, traveler’s;1.5
+Club;0.07
+Cobbler’s tools;3.75
+Component pouch;26.6
+Cooking Pot;2.04
+Cook’s utensils;1.03
+Crossbow bolts (20);1.12
+Crossbow, hand;65.13
+Crossbow, heavy;52.75
+Crossbow, light;26.01
+Crowbar;1.61
+Dagger;2.04
+Dart;0.01
+Dice set;0.06
+Drum;5.87
+Dulcimer;24.98
+Fishing Rod;1.2
+Fishing tackle;1.12
+Flail;8.53
+Flask or Tankard;0.01
+Flute;2.0
+Glaive;20.36
+Glassblower’s tools;26.96
+Grappling Hook;1.32
+Grappling hook;1.46
+Greatclub;0.17
+Greatsword;57.04
+Halberd;22.9
+Half plate;872.87
+Hammer;1.03
+Hammer and Nails;0.47
+Hammer, sledge;1.35
+Handaxe;4.67
+Healing Potion;43.84
+Hide;9.1
+Holy Water (flask);23.14
+Horn;2.99
+Hourglass;21.09
+Hunting trap;5.48
+Ink (1 ounce bottle);10.3
+Ink and Quill;0.01
+Ink pen;0.01
+Javelin;0.47
+Jeweler’s tools;23.15
+Jug or Pitcher;0.01
+Kit, climber’s;23.12
+Kit, disguise;22.44
+Kit, forgery;17.05
+Kit, healer’s;3.2
+Kit, herbalism;4.87
+Kit, mess;0.16
+Kit, poisoner’s;45.47
+Ladder (10-foot);0.02
+Lamp;0.5
+Lance;9.4
+Lantern;5.28
+Lantern Oil;0.09
+Lantern, bullseye;10.48
+Lantern, hooded;5.46
+Leather;11.81
+Leatherworker’s tools;3.87
+Light Hammer;1.74
+Lock;7.7
+Lockpicks;21.28
+Longbow;48.38
+Longsword;12.35
+Lute;36.43
+Lyre;29.12
+Mace;5.04
+Manacles;1.8
+Map of the Region;9.35
+Mason’s tools;7.12
+Maul;8.14
+Mirror, steel;3.34
+Morningstar;14.26
+Navigator’s tools;25.83
+Net;0.95
+Oil (flask);0.01
+Padded;5.24
+Painter’s supplies;9.52
+Pan flute;12.48
+Paper (one sheet);0.09
+Parchment (one sheet);0.05
+Perfume (vial);4.36
+Pick, miner’s;1.8
+Pike;4.89
+Piton;0.01
+Plate;1583.97
+Playing card set;0.51
+Poison, basic (vial);107.12
+Pole (10-foot);0.03
+Pot, iron;1.67
+Potion of Healing;42.18
+Potter’s tools;11.37
+Pouch;0.63
+Quarterstaff;0.1
+Quiver;0.58
+Ram, portable;5.08
+Rapier;24.9
+Rations (1 day);0.51
+Ring mail;29.62
+Robes;1.16
+Rope, 50 feet;0.93
+Rope, hempen (50 feet);0.48
+Rope, silk (50 feet);10.05
+Sack;0.01
+Saddlebags;3.84
+Scale mail;51.38
+Scale, merchant’s;5.88
+Scimitar;25.59
+Sealing wax;0.45
+Shawm;1.99
+Shield;10.27
+Shortbow;22.39
+Shortsword;9.2
+Sickle;1.13
+Signal whistle;0.01
+Signet ring;5.05
+Sling;0.1
+Sling bullets (20);0.03
+Smith’s tools;28.81
+Soap;0.01
+Spear;1.03
+Spellbook;43.94
+Spikes, iron (10);0.86
+Splint;177.1
+Spyglass;856.54
+Studded leather;51.43
+Tents;8.62
+Thieves’ tools;28.0
+Tinderbox;0.45
+Tinker’s tools;57.79
+Torch;0.01
+Trail Rations;0.48
+Traveler's Clothes;1.01
+Traveler's Rations;0.99
+Trident;5.53
+Vial;0.9
+Viol;19.92
+War Pick;4.74
+Warhammer;17.18
+Waterskin;1.72
+Weaver’s tools;0.94
+Whetstone;0.01
+Whip;1.94
+Woodcarver’s tools;0.82
+canvas;0.03
+cinnamon;1.63
+cloves;2.69
+copper;0.38
+cotton cloth;0.45
+flour;0.01
+ginger;0.77
+gold;45.17
+iron;0.01
+linen;6.07
+one baby chicken;0.01
+one baby cow;12.71
+one baby goat;0.9
+one baby ox;15.7
+one baby pig;2.81
+one baby sheep;1.82
+pepper;2.13
+platinum;552.95
+saffron;16.11
+salt;0.01
+silk;10.13
+silver;4.58
+wheat;0.01
+Amulet of the Mage;11515.46
+Amulet of the Planes;121062.72
+Blade of Olympus;1153.67
+Boots of Striding and Springing;17693.41
+Bottle of Common Wine;1.92
+Everburning Torch;43.2
+Featherfall Amulet;108.96
+Flask of Eternity;144.45
+Flask of Liquid Courage;56.54
+Ghost Fungus (1 shroom);0.79
+Lantern of Flickering Shadows;105.48
+Moonstone;24.29
+Musical Instrument (Accordion);42.86
+Musical Instrument (Clarinet);79.04
+Musical Instrument (Harmonica);2.87
+Musical Instrument (Horn);2.69
+Musical Instrument (Pan Flute);12.24
+Musical Instrument (Piccolo);37.64
+Musical Instrument (Sitar);127.76
+Musical Instrument (Tambourine);0.81
+Potion of Cat Agility;270.4
+Potion of Endure elements;40.9
+Ring of Protection;4324.81
+Rod of Cancellation;25773.6
+Rod of extend metamagic (lesser);2342.8
+Satchel of Holding;174.53
+Shard of the Stars;255.76
+Veil of Concealment;150.66
+Whispering Amulet;150.52
+White Onyx;47.5
+oil of bless weapon;128.06

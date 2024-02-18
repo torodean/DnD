@@ -243,10 +243,14 @@ footer a:hover {
 }
 
 .dnd-table .top-row {
-  background-color: #303050; /* Gray background color */
-  border-bottom: 1px solid #ffffff; /* Black border */
-  color: #ffffff; /* Text color */
-  font-weight: bold; /* Bold text */
+    background-color: #303050;
+    /* Gray background color */
+    border-bottom: 1px solid #ffffff;
+    /* Black border */
+    color: #ffffff;
+    /* Text color */
+    font-weight: bold;
+    /* Bold text */
 }
 
 .dnd-list h3 {
