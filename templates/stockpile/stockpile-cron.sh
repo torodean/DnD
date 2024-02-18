@@ -18,7 +18,8 @@ echo "Running the stockpile plot generation!"
 
 # Update the HTML page.
 echo "Updating the stockpile HTML pages!"
-../creator.py -f ${script_dir}/stockpile_inventory_lists.input
+cd ..
+./creator.py -f ${script_dir}/stockpile_inventory_lists.input
 
 # Add the new updated files to the git repo.
 echo "Updating the git repo with the new files!"
@@ -28,7 +29,7 @@ git push origin main
 
 # Update the public MMORPDND database to reflect changes.
 echo "Updating the MMORPDND git database with the new files!"
-cd ~git/MMORPDND.github.io/
+cd ~/git/MMORPDND.github.io/
 git pull
 ./updateSubmodules.sh
 git add -A
