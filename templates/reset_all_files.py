@@ -84,16 +84,17 @@ if __name__ == "__main__":
     campaign_dir = os.path.join(script_dir, "..", "campaign")
     # Define the destination directory for images relative to the script directory
     dest_img_dir = os.path.join(script_dir, "img")
+    # Define the trash directory relative to the script directory
+    trash_dir = os.path.join(script_dir, "trash")
+    # Define the input_files directory relative to the script directory
+    input_files_dir = os.path.join(script_dir, "input_files")
 
-    # Call the copy_images function to copy images from the campaign directory to the destination directory
-    copy_images(campaign_dir, dest_img_dir)    
+    # Call the copy_images function to copy images from the campaign and trash directory to the destination directory
+    copy_images(campaign_dir, dest_img_dir)
+    copy_images(trash_img_dir, dest_img_dir)
     
     # Call the delete_html_files function to delete HTML files from the specified directory
     delete_html_files(campaign_dir)
-
-    # Define source and destination directories
-    trash_dir = os.path.join(script_dir, "trash")
-    input_files_dir = os.path.join(script_dir, "input_files")
     
     # Call move_input_files function to move input files
     move_input_files(trash_dir, input_files_dir)
