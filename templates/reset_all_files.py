@@ -21,8 +21,10 @@ def copy_images(source_dir, dest_dir):
                     # Construct the source and destination paths for the image file
                     source_path = os.path.join(img_folder, img_file)
                     dest_path = os.path.join(dest_dir, img_file)
-                    # Perform the copy operation (commented out for safety)
+                    # Perform the copy operation (commented out for safety/testing)
                     # shutil.copy(source_path, dest_path)
+                    # Delete the source image file (commented out for safety/testing)
+                    # os.remove(source_path)
                     # Print the copy operation for debugging
                     print(f"Copied: {source_path} -> {dest_path}")
 
