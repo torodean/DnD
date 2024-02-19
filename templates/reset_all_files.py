@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
     # Call the copy_images function to copy images from the campaign and trash directory to the destination directory
     copy_images(campaign_dir, dest_img_dir)
-    copy_images(trash_img_dir, dest_img_dir)
+    copy_images(trash_dir, dest_img_dir)
     
     # Call the delete_html_files function to delete HTML files from the specified directory
     delete_html_files(campaign_dir)
