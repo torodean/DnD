@@ -522,7 +522,7 @@ class MMORPDND:
                 for file_name in os.listdir(dir_path):
                     file_path = os.path.join(dir_path, file_name)
                     if file_name.endswith(".html") or is_image_file(file_name) or os.path.isdir(
-                            file_path) or file_name.endswith(".mp3"):
+                            file_path) or file_name.endswith(".mp3") or file_name.endswith(".txt"):
                         files_in_dir.append(file_name)
 
                 # Create index links div section if it does not exist
