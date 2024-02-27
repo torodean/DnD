@@ -3,7 +3,7 @@ name: Build LaTeX Documents
 on:
   push:
     branches:
-      - main  # Default Branch
+      - automated-updates  # Default Branch
     paths:
       - 'docs/**'
 
