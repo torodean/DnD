@@ -8,13 +8,6 @@ from cssbeautifier import beautify
 from bs4 import BeautifulSoup
 import argparse
 
-parser = argparse.ArgumentParser(description='MMORPDND Tools and apps.')
-parser.add_argument('-t', '--test', action='store_true', help='Runs the test-all feature then exit.')
-parser.add_argument('-u', '--update', action='store_true', help='Runs the update-all feature then exit.')
-
-args = parser.parse_args()
-
-
 class MMORPDND_VARS:
     """
     This is a class for storing variables used by MMORPDND* classes.
@@ -153,7 +146,7 @@ def is_image_file(file_name):
     """
     image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
     for ext in image_extensions:
-        if file_name.endswith(ext):
+        if file_name.lower().endswith(ext):
             return True
     return False
 
@@ -381,7 +374,7 @@ class MMORPDND:
             # Create the index.html file and write the HTML content to it
             directory_name = os.path.basename(root)
             with open(index_file_path, 'w') as f:
-                f.write(f"<html>\n<head>\n<title>Index of {directory_name}/{directory_name}</title>\n</head>\n<body>\n")
+                f.write(f"<html>\n<head>\n<title>Index of {directory_name}</title>\n</head>\n<body>\n")
                 f.write(f"<h1>Index of {root}</h1>\n</body>\n</html>\n")
             print(f"Created index file at {index_file_path}")
 
@@ -1082,4 +1075,11 @@ def main():
 
 
 if __name__ == '__main__':
+    # Move the args here so they are not ran when importing this script as a package/module for testing.
+    parser = argparse.ArgumentParser(description='MMORPDND Tools and apps.')
+    parser.add_argument('-t', '--test', action='store_true', help='Runs the test-all feature then exit.')
+    parser.add_argument('-u', '--update', action='store_true', help='Runs the update-all feature then exit.')
+
+    args = parser.parse_args()
+    
     main()
