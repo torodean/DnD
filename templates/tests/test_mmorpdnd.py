@@ -416,7 +416,7 @@ def test_find_all_html_files_multiple_html_files(mmorpdnd_instance, tmp_path):
     # Add some sorting since they could be read in a different order.
     sorted_list1 = sorted(mmorpdnd_instance.find_all_html_files(tmp_path), key=lambda x: x['name_no_ext'])
     sorted_list2 = sorted(expected_result, key=lambda x: x['name_no_ext'])
-    assert mmorpdnd_instance.find_all_html_files(tmp_path) == expected_result
+    assert sorted_list1 == sorted_list2
     
     
 def test_find_all_html_files_multiple_html_files_and_directories(mmorpdnd_instance, tmp_path):
