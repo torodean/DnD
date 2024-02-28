@@ -412,6 +412,10 @@ def test_find_all_html_files_multiple_html_files(mmorpdnd_instance, tmp_path):
         {'name_no_ext': 'file2', 'name_with_ext': 'file2.html', 'full_path': str(tmp_path / "file2.html")},
         {'name_no_ext': 'file3', 'name_with_ext': 'file3.html', 'full_path': str(tmp_path / "file3.html")}
     ]
+    
+    # Add some sorting since they could be read in a different order.
+    sorted_list1 = sorted(mmorpdnd_instance.find_all_html_files(tmp_path), key=lambda x: x['name_no_ext'])
+    sorted_list2 = sorted(expected_result, key=lambda x: x['name_no_ext'])
     assert mmorpdnd_instance.find_all_html_files(tmp_path) == expected_result
     
     
@@ -432,6 +436,8 @@ def test_find_all_html_files_multiple_html_files_and_directories(mmorpdnd_instan
         {'name_no_ext': 'file3', 'name_with_ext': 'file3.html', 'full_path': str(tmp_path / "file3.html")},
         {'name_no_ext': 'file4', 'name_with_ext': 'file4.html', 'full_path': str(tmp_path / "dir" / "file4.html")}
     ]
+    
+    # Add some sorting since they could be read in a different order.
     sorted_list1 = sorted(mmorpdnd_instance.find_all_html_files(tmp_path), key=lambda x: x['name_no_ext'])
     sorted_list2 = sorted(expected_result, key=lambda x: x['name_no_ext'])
     assert sorted_list1 == sorted_list2
