@@ -388,3 +388,241 @@ def test_move_file_to_directory_directory_not_exist(tmp_path):
     # Check the contents of the moved file
     with open(moved_file_path, 'r') as moved_file:
         assert moved_file.read() == "Test content"
+
+
+def test_generate_prob_matrix():
+    """
+    Test case to verify the generation of a probability matrix based on a list of words.
+    """
+    # Input list of words
+    words = ["cat", "dog", "cut", "cog", "cot", "caught"]
+
+    # Expected probability matrix
+    expected_prob_matrix = {
+        'c': {'a': 0.4, 'u': 0.2, 'o': 0.4},
+        'a': {'t': 0.5, 'u': 0.5},
+        't': {},
+        'd': {'o': 1.0},
+        'o': {'g': 0.6666666666666666, 't': 0.3333333333333333},
+        'g': {'h': 1.0},
+        'u': {'t': 0.5, 'g': 0.5},
+        'h': {'t': 1.0}
+    }
+
+    # Generate the probability matrix
+    prob_matrix = generate_prob_matrix(words)
+
+    # Check if the generated probability matrix matches the expected one
+    assert prob_matrix == expected_prob_matrix
+    
+    # Alternate input list of words
+    words = ["cat", "dog", "cut", "cog", "cot", "caught", "fish"]
+
+    # Expected probability matrix
+    expected_prob_matrix = {
+        'c': {'a': 0.4, 'u': 0.2, 'o': 0.4},
+        'a': {'t': 0.5, 'u': 0.5},
+        't': {},
+        'd': {'o': 1.0},
+        'o': {'g': 0.6666666666666666, 't': 0.3333333333333333},
+        'g': {'h': 1.0},
+        'u': {'t': 0.5, 'g': 0.5},
+        'h': {'t': 1.0},
+        'f': {'i': 1.0},
+        'i': {'s': 1.0},
+        's': {'h': 1.0}
+    }
+
+    # Generate the probability matrix
+    prob_matrix = generate_prob_matrix(words)
+
+    # Check if the generated probability matrix matches the expected one
+    assert prob_matrix == expected_prob_matrix
+
+
+def test_split_list_equal_size():
+    """
+    Test case to verify splitting a list into n sublists of approximately equal size.
+    """
+    # Input list
+    my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    # Number of sublists
+    n = 3
+
+    # Expected sublists
+    expected_sublists = [[1, 2, 3, 4], [5, 6, 7], [8, 9, 10]]
+
+    # Split the list into sublists
+    sublists = split_list(my_list, n)
+
+    # Check if the generated sublists match the expected ones
+    assert sublists == expected_sublists
+
+
+def test_split_list_unequal_size():
+    """
+    Test case to verify splitting a list into n sublists when the size of the list is not divisible by n.
+    """
+    # Input list
+    my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+    # Number of sublists
+    n = 4
+
+    # Expected sublists
+    expected_sublists = [[1, 2, 3], [4, 5], [6, 7], [8, 9]]
+
+    # Split the list into sublists
+    sublists = split_list(my_list, n)
+
+    # Check if the generated sublists match the expected ones
+    assert sublists == expected_sublists
+
+
+def test_split_list_single_element_list():
+    """
+    Test case to verify splitting a single-element list into multiple sublists.
+    """
+    # Input list
+    my_list = [42]
+
+    # Number of sublists
+    n = 3
+
+    # Expected sublists
+    expected_sublists = [[42], [], []]
+
+    # Split the list into sublists
+    sublists = split_list(my_list, n)
+
+    # Check if the generated sublists match the expected ones
+    assert sublists == expected_sublists
+
+
+def test_separate_header_and_info_normal_case():
+    """
+    Test case to verify behavior with a string in the format "*header* Information".
+    """
+    input_string = "*header* Information"
+    expected_result = ("header", "Information")
+    assert separate_header_and_info(input_string) == expected_result
+
+
+def test_separate_header_and_info_whitespace():
+    """
+    Test case to verify behavior when there is whitespace around the header and information.
+    """
+    input_string = "  *header*   Information   "
+    expected_result = ("header", "Information")
+    assert separate_header_and_info(input_string) == expected_result
+
+
+def test_separate_header_and_info_multiple_headers():
+    """
+    Test case to verify behavior when there are multiple headers in the string.
+    """
+    input_string = "*header1* Info1 *header2* Info2"
+    with pytest.raises(ValueError):
+        separate_header_and_info(input_string)
+
+
+def test_separate_header_and_info_empty_info():
+    """
+    Test case to verify behavior when there is no information after the header.
+    """
+    input_string = "*header*"
+    expected_result = ("header", "")
+    assert separate_header_and_info(input_string) == expected_result
+
+
+def test_add_number_to_filename():
+    """
+    Test case to verify adding a number to the filename.
+    """
+    assert add_number_to_filename("document.txt", 3) == "document (3).txt"
+
+
+def test_add_number_to_filename_zero():
+    """
+    Test case to verify adding zero to the filename.
+    """
+    assert add_number_to_filename("file.txt", 0) == "file (0).txt"
+
+
+def test_add_number_to_filename_negative_number():
+    """
+    Test case to verify behavior when a negative number is added to the filename.
+    """
+    with pytest.raises(ValueError):
+        add_number_to_filename("example.docx", -2)
+
+
+def test_add_number_to_filename_no_extension():
+    """
+    Test case to verify behavior when the filename has no extension.
+    """
+    assert add_number_to_filename("data", 4) == "data (4)"
+
+
+def test_add_number_to_filename_empty_filename():
+    """
+    Test case to verify behavior when an empty filename is provided.
+    """
+    with pytest.raises(ValueError):
+        add_number_to_filename("", 1)
+
+
+def test_is_image_file_with_image_extensions():
+    """
+    Test if the function correctly identifies file names with image extensions.
+    """
+    assert is_image_file('photo.jpg') == True
+    assert is_image_file('image.jpeg') == True
+    assert is_image_file('picture.png') == True
+    assert is_image_file('logo.gif') == True
+    assert is_image_file('pic.bmp') == True
+
+
+def test_is_image_file_without_image_extensions():
+    """
+    Test if the function correctly identifies file names without image extensions.
+    """
+    assert is_image_file('document.pdf') == False
+    assert is_image_file('presentation.pptx') == False
+    assert is_image_file('spreadsheet.xlsx') == False
+    assert is_image_file('text.txt') == False
+
+
+def test_is_image_file_with_mixed_case_extensions():
+    """
+    Test if the function correctly handles file names with mixed case extensions.
+    """
+    assert is_image_file('photo.JPG') == True
+    assert is_image_file('image.PnG') == True
+    assert is_image_file('picture.GIF') == True
+    
+
+def test_is_image_file_with_edge_cases():
+    """
+    Test if the function correctly handles edge cases and boundary conditions.
+    """
+    #assert is_image_file('.jpg') == False   # File name consists only of the extension
+    assert is_image_file('image') == False  # File name has no extension
+    assert is_image_file('') == False       # Empty file name
+
+
+@pytest.mark.parametrize("input_string, expected_output", [
+    ("'6 (barbarian 3, rogue 3)'", 6),
+    ("'12 dwarfs and 3 elves'", 12),
+    ("'No numbers here!'", None),
+    ("'Only one number: 42'", 42),
+    ("'Negative number: -10'", -10),
+    ("'Integers: 1 2 3'", 1),
+    ("'999'", 999),
+])
+def test_extract_first_integer(input_string, expected_output):
+    """
+    Test case to verify the behavior of extract_first_integer function.
+    """
+    assert extract_first_integer(input_string) == expected_output
