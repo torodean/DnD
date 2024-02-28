@@ -4,8 +4,6 @@ import re
 import shutil
 import random
 import json
-import requests
-from bs4 import BeautifulSoup
 
 # Used for program arguments.
 import argparse
@@ -2208,6 +2206,9 @@ class Creator:
 
 
 if __name__ == '__main__':
+    import requests
+    from bs4 import BeautifulSoup
+    
     parser = argparse.ArgumentParser(description='MMORPDND Creator Tool.')
     parser.add_argument('-f', '--file', action='store', help='Run the creator for a single input file and update all files.')
 
