@@ -9,22 +9,25 @@ def copy_images(source_dir, dest_dir):
         source_dir (str): The path to the source directory.
         dest_dir (str): The path to the destination directory.
     """
+    print(f"Running copy_images({source_dir}, {dest_dir})")
     # Traverse through the directory tree rooted at source_dir
     for root, _, files in os.walk(source_dir):
-        # Check if the current directory contains an 'img' folder
-        img_folder = os.path.join(root, "img")
-        if os.path.exists(img_folder) and os.path.isdir(img_folder):
+        # Check if the current directory is the 'img' folder
+        if os.path.basename(root) == 'img':
+            print(f"Detected image directory: {root}")
             # Iterate over the files in the 'img' folder
             for img_file in files:
+                print(f"File found: {img_file}")
                 # Check if the file is an image (png, jpg, jpeg, gif)
                 if img_file.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
+                    print(f"Image file detected: {img_file}")
                     # Construct the source and destination paths for the image file
-                    source_path = os.path.join(img_folder, img_file)
+                    source_path = os.path.join(root, img_file)
                     dest_path = os.path.join(dest_dir, img_file)
-                    # Perform the copy operation (commented out for safety/testing)
-                    # shutil.copy(source_path, dest_path)
-                    # Delete the source image file (commented out for safety/testing)
-                    # os.remove(source_path)
+                    print(f"Source path of image: {source_path}")
+                    print(f"Destination path of image: {dest_path}")
+                    # Perform the copy operation
+                    shutil.copy(source_path, dest_path)
                     # Print the copy operation for debugging
                     print(f"Copied: {source_path} -> {dest_path}")
 
@@ -36,14 +39,17 @@ def delete_html_files(directory):
     Args:
         directory (str): The path to the directory.
     """
+    print(f"Running delete_html_files({directory})")
     # Traverse through the directory tree rooted at directory
     for root, _, files in os.walk(directory):
         # Iterate over the files in the directory
-        for file in files:
+        print(f"Detected directory: {root}")
+        for html_file in files:
             # Check if the file is an HTML file
-            if file.lower().endswith(".html"):
+            if html_file.lower().endswith(".html"):
                 # Construct the path to the HTML file
-                file_path = os.path.join(root, file)
+                file_path = os.path.join(root, html_file)
+                print(f"HTML file detected: {file_path}")
                 # Delete the HTML file
                 os.remove(file_path)
                 # Print the deletion operation for debugging
@@ -58,16 +64,20 @@ def move_input_files(source_dir, dest_dir):
         source_dir (str): The path to the source directory.
         dest_dir (str): The path to the destination directory.
     """
+    print(f"Running move_input_files({source_dir}, {dest_dir})")
     # Ensure destination directory exists
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
 
     # Traverse through the directory tree rooted at source_dir
     for root, _, files in os.walk(source_dir):
+        print(f"Detected directory: {root}")
         # Iterate over files in the current directory
         for file in files:
+            print(f"File found: {file}")
             # Check if the file ends with ".input" or ".char"
             if file.lower().endswith((".input", ".char")):
+                print(f".input or .char file detected: {file}")
                 # Construct source and destination paths
                 source_path = os.path.join(root, file)
                 dest_path = os.path.join(dest_dir, file)
