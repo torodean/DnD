@@ -3,7 +3,7 @@ name: Running Automated Tests
 on:
   push:
     branches:
-      - main
+      - tests
   pull_request:
     branches:
       - main
