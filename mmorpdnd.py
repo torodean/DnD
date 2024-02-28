@@ -2,10 +2,6 @@
 import os
 import re
 import random
-import tkinter as tk
-from tkinter import PhotoImage
-from cssbeautifier import beautify
-from bs4 import BeautifulSoup
 import argparse
 
 class MMORPDND_VARS:
@@ -1075,6 +1071,11 @@ def main():
 
 
 if __name__ == '__main__':
+    import tkinter as tk
+    from tkinter import PhotoImage
+    from cssbeautifier import beautify
+    from bs4 import BeautifulSoup
+    
     # Move the args here so they are not ran when importing this script as a package/module for testing.
     parser = argparse.ArgumentParser(description='MMORPDND Tools and apps.')
     parser.add_argument('-t', '--test', action='store_true', help='Runs the test-all feature then exit.')
