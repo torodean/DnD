@@ -3,10 +3,10 @@ name: Running Automated Tests
 on:
   push:
     branches:
-      - main  # Adjust this to match your main branch name
+      - main
   pull_request:
     branches:
-      - main  # Adjust this to match your main branch name
+      - main
 
 jobs:
   run_tests:
