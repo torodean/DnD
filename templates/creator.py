@@ -7,28 +7,11 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
+# Used for program arguments.
 import argparse
-
-parser = argparse.ArgumentParser(description='MMORPDND Creator Tool.')
-parser.add_argument('-f', '--file', action='store', help='Run the creator for a single input file and update all files.')
-
-args = parser.parse_args()
 
 # Sets terminal mode.
 terminal_mode = False
-if args.file != None:
-    terminal_mode = True
-
-if not terminal_mode:
-    import tkinter as tk
-    from tkinter import filedialog
-    from tkinter import PhotoImage
-    # Used for music
-    from pytube import YouTube
-    from moviepy.editor import *
-
-    # Used for progress bars
-    from tqdm import tqdm
 
 
 def output_text(text, option = "text"):
@@ -122,7 +105,7 @@ def find_longest_and_shortest(words):
         words (list): A list of words.
 
     Returns:
-        tuple: A tuple containing the lengths of the longest and shortest words.
+        tuple: A tuple containing the lengths of the shortest and longest words respectively.
 
     Raises:
         ValueError: If the input list is empty.
@@ -135,6 +118,9 @@ def find_longest_and_shortest(words):
         Longest word length: 5
         Shortest word length: 3
     """
+    if len(words) == 0:
+        raise ValueError("Input list cannot be empty.")
+        
     longest_word_length = len(max(words, key=len))
     shortest_word_length = len(min(words, key=len))
     return shortest_word_length, longest_word_length
@@ -184,12 +170,17 @@ def read_lines_from_file(file_name):
         FileNotFoundError: If the specified file does not exist.
         PermissionError: If the specified file cannot be opened due to insufficient permissions.
     """
-    lines = []
-    with open(file_name, 'r') as f:
-        for line in f:
-            line = line.strip()
-            lines.append(line)
-    return lines
+    try:
+        lines = []
+        with open(file_name, 'r') as f:
+            for line in f:
+                line = line.strip()
+                lines.append(line)
+        return lines
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File not found: {file_name}")
+    except PermissionError:
+        raise PermissionError(f"Insufficient permissions to open file: {file_name}")
 
 
 def calculate_hp(class_type: str, level: int, constitution: int) -> int:
@@ -198,7 +189,7 @@ def calculate_hp(class_type: str, level: int, constitution: int) -> int:
     based on their class, level, and constitution modifier.
 
     Args:
-        class_type (str): The character's class (e.g. 'fighter', 'wizard', 'rogue').
+        class_type (str): The character's class (e.g. 'fighter', 'wizard', 'rogue', etc.).
         level (int): The character's level, between 1 and 20.
         constitution (int): The character's constitution score, between 1 and 30.
 
@@ -220,13 +211,15 @@ def calculate_hp(class_type: str, level: int, constitution: int) -> int:
         hit_die = 8
     elif class_type == 'sorcerer' or class_type == 'wizard':
         hit_die = 6
+    else:
+        raise ValueError(f"Invalid or unsupported class type of {class_type}.")
 
     # Calculate base hit points
     base_hp = hit_die + (constitution - 10) // 2
 
     additional_hp = 0
     # Calculate additional hit points based on level
-    for i in range(2, level):
+    for i in range(1, level):
         additional_hp += random.randint(1, hit_die) + ((constitution - 10) // 2)
 
     # Calculate total hit points
@@ -257,7 +250,7 @@ def calculate_proficiency_bonus(level):
         return 6
 
 
-def roll_4d6_drop_lowest():
+def roll_4d6_drop_lowest(print_operation=True):
     """
     Rolls 4d6 and returns the sum of the highest 3 dice.
     Returns:
@@ -265,7 +258,8 @@ def roll_4d6_drop_lowest():
     """
     rolls = [random.randint(1, 6) for _ in range(4)]
     total = sum(sorted(rolls)[1:])
-    output_text("Rolling 4d6: {0} - Dropping lowest -> {1}".format(rolls, total), "note")
+    if print_operation:
+        output_text("Rolling 4d6: {0} - Dropping lowest -> {1}".format(rolls, total), "note")
     return total
 
 
@@ -419,7 +413,7 @@ def copy_file_to_directory(file_path, directory_path):
         directory_path (str): The path to the directory to copy the file to.
 
     Raises:
-        ValueError: If the file or directory doesn't exist.
+        ValueError: If the file doesn't exist.
 
     Returns:
         None
@@ -451,7 +445,7 @@ def move_file_to_directory(file_path, directory_path):
         directory_path (str): The path to the directory to move the file to.
 
     Raises:
-        ValueError: If the file or directory doesn't exist.
+        ValueError: If the file doesn't exist.
 
     Returns:
         None
@@ -461,9 +455,7 @@ def move_file_to_directory(file_path, directory_path):
         raise ValueError("File does not exist")
 
     # Check if the directory exists
-    if not os.path.isdir(directory_path):
-        output_text(f"Directory {directory_path} does not exist. Creating directory...", "note")
-        os.makedirs(directory_path)
+    ensure_directory_exists(directory_path)
 
     new_file = os.path.join(directory_path, os.path.basename(file_path))
     if not os.path.isfile(new_file):
@@ -618,26 +610,6 @@ def generate_word(prob_matrix, min_length=4, max_length=10):
     return word
 
 
-def move_file(source_file_path, destination_folder_path):
-    """
-    Move a file from the source path to the destination folder.
-
-    Args:
-        source_file_path (str): The path to the file to be moved.
-        destination_folder_path (str): The path to the destination folder.
-
-    Returns:
-        None
-    """
-
-    # Create the destination folder if it doesn't exist
-    if not os.path.exists(destination_folder_path):
-        os.makedirs(destination_folder_path)
-
-    # Use shutil.move() to move the file to the destination folder
-    shutil.move(source_file_path, destination_folder_path)
-
-
 class Variables:
     """
     A class to store app wide variables.
@@ -676,7 +648,7 @@ class Variables:
         else:
             destination = self.trash_dir
 
-        move_file(file, destination)
+        move_file_to_directory(file, destination)
 
     def reset(self):
         """
@@ -2221,6 +2193,25 @@ class Creator:
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='MMORPDND Creator Tool.')
+    parser.add_argument('-f', '--file', action='store', help='Run the creator for a single input file and update all files.')
+
+    args = parser.parse_args()
+    
+    if args.file != None:
+        terminal_mode = True
+
+    if not terminal_mode:
+        import tkinter as tk
+        from tkinter import filedialog
+        from tkinter import PhotoImage
+        # Used for music
+        from pytube import YouTube
+        from moviepy.editor import *
+
+        # Used for progress bars
+        from tqdm import tqdm
+    
     app = Creator()
     
     if args.file == None:
