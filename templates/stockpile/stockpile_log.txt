@@ -460,3 +460,67 @@ Running the stockpile plot generation!
 Updating the stockpile HTML pages!
 /home/d0sag3/git/DnD/templates/stockpile/stockpile-cron.sh: ./creator.py: /bin/python3: bad interpreter: No such file or directory
 Updating the git repo with the new files!
+[main 007ff13] Automatic stockpile update.
+ 1 file changed, 64 insertions(+)
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+Updating the MMORPDND git database with the new files!
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+Unable to fetch in submodule path 'database'
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+On branch main
+Your branch is up-to-date with 'origin/main'.
+Changes not staged for commit:
+	modified:   database (modified content)
+
+no changes added to commit
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+On branch main
+Your branch is up-to-date with 'origin/main'.
+Changes not staged for commit:
+	modified:   database (modified content)
+
+no changes added to commit
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+Updating git repo and files to latest!
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+Running the stockpile update!
+/home/d0sag3/git/DnD/templates/stockpile/stockpile-cron.sh: ./stockpile.py: /bin/python3: bad interpreter: No such file or directory
+Running the stockpile plot generation!
+/home/d0sag3/git/DnD/templates/stockpile/stockpile-cron.sh: ./stockpile_plot.py: /bin/python3: bad interpreter: No such file or directory
+Updating the stockpile HTML pages!
+/home/d0sag3/git/DnD/templates/stockpile/stockpile-cron.sh: ./creator.py: /bin/python3: bad interpreter: No such file or directory
+Updating the git repo with the new files!
