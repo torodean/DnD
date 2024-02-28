@@ -820,12 +820,19 @@ def separate_header_and_info(string):
         string (str): The input string in the specified format.
 
     Returns:
-        tuple: A tuple containing the title value and the information.
+        tuple: A tuple containing the title value and the information.    
+        
+    Raises:
+        ValueError: If the string format is invalid (not exactly two asterisks).
+
 
     Example:
         >>> separate_title_and_info("*header* Information here")
         ('header', 'Information here')
     """
+    if string.count("*") != 2:
+        raise ValueError("Invalid string format: string should contain exactly two asterisks")
+
     start_index = string.find("*") + 1  # Find the index of the first "*"
     end_index = string.rfind("*")  # Find the index of the last "*"
 
@@ -1000,11 +1007,19 @@ def add_number_to_filename(filename, number):
     Returns:
         str: The updated file name with a number added before the extension.
 
+    Raises:
+        ValueError: If the filename is empty or if a negative number is provided.
+
     Example Usage:
-        >>> new_filename = add_number_to_filename("document.txt")
-        >>> print(new_filename, 3)
+        >>> new_filename = add_number_to_filename("document.txt", 3)
+        >>> print(new_filename)
         document (3).txt
     """
+    if not filename:
+        raise ValueError("Filename cannot be empty")
+    if number < 0:
+        raise ValueError("Number cannot be negative")
+
     base_name, extension = os.path.splitext(filename)
     new_filename = f"{base_name} ({number}){extension}"
 
@@ -1029,7 +1044,7 @@ def is_image_file(file_name):
     """
     image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
     for ext in image_extensions:
-        if file_name.endswith(ext):
+        if file_name.lower().endswith(ext):
             return True
     return False
 
@@ -1196,7 +1211,7 @@ def extract_first_integer(string):
         >>> print(first_integer)
         6
     """
-    match = re.search(r'\d+', string)
+    match = re.search(r'-?\d+', string)
     if match:
         return int(match.group())
     else:
