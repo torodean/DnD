@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install bs4
-        pip install tkinter
+        pip install python3-tk
         pip install cssbeautifier
         # Install pytest
         pip install pytest
