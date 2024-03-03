@@ -29,7 +29,7 @@ sleep 1
 echo "Updating the git repo with the new files!"
 git add -A
 git commit -m "Automatic stockpile update."
-git push origin main
+git push origin automated-updates
 sleep 1
 
 # Update the public MMORPDND database to reflect changes.
@@ -39,4 +39,4 @@ git pull
 ./updateSubmodules.sh
 git add -A
 git commit -m "Automatic database update for stockpile updates"
-git push origin main
+git push origin automated-updates
