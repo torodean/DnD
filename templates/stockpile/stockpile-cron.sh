@@ -40,4 +40,4 @@ git pull
 ./updateSubmodules.sh
 git add -A
 git commit -m "Automatic database update for stockpile updates"
-git push origin automated-updates
+git push
