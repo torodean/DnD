@@ -7,30 +7,30 @@ stockpile_dir=${script_dir}/../../campaign/notes/stockpile
 echo "Updating git repo and files to latest!"
 cd ~/git/DnD/templates/stockpile
 git pull
-sleep 5
+sleep 1
 
 # Run the stockpile updates.
 echo "Running the stockpile update!"
 ./stockpile.py -g ${script_dir}/stockpile_master_general.txt -t ${script_dir}/stockpile_master_trade.txt -o ${script_dir}/stockpile_inventory_lists.input -b ${script_dir}/stockpile_buy_history.txt -s ${script_dir}/stockpile_sell_history.txt
-sleep 5
+sleep 1
 
 # Update the plots.
 echo "Running the stockpile plot generation!"
 ./stockpile_plot.py -b ${script_dir}/stockpile_buy_history.txt -s ${script_dir}/stockpile_sell_history.txt -o ${stockpile_dir}/plots
-sleep 5
+sleep 1
 
 # Update the HTML page.
 echo "Updating the stockpile HTML pages!"
 cd ..
 ./creator.py -f ${script_dir}/stockpile_inventory_lists.input
-sleep 5
+sleep 1
 
 # Add the new updated files to the git repo.
 echo "Updating the git repo with the new files!"
 git add -A
 git commit -m "Automatic stockpile update."
 git push origin main
-sleep 5
+sleep 1
 
 # Update the public MMORPDND database to reflect changes.
 echo "Updating the MMORPDND git database with the new files!"

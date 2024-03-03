@@ -3,7 +3,7 @@ name: Run Script
 on:
   push:
     branches:
-      - main  # Default branch
+      - automated-updates  # Default branch
     paths:
     - 'templates/img/**'
     - 'campaign/characters/**'
