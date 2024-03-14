@@ -1,5 +1,6 @@
 #!/bin/python3
 import os
+import sys
 import re
 import shutil
 import json
@@ -7,17 +8,70 @@ import requests
 import argparse
 import random
 import numpy as np
+
+# Used for gathering time and date data.
+from datetime import datetime
+
+# Used for plotting.
 import matplotlib.pyplot as plt
+
+# Used for outputting data in a pretty format.
 from prettytable import PrettyTable
+
+
+def set_log_file_name():
+    """
+    Returns the log file name. If it has not yet been set, creates the log filename that contains the date and then returns it.
+    
+    The desired behavior is that one log_file is used per run of the application. To account for day changes while the program is running, log_file must be created at application runtime.
+    """
+    
+    global log_file
+    
+    # Get the script name with full path
+    script_path = os.path.abspath(sys.argv[0])
+    script_name = os.path.basename(script_path)
+    
+    # Check if the log file already has been set.
+    if log_file == "":
+        today = datetime.today().strftime("%Y%m%d")
+        log_file = f"{script_name}_log_{today}"
+        
+    return log_file
+
+
+# The log file to be used throughout the file.
+log_file = ""
+set_log_file_name()
+
+
+def log_text(text, include_time_stamp=True):
+    """
+    This will output text to the logfile with an optional time stamp.
+    Args:        
+        text (str): The text to be logged.
+        timestamp (bool): Option to include timestamp in logging.
+
+    
+    """
+    # Set's the appropriate timestamp value to use.
+    if timestamp:
+        timestamp_text = datetime.now().strftime("[%Y-%m-%d %H %M %S]")
+    else:
+        timestamp_text = ""
+
+    # Logs the output.
+    with open(log_file, 'a') as log:            
+        log.write(f"{timestamp_text} {text}\n")
 
 
 def output_text(text, option="text"):
     """
-    Print text in different colors based on the provided option.`
+    Print text in different colors based on the provided option. This will also log the output text (including a time stamp).
 
     Args:
-        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
         text (str): The text to be printed.
+        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", "program", "command", and "success".
 
     Returns:
         None
@@ -25,20 +79,24 @@ def output_text(text, option="text"):
     Note:
         This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
     """
+    # Define the color codes.
     color_codes = {
         "text": "\033[0m",      # Reset color
         "warning": "\033[93m",  # Yellow
         "error": "\033[91m",    # Red
         "note": "\033[94m",     # Blue
-        "success": "\033[92m"   # Green
+        "success": "\033[92m",  # Green
+        "program": "\033[35m",  # Magenta
+        "command": "\033[36m"   # Cyan
     }
-
     if option in color_codes:
         color_code = color_codes[option]
         reset_code = color_codes["text"]
         print(f"{color_code}{text}{reset_code}")
     else:
         print(text)
+        
+    log_text(text)
 
 
 class Config:
