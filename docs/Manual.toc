@@ -18,7 +18,7 @@
 \contentsline {section}{\numberline {3.3}Gameplay Features}{7}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}O.R.B.I.T System}{7}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}E.N.G.A.G.E. System}{8}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}P.R.O.F.I.T System}{8}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.3}P.R.O.F.I.T System}{9}{subsection.3.3.3}%
 \contentsline {subsection}{\numberline {3.3.4}S.T.O.C.K.P.I.L.E System}{9}{subsection.3.3.4}%
 \contentsline {chapter}{\numberline {4}Tools And Scripts}{10}{chapter.4}%
 \contentsline {section}{\numberline {4.1}mmorpdnd.py}{10}{section.4.1}%
@@ -50,6 +50,6 @@
 \contentsline {section}{\numberline {4.6}templates/img/fix\_image\_extensions.py}{19}{section.4.6}%
 \contentsline {section}{\numberline {4.7}templates/languages/translator.py}{19}{section.4.7}%
 \contentsline {section}{\numberline {4.8}templates/reset\_all\_files.py}{20}{section.4.8}%
-\contentsline {chapter}{Programming Methods and Variables}{21}{chapter*.2}%
-\contentsline {section}{\numberline {4.9}MMORPPDND Programming Methods and Variables}{21}{section.4.9}%
-\contentsline {section}{\numberline {4.10}Creator Programming Methods and Variables}{30}{section.4.10}%
+\contentsline {section}{\numberline {4.9}templates/stockpile/}{20}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}stockpile.py}{20}{subsection.4.9.1}%
+\contentsline {subsection}{\numberline {4.9.2}stockpile\_plot.py}{20}{subsection.4.9.2}%

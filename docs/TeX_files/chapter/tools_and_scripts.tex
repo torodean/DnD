@@ -502,9 +502,9 @@ usage: remove_duplicates.py [-h] [-f FILE] [-a]
 Remove duplicate lines from files
 
 optional arguments:
--h, --help            show this help message and exit
--f FILE, --file FILE  Path to the file
--a, --all             Run against all files in the current folder
+	-h, --help            show this help message and exit
+	-f FILE, --file FILE  Path to the file
+	-a, --all             Run against all files in the current folder
 \end{lstlisting}
 
 
@@ -575,6 +575,65 @@ This tool is still in development and not yet functioning.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+\section{templates/stockpile/}
+
+This directory contains the various elements of the Stockpile system (see \ref{S.T.O.C.K.P.I.L.E}).
+
+\subsection{stockpile.py}
+
+The stockpile.py script is the main application controlling the Stockpiles.
+
+TODO - finish section.
+
+\begin{lstlisting}
+usage: stockpile.py [-h] [-c CONFIG] -g GENERAL -t TRADE [-b BUY] [-s SELL] -o OUTPUT [-i]
+
+S.T.O.C.K.P.I.L.E System Interface and Database Updater.
+
+optional arguments:
+	-h, --help            show this help message and exit
+	-c CONFIG, --config CONFIG
+	                    The config file containing key-value pairs representing configuration parameters, each line formatted as 'variable=value.'
+	-g GENERAL, --general GENERAL
+	                    The file containing general store items.
+	-t TRADE, --trade TRADE
+	                    The file containing random and trade items.
+	-b BUY, --buy BUY     The file containing the buy price history of the various items. Including this option will update this.
+	-s SELL, --sell SELL  The file containing the sell price history of the various items. Including this option will update this.
+	-o OUTPUT, --output OUTPUT
+	                    The output file to compare to and update. This should be a .input file with the lists formatted in the dnd-table format (see documentation).
+	-i, --initial         Generates an initial .input file for processing.
+\end{lstlisting}
+
+
+\subsection{stockpile\_plot.py}
+
+TODO - finish section.
+
+\begin{lstlisting}
+usage: stockpile_plot.py [-h] -b BUY -s SELL [-i ITEM] [-o OUTPUT]
+
+S.T.O.C.K.P.I.L.E.S price history plotting.
+
+optional arguments:
+	-h, --help            show this help message and exit
+	-b BUY, --buy BUY     The file containing buy price history for the stockpile items.
+	-s SELL, --sell SELL  The file containing sell price history for the stockpile items.
+	-i ITEM, --item ITEM  The item to search for and plot. This will display the plot as well. If not specified, all plots will be generated.
+	-o OUTPUT, --output OUTPUT
+	                    The folder to output all plots to. This option will be ignored if '-i' is specified.
+\end{lstlisting}
 
 
 
