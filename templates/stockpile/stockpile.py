@@ -23,7 +23,8 @@ def set_log_file_name():
     """
     Returns the log file name. If it has not yet been set, creates the log filename that contains the date and then returns it.
     
-    The desired behavior is that one log_file is used per run of the application. To account for day changes while the program is running, log_file must be created at application runtime.
+    The desired behavior is that one log_file is used per run of the application. 
+    To account for day changes while the program is running, log_file must be created at application runtime.
     """    
     global log_file
     
@@ -50,9 +51,7 @@ def log_text(text, include_time_stamp=True):
     This will output text to the logfile with an optional time stamp.
     Args:        
         text (str): The text to be logged.
-        timestamp (bool): Option to include timestamp in logging.
-
-    
+        timestamp (bool): Option to include timestamp in logging.    
     """
     # Set's the appropriate timestamp value to use.
     if include_time_stamp:
@@ -73,14 +72,14 @@ def output_text(text:str, option:str=None , color:str=None , log=True):
         text (str): The text to be printed and logged.
         option (str): The color option for the text. Valid options are defined in the color mappings list (second element). Default = None.
         color (str): The color name for the text. Valid options are defined in the color mappings list (first element). Default = None.
-        log (bool): Determines whether to log the text or not. Default = True.
-        
+        log (bool): Determines whether to log the text or not. Default = True.        
 
     Returns:
         None
 
     Note:
-        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments. The color and option parameters should not both be used. If they are, the color will override the option parameter.
+        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments. 
+        The color and option parameters should not both be used. If they are, the color will override the option parameter.
     """
     # Defines the default behaviour.
     if color == None and option == None:
