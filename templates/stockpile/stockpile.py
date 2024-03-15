@@ -30,7 +30,8 @@ def set_log_file_name():
     
     # Get the script name with full path
     script_path = os.path.abspath(sys.argv[0])
-    script_name = os.path.basename(script_path)
+    # Get the script name without the extension.
+    script_name = os.path.basename(script_path).split('.py')[0]
     
     # Check if the log file already has been set.
     if log_file == "":
@@ -55,7 +56,7 @@ def log_text(text, include_time_stamp=True):
     
     """
     # Set's the appropriate timestamp value to use.
-    if timestamp:
+    if include_time_stamp:
         timestamp_text = datetime.now().strftime("[%Y-%m-%d %H %M %S]")
     else:
         timestamp_text = ""
