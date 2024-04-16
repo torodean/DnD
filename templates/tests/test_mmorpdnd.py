@@ -459,6 +459,9 @@ def test_find_all_html_files_with_index_html_file(mmorpdnd_instance, tmp_path):
         {'name_no_ext': 'file1', 'name_with_ext': 'file1.html', 'full_path': str(tmp_path / "file1.html")},
         {'name_no_ext': 'file2', 'name_with_ext': 'file2.html', 'full_path': str(tmp_path / "file2.html")}
     ]
-    assert mmorpdnd_instance.find_all_html_files(tmp_path) == expected_result
 
+    # Add some sorting since they could be read in a different order.
+    sorted_list1 = sorted(mmorpdnd_instance.find_all_html_files(tmp_path), key=lambda x: x['name_no_ext'])
+    sorted_list2 = sorted(expected_result, key=lambda x: x['name_no_ext'])
+    assert sorted_list1 == sorted_list2
 
