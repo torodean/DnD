@@ -1,233 +1,233 @@
-Abacus;1.53;1.6;1.46
-Acid (vial);21.53;19.23;20.98
-Alchemist’s fire (flask);38.47;47.92;47.14;42.99
-Antitoxin (vial);35.76;36.02;31.62
+Abacus;1.53;1.6;1.46;1.83
+Acid (vial);21.53;19.23;20.98;18.17
+Alchemist’s fire (flask);38.47;47.92;47.14;42.99;55.32
+Antitoxin (vial);35.76;36.02;31.62;36.03
 Arrows (20);0.6;0.54;0.54;0.58
-Backpack;1.36;1.59;1.32;1.34
-Backpack;1.61;1.59;1.32;1.34
-Bagpipes;21.65;22.58;23.01;26.2
-Ball bearings (bag of 1,000);0.57;0.61;0.67;0.56
-Barrel;1.87;1.62;1.77
-Basket;0.29;0.31;0.36;0.31
-Battleaxe;8.94;8.37;9.73;10.77
-Bedroll;0.72;0.84;0.7;0.68
-Bedroll;0.05;0.84;0.7;0.68
-Bell;0.7;0.69;0.81;0.69
-Blanket;0.37;0.36;0.38;0.33
-Block and tackle;0.46;0.57;0.6;0.53
-Blowgun;7.45;8.0;5.73;7.36
-Blowgun Needles (50);0.73;0.7;0.82;0.78
-Book;17.55;16.97;21.03;18.81
-Bottle, glass;1.53;1.35;1.29;1.24
+Backpack;1.36;1.59;1.32;1.34;1.36
+Backpack;1.61;1.59;1.32;1.34;1.36
+Bagpipes;21.65;22.58;23.01;26.2;21.79
+Ball bearings (bag of 1,000);0.57;0.61;0.67;0.56;0.66
+Barrel;1.87;1.62;1.77;1.71
+Basket;0.29;0.31;0.36;0.31;0.32
+Battleaxe;8.94;8.37;9.73;10.77;12.78
+Bedroll;0.72;0.84;0.7;0.68;0.79
+Bedroll;0.05;0.84;0.7;0.68;0.79
+Bell;0.7;0.69;0.81;0.69;0.63
+Blanket;0.37;0.36;0.38;0.33;0.32
+Block and tackle;0.46;0.57;0.6;0.53;0.43
+Blowgun;7.45;8.0;5.73;7.36;8.62
+Blowgun Needles (50);0.73;0.7;0.82;0.78;0.82
+Book;17.55;16.97;21.03;18.81;23.85
+Bottle, glass;1.53;1.35;1.29;1.24;1.08
 Brewer’s supplies;15.98;14.53;15.75;16.02
-Bucket;0.01;0.01;0.01
+Bucket;0.01;0.01;0.01;0.03
 Calligrapher's Supplies;7.36;7.65;7.24
-Caltrops (bag of 20);0.84;0.95;0.88;0.68
+Caltrops (bag of 20);0.84;0.95;0.88;0.68;0.79
 Candle;0.01;0.01;0.01;0.01
-Carpenter’s tools;6.68;6.23;6.42;6.27
+Carpenter’s tools;6.68;6.23;6.42;6.27;4.66
 Cartographer’s tools;12.98;13.64;11.83;10.9
 Case, crossbow bolt;0.79;0.72;0.86
-Case, map or scroll;0.64;0.57;0.74
+Case, map or scroll;0.64;0.57;0.74;0.72
 Chain (10 feet);2.99;2.54;3.52;3.02
-Chain shirt;35.82;25.71;28.37;30.68
-Chalk (1 piece);0.01;0.01;0.01;0.01
-Chest;4.13;3.35;3.2;3.37
-Clothes, Common;0.32;0.31;0.31
-Clothes, costume;3.96;3.93;4.56;3.46
-Clothes, fine;12.12;11.75;12.31;9.51
-Clothes, traveler’s;0.99;1.21;1.1;1.13
-Club;0.06;0.04;0.04;0.03
-Cobbler’s tools;2.72;3.38;2.67;2.61
-Component pouch;23.43;25.06;20.19;21.2
-Cooking Pot;1.5;1.69;1.27;1.54
-Cook’s utensils;0.86;0.64;0.71;0.81
-Crossbow bolts (20);0.73;0.82;0.75;0.81
-Crossbow, hand;54.67;42.23;51.94;61.58
-Crossbow, heavy;37.39;36.91;40.71;47.97
-Crossbow, light;19.6;22.63;20.21;16.63
-Crowbar;1.25;1.05;1.11
-Dagger;1.44;1.05;1.5;1.39
-Dart;0.01;0.01;0.01;0.01
-Dice set;0.04;0.04;0.03;0.03
-Drum;4.85;3.87;4.04
-Dulcimer;20.07;19.32;21.75;21.85
-Fishing Rod;0.87;0.86;0.75
-Fishing tackle;0.84;0.77;0.84;0.88
-Flail;4.93;5.73;6.01;7.5
-Flask or Tankard;0.01;0.01;0.01;0.01
-Flute;1.38;1.34;1.7;1.41
-Glaive;12.82;14.72;16.87
-Glassblower’s tools;18.08;19.96;21.17;19.25
+Chain shirt;35.82;25.71;28.37;30.68;22.95
+Chalk (1 piece);0.01;0.01;0.01;0.01;0.01
+Chest;4.13;3.35;3.2;3.37;2.98
+Clothes, Common;0.32;0.31;0.31;0.4
+Clothes, costume;3.96;3.93;4.56;3.46;3.1
+Clothes, fine;12.12;11.75;12.31;9.51;10.41
+Clothes, traveler’s;0.99;1.21;1.1;1.13;0.94
+Club;0.06;0.04;0.04;0.03;0.03
+Cobbler’s tools;2.72;3.38;2.67;2.61;2.33
+Component pouch;23.43;25.06;20.19;21.2;21.71
+Cooking Pot;1.5;1.69;1.27;1.54;1.35
+Cook’s utensils;0.86;0.64;0.71;0.81;0.7
+Crossbow bolts (20);0.73;0.82;0.75;0.81;0.84
+Crossbow, hand;54.67;42.23;51.94;61.58;48.09
+Crossbow, heavy;37.39;36.91;40.71;47.97;43.91
+Crossbow, light;19.6;22.63;20.21;16.63;18.66
+Crowbar;1.25;1.05;1.11;1.59
+Dagger;1.44;1.05;1.5;1.39;1.42
+Dart;0.01;0.01;0.01;0.01;0.01
+Dice set;0.04;0.04;0.03;0.03;0.02
+Drum;4.85;3.87;4.04;4.11
+Dulcimer;20.07;19.32;21.75;21.85;20.78
+Fishing Rod;0.87;0.86;0.75;0.68
+Fishing tackle;0.84;0.77;0.84;0.88;0.94
+Flail;4.93;5.73;6.01;7.5;7.2
+Flask or Tankard;0.01;0.01;0.01;0.01;0.01
+Flute;1.38;1.34;1.7;1.41;1.42;0.78
+Glaive;12.82;14.72;16.87;13.05
+Glassblower’s tools;18.08;19.96;21.17;19.25;17.54
 Grappling Hook;1.1;1.09
-Grappling hook;1.18;1.02;1.07
-Greatclub;0.13;0.16;0.12;0.12
-Greatsword;36.19;44.11;48.59;35.38
-Halberd;17.41;15.75;15.71;18.73
-Half plate;596.02;742.4;719.0;606.55
-Hammer;0.81;0.55;0.68
-Hammer and Nails;0.39;0.35;0.43;0.38
-Hammer, sledge;1.25;1.53;1.41
-Handaxe;3.58;3.1;3.48;3.63
-Healing Potion;41.67;31.88;40.88;35.89
-Hide;5.92;5.81;6.85;7.44
-Holy Water (flask);16.64;17.23;14.87
-Horn;1.92;1.84;1.39;2.04
-Hourglass;10.59;12.29;15.94;15.73
+Grappling hook;1.18;1.02;1.07;1.7
+Greatclub;0.13;0.16;0.12;0.12;0.13
+Greatsword;36.19;44.11;48.59;35.38;40.42
+Halberd;17.41;15.75;15.71;18.73;15.72
+Half plate;596.02;742.4;719.0;606.55;567.13
+Hammer;0.81;0.55;0.68;0.71
+Hammer and Nails;0.39;0.35;0.43;0.38;0.42
+Hammer, sledge;1.25;1.53;1.41;1.44
+Handaxe;3.58;3.1;3.48;3.63;4.58
+Healing Potion;41.67;31.88;40.88;35.89;26.17
+Hide;5.92;5.81;6.85;7.44;6.48
+Holy Water (flask);16.64;17.23;14.87;17.84
+Horn;1.92;1.84;1.39;2.04;2.56
+Hourglass;10.59;12.29;15.94;15.73;18.81
 Hunting trap;4.01;4.26
-Ink (1 ounce bottle);6.43;6.06;8.82
-Ink and Quill;0.01;0.01;0.01;0.01
-Ink pen;0.01;0.01;0.01;0.01
-Javelin;0.3;0.34;0.29;0.3
-Jeweler’s tools;18.76;14.36;17.36;19.04
+Ink (1 ounce bottle);6.43;6.06;8.82;8.4
+Ink and Quill;0.01;0.01;0.01;0.01;0.01
+Ink pen;0.01;0.01;0.01;0.01;0.01
+Javelin;0.3;0.34;0.29;0.3;0.27
+Jeweler’s tools;18.76;14.36;17.36;19.04;18.49
 Jug or Pitcher;0.01;0.01;0.01;0.01
-Kit, climber’s;17.32;16.0;18.81;18.95
-Kit, disguise;18.64;16.89;20.93;17.86
-Kit, forgery;12.22;9.24;10.09;10.6
-Kit, healer’s;2.4;2.33;2.78;2.35
-Kit, herbalism;4.19;2.73;3.4;3.49
-Kit, mess;0.13;0.11;0.09;0.1
-Kit, poisoner’s;34.09;29.51;30.53;29.96
-Ladder (10-foot);0.02;0.01;0.01;0.01
-Lamp;0.3;0.34;0.44
-Lance;7.06;8.65;7.17
-Lantern;3.92;4.6;4.83;4.08
-Lantern Oil;0.06;0.08;0.07;0.06
-Lantern, bullseye;6.57;9.26;8.49
+Kit, climber’s;17.32;16.0;18.81;18.95;18.93
+Kit, disguise;18.64;16.89;20.93;17.86;16.67
+Kit, forgery;12.22;9.24;10.09;10.6;11.87
+Kit, healer’s;2.4;2.33;2.78;2.35;2.17
+Kit, herbalism;4.19;2.73;3.4;3.49;4.07
+Kit, mess;0.13;0.11;0.09;0.1;0.11
+Kit, poisoner’s;34.09;29.51;30.53;29.96;40.01
+Ladder (10-foot);0.02;0.01;0.01;0.01;0.01
+Lamp;0.3;0.34;0.44;0.33
+Lance;7.06;8.65;7.17;7.95
+Lantern;3.92;4.6;4.83;4.08;5.14
+Lantern Oil;0.06;0.08;0.07;0.06;0.05
+Lantern, bullseye;6.57;9.26;8.49;9.31
 Lantern, hooded;4.67;4.03;3.57;4.13
-Leather;7.49;7.53;9.26;9.78
-Leatherworker’s tools;2.99;2.51;3.42;3.45
-Light Hammer;1.08;1.13;1.28;1.39
+Leather;7.49;7.53;9.26;9.78;8.49
+Leatherworker’s tools;2.99;2.51;3.42;3.45;3.1
+Light Hammer;1.08;1.13;1.28;1.39;1.41
 Lock;5.38;5.27;5.18;5.45
-Lockpicks;18.79;14.35;16.9;17.07
-Longbow;42.55;29.79;31.5;29.92
-Longsword;9.36;8.46;9.35;9.36
-Lute;27.15;31.48;27.59
+Lockpicks;18.79;14.35;16.9;17.07;16.53
+Longbow;42.55;29.79;31.5;29.92;28.58
+Longsword;9.36;8.46;9.35;9.36;10.2
+Lute;27.15;31.48;27.59;25.69
 Lyre;16.89;20.05;21.84;24.85
 Mace;3.49;3.33;3.98;3.61
 Manacles;1.52;1.28;1.36
-Map of the Region;5.95;9.22;6.81
-Mason’s tools;4.98;8.84;7.2
-Maul;6.83;6.76;6.68
-Mirror, steel;2.13;2.59;2.12;3.02
-Morningstar;11.33;10.63;13.39
-Navigator’s tools;19.59;17.58;19.2;16.91
-Net;0.81;0.86;0.66;0.64
-Oil (flask);0.01;0.01;0.01;0.01
-Padded;3.64;4.85;4.01;3.95
-Painter’s supplies;6.65;7.27;7.46
+Map of the Region;5.95;9.22;6.81;8.48
+Mason’s tools;4.98;8.84;7.2;8.61
+Maul;6.83;6.76;6.68;7.95
+Mirror, steel;2.13;2.59;2.12;3.02;3.19
+Morningstar;11.33;10.63;13.39;10.49
+Navigator’s tools;19.59;17.58;19.2;16.91;21.01
+Net;0.81;0.86;0.66;0.64;0.51
+Oil (flask);0.01;0.01;0.01;0.01;0.01
+Padded;3.64;4.85;4.01;3.95;4.64
+Painter’s supplies;6.65;7.27;7.46;7.59
 Pan flute;9.29;9.96;9.66
-Paper (one sheet);0.05;0.07;0.06;0.06
-Parchment (one sheet);0.05;0.03;0.02;0.01
-Perfume (vial);3.35;3.34;3.9;3.24
-Pick, miner’s;1.35;1.44;1.1;1.36
-Pike;3.12;3.81;3.64
-Piton;0.01;0.01;0.01;0.01
-Plate;852.58;1087.82;1150.04;1316.7
-Playing card set;0.36;0.33;0.33;0.34
-Poison, basic (vial);84.41;81.34;61.96;71.96
-Pole (10-foot);0.02;0.02;0.01;0.01
+Paper (one sheet);0.05;0.07;0.06;0.06;0.06
+Parchment (one sheet);0.05;0.03;0.02;0.01;0.01
+Perfume (vial);3.35;3.34;3.9;3.24;3.16
+Pick, miner’s;1.35;1.44;1.1;1.36;1.33
+Pike;3.12;3.81;3.64;3.81
+Piton;0.01;0.01;0.01;0.01;0.01
+Plate;852.58;1087.82;1150.04;1316.7;1170.44
+Playing card set;0.36;0.33;0.33;0.34;0.31
+Poison, basic (vial);84.41;81.34;61.96;71.96;69.0
+Pole (10-foot);0.02;0.02;0.01;0.01;0.01
 Pot, iron;1.14;1.44;1.82
-Potion of Healing;34.19;24.63;25.65;28.11
-Potter’s tools;10.04;7.24;8.96;9.04
-Pouch;0.43;0.44;0.3;0.42
-Quarterstaff;0.07;0.18;0.19
-Quiver;0.41;0.45;0.34;0.37
-Ram, portable;2.77;4.21;4.07;4.34
-Rapier;18.03;20.37;18.29;16.03
-Rations (1 day);0.41;0.39;0.3;0.37
-Ring mail;23.2;23.11;15.16;19.79
-Robes;0.73;0.95;0.82;0.79
-Rope, 50 feet;0.8;0.8;0.66
-Rope, hempen (50 feet);0.36;0.74;0.73
-Rope, silk (50 feet);8.07;7.19;6.75;7.16
-Sack;0.01;0.01;0.01;0.01
-Saddlebags;2.5;2.41;2.36;2.41
-Scale mail;46.47;37.9;42.44;39.65
-Scale, merchant’s;4.44;3.88;4.55;3.65
-Scimitar;18.93;21.43;22.0;20.42
-Sealing wax;0.3;0.29;0.33;0.32
-Shawm;1.45;1.66;1.39;1.73
-Shield;8.26;6.56;7.28
-Shortbow;15.25;16.49;21.04;17.88
-Shortsword;6.54;6.98;9.43
-Sickle;0.79;0.69;0.76
-Signal whistle;0.01;0.01;0.04
-Signet ring;3.29;3.11;4.24
-Sling;0.06;0.08;0.06;0.06
-Sling bullets (20);0.02;0.02;0.02;0.01
-Smith’s tools;24.5;25.31;23.16;19.78
-Soap;0.01;0.01;0.01
-Spear;0.86;0.83;0.69;0.81
-Spellbook;33.65;30.12;31.28;41.7
+Potion of Healing;34.19;24.63;25.65;28.11;29.6
+Potter’s tools;10.04;7.24;8.96;9.04;7.97
+Pouch;0.43;0.44;0.3;0.42;0.39
+Quarterstaff;0.07;0.18;0.19;0.17
+Quiver;0.41;0.45;0.34;0.37;0.38
+Ram, portable;2.77;4.21;4.07;4.34;4.2
+Rapier;18.03;20.37;18.29;16.03;18.57
+Rations (1 day);0.41;0.39;0.3;0.37;0.33
+Ring mail;23.2;23.11;15.16;19.79;21.41
+Robes;0.73;0.95;0.82;0.79;0.92
+Rope, 50 feet;0.8;0.8;0.66;0.71
+Rope, hempen (50 feet);0.36;0.74;0.73;0.68
+Rope, silk (50 feet);8.07;7.19;6.75;7.16;6.99
+Sack;0.01;0.01;0.01;0.01;0.01
+Saddlebags;2.5;2.41;2.36;2.41;2.56
+Scale mail;46.47;37.9;42.44;39.65;39.82
+Scale, merchant’s;4.44;3.88;4.55;3.65;3.76
+Scimitar;18.93;21.43;22.0;20.42;25.37
+Sealing wax;0.3;0.29;0.33;0.32;0.26
+Shawm;1.45;1.66;1.39;1.73;1.53
+Shield;8.26;6.56;7.28;7.3
+Shortbow;15.25;16.49;21.04;17.88;18.28
+Shortsword;6.54;6.98;9.43;8.82
+Sickle;0.79;0.69;0.76;0.73
+Signal whistle;0.01;0.01;0.04;0.03
+Signet ring;3.29;3.11;4.24;3.23
+Sling;0.06;0.08;0.06;0.06;0.06
+Sling bullets (20);0.02;0.02;0.02;0.01;0.01
+Smith’s tools;24.5;25.31;23.16;19.78;23.47
+Soap;0.01;0.01;0.01;0.01
+Spear;0.86;0.83;0.69;0.81;0.9
+Spellbook;33.65;30.12;31.28;41.7;34.86
 Spikes, iron (10);0.7;0.62;0.75;0.66
 Splint;149.56;180.98;165.89
-Spyglass;629.01;590.89;552.69;733.31
-Studded leather;36.71;38.15;39.22;31.98
+Spyglass;629.01;590.89;552.69;733.31;634.65
+Studded leather;36.71;38.15;39.22;31.98;40.45
 Tents;7.39;7.94;7.75;7.21
-Thieves’ tools;18.25;18.74;18.69;22.11
-Tinderbox;0.38;0.3;0.44
-Tinker’s tools;46.57;41.39;38.2;37.34
-Torch;0.01;0.01;0.01;0.01
-Trail Rations;0.35;0.41;0.3;0.35
-Traveler's Clothes;0.79;0.75;0.63;0.84
-Traveler's Rations;0.71;0.62;1.0;0.77
+Thieves’ tools;18.25;18.74;18.69;22.11;20.49
+Tinderbox;0.38;0.3;0.44;0.35
+Tinker’s tools;46.57;41.39;38.2;37.34;29.95
+Torch;0.01;0.01;0.01;0.01;0.01
+Trail Rations;0.35;0.41;0.3;0.35;0.44
+Traveler's Clothes;0.79;0.75;0.63;0.84;0.73
+Traveler's Rations;0.71;0.62;1.0;0.77;0.6
 Trident;4.12;4.17;3.99;4.12
-Vial;0.71;0.62;0.87
-Viol;15.28;17.54;18.05;15.66
-War Pick;3.76;3.97;3.79
+Vial;0.71;0.62;0.87;0.83
+Viol;15.28;17.54;18.05;15.66;15.08
+War Pick;3.76;3.97;3.79;2.86
 Warhammer;16.01;13.01;13.07;15.54
-Waterskin;1.29;1.37;1.43;1.63
+Waterskin;1.29;1.37;1.43;1.63;1.45
 Weaver’s tools;0.7;0.77;0.79
-Whetstone;0.01;0.01;0.01;0.01
-Whip;1.56;1.41;1.69;1.67
-Woodcarver’s tools;0.68;0.61;0.54;0.64
+Whetstone;0.01;0.01;0.01;0.01;0.01
+Whip;1.56;1.41;1.69;1.67;1.07
+Woodcarver’s tools;0.68;0.61;0.54;0.64;0.67
 canvas;0.01;0.02;0.07
-cinnamon;1.2;1.23;1.09;1.3
-cloves;2.3;1.68;1.82;2.0
+cinnamon;1.2;1.23;1.09;1.3;1.3
+cloves;2.3;1.68;1.82;2.0;1.55
 copper;0.31;0.36;0.34
-cotton cloth;0.32;0.26;0.32;0.3
+cotton cloth;0.32;0.26;0.32;0.3;0.29
 flour;0.01;0.01;0.01;0.01
-ginger;0.63;0.58;0.53;0.54
+ginger;0.63;0.58;0.53;0.54;0.58
 gold;34.23;34.49;37.51;38.29
-iron;0.01;0.01;0.01;0.01
-linen;4.92;5.0;5.18;4.42
+iron;0.01;0.01;0.01;0.01;0.01
+linen;4.92;5.0;5.18;4.42;4.03
 one baby chicken;0.01;0.01;0.01;0.01
-one baby cow;9.15;10.46;10.33;9.21
-one baby goat;0.65;0.7;0.7;0.68
-one baby ox;8.49;13.67;12.11;11.58
-one baby pig;1.9;2.23;2.37;2.6
-one baby sheep;1.3;1.34;1.26;1.27
-pepper;1.68;1.38;1.82;1.53
-platinum;348.65;459.88;440.49
+one baby cow;9.15;10.46;10.33;9.21;12.23
+one baby goat;0.65;0.7;0.7;0.68;0.73
+one baby ox;8.49;13.67;12.11;11.58;11.39
+one baby pig;1.9;2.23;2.37;2.6;2.26
+one baby sheep;1.3;1.34;1.26;1.27;1.02
+pepper;1.68;1.38;1.82;1.53;1.58
+platinum;348.65;459.88;440.49;358.77
 saffron;8.15;14.06;10.23;10.76
-salt;0.01;0.01;0.01;0.01
-silk;6.66;8.96;8.32
-silver;3.24;3.27;3.16;3.29
-wheat;0.01;0.01;0.01
+salt;0.01;0.01;0.01;0.01;0.01
+silk;6.66;8.96;8.32;9.97
+silver;3.24;3.27;3.16;3.29;2.8
+wheat;0.01;0.01;0.01;0.01
 Amulet of the Mage;7534.71;10201.73;10433.03
 Amulet of the Planes;84086.16;99641.82;102322.93
 Blade of Olympus;798.31;952.59;930.64;1366.83
 Boots of Striding and Springing;12168.81;10505.83
-Bottle of Common Wine;1.58;0.83
+Bottle of Common Wine;1.58;0.83;0.53
 Everburning Torch;29.41;12.61
 Featherfall Amulet;85.57
 Flask of Eternity;99.7;85.25
-Flask of Liquid Courage;48.63
+Flask of Liquid Courage;48.63;30.52
 Ghost Fungus (1 shroom);0.6;0.68
 Lantern of Flickering Shadows;76.92;109.51;80.74;79.01
-Moonstone;20.98;33.78;34.46
+Moonstone;20.98;33.78;34.46;54.64
 Musical Instrument (Accordion);38.3;23.98;17.88;19.9
 Musical Instrument (Clarinet);60.65
 Musical Instrument (Harmonica);1.84;2.03
 Musical Instrument (Horn);2.0
 Musical Instrument (Pan Flute);9.54
-Musical Instrument (Piccolo);28.25
+Musical Instrument (Piccolo);28.25;34.01
 Musical Instrument (Sitar);76.45;134.54;126.13;88.3
 Musical Instrument (Tambourine);0.5
-Potion of Cat Agility;223.32;182.95;131.33
+Potion of Cat Agility;223.32;182.95;131.33;124.11
 Potion of Endure elements;28.59
 Ring of Protection;3049.6;4462.3;4626.68
-Rod of Cancellation;18101.4
+Rod of Cancellation;18101.4;11656.36
 Rod of extend metamagic (lesser);1744.31;1776.15
 Satchel of Holding;134.52
 Shard of the Stars;230.25;104.19
@@ -235,49 +235,64 @@ Veil of Concealment;90.64;139.18;89.91;113.92
 Whispering Amulet;112.25;72.53
 White Onyx;39.45
 oil of bless weapon;100.47
-Alchemist’s supplies;29.33;29.39;25.97
-Breastplate;287.67;307.3
-Greataxe;22.85;21.5;24.11
-Magnifying glass;77.49;76.8
+Alchemist’s supplies;29.33;29.39;25.97;33.59
+Breastplate;287.67;307.3;271.23
+Greataxe;22.85;21.5;24.11;21.82
+Magnifying glass;77.49;76.8;68.5
 Arcane Scroll (Detect Undead);15.1;18.0
-Bag of Chestnuts;0.75;0.8;0.94
-Book of Elementary Mathematics;19.05;24.18;21.12
+Bag of Chestnuts;0.75;0.8;0.94;1.2
+Book of Elementary Mathematics;19.05;24.18;21.12;22.53
 Bracers of Defense;6629.15;8357.58
 Buckler;3247.27
-Cape of the Mountebank;12214.03;13960.6;16115.13
+Cape of the Mountebank;12214.03;13960.6;16115.13;21041.73
 Dagger of Venom;7389.07;6688.17
 Gloves of Dexterity;3606.34;3839.07;3819.87
 Hematite;6.54
-Mirror of Reflection;63.87;70.51;93.74
-Musical Instrument (Bagpipes);16.23;13.93
+Mirror of Reflection;63.87;70.51;93.74;111.4
+Musical Instrument (Bagpipes);16.23;13.93;25.03
 Musical Instrument (Bassoon);129.22
-Musical Instrument (Didgeridoo);20.66;20.06;24.65
+Musical Instrument (Didgeridoo);20.66;20.06;24.65;23.8
 Onyx Goblet;15.39;16.07
 Rod of Absorption;21649.0;21105.72
-Staff of Healing (25 of 50 charges);10178.23;7700.49;7541.96
+Staff of Healing (25 of 50 charges);10178.23;7700.49;7541.96;10461.1
 Staff of Power;23568.48
 Trinket of Elemental Control;112.7;127.35
 Yellow Topaz;224.3
-Chain mail;48.31;46.25
-Shovel;1.65
-Tent, two-person;1.42;1.45
+Chain mail;48.31;46.25;45.28
+Shovel;1.65;1.19
+Tent, two-person;1.42;1.45;1.64
 Arcane Scroll;20.6;27.83
 Ashes of Al'ar;11951.7
-Mirage Cloak;113.38;90.95
-Musical Instrument (Trumpet);15.84
+Mirage Cloak;113.38;90.95;83.48
+Musical Instrument (Trumpet);15.84;27.99
 Potion of shield of faith;666.77
 Rod of Flame Extinguishing;11660.38
 Small Cask of Tobacco;1.21;1.26
 45 Gallons of ale;4.93
-Amulet of Health (+4);12157.05
+Amulet of Health (+4);12157.05;10726.87
 Book of elementary Mathematics;20.47
 Elixer of Truth;720.88
-Elixer of swimming;165.08
-Enigmatic Puzzle Box;117.06
+Elixer of swimming;165.08;195.82
+Enigmatic Puzzle Box;117.06;97.12
 Feathered Quill of Endless Ink;14.12
-Musical Instrument (Cymbals);1.71
+Musical Instrument (Cymbals);1.71;1.37
 Musical Instrument (Drum);1.93
 Musical Instrument (Xylophone);9.42
 Ring of Resilience;8050.0
-Satin Robe;208.07
+Satin Robe;208.07;157.85
 Spined Shield;4649.23
+Amulet of Vitality;14000.96
+Bottle of Brandywine;2.33
+Chalice of Dreamweaving;85.81
+Cursed Coin Purse;38.04
+Dancing Flame Lantern;17.93
+Goggles of Night;13507.89
+Holy Arrow;7.25
+Musical Instrument (Baglamas);11.97
+Musical Instrument (Tabla);56.41
+Musical Instrument (Triangle);1.05
+Potion of Blur;263.58
+Potion of Jump;30.8
+Potion of Mage armor;38.88
+Scroll of Fireball;742.54
+yellow Quartz;35.2
