@@ -40,4 +40,4 @@ The apps in this folder are sub-apps of the MMORPDND system and each serve a spe
 - reset_all_files.py
   - This will reset all images, delete all HTML files, and move trash files back to input_files to be re-deployed.
 - publicize_files.py
-  - This will create a copy of an HTML file with the navigation header and links (TODO) removed for public release. The new file will have an appended '_public' to the file name. The files to publicize are determined by the public_files.list file. 
+  - This will create a copy of an HTML file with the navigation header and links removed for public release. The new file will have an appended '_public' to the file name. The files to publicize are determined by the public_files.list file. 
