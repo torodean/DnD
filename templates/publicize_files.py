@@ -63,21 +63,27 @@ def remove_links(public_file_path):
     # Parse the HTML content
     soup = BeautifulSoup(content, 'lxml')
     
+    # Get the directory of the original file
+    original_dir = os.path.dirname(public_file_path)
+    
     for a_tag in soup.find_all('a'):
         href = a_tag.get('href')
         if href and href.endswith('.html'):
             # Skip the already public links.
             if "_public" in href:
+                print(f"Ignoring link for {href}")
                 continue
                 
             # Construct the public version filename
             public_version = href[:-5] + '_public.html'
-            public_path = os.path.join(current_script_dir, public_version)
+            public_path = os.path.join(original_dir, public_version)
 
             if os.path.exists(public_path):
+                print(f"Public link exists for {public_path}")
                 # Update the href to the public version
                 a_tag['href'] = public_version
-            else:
+            else:                
+                print(f"Removing link for {href}")
                 # Remove the link but keep the text
                 a_tag.replace_with(a_tag.text)    
                 
