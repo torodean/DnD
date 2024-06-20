@@ -867,7 +867,11 @@ class MMORPDND:
                 body_text = body_match.group(1)
                 # Search the body text for the search string
                 for search_word in html_files:
-                    search_string = search_word['name_no_ext']
+                    search_string = search_word['name_no_ext']                    
+                    
+                    # Skip the public files.
+                    if "_public" in search_string:
+                        continue
 
                     # No need to link it it's to the current file.
                     if search_string == file_info['name_no_ext']:
