@@ -930,6 +930,27 @@ class MMORPDND:
                                 f.write(content)
 
 
+    def publicize_files(self):
+        """
+        Publicize files by running the publicize_files.py script.
+
+        Example usage:
+            publicize_files()
+        """
+        
+        current_dir = os.getcwd()
+        os.chdir("./templates")
+        if os.path.isfile("publicize_files.py"):
+            command = f"./publicize_files.py"
+            os.system(command)
+        else:
+            print("Error: 'publicize_files.py' file not found.", "error")
+            
+        # Return to the original directory 
+        os.chdir(current_dir)
+        return
+
+
 class MMORPDND_GUI:
     """
     Class to store GUI functions and operations.
@@ -943,7 +964,7 @@ class MMORPDND_GUI:
         self.mmorpdnd = MMORPDND()
         self.gui = tk.Tk()
         self.gui.title("MMORPDND")
-        self.gui.geometry("300x470")
+        self.gui.geometry("300x500")
 
         # set the background color to black
         self.gui.configure(bg="black")
@@ -1003,6 +1024,10 @@ class MMORPDND_GUI:
                                           **blue_button_style)
         beautify_files_button.pack(pady=5)
 
+        beautify_files_button = tk.Button(self.gui, text="Publicize Files", command=self.publicize_files,
+                                          **blue_button_style)
+        beautify_files_button.pack(pady=5)
+
     def run(self):
         """
         This method will run/open the GUI.
@@ -1021,6 +1046,7 @@ class MMORPDND_GUI:
         self.update_navigation()
         self.update_html_links()
         self.beautify_files()
+        self.publicize_files()
         print("...Finished test for all files!")
 
     def update_all(self):
@@ -1036,6 +1062,7 @@ class MMORPDND_GUI:
         self.update_navigation()
         self.update_html_links()
         self.beautify_files()
+        self.publicize_files()
         print("...Finished updating all files!")
 
     def create_directories(self):
@@ -1061,7 +1088,10 @@ class MMORPDND_GUI:
 
     def update_html_links(self):
         self.mmorpdnd.update_html_links(global_vars.root_dir)
-
+        
+    def publicize_files(self):
+        self.mmorpdnd.publicize_files()
+    	
 
 def main():
     # main method code here
