@@ -57,7 +57,7 @@ The GUI window is somewhat self explanatory. The two main features are represent
 
 \subsubsection{Command Line}
 
-The MMORPDND application supports some command line features.
+The MMORPDND application supports some command line features. The update feature will run the updates for all HTML files.
 
 \begin{lstlisting}
 usage: mmorpdnd.py [-h] [-t] [-u]
@@ -502,9 +502,9 @@ usage: remove_duplicates.py [-h] [-f FILE] [-a]
 Remove duplicate lines from files
 
 optional arguments:
--h, --help            show this help message and exit
--f FILE, --file FILE  Path to the file
--a, --all             Run against all files in the current folder
+	-h, --help            show this help message and exit
+	-f FILE, --file FILE  Path to the file
+	-a, --all             Run against all files in the current folder
 \end{lstlisting}
 
 
@@ -575,6 +575,111 @@ This tool is still in development and not yet functioning.
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+\section{templates/stockpile/}
+
+This directory contains the various elements of the Stockpile system (see \ref{S.T.O.C.K.P.I.L.E}).
+
+\subsection{stockpile.py}
+
+The stockpile.py script is the main application controlling the Stockpiles. The stockpile script takes an optional config file where the various parameters for stockpile updating and generation can be modified (see /ref{stockpile config}).
+
+\begin{lstlisting}
+usage: stockpile.py [-h] [-c CONFIG] -g GENERAL -t TRADE [-b BUY] [-s SELL] -o OUTPUT [-i]
+
+S.T.O.C.K.P.I.L.E System Interface and Database Updater.
+
+optional arguments:
+	-h, --help            show this help message and exit
+	-c CONFIG, --config CONFIG
+	                    The config file containing key-value pairs representing configuration parameters, each line formatted as 'variable=value.'
+	-g GENERAL, --general GENERAL
+	                    The file containing general store items.
+	-t TRADE, --trade TRADE
+	                    The file containing random and trade items.
+	-b BUY, --buy BUY     The file containing the buy price history of the various items. Including this option will update this.
+	-s SELL, --sell SELL  The file containing the sell price history of the various items. Including this option will update this.
+	-o OUTPUT, --output OUTPUT
+	                    The output file to compare to and update. This should be a .input file with the lists formatted in the dnd-table format (see documentation).
+	-i, --initial         Generates an initial .input file for processing.
+\end{lstlisting}
+
+\subsubsection{Item Lists}
+
+The item lists are the master list that contains all of the general and specialty items for the Stockpiles. These lists are fed into the stockpile app with the `-g' and `-t' options. The lists should be formatted such that each line represents a single item. Each item will contain 3 parts separated by a semicolon delimiter - A name, a price, and a description (see below for example file). 
+
+\begin{lstlisting}
+Abacus;2g;2 lb.
+Acid (vial);25g;1 lb.
+Alchemist fire (flask);50g;1 lb.
+Arrows (20);1g;1 lb.
+Blowgun Needles (50);1g;1 lb.
+Crossbow bolts (20);1g;1.5 lb.
+Sling bullets (20);4c;1.5 lb.
+Antitoxin (vial);50g;
+Backpack;2g;5 lb.
+\end{lstlisting}
+
+The distinction between these two lists is in the types of items they contain. The general list should be easily obtainable and typically available items for an area. In contrast, the Trade/Specialty items are rare items, or things that may or may not be available - primarily carried by traders to a region.
+
+\subsubsection{Buy and Sell Price History Lists}
+
+The buy and sell price history files can start blank. The application will create these by adding items into the list that are not already found. The files are formatted so that each line represents a single item. The lines will contain a number of elements separated by a semi-colon delimiter. The first element is the item name. All later elements are the various prices of the items as they have changed (thus capturing the price history).
+
+\begin{lstlisting}
+Abacus;1.9;1.95;2.03;2.16;2.08;2.07;2.13;1.99;1.96;2.03;2.06;2.17;2.27;2.31
+Acid (vial);27.32;26.57;28.75;28.61;28.42;28.7;28.01
+Alchemist fire (flask);50.52;52.08;54.07;55.43;57.35
+Alchemist supplies;48.03;46.5;45.58;47.4;45.4;44.22;42.28;40.12;40.93
+Antitoxin (vial);55.09;54.65;57.01;58.46;61.02;64.23;68.13;68.74;66.47
+Arrows (20);1.01;1.02;0.97;1.01;0.98
+\end{lstlisting}
+
+\subsubsection{Output list}
+
+
+
+
+TODO - finish section.
+
+\subsection{Stockpile Config\label{stockpile config}}
+
+TODO - finish section.
+
+
+
+
+
+
+
+
+\subsection{stockpile\_plot.py}
+
+TODO - finish section.
+
+\begin{lstlisting}
+usage: stockpile_plot.py [-h] -b BUY -s SELL [-i ITEM] [-o OUTPUT]
+
+S.T.O.C.K.P.I.L.E.S price history plotting.
+
+optional arguments:
+	-h, --help            show this help message and exit
+	-b BUY, --buy BUY     The file containing buy price history for the stockpile items.
+	-s SELL, --sell SELL  The file containing sell price history for the stockpile items.
+	-i ITEM, --item ITEM  The item to search for and plot. This will display the plot as well. If not specified, all plots will be generated.
+	-o OUTPUT, --output OUTPUT
+	                    The folder to output all plots to. This option will be ignored if '-i' is specified.
+\end{lstlisting}
 
 
 

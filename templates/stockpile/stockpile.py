@@ -1,5 +1,6 @@
 #!/bin/python3
 import os
+import sys
 import re
 import shutil
 import json
@@ -7,38 +8,120 @@ import requests
 import argparse
 import random
 import numpy as np
+
+# Used for gathering time and date data.
+from datetime import datetime
+
+# Used for plotting.
 import matplotlib.pyplot as plt
+
+# Used for outputting data in a pretty format.
 from prettytable import PrettyTable
 
 
-def output_text(text, option="text"):
+def set_log_file_name():
     """
-    Print text in different colors based on the provided option.`
+    Returns the log file name. If it has not yet been set, creates the log filename that contains the date and then returns it.
+    
+    The desired behavior is that one log_file is used per run of the application. 
+    To account for day changes while the program is running, log_file must be created at application runtime.
+    """    
+    global log_file
+    
+    # Get the script name with full path
+    script_path = os.path.abspath(sys.argv[0])
+    # Get the script name without the extension.
+    script_name = os.path.basename(script_path).split('.py')[0]
+    
+    # Check if the log file already has been set.
+    if log_file == "":
+        today = datetime.today().strftime("%Y%m%d")
+        log_file = f"{script_name}_log_{today}"
+        
+    return log_file
+
+
+# The log file to be used throughout the file.
+log_file = ""
+set_log_file_name()
+
+
+def log_text(text, include_time_stamp=True):
+    """
+    This will output text to the logfile with an optional time stamp.
+    Args:        
+        text (str): The text to be logged.
+        timestamp (bool): Option to include timestamp in logging.    
+    """
+    # Set's the appropriate timestamp value to use.
+    if include_time_stamp:
+        timestamp_text = datetime.now().strftime("[%Y-%m-%d %H %M %S]")
+    else:
+        timestamp_text = ""
+
+    # Logs the output. This assumes log_file is defined.
+    with open(log_file, 'a') as log:            
+        log.write(f"{timestamp_text} {text}\n")
+
+
+def output_text(text:str, option:str=None , color:str=None , log=True):
+    """
+    Print text in different colors based on the provided option. This will also log the output text (including a time stamp).
 
     Args:
-        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
-        text (str): The text to be printed.
+        text (str): The text to be printed and logged.
+        option (str): The color option for the text. Valid options are defined in the color mappings list (second element). Default = None.
+        color (str): The color name for the text. Valid options are defined in the color mappings list (first element). Default = None.
+        log (bool): Determines whether to log the text or not. Default = True.        
 
     Returns:
         None
 
     Note:
-        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
+        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments. 
+        The color and option parameters should not both be used. If they are, the color will override the option parameter.
     """
-    color_codes = {
-        "text": "\033[0m",      # Reset color
-        "warning": "\033[93m",  # Yellow
-        "error": "\033[91m",    # Red
-        "note": "\033[94m",     # Blue
-        "success": "\033[92m"   # Green
-    }
-
-    if option in color_codes:
-        color_code = color_codes[option]
-        reset_code = color_codes["text"]
-        print(f"{color_code}{text}{reset_code}")
-    else:
-        print(text)
+    # Defines the default behaviour.
+    if color == None and option == None:
+        color = "white"  
+    if color != None and option != None:
+        option = None
+    if color == None:
+        color = ""
+    if option == None:
+        option = ""
+        
+    # Define the list of color mappings
+    color_mappings = [
+        ("white",   "text",    "\033[0m"),      # White/default/reset
+        ("red",     "error",   "\033[91m"),     # Red
+        ("green",   "success", "\033[92m"),     # Green
+        ("yellow",  "warning", "\033[93m"),     # Yellow
+        ("blue",    "note",    "\033[94m"),     # Blue
+        ("magenta", "program", "\033[35m"),     # Magenta
+        ("cyan",    "command", "\033[36m")      # Cyan
+    ]
+    
+    # Set's the reset value for normal text.
+    reset_code = "\033[0m"
+    found_match = False    
+    
+    for color_name, color_type, color_code in color_mappings:
+        if color.lower() == color_name:
+            print(f"{color_code}{text}{reset_code}")
+            found_match = True
+            break
+        elif option.lower()  == color_type:
+            print(f"{color_code}{text}{reset_code}")
+            found_match = True
+            break
+            
+    # If no color match was found, print the text.         
+    if not found_match:
+            print(text)
+    
+    if log:
+        log_text(text)
 
 
 class Config:
