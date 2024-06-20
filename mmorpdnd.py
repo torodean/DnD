@@ -2,18 +2,7 @@
 import os
 import re
 import random
-import tkinter as tk
-from tkinter import PhotoImage
-from cssbeautifier import beautify
-from bs4 import BeautifulSoup
 import argparse
-
-parser = argparse.ArgumentParser(description='MMORPDND Tools and apps.')
-parser.add_argument('-t', '--test', action='store_true', help='Runs the test-all feature then exit.')
-parser.add_argument('-u', '--update', action='store_true', help='Runs the update-all feature then exit.')
-
-args = parser.parse_args()
-
 
 class MMORPDND_VARS:
     """
@@ -153,7 +142,7 @@ def is_image_file(file_name):
     """
     image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
     for ext in image_extensions:
-        if file_name.endswith(ext):
+        if file_name.lower().endswith(ext):
             return True
     return False
 
@@ -311,10 +300,12 @@ class MMORPDND:
     A class for all the main MMORPDND features.
     """
 
+
     def __init__(self):
         """
         Initialization method.
         """
+
 
     # Define a function to create directories recursively
     def create_directories(self, path: str, structure: dict) -> None:
@@ -381,9 +372,10 @@ class MMORPDND:
             # Create the index.html file and write the HTML content to it
             directory_name = os.path.basename(root)
             with open(index_file_path, 'w') as f:
-                f.write(f"<html>\n<head>\n<title>Index of {directory_name}/{directory_name}</title>\n</head>\n<body>\n")
+                f.write(f"<html>\n<head>\n<title>Index of {directory_name}</title>\n</head>\n<body>\n")
                 f.write(f"<h1>Index of {root}</h1>\n</body>\n</html>\n")
             print(f"Created index file at {index_file_path}")
+
 
     def move_dir_items_to_end(self, string):
         """
@@ -461,6 +453,7 @@ class MMORPDND:
         new_string = '\n'.join(new_lines)
 
         return new_string
+
 
     def update_index_files(self):
         """
@@ -572,6 +565,7 @@ class MMORPDND:
                 print(f"{file} updated")
         print("All index.html files updated.")
 
+
     def update_headers(self, directory=global_vars.root_dir):
         """
         Updates the headers of HTML files in the specified directory and its subdirectories to match a predefined template.
@@ -651,6 +645,7 @@ class MMORPDND:
                         f.write(contents)
 
                     print(f"Updated head and css in {file_path}")  # Print progress update
+
 
     def update_navigation(self, directory=global_vars.root_dir):
         """
@@ -734,6 +729,7 @@ class MMORPDND:
                             file.write(new_contents)
 
                         print(" -- Inserted nav contents at the start of the body tag")
+                        
 
     def beautify_files(self, directory=global_vars.root_dir):
         """
@@ -814,6 +810,7 @@ class MMORPDND:
                     f.write(prettified_content)
 
                 print(f"File {file_path} has been prettified.")
+                
 
     def find_all_html_files(self, directory=global_vars.root_dir):
         """
@@ -842,6 +839,7 @@ class MMORPDND:
                         'full_path': file_path
                     })
         return html_files
+        
 
     def update_html_links(self, directory=global_vars.root_dir):
         """
@@ -1082,4 +1080,16 @@ def main():
 
 
 if __name__ == '__main__':
+    import tkinter as tk
+    from tkinter import PhotoImage
+    from cssbeautifier import beautify
+    from bs4 import BeautifulSoup
+    
+    # Move the args here so they are not ran when importing this script as a package/module for testing.
+    parser = argparse.ArgumentParser(description='MMORPDND Tools and apps.')
+    parser.add_argument('-t', '--test', action='store_true', help='Runs the test-all feature then exit.')
+    parser.add_argument('-u', '--update', action='store_true', help='Runs the update-all feature then exit.')
+
+    args = parser.parse_args()
+    
     main()

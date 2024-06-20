@@ -1,5 +1,5 @@
 %%Version Number
-\newcommand{\Version}{1.001}
+\newcommand{\Version}{1.002}
 
 \renewcommand{\chaptername}{}
 
@@ -85,4 +85,31 @@
 		numberstyle=\tiny,
 		escapeinside={(*@}{@*)},
 	},
+}
+
+
+
+% Define colors
+\definecolor{codebg}{RGB}{240,240,240}
+\definecolor{codecomment}{RGB}{120,120,120}
+\definecolor{codekeyword}{RGB}{0,0,255}
+\definecolor{codestring}{RGB}{160,32,240}
+
+% Define code style
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{codebg},
+    commentstyle=\color{codecomment},
+    keywordstyle=\color{codekeyword},
+    numberstyle=\tiny\color{codecomment},
+    stringstyle=\color{codestring},
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
 }
