@@ -2079,6 +2079,18 @@ genji_tink (2).jpg
 </td>
 
 <td valign="bottom">
+<img src="./goro_emporium-greeting.png" width="200"><br>
+goro_emporium-greeting.png
+</td>
+
+<td valign="bottom">
+<img src="./goro_pin_pad.png" width="200"><br>
+goro_pin_pad.png
+</td>
+
+</tr>
+<tr>
+<td valign="bottom">
 <img src="./iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg" width="200"><br>
 iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg
 </td>
@@ -2088,8 +2100,6 @@ iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg
 iYZER0V5Ufnx0BV0uO7m--3--2sg5t.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./indigo dahlia, macro photography.jpg" width="200"><br>
 indigo dahlia, macro photography.jpg
@@ -2100,6 +2110,8 @@ indigo dahlia, macro photography.jpg
 svedka_manastorm.png
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./svedka_manastorm_1.png" width="200"><br>
 svedka_manastorm_1.png
