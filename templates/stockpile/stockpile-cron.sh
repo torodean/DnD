@@ -6,6 +6,7 @@ stockpile_dir=${script_dir}/../../campaign/notes/stockpile
 # Ensure we have the latest changes.
 echo "Updating git repo and files to latest!"
 cd ~/git/DnD/templates/stockpile
+git checkout automated-updates
 git pull
 sleep 1
 
