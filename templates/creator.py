@@ -1649,8 +1649,8 @@ class Creator:
         if len(output_images) > 0:
             for image in output_images:
                 if os.path.isfile(image):
+                    output_image_dir = global_vars.output_file_folder + "img"
                     ensure_directory_exists(output_image_dir)
-                    output_image_dir = global_vars.output_file_folder + "/img"
 
                     # trash image if needed.
                     if self.trash_checkbox_value.get():
@@ -1663,7 +1663,7 @@ class Creator:
                 else:
                     output_text(f'Image file does not exist: {image}', "error")
 
-                    output_image_file = global_vars.output_file_folder + "/img/" + image
+                    output_image_file = global_vars.output_file_folder + "img/" + image
                     if os.path.isfile(output_image_file):
                         output_text(f'Image file exists in target directory: {output_image_file}', "warning")
 
