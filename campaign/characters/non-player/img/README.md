@@ -187,17 +187,22 @@ faerwen_grenleaf.jpg
 </td>
 
 <td valign="bottom">
+<img src="./galen_thornbro.jpg" width="200"><br>
+galen_thornbro.jpg
+</td>
+
+<td valign="bottom">
 <img src="./genji_tink (1).jpg" width="200"><br>
 genji_tink (1).jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./genji_tink (2).jpg" width="200"><br>
 genji_tink (2).jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./gilb_dessalla.jpg" width="200"><br>
 gilb_dessalla.jpg
@@ -213,16 +218,21 @@ grizzlegob.jpg
 index.html
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./isabella_evergreen.jpg" width="200"><br>
 isabella_evergreen.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./isabella_shadowbrook.jpg" width="200"><br>
 isabella_shadowbrook.jpg
+</td>
+
+<td valign="bottom">
+<img src="./jake_durgo.jpg" width="200"><br>
+jake_durgo.jpg
 </td>
 
 <td valign="bottom">
@@ -230,6 +240,8 @@ isabella_shadowbrook.jpg
 jonas_fisher.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./kaelar_stormcaller.jpg" width="200"><br>
 kaelar_stormcaller.jpg
@@ -240,8 +252,6 @@ kaelar_stormcaller.jpg
 kellan_stormtide.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./kendril_megatto.jpg" width="200"><br>
 kendril_megatto.jpg
@@ -252,6 +262,8 @@ kendril_megatto.jpg
 kenneth_zud.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./lexus_nerro.jpg" width="200"><br>
 lexus_nerro.jpg
@@ -262,8 +274,6 @@ lexus_nerro.jpg
 lilyana_hearthwood.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./lirael_forestwind.jpg" width="200"><br>
 lirael_forestwind.jpg
@@ -272,6 +282,13 @@ lirael_forestwind.jpg
 <td valign="bottom">
 <img src="./lirael_willowleaf.jpg" width="200"><br>
 lirael_willowleaf.jpg
+</td>
+
+</tr>
+<tr>
+<td valign="bottom">
+<img src="./lyra_nighsho.jpg" width="200"><br>
+lyra_nighsho.jpg
 </td>
 
 <td valign="bottom">
@@ -284,13 +301,13 @@ lyra_silverwind.jpg
 marius_stormrider.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./marla_hindesah.jpg" width="200"><br>
 marla_hindesah.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./martin_greenfield.jpg" width="200"><br>
 martin_greenfield.jpg
@@ -306,13 +323,13 @@ maximus_stormweaver.jpg
 maxwell_loren.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./maybell_declure.jpg" width="200"><br>
 maybell_declure.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./merrick_gearlock.jpg" width="200"><br>
 merrick_gearlock.jpg
@@ -328,13 +345,13 @@ mortimer_blackthorn.jpg
 nenyala_rindew.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./percival_gearlock.jpg" width="200"><br>
 percival_gearlock.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./phineous_grenn.jpg" width="200"><br>
 phineous_grenn.jpg
@@ -343,6 +360,11 @@ phineous_grenn.jpg
 <td valign="bottom">
 <img src="./quintus_salwaither.jpg" width="200"><br>
 quintus_salwaither.jpg
+</td>
+
+<td valign="bottom">
+<img src="./riven_darkwire.jpg" width="200"><br>
+riven_darkwire.jpg
 </td>
 
 <td valign="bottom">
@@ -433,6 +455,13 @@ toshira_siljie.jpg
 valen_shadowborn.jpg
 </td>
 
+<td valign="bottom">
+<img src="./vespera_shadowspir.jpg" width="200"><br>
+vespera_shadowspir.jpg
+</td>
+
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./zadarin_stard_iro.jpg" width="200"><br>
 zadarin_stard_iro.jpg
