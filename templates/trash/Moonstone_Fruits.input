@@ -1,0 +1,7 @@
+folder=food
+
+Moonstone Fruits[dnd-image]=img/Moonstone_Fruits.jpg;Created by Bing AI image generator;A variety of Moonstone Fruits.
+
+Moonstone Fruits[dnd-info]=Fruits that grow in abundance on Moonstone Trees, with a soft crystalline exterior. When bitten into, the shell of the fruit crumbles and resembles a texture as if hard sourdough bread. The inside, however, is filled with a soft melonous texture with small gel-like seeds. Consuming these fruits grants temporary enhancements to magical abilities and heightened senses.
+
+Moonstone Fruit Enhancements[dnd-info]=The enhancements from this fruit can be determined by a d6 roll. Only one effect can be active on a user at a time.;-Arcane Insight: Gain advantage on all Intelligence (Arcana) checks for the next hour.;-Heightened Senses: Gain a +2 bonus to Wisdom (Perception) checks for the next hour.;-Mana Surge: The next spell you cast is free of charge (does not expend a spell slot).;-Mystic Shield: Gain temporary hit points equal to your constitution for the next hour.;-Clairvoyant Vision: Gain the ability to see invisible creatures and objects for the next hour.;-Elemental Affinity: Choose one damage type (fire, cold, lightning, acid, poison). You gain resistance to that damage type for the next hour.
