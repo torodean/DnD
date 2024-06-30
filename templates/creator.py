@@ -637,6 +637,8 @@ class Variables:
         Returns: 
             None
         """
+        output_text(f'TRASHING file: {file}', "note")
+                            
         if file.endswith(".char"):
             destination = self.trash_dir + "/chars"
         elif file.endswith(".py") or file.endswith(".sh"):
@@ -1073,6 +1075,14 @@ def create_html_img(input_line):
     image_source = input_line[1].strip()
     image_caption = input_line[2].strip()
 
+    if not os.path.isfile(image_file):
+        output_text(f"Image NOT found: {image_file}.", "warning")
+        if "www." in image_source or "https:" in image_source:
+            if not download_image(image_source, image_file):
+                output_text(f"No image found: image section will be incomplete.", "warning")
+    else:
+        output_text(f"Image found: {image_file}.", "success")
+
     image_files = []
     if " (1)" in image_file:
         img_file_enum = image_file
@@ -1087,19 +1097,12 @@ def create_html_img(input_line):
         img_file_enum = add_number_to_filename(image_file, 1)
         count = 2
         while os.path.isfile(img_file_enum):
+            output_text(f"Image file with added number found: {img_file_enum}.", "success")
             image_files.append(img_file_enum)
             img_file_enum = img_file_enum.replace(f" ({count - 1})", f" ({count})")
             count += 1
-    else:
+    elif os.path.isfile(image_file):
         image_files.append(image_file)
-
-    if not os.path.isfile(image_file):
-        output_text(f"Image NOT found: {image_file}.", "error")
-        if "www." in image_source or "https:" in image_source:
-            if not download_image(image_source, image_file):
-                output_text(f"No image found: image section will be incomplete.", "warning")
-    else:
-        output_text(f"Image found: {image_file}.")
 
     # Generate the HTML block
     html_block = f'<div class="dnd-image-info">'
@@ -1545,9 +1548,9 @@ class Creator:
         for line in lines:
             if "folder" in line:
                 folder = line.split('=')[1].strip()
-                output_text(f"Destination folder set to: {folder}", "note")
+                output_text(f"Destination folder to search for set to: {folder}", "note")
                 
-        print(os.getcwd())
+        output_text(f"Application being ran from: {os.getcwd()}", "note")
 
         global_vars.output_file_folder = os.getcwd()  # used for testing mainly
         for dirpath, dirnames, filenames in os.walk("../"):
@@ -1555,18 +1558,25 @@ class Creator:
             # Check if we are looking at a file in our exclude list.
             if any(exclude in dirnames for exclude in global_vars.directories_to_exclude):
                 continue
+
             # Check if we are looking at a file in our exclude list.
             if any(exclude in dirpath for exclude in global_vars.directories_to_exclude):
                 continue
 
             if folder in dirnames:
-                output_text(f"Matching folder found: {folder} in {dirpath}", "note")                
+                output_text(f"Matching folder found: {folder} in {dirpath}", "note")             
                 global_vars.output_file_folder = dirpath + "/" + folder + "/"
                 break
             elif dirpath.endswith(folder):
+                output_text(f"No matching folder found: {folder} in {dirpath}", "note")   
                 global_vars.output_file_folder = dirpath + "/"
                 break
 
+        # Check if the folder was not found (still default value). Means no folder existed.
+        if global_vars.output_file_folder == os.getcwd():
+            output_text(f"WARNING: Folder not found: {folder}", "warning")
+            global_vars.output_file_folder += "/" # This will prevent a bug.
+            
         output_text(f"Output file folder set to: {global_vars.output_file_folder}", "note")
 
         output_fn = os.path.basename(file).split('.')[0]
@@ -1612,10 +1622,9 @@ class Creator:
                     # Create HTML image element.
                     html_img, image_files = create_html_img(value)
                     image_name = value.split(';')[0].strip()
-                    output_images.append(image_name)
-                    for img in image_files:
+                    for img in image_files:       
+                        output_text(f"Processed {img}.")
                         output_images.append(img)
-                    output_text(f"Processing {image_name}.")
                     html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
 
                 elif class_name == "dnd-info":
