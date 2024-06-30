@@ -1,3 +1,5 @@
-folder=creatures
+folder=creatures/animals
+
+Echo Howlers[dnd-image]=img/Echo_Howlers.jpg;Created by Bing AI image generator;Echo Howlers howling in the moonlight.
 
 Echo Howlers[dnd-info]=Wolf-like creatures with the ability to manipulate sound. They use echoing calls to communicate across great distances and coordinate with other members of their pack. Their fur can be used to create magical soundproofing materials.
