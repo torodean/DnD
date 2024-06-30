@@ -1545,9 +1545,9 @@ class Creator:
         for line in lines:
             if "folder" in line:
                 folder = line.split('=')[1].strip()
-                output_text(f"Destination folder set to: {folder}", "note")
+                output_text(f"Destination folder to search for set to: {folder}", "note")
                 
-        print(os.getcwd())
+        output_text(f"Application being ran from: {os.getcwd()}", "note")
 
         global_vars.output_file_folder = os.getcwd()  # used for testing mainly
         for dirpath, dirnames, filenames in os.walk("../"):
@@ -1555,18 +1555,25 @@ class Creator:
             # Check if we are looking at a file in our exclude list.
             if any(exclude in dirnames for exclude in global_vars.directories_to_exclude):
                 continue
+
             # Check if we are looking at a file in our exclude list.
             if any(exclude in dirpath for exclude in global_vars.directories_to_exclude):
                 continue
 
             if folder in dirnames:
-                output_text(f"Matching folder found: {folder} in {dirpath}", "note")                
+                output_text(f"Matching folder found: {folder} in {dirpath}", "note")             
                 global_vars.output_file_folder = dirpath + "/" + folder + "/"
                 break
             elif dirpath.endswith(folder):
+                output_text(f"No matching folder found: {folder} in {dirpath}", "note")   
                 global_vars.output_file_folder = dirpath + "/"
                 break
 
+        # Check if the folder was not found (still default value). Means no folder existed.
+        if global_vars.output_file_folder == os.getcwd():
+            output_text(f"WARNING: Folder not found: {folder}", "warning")
+            global_vars.output_file_folder += "/" # This will prevent a bug.
+            
         output_text(f"Output file folder set to: {global_vars.output_file_folder}", "note")
 
         output_fn = os.path.basename(file).split('.')[0]
