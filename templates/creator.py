@@ -1501,20 +1501,28 @@ class Creator:
         self.update_input_file(input_file)
         fix_image_extensions()
 
+        # Check if the input is a file.
         if os.path.isfile(global_vars.current_file):
             if global_vars.current_file.endswith(".char"):
                 self.generate_char(global_vars.current_file)
             elif global_vars.current_file.endswith(".input"):
                 self.create_page(global_vars.current_file)
+
+        # Otherwise it should be a directory.
         elif os.path.isdir(global_vars.current_file):
             directory = global_vars.current_file
+            
+            # Iterate through all files in the directory.
             for file_name in os.listdir(directory):
                 file_path = os.path.join(directory, file_name)
                 if os.path.isfile(file_path):
-                    if file_path.endswith(".char"):
-                        self.generate_char(file_path)
-                    elif file_path.endswith(".input"):
-                        self.create_page(file_path)
+                    try:
+                        if file_path.endswith(".char"):
+                            self.generate_char(file_path)
+                        elif file_path.endswith(".input"):
+                            self.create_page(file_path)
+                    except Exception as e:
+                        print(f"An error occurred: {e}")
 
             self.output_text_to_gui(f"Page generation completed for all files in the directory: {directory}.")
         else:
@@ -1532,7 +1540,7 @@ class Creator:
         The output HTML file is created in the specified destination folder or the current directory if not specified.
 
         Returns:
-            None
+            True on success, otherwise False
         """
         if not file.endswith(".input"):
             self.output_text_to_gui(f"Wrong input file type: {file}")
@@ -1680,7 +1688,9 @@ class Creator:
         if not terminal_mode:
             if self.trash_checkbox_value.get():
                 global_vars.trash_file(file)
-            
+                
+        return True            
+
 
     def checkbox_changed(self):
         """
