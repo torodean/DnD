@@ -57,3 +57,4 @@
 \contentsline {subsubsection}{\numberline {4.9.1.3}Output list}{21}{subsubsection.4.9.1.3}%
 \contentsline {subsection}{\numberline {4.9.2}Stockpile Config}{21}{subsection.4.9.2}%
 \contentsline {subsection}{\numberline {4.9.3}stockpile\_plot.py}{21}{subsection.4.9.3}%
+\contentsline {subsection}{\numberline {4.9.4}publicize\_files.py}{21}{subsection.4.9.4}%
