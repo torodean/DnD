@@ -105,7 +105,9 @@ languages_list = [
     "Sylvan",
     "Vedalken",
     "Infernal",
-    "Primodial"
+    "Primodial",
+    "Aarakocra",
+    "Druidic"
 ]
 
 # Mapping of DnD classes to their core proficiencies
@@ -193,10 +195,10 @@ full_width_fields = ["abilities", "equipment", "proficiencies", "information", "
 class SimpleGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("MMORPDND Char Generator")
+        self.root.title("MMORPDND Character Generator")
         
         # Generate character button
-        generate_button = tk.Button(root, text="Generate Char", command=self.generate_character)
+        generate_button = tk.Button(root, text="Generate", command=self.generate_character)
         generate_button.grid(row=0, column=1, padx=2, pady=2, sticky=tk.W)
 
         # Save character button
@@ -303,17 +305,18 @@ class SimpleGUI:
             self.vars[label].insert(tk.END, getattr(self, f"random_{label}")())  # Insert new information
 
     def save_action(self):
-        file_path = filedialog.asksaveasfilename(defaultextension=".char",
+        default_file_name = self.vars["name"].get().lower().replace(" ", "_") + ".char"
+        file_path = filedialog.asksaveasfilename(initialfile=default_file_name,
+                                                 defaultextension=".char",
                                                  filetypes=[("Char files", "*.char"),
                                                             ("All files", "*.*")])
         if file_path:
             print(f"Save button clicked! File saved to: {file_path}")
             with open(file_path, 'w') as file:
                 for label in self.labels:
-                    if label in full_width_fields:
-                        file.write(f"{label} = {self.vars[label].get('1.0', tk.END).strip()}\n")
-                    else:
-                        file.write(f"{label} = {self.vars[label].get()}\n")
+                    file.write(f"{label} = {self.vars[label].get()}\n")
+                for label in full_width_fields:
+                    file.write(f"{label} = {self.vars[label].get('1.0', tk.END).strip()}\n")
                     
     def update_folder(self, folder_var, class_var):
         folder_text = f"characters/non-player/{class_var.get()}"
@@ -403,7 +406,7 @@ class SimpleGUI:
     def random_resistances(self):
         dnd_class = self.vars["class"].get().lower()
         resistances = class_to_resistances.get(dnd_class, [])
-        return random.sample(resistances, 1)
+        return random.sample(resistances, 1)[0]
     
     def random_immunities(self):
         return "None"
@@ -430,6 +433,10 @@ class SimpleGUI:
             languages += ", Halfling"
         elif race == "goblin":
             languages += ", Goblin"
+        elif race == "aarakocra":
+            languages += ", Aarakocra"
+        elif class == "druid":
+            languages += ", Druidic"
             
         new_language = random.choice(languages_list)
         
