@@ -2,7 +2,11 @@
 import tkinter as tk
 from tkinter import filedialog, ttk
 import random
-from PIL import Image, ImageTk
+#from PIL import Image, ImageTk
+
+# Import character generation methods from creator.
+from creator import generate_character_stats
+from creator import calculate_hp
 
 folder_options = ["characters/non-player", 
                   "characters/player", 
@@ -16,15 +20,35 @@ class_options = ["Barbarian",
                  "Wizard",
                  "Sorcerer",
                  "Bard",
-                 "Ranger"]
-                 
+                 "Ranger",
+                 "Cleric",
+                 "Druid",
+                 "Fighter",
+                 "Monk",
+                 "Paladin",
+                 "Rogue",
+                 "Warlock",
+                 "Artificer",
+                 "Blood Hunter"]
+# PHB races.        
 race_options = ["Human",
                 "Elf",
                 "Dwarf",
                 "Gnome",
-                "Half-Elf"]
-                  
-full_width_fields = ["abilities", "equipment", "proficiencies", "information"]
+                "Half-Elf",
+                "Dragonborn",
+                "Halfling",
+                "Half-Orc"]
+                
+# Optional races from Monsters of the Multiverse.
+multiverse_races = ["Tiefling", "Aarakocra", "Aasimar", "Air Genasi" "Bugbear",
+                    "Centaur", "Changeling", "Deep Gnome", "Duergar", "Earth Genasi",
+                    "Eladrin", "Fairy", "Firblog", "Fire Genasi" "Githyanki", "Gothzerai",
+                    "Goblin", "Goliath", "Harengon", "Hobgoblin", "Kenku", "Kobold",
+                    "Lizardfolk", "Minotaur", "Orc", "Satyr", "Sea Elf", "Shadar-kai",
+                    "Shifter", "Tabaxi", "Tortle", "Triton", "Water Genasi", "Yuan-ti"]
+
+full_width_fields = ["abilities", "equipment", "proficiencies", "information", "notes"]
 
 class SimpleGUI:
     def __init__(self, root):
@@ -57,7 +81,7 @@ class SimpleGUI:
                 entry = tk.Entry(root, textvariable=self.vars[label], width=50)
                 entry.grid(row=i, column=1, sticky=tk.W)
             elif label == "name":
-                # Image selection box.
+                # name generation box.
                 image_button = tk.Button(root, text=label, command=self.generate_name)
                 image_button.grid(row=i, column=0, sticky=tk.W)
                 entry = tk.Entry(root, textvariable=self.vars[label], width=50)
@@ -96,29 +120,42 @@ class SimpleGUI:
     def generate_character(self):
         print("Generate button clicked!")
         
+        # Set the base values first.
         self.vars["folder"].set(self.random_folder())
-        self.vars["name"].set(self.random_name())
         self.vars["level"].set(self.random_level())
-        self.vars["ac"].set(self.random_ac())
-        self.vars["hp"].set(self.random_hp())
+        self.vars["race"].set(self.random_race())
+        self.vars["class"].set(self.random_class())
         self.vars["size"].set(self.random_size())
         self.vars["type"].set(self.random_type())
         self.vars["alignment"].set(self.random_alignment())
+        
+        # The name and speed will depend on the race so those should come before this.
+        self.vars["name"].set(self.random_name())
         self.vars["speed"].set(self.random_speed())
+        
+        # Make the image name based on the name.
+        self.vars["image"].set(self.vars["name"].get().replace(" ", "_").lower() + ".jpg")
+        
+        # ac and background will depend on the class.
+        self.vars["ac"].set(self.random_ac())
+        self.vars["background"].set(self.random_background())
         self.vars["resistances"].set(self.random_resistances())
         self.vars["immunities"].set(self.random_immunities())
         self.vars["senses"].set(self.random_senses())
         self.vars["languages"].set(self.random_languages())
-        self.vars["image"].set(self.random_image())
-        self.vars["race"].set(self.random_race())
-        self.vars["class"].set(self.random_class())
-        self.vars["background"].set(self.random_background())
-        self.vars["strength"].set(self.random_strength())
-        self.vars["dexterity"].set(self.random_dexterity())
-        self.vars["constitution"].set(self.random_constitution())
-        self.vars["intelligence"].set(self.random_intelligence())
-        self.vars["wisdom"].set(self.random_wisdom())
-        self.vars["charisma"].set(self.random_charisma())
+        
+        # Generate random character stats based on class and level.
+        char_stats = generate_character_stats(self.vars["class"].get(), int(self.vars["level"].get()))
+        print(char_stats)
+        self.vars["strength"].set(char_stats["strength"])
+        self.vars["dexterity"].set(char_stats["dexterity"])
+        self.vars["constitution"].set(char_stats["constitution"])
+        self.vars["intelligence"].set(char_stats["intelligence"])
+        self.vars["wisdom"].set(char_stats["wisdom"])
+        self.vars["charisma"].set(char_stats["charisma"])
+        
+        # hp will depend on the level class, and constitution.
+        self.vars["hp"].set(calculate_hp(self.vars["class"].get(), int(self.vars["level"].get()), char_stats["constitution"]))
         
         for label in full_width_fields:
             self.vars[label].delete("1.0", tk.END)  # Clear the Text widget
@@ -151,9 +188,9 @@ class SimpleGUI:
         return "generated name"
 
     def display_image(self, file_path):
-        img = Image.open(file_path)
-        img = img.resize((500, 500), Image.ANTIALIAS)
-        img = ImageTk.PhotoImage(img)
+        #img = Image.open(file_path)
+        #img = img.resize((500, 500), Image.ANTIALIAS)
+        #img = ImageTk.PhotoImage(img)
         self.image_box.create_image(0, 0, anchor=tk.NW, image=img)
         self.image_box.image = img
 
@@ -164,14 +201,17 @@ class SimpleGUI:
     def random_name(self):
         return "Abigail Reed"
     
+    def biased_random(self, start, end):
+        weights = [1/(i+1) for i in range(end)]  # Weights decrease as the numbers increase
+        total = sum(weights)
+        normalized_weights = [w/total for w in weights]  # Normalize the weights to sum to 1
+        return random.choices(range(start, end + 1), weights=normalized_weights, k=1)[0]
+    
     def random_level(self):
-        return str(random.randint(1, 20))
+        return str(self.biased_random(1, 20))
     
     def random_ac(self):
         return "13 (studded leather armor)"
-    
-    def random_hp(self):
-        return str(random.randint(10, 100))
     
     def random_size(self):
         return "Medium"
@@ -180,7 +220,9 @@ class SimpleGUI:
         return "Humanoid"
     
     def random_alignment(self):
-        return "Neutral Good"
+        return random.choice(["Lawful Good", "Neutral Good", "Chaotic Good", 
+                              "Lawful Neutral", "True Neutral", "Chaotic Neutral",
+                              "Lawful Evil", "Neutral Evil", "Chaotic Evil"])
     
     def random_speed(self):
         return "30 ft."
@@ -201,45 +243,28 @@ class SimpleGUI:
         return "abigail_reed.jpg"
     
     def random_race(self):
-        return "Human"
+        return random.choice(race_options)
     
     def random_class(self):
-        return "Druid"
+        return random.choice(class_options)
     
     def random_background(self):
-        return "Farmer"
-    
-    def random_strength(self):
-        return str(random.randint(8, 20))
-    
-    def random_dexterity(self):
-        return str(random.randint(8, 20))
-    
-    def random_constitution(self):
-        return str(random.randint(8, 20))
-    
-    def random_intelligence(self):
-        return str(random.randint(8, 20))
-    
-    def random_wisdom(self):
-        return str(random.randint(8, 20))
-    
-    def random_charisma(self):
-        return str(random.randint(8, 20))
+        return "Farmer"    
     
     def random_abilities(self):
-        return "Farming expertise, proficiency with farming tools, natural magic (druidcraft, produce flame), wild shape"
+        return "TODO"
     
     def random_equipment(self):
-        return "Farming tools (shovel, hoe, sickle), studded leather armor, wooden shield, quarterstaff"
+        return "TODO"
     
     def random_proficiencies(self):
-        return "Farming tools, Nature, Survival"
+        return "TODO"
     
     def random_information(self):
-        return ("Abigail Reed, a skilled and compassionate farmer, has a deep connection with nature and the cycles of the land. "
-                "With her druidic powers, she tends to her crops with an understanding of the intricate balance between flora, fauna, and the elements. "
-                "Her farm thrives under her care, blessed by the harmonious energies of nature.")
+        return ("TODO")
+    
+    def random_notes(self):
+        return ("TODO")
 
 if __name__ == "__main__":
     root = tk.Tk()
