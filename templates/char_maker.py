@@ -7,6 +7,7 @@ import random
 # Import character generation methods from creator.
 from creator import generate_character_stats
 from creator import calculate_hp
+from creator import generate_word_from_file
 
 folder_options = ["characters/non-player", 
                   "characters/player", 
@@ -185,7 +186,9 @@ class SimpleGUI:
             self.display_image(file_path)
             
     def generate_name(self):
-        return "generated name"
+        name = self.random_name()
+        self.vars["name"].set(name)
+        return name
 
     def display_image(self, file_path):
         #img = Image.open(file_path)
@@ -199,7 +202,27 @@ class SimpleGUI:
         return "characters/non-player"
     
     def random_name(self):
-        return "Abigail Reed"
+        # Setup the probability matrix for word generation.
+        race = self.vars["race"].get().lower()
+        if race == "elf":
+            input_file = "lists/elven.names"
+        elif race == "halfling":
+            input_file = "lists/halfling.names"
+        elif race == "human":
+            input_file = "lists/human.names"
+        elif race == "tiefling":
+            input_file = "lists/tiefling.names"
+        elif race == "dwarf":
+            first_name = generate_word_from_file("lists/dwarven_first.names")
+            last_name = generate_word_from_file("lists/dwarven_last.names")
+            return first_name + " " + last_name
+        else:
+            first_name = generate_word_from_file("lists/asian_first.names")
+            last_name = generate_word_from_file("lists/asian_last.names")
+            return first_name + " " + last_name
+
+        name = generate_word_from_file(input_file)
+        return name
     
     def biased_random(self, start, end):
         weights = [1/(i+1) for i in range(end)]  # Weights decrease as the numbers increase
@@ -225,7 +248,13 @@ class SimpleGUI:
                               "Lawful Evil", "Neutral Evil", "Chaotic Evil"])
     
     def random_speed(self):
-        return "30 ft."
+        race = self.vars["race"].get().lower()
+        if race == "gnome" or race == "dwarf":
+            return "25 ft."
+        elif race == "elf" or race == "vryloka" or race == "gnoll" or race == "hengeyokai" or race == "thri-kreen":
+            return "35 ft."
+        else:
+            return "30 ft."
     
     def random_resistances(self):
         return "None"
