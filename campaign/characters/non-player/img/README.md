@@ -412,12 +412,17 @@ silas_shadowvale.jpg
 </td>
 
 <td valign="bottom">
-<img src="./telburn_himreich.jpg" width="200"><br>
-telburn_himreich.jpg
+<img src="./sorinembercloak.jpg" width="200"><br>
+sorinembercloak.jpg
 </td>
 
 </tr>
 <tr>
+<td valign="bottom">
+<img src="./telburn_himreich.jpg" width="200"><br>
+telburn_himreich.jpg
+</td>
+
 <td valign="bottom">
 <img src="./telma_fhindre.jpg" width="200"><br>
 telma_fhindre.jpg
@@ -433,13 +438,13 @@ thaldir_windrider.jpg
 thorin_stonehammer.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./thorne_ironfist.jpg" width="200"><br>
 thorne_ironfist.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./tonya_dessala.jpg" width="200"><br>
 tonya_dessala.jpg
@@ -455,13 +460,13 @@ toshira_siljie.jpg
 valen_shadowborn.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./vespera_shadowspir.jpg" width="200"><br>
 vespera_shadowspir.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./zadarin_stard_iro.jpg" width="200"><br>
 zadarin_stard_iro.jpg
