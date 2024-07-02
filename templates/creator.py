@@ -541,6 +541,36 @@ def generate_prob_matrix(words):
     return prob_matrix
 
 
+def generate_word_from_file(file_name):
+    """
+    This will generate a random word from a probability matrix from a file.
+    
+    Args:
+        file_name (str): The file name to parse. It should be a .list or .names file.
+        
+    Returns:
+        word (str): The generated word.
+    """
+    
+    if file_name.endswith(".names") or file_name.endswith(".list"):
+        file_content_list = read_lines_from_file(file_name)
+    else:
+        output_text(f"ERROR: Invalid file for generate_word_from_file(): {file_name}", "error")
+        return ""
+        
+    output_text("Generating word.")
+    
+    # Generate probability matrix and word generation parameters.
+    prob_matrix = generate_prob_matrix(file_content_list)
+    shortest, longest = find_longest_and_shortest(file_content_list)
+    print_prob_matrix(prob_matrix)
+    
+    # Generate word.
+    word = "{0}".format(generate_word(prob_matrix, shortest, longest))
+    self.output_text(f"Generated word: {word}", "success")
+    return word
+    
+
 def generate_word(prob_matrix, min_length=4, max_length=10):
     """
     Generate a random word using a probability matrix.
