@@ -148,50 +148,6 @@ Milton_Manastorm.png
 </td>
 
 <td valign="bottom">
-<img src="./Telomney_Falcons (1).jpg" width="200"><br>
-Telomney_Falcons (1).jpg
-</td>
-
-</tr>
-<tr>
-<td valign="bottom">
-<img src="./Telomney_Falcons (2).jpg" width="200"><br>
-Telomney_Falcons (2).jpg
-</td>
-
-<td valign="bottom">
-<img src="./Telomney_Falcons (3).jpg" width="200"><br>
-Telomney_Falcons (3).jpg
-</td>
-
-<td valign="bottom">
-<img src="./Umbradraconis_Brastryx (1).jpg" width="200"><br>
-Umbradraconis_Brastryx (1).jpg
-</td>
-
-<td valign="bottom">
-<img src="./Umbradraconis_Brastryx (2).jpg" width="200"><br>
-Umbradraconis_Brastryx (2).jpg
-</td>
-
-</tr>
-<tr>
-<td valign="bottom">
-<img src="./Umbradraconis_Brastryx (3).jpg" width="200"><br>
-Umbradraconis_Brastryx (3).jpg
-</td>
-
-<td valign="bottom">
-<img src="./Umbradraconis_Brastryx_Path.jpg" width="200"><br>
-Umbradraconis_Brastryx_Path.jpg
-</td>
-
-<td valign="bottom">
-<img src="./Zaubergrube_Arena_Challenges.jpg" width="200"><br>
-Zaubergrube_Arena_Challenges.jpg
-</td>
-
-<td valign="bottom">
 <img src="./_00798ce2-4164-4575-9f14-8f98ed46e976.jpg" width="200"><br>
 _00798ce2-4164-4575-9f14-8f98ed46e976.jpg
 </td>
@@ -2299,18 +2255,6 @@ genji_tink (2).jpg
 </td>
 
 <td valign="bottom">
-<img src="./goro_emporium-greeting.png" width="200"><br>
-goro_emporium-greeting.png
-</td>
-
-<td valign="bottom">
-<img src="./goro_pin_pad.png" width="200"><br>
-goro_pin_pad.png
-</td>
-
-</tr>
-<tr>
-<td valign="bottom">
 <img src="./iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg" width="200"><br>
 iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg
 </td>
@@ -2320,31 +2264,11 @@ iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg
 iYZER0V5Ufnx0BV0uO7m--3--2sg5t.jpg
 </td>
 
-<td valign="bottom">
-<img src="./indigo dahlia, macro photography.jpg" width="200"><br>
-indigo dahlia, macro photography.jpg
-</td>
-
-<td valign="bottom">
-<img src="./purple_leopard_dart_frog (1).jpg" width="200"><br>
-purple_leopard_dart_frog (1).jpg
-</td>
-
 </tr>
 <tr>
 <td valign="bottom">
-<img src="./purple_leopard_dart_frog (2).jpg" width="200"><br>
-purple_leopard_dart_frog (2).jpg
-</td>
-
-<td valign="bottom">
-<img src="./purple_leopard_dart_frog (3).jpg" width="200"><br>
-purple_leopard_dart_frog (3).jpg
-</td>
-
-<td valign="bottom">
-<img src="./purple_leopard_dart_frog (4).jpg" width="200"><br>
-purple_leopard_dart_frog (4).jpg
+<img src="./indigo dahlia, macro photography.jpg" width="200"><br>
+indigo dahlia, macro photography.jpg
 </td>
 
 <td valign="bottom">
@@ -2352,21 +2276,9 @@ purple_leopard_dart_frog (4).jpg
 svedka_manastorm.png
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./svedka_manastorm_1.png" width="200"><br>
 svedka_manastorm_1.png
-</td>
-
-<td valign="bottom">
-<img src="./whiskered_crocfish (1).jpg" width="200"><br>
-whiskered_crocfish (1).jpg
-</td>
-
-<td valign="bottom">
-<img src="./whiskered_crocfish (2).jpg" width="200"><br>
-whiskered_crocfish (2).jpg
 </td>
 
 </tr></table>
