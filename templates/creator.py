@@ -204,9 +204,9 @@ def calculate_hp(class_type: str, level: int, constitution: int) -> int:
     # Determine hit die for the class
     if class_type == 'barbarian':
         hit_die = 12
-    elif class_type == 'fighter' or class_type == 'paladin' or class_type == 'ranger':
+    elif class_type == 'fighter' or class_type == 'paladin' or class_type == 'ranger' or class_type == 'blood hunter':
         hit_die = 10
-    elif class_type == 'cleric' or class_type == 'druid' or class_type == 'monk' or class_type == 'rogue' or class_type == 'warlock' or class_type == 'bard':
+    elif class_type == 'cleric' or class_type == 'druid' or class_type == 'monk' or class_type == 'rogue' or class_type == 'warlock' or class_type == 'bard' or class_type == 'artificer':
         hit_die = 8
     elif class_type == 'sorcerer' or class_type == 'wizard':
         hit_die = 6
@@ -271,8 +271,10 @@ def get_stat_priority(character_class):
         list: The list of attributes ordered by the stat priority.
     """
     stat_priorities = {
+        'artificer': ['intelligence', 'constitution', 'wisdom', 'dexterity', 'charisma', 'strength'],
         'barbarian': ['strength', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'charisma'],
         'bard': ['charisma', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'strength'],
+        'blood hunter': ['strength', 'dexterity', 'intelligence', 'constitution', 'wisdom', 'charisma'],
         'cleric': ['wisdom', 'constitution', 'strength', 'intelligence', 'dexterity', 'charisma'],
         'druid': ['wisdom', 'constitution', 'dexterity', 'intelligence', 'charisma', 'strength'],
         'fighter': ['strength', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'charisma'],
