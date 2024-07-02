@@ -199,13 +199,14 @@ def calculate_hp(class_type: str, level: int, constitution: int) -> int:
         ValueError: If the given class_type is not recognized.
     """
     hit_die = 0
+    class_type = class_type.lower() # ensure it's lowercase.
 
     # Determine hit die for the class
     if class_type == 'barbarian':
         hit_die = 12
-    elif class_type == 'fighter' or class_type == 'paladin' or class_type == 'ranger':
+    elif class_type == 'fighter' or class_type == 'paladin' or class_type == 'ranger' or class_type == 'blood hunter':
         hit_die = 10
-    elif class_type == 'cleric' or class_type == 'druid' or class_type == 'monk' or class_type == 'rogue' or class_type == 'warlock':
+    elif class_type == 'cleric' or class_type == 'druid' or class_type == 'monk' or class_type == 'rogue' or class_type == 'warlock' or class_type == 'bard' or class_type == 'artificer':
         hit_die = 8
     elif class_type == 'sorcerer' or class_type == 'wizard':
         hit_die = 6
@@ -270,8 +271,10 @@ def get_stat_priority(character_class):
         list: The list of attributes ordered by the stat priority.
     """
     stat_priorities = {
+        'artificer': ['intelligence', 'constitution', 'wisdom', 'dexterity', 'charisma', 'strength'],
         'barbarian': ['strength', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'charisma'],
         'bard': ['charisma', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'strength'],
+        'blood hunter': ['strength', 'dexterity', 'intelligence', 'constitution', 'wisdom', 'charisma'],
         'cleric': ['wisdom', 'constitution', 'strength', 'intelligence', 'dexterity', 'charisma'],
         'druid': ['wisdom', 'constitution', 'dexterity', 'intelligence', 'charisma', 'strength'],
         'fighter': ['strength', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'charisma'],
@@ -537,6 +540,36 @@ def generate_prob_matrix(words):
 
     return prob_matrix
 
+
+def generate_word_from_file(file_name):
+    """
+    This will generate a random word from a probability matrix from a file.
+    
+    Args:
+        file_name (str): The file name to parse. It should be a .list or .names file.
+        
+    Returns:
+        word (str): The generated word.
+    """
+    
+    if file_name.endswith(".names") or file_name.endswith(".list"):
+        file_content_list = read_lines_from_file(file_name)
+    else:
+        output_text(f"ERROR: Invalid file for generate_word_from_file(): {file_name}", "error")
+        return ""
+        
+    output_text("Generating word.")
+    
+    # Generate probability matrix and word generation parameters.
+    prob_matrix = generate_prob_matrix(file_content_list)
+    shortest, longest = find_longest_and_shortest(file_content_list)
+    print_prob_matrix(prob_matrix)
+    
+    # Generate word.
+    word = "{0}".format(generate_word(prob_matrix, shortest, longest))
+    output_text(f"Generated word: {word}", "success")
+    return word
+    
 
 def generate_word(prob_matrix, min_length=4, max_length=10):
     """
