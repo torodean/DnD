@@ -2,52 +2,191 @@
 import tkinter as tk
 from tkinter import filedialog, ttk
 import random
-#from PIL import Image, ImageTk
+from PIL import Image, ImageTk
 
 # Import character generation methods from creator.
 from creator import generate_character_stats
 from creator import calculate_hp
 from creator import generate_word_from_file
+from creator import calculate_modifier
 
-folder_options = ["characters/non-player", 
-                  "characters/player", 
-                  "creatures/monsters", 
-                  "creatures/animals", 
-                  "creatures/humanoids", 
-                  "creatures/dragons", 
-                  "creatures/other"]
+folder_options = [
+    "characters/non-player", 
+    "characters/player", 
+    "creatures/monsters", 
+    "creatures/animals", 
+    "creatures/humanoids", 
+    "creatures/dragons", 
+    "creatures/other"
+]
                   
-class_options = ["Barbarian",
-                 "Wizard",
-                 "Sorcerer",
-                 "Bard",
-                 "Ranger",
-                 "Cleric",
-                 "Druid",
-                 "Fighter",
-                 "Monk",
-                 "Paladin",
-                 "Rogue",
-                 "Warlock",
-                 "Artificer",
-                 "Blood Hunter"]
+class_options = [
+    "Barbarian",
+    "Wizard",
+    "Sorcerer",
+    "Bard",
+    "Ranger",
+    "Cleric",
+    "Druid",
+    "Fighter",
+    "Monk",
+    "Paladin",
+    "Rogue",
+    "Warlock",
+    "Artificer",
+    "Blood Hunter"
+]
+                 
+# Mapping of DnD classes to their potential backgrounds
+class_to_backgrounds = {
+    "barbarian": ["Outlander", "Tribal Nomad", "Hermit"],
+    "bard": ["Entertainer", "Charlatan", "Guild Artisan"],
+    "cleric": ["Acolyte", "Hermit", "Noble"],
+    "druid": ["Hermit", "Outlander", "Sage"],
+    "fighter": ["Soldier", "Mercenary Veteran", "Noble"],
+    "monk": ["Hermit", "Noble", "Outlander"],
+    "paladin": ["Noble", "Soldier", "Knight"],
+    "ranger": ["Outlander", "Hunter", "Tribal Nomad"],
+    "rogue": ["Charlatan", "Criminal", "Spy"],
+    "sorcerer": ["Hermit", "Noble", "Sage"],
+    "warlock": ["Charlatan", "Noble", "Sage"],
+    "wizard": ["Sage", "Acolyte", "Hermit"],
+    "artificer": ["Acolyte", "Noble", "Sage", "Hermit"],
+    "blood hunter": ["Criminal", "Acolyte", "Outlander"]
+}
+
 # PHB races.        
-race_options = ["Human",
-                "Elf",
-                "Dwarf",
-                "Gnome",
-                "Half-Elf",
-                "Dragonborn",
-                "Halfling",
-                "Half-Orc"]
+race_options = [
+    "Human",
+    "Elf",
+    "Dwarf",
+    "Gnome",
+    "Half-Elf",
+    "Dragonborn",
+    "Halfling",
+    "Half-Orc"
+]
+
+# Mapping of DnD classes to their potential AC ranges
+class_to_ac_range = {
+    "barbarian": (12, 16),
+    "bard": (11, 15),
+    "cleric": (12, 18),
+    "druid": (11, 16),
+    "fighter": (14, 18),
+    "monk": (12, 17),
+    "paladin": (14, 18),
+    "ranger": (13, 17),
+    "rogue": (12, 16),
+    "sorcerer": (10, 14),
+    "warlock": (10, 14),
+    "wizard": (10, 14),
+    "Artificer": (12, 17),
+    "Blood Hunter": (11, 17)
+}
+
+languages_list = [
+    "Common",
+    "Dwarvish",
+    "Elvish",
+    "Giant",
+    "Gnomish",
+    "Goblin",
+    "Halfling",
+    "Orcish",
+    "Abyssal",
+    "Celestial",
+    "Draconic",
+    "Kraul",
+    "Loxodon",
+    "Merfolk",
+    "Minotaur",
+    "Sphinx",
+    "Sylvan",
+    "Vedalken",
+    "Infernal",
+    "Primodial"
+]
+
+# Mapping of DnD classes to their core proficiencies
+class_to_proficiencies = {
+    "barbarian": ["Athletics", "Survival", "Strength", "Constitution"],
+    "bard": ["Acrobatics", "Performance", "Sleight of Hand", "Dexterity", "Charisma"],
+    "cleric": ["History", "Insight", "Medicine", "Religion", "Wisdom", "Charisma"],
+    "druid": ["Nature", "Survival", "Animal Handling", "Intelligence", "Wisdom"],
+    "fighter": ["Athletics", "Intimidation", "Strength", "Constitution"],
+    "monk": ["Acrobatics", "Stealth", "Dexterity", "Wisdom"],
+    "paladin": ["Athletics", "Religion", "Wisdom", "Charisma"],
+    "ranger": ["Nature", "Survival", "Stealth", "Strength", "Dexterity"],
+    "rogue": ["Acrobatics", "Deception", "Stealth", "Sleight of Hand", "Dexterity", "Intelligence"],
+    "sorcerer": ["Arcana", "Deception", "Intimidation", "Constitution", "Charisma"],
+    "warlock": ["Arcana", "Deception", "Intimidation", "Wisdom", "Charisma"],
+    "wizard": ["Arcana", "History", "Investigation", "Intelligence", "Wisdom"],
+    "artificer": ["Arcana", "History", "Investigation", "Constitution", "Intelligence"],
+    "blood hunter": ["Nature", "Survival", "Stealth", "Strength", "Dexterity"]
+}
+
+# General list of additional proficiencies
+additional_proficiencies = [
+    "Acrobatics", "Animal Handling", "Arcana", "Athletics", "Deception",
+    "History", "Insight", "Intimidation", "Investigation", "Medicine",
+    "Nature", "Perception", "Performance", "Persuasion", "Religion",
+    "Sleight of Hand", "Stealth", "Survival"
+]
+
+# Mapping of DnD classes to their core weapon proficiencies
+class_to_weapon_proficiencies = {
+    "barbarian": ["Simple Weapons", "Martial Weapons"],
+    "bard": ["Simple Weapons", "Hand Crossbows", "Longswords", "Rapiers", "Shortswords"],
+    "cleric": ["Simple Weapons"],
+    "druid": ["Clubs", "Daggers", "Darts", "Javelins", "Maces", "Quarterstaffs", "Scimitars", "Sickles", "Slings", "Spears"],
+    "fighter": ["Simple Weapons", "Martial Weapons"],
+    "monk": ["Simple Weapons", "Shortswords"],
+    "paladin": ["Simple Weapons", "Martial Weapons"],
+    "ranger": ["Simple Weapons", "Martial Weapons"],
+    "rogue": ["Simple Weapons", "Hand Crossbows", "Longswords", "Rapiers", "Shortswords"],
+    "sorcerer": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light Crossbows"],
+    "warlock": ["Simple Weapons"],
+    "wizard": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light Crossbows"],
+    "artificer": ["Simple Weapons", "Martial Weapons"],
+    "blood hunter": ["Simple Weapons", "Martial Weapons"]
+}
+
+# General list of additional weapon proficiencies
+additional_weapon_proficiencies = [
+    "Battleaxes", "Blowguns", "Glaives", "Greataxes", "Greatswords", "Halberds",
+    "Lances", "Light Hammers", "Longbows", "Mauls", "Morningstars", "Nets",
+    "Pikes", "Scimitars", "Shortbows", "Tridents", "War Picks", "Warhammers",
+    "Whips"
+]
                 
 # Optional races from Monsters of the Multiverse.
-multiverse_races = ["Tiefling", "Aarakocra", "Aasimar", "Air Genasi" "Bugbear",
-                    "Centaur", "Changeling", "Deep Gnome", "Duergar", "Earth Genasi",
-                    "Eladrin", "Fairy", "Firblog", "Fire Genasi" "Githyanki", "Gothzerai",
-                    "Goblin", "Goliath", "Harengon", "Hobgoblin", "Kenku", "Kobold",
-                    "Lizardfolk", "Minotaur", "Orc", "Satyr", "Sea Elf", "Shadar-kai",
-                    "Shifter", "Tabaxi", "Tortle", "Triton", "Water Genasi", "Yuan-ti"]
+multiverse_races = [
+    "Tiefling", "Aarakocra", "Aasimar", "Air Genasi" "Bugbear",
+    "Centaur", "Changeling", "Deep Gnome", "Duergar", "Earth Genasi",
+    "Eladrin", "Fairy", "Firblog", "Fire Genasi" "Githyanki", "Gothzerai",
+    "Goblin", "Goliath", "Harengon", "Hobgoblin", "Kenku", "Kobold",
+    "Lizardfolk", "Minotaur", "Orc", "Satyr", "Sea Elf", "Shadar-kai",
+    "Shifter", "Tabaxi", "Tortle", "Triton", "Water Genasi", "Yuan-ti"
+]
+
+# Mapping of DnD classes to possible resistances
+class_to_resistances = {
+    "barbarian": ["Bludgeoning", "Piercing", "Slashing"],
+    "bard": ["Psychic"],
+    "cleric": ["Radiant", "Necrotic"],
+    "druid": ["Poison"],
+    "fighter": ["Force"],
+    "monk": ["Radiant"],
+    "paladin": ["Radiant", "Necrotic"],
+    "ranger": ["Poison"],
+    "rogue": ["Lightning", "Poison"],
+    "sorcerer": ["Fire", "Cold", "Lightning"],
+    "warlock": ["Necrotic", "Force"],
+    "wizard": ["Acid", "Thunder"],
+    "artificer": ["Acid", "Fire"],
+    "blood hunter": ["Fire", "Necrotic"]
+}
 
 full_width_fields = ["abilities", "equipment", "proficiencies", "information", "notes"]
 
@@ -142,7 +281,6 @@ class SimpleGUI:
         self.vars["background"].set(self.random_background())
         self.vars["resistances"].set(self.random_resistances())
         self.vars["immunities"].set(self.random_immunities())
-        self.vars["senses"].set(self.random_senses())
         self.vars["languages"].set(self.random_languages())
         
         # Generate random character stats based on class and level.
@@ -153,7 +291,9 @@ class SimpleGUI:
         self.vars["constitution"].set(char_stats["constitution"])
         self.vars["intelligence"].set(char_stats["intelligence"])
         self.vars["wisdom"].set(char_stats["wisdom"])
-        self.vars["charisma"].set(char_stats["charisma"])
+        self.vars["charisma"].set(char_stats["charisma"])        
+        
+        self.vars["senses"].set(self.random_senses())
         
         # hp will depend on the level class, and constitution.
         self.vars["hp"].set(calculate_hp(self.vars["class"].get(), int(self.vars["level"].get()), char_stats["constitution"]))
@@ -191,9 +331,9 @@ class SimpleGUI:
         return name
 
     def display_image(self, file_path):
-        #img = Image.open(file_path)
-        #img = img.resize((500, 500), Image.ANTIALIAS)
-        #img = ImageTk.PhotoImage(img)
+        img = Image.open(file_path)
+        img = img.resize((500, 500), Image.ANTIALIAS)
+        img = ImageTk.PhotoImage(img)
         self.image_box.create_image(0, 0, anchor=tk.NW, image=img)
         self.image_box.image = img
 
@@ -234,7 +374,11 @@ class SimpleGUI:
         return str(self.biased_random(1, 20))
     
     def random_ac(self):
-        return "13 (studded leather armor)"
+        dnd_class = self.vars["class"].get().lower()
+        ac_range = class_to_ac_range.get(dnd_class)
+        if not ac_range:
+            return "13"
+        return random.randint(*ac_range)
     
     def random_size(self):
         return "Medium"
@@ -257,19 +401,42 @@ class SimpleGUI:
             return "30 ft."
     
     def random_resistances(self):
-        return "None"
+        dnd_class = self.vars["class"].get().lower()
+        resistances = class_to_resistances.get(dnd_class, [])
+        return random.sample(resistances, 1)
     
     def random_immunities(self):
         return "None"
     
     def random_senses(self):
-        return "Passive Perception 12"
+        wisdom = int(self.vars["wisdom"].get())
+        wisdom_modifier = calculate_modifier(wisdom)
+        return f"Passive Perception {10 + wisdom_modifier}"
     
     def random_languages(self):
-        return "Common"
-    
-    def random_image(self):
-        return "abigail_reed.jpg"
+        race = self.vars["race"].get().lower()
+        languages = "Common"
+        if race == "elf":
+            languages += ", Elvish"
+        elif race == "dwarf":
+            languages += ", Dwarvish"
+        elif race == "orc" or race == "half-orc":
+            languages += ", Orcish"
+        elif race == "goliath":
+            languages += ", Giant"
+        elif race == "Gnome":
+            languages += ", Gnomish"
+        elif race == "halfling":
+            languages += ", Halfling"
+        elif race == "goblin":
+            languages += ", Goblin"
+            
+        new_language = random.choice(languages_list)
+        
+        if new_language not in languages:
+            languages += f", {new_language}"
+            
+        return languages
     
     def random_race(self):
         return random.choice(race_options)
@@ -278,7 +445,11 @@ class SimpleGUI:
         return random.choice(class_options)
     
     def random_background(self):
-        return "Farmer"    
+        dnd_class = self.vars["class"].get().lower()
+        backgrounds = class_to_backgrounds.get(dnd_class)
+        if not backgrounds:
+            return "Unknown"
+        return random.choice(backgrounds)
     
     def random_abilities(self):
         return "TODO"
@@ -287,7 +458,20 @@ class SimpleGUI:
         return "TODO"
     
     def random_proficiencies(self):
-        return "TODO"
+        dnd_class = self.vars["class"].get().lower()
+        
+        # core proficiencies.
+        core_proficiencies = class_to_proficiencies.get(dnd_class, [])
+        remaining_proficiencies = list(set(additional_proficiencies) - set(core_proficiencies))
+        additional_core = random.sample(remaining_proficiencies, 1)
+        
+        # weapon proficiencies
+        core_weapon_proficiencies = class_to_weapon_proficiencies.get(dnd_class, [])
+        remaining_weapon_proficiencies = list(set(additional_weapon_proficiencies) - set(core_weapon_proficiencies))
+        additional_weapon = random.sample(remaining_weapon_proficiencies, 1)
+        
+        all_proficiencies = list(set(core_proficiencies + additional_core + core_weapon_proficiencies + additional_weapon))
+        return ", ".join(all_proficiencies)
     
     def random_information(self):
         return ("TODO")
@@ -299,4 +483,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     simple_gui = SimpleGUI(root)
     root.mainloop()
-
