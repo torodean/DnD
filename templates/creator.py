@@ -567,7 +567,7 @@ def generate_word_from_file(file_name):
     
     # Generate word.
     word = "{0}".format(generate_word(prob_matrix, shortest, longest))
-    self.output_text(f"Generated word: {word}", "success")
+    output_text(f"Generated word: {word}", "success")
     return word
     
 
