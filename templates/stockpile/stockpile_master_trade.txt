@@ -23,7 +23,7 @@ Ring of Keys;3120g;This golden ring appears non-magical at first glance. While w
 Bottle of Fine Wine;8g;
 Ghost Fungus (1 shroom);1g;A funnel shaped mushroom shining brightly enough in the dark to read by
 Flute;1g;
-Book of Elementary Mathematics;25g;Second Edition
+Book of Elementary Mathematics: Second Edition;25g;Second Edition
 Set of bagpipes;30g;
 45 Gallons of ale;9g;Comes in 5 Gallon Barrels, 9 different brews
 yellow Quartz;50g;
@@ -70,7 +70,7 @@ Ashes of Al'ar;15000g;This box is magically sealed with 4 gem slots on each face
 Hematite;10g;
 Saronite Bar;200g;
 Amulet of the Planes;120000g;
-Book of elementary Mathematics;25g;Third edition
+Book of Elementary Mathematics: Third Edition;25g;Third edition
 Elixer of swimming;250g;
 Spined Shield;5580g;This finely crafted shield once belonged to the illustrious paladin Gerxup, who vanished in the Chambers of Dark Sorrows.
 Ring ofsell Turning;98280g;(inscription provides clue to function) This polished ring also repels small insects when held.
