@@ -419,7 +419,7 @@ def copy_file_to_directory(file_path, directory_path):
 
     # Check if the file exists
     if not os.path.isfile(file_path):
-        raise ValueError("File does not exist")
+        raise ValueError(f"File does not exist: {file_path}. Cannot Copy.")
 
     # Check if the directory exists
     ensure_directory_exists(directory_path)
