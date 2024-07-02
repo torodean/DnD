@@ -199,13 +199,14 @@ def calculate_hp(class_type: str, level: int, constitution: int) -> int:
         ValueError: If the given class_type is not recognized.
     """
     hit_die = 0
+    class_type = class_type.lower() # ensure it's lowercase.
 
     # Determine hit die for the class
     if class_type == 'barbarian':
         hit_die = 12
     elif class_type == 'fighter' or class_type == 'paladin' or class_type == 'ranger':
         hit_die = 10
-    elif class_type == 'cleric' or class_type == 'druid' or class_type == 'monk' or class_type == 'rogue' or class_type == 'warlock':
+    elif class_type == 'cleric' or class_type == 'druid' or class_type == 'monk' or class_type == 'rogue' or class_type == 'warlock' or class_type == 'bard':
         hit_die = 8
     elif class_type == 'sorcerer' or class_type == 'wizard':
         hit_die = 6
