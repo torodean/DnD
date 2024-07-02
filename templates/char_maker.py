@@ -106,7 +106,8 @@ languages_list = [
     "Vedalken",
     "Infernal",
     "Primodial",
-    "Aarakocra"
+    "Aarakocra",
+    "Druidic"
 ]
 
 # Mapping of DnD classes to their core proficiencies
@@ -434,6 +435,8 @@ class SimpleGUI:
             languages += ", Goblin"
         elif race == "aarakocra":
             languages += ", Aarakocra"
+        elif class == "druid":
+            languages += ", Druidic"
             
         new_language = random.choice(languages_list)
         
