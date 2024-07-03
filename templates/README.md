@@ -36,7 +36,7 @@ The apps in this folder are sub-apps of the MMORPDND system and each serve a spe
 - stockpile/stockpile_plot.py
   - This app will plot the data generated using the stockpile system over time.
 - char_maker.py
-  - This app is a tool for making characters with the assistance of AI.
+  - This app is a tool for making characters with the optional assistance of AI (AI features not yet implemented).
 - reset_all_files.py
   - This will reset all images, delete all HTML files, and move trash files back to input_files to be re-deployed.
 - publicize_files.py
