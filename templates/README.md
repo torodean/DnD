@@ -22,6 +22,8 @@ The various folders in this directory server purposes for the various MMORPDND a
   - This folder is a place to store custom languages. These often contain many files (fonts, docs, and applications for assitance in translating or creating puzzles).
 - stockpile
   - Files relating to the stockpile system.
+- tests
+  - This is where automated python unit tests are stored.
 - trash
   - This is a folder to store files that have already been 'finished' or converted using the creator.py app but are to be kept around in case future additions or changes are made. 
 
