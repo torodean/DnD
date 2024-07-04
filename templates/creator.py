@@ -1634,7 +1634,7 @@ class Creator:
             f.write('<!DOCTYPE html>\n<html>\n<head>\n<title></title>\n</head>\n<body>\n')
 
             file_name_val = output_file.split('/')[-1].split('.')[0].replace("_", " ")
-            header = f"<div class=\"dnd-header\"><h1>{file_name_val}</h1></div><hr/>"
+            header = f"<div class=\"dnd-header\"><h1>{file_name_val}</h1></div>"
             f.write(header)
 
             # iterate over lines in input file
@@ -1644,6 +1644,8 @@ class Creator:
                 if "folder" in line or line.startswith('#') or line.strip() == "":
                     continue
 
+                html_element = '<hr>'
+
                 # parse line
                 variable_class, value = line.split('=', 1)
                 variable, class_name = variable_class.split('[')
@@ -1652,12 +1654,12 @@ class Creator:
                 if class_name == "dnd-list" and ";" in value:
                     # Create HTML list element.
                     html_list = create_html_list(value)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
 
                 elif class_name == "dnd-table" and ";" in value:
                     # Create HTML table element.
                     html_table = create_html_table(value)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
 
                 elif class_name == "dnd-image" and ";" in value:
                     # Create HTML image element.
@@ -1666,25 +1668,23 @@ class Creator:
                     for img in image_files:       
                         output_text(f"Processed {img}.")
                         output_images.append(img)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
 
                 elif class_name == "dnd-info":
                     html_info = create_html_info(value)
                     if ";" in value:
                         # Create HTML info element.
-                        html_element = f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
+                        html_element += f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
                     else:
-                        html_element = f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
+                        html_element += f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
 
                 elif class_name == "dnd-music":
                     html_music = self.create_html_music(value)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_music}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_music}</p></div>'
 
                 else:
                     # Create generic HTML element.
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
-
-                html_element += '<hr>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
 
                 # write HTML element to file
                 f.write(html_element)
@@ -1826,7 +1826,7 @@ class Creator:
 
         # Generate the character file path
         char_name = char_fields['name']
-        filename = f'{char_name.lower().replace(" ", "_")}.html'
+        filename = f'{char_name.replace(" ", "_")}.html'
         filepath = os.path.join(global_vars.output_file_folder, filename)
 
         # Read the template file and replace the fields with the character information
@@ -1912,18 +1912,13 @@ class Creator:
             template = template.replace("[notes]", notes)
 
         # Replace the image block.
+        output_images = []
         img_src = "img/" + char_fields['image']
         img_dir = global_vars.output_file_folder + "/img"
         img_desc = img_src.split('/')[1].split('.')[0] + "-image"
         template = template.replace("[image-description]", img_desc)
         template = template.replace("[image-url]", img_src)
-
-        try:
-            copy_file_to_directory(img_src, img_dir)
-            if self.trash_checkbox_value.get():
-                global_vars.trash_file(img_src)
-        except ValueError as e:
-            output_text(f"An error occurred: {e}", "error")
+        output_images.append(img_src)
 
         # Update abilities
         abilities = char_fields['abilities'].split(';')
@@ -1961,16 +1956,102 @@ class Creator:
                 equipment_output += " description]</li>"
         template = template.replace("[equipment list]", equipment_output)
 
+        # read input file to determine if extra fields need parsed.
+        with open(file, 'r') as f:
+            lines = f.readlines()
+
+        # iterate over lines in input file
+        for line in lines:
+            print(line, end='')
+            # Skip the line with folder in it or a comment line.
+            if "folder" in line or line.startswith('#') or line.strip() == "":
+                continue
+
+            # Make sure the line is formatted properly to be an extra (non-template) char line.
+            # All these should be in the line if it's an extra line.
+            if not ("=" in line and "[" in line and "]" in line and "dnd-" in line):
+                continue
+
+            html_element = '<hr>'
+
+            # parse line
+            variable_class, value = line.split('=', 1)
+            variable, class_name = variable_class.split('[')
+            class_name = class_name[0:-1].strip()
+
+            if class_name == "dnd-list" and ";" in value:
+                # Create HTML list element.
+                html_list = create_html_list(value)
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
+
+            elif class_name == "dnd-table" and ";" in value:
+                # Create HTML table element.
+                html_table = create_html_table(value)
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
+
+            elif class_name == "dnd-image" and ";" in value:
+                # Create HTML image element.
+                html_img, image_files = create_html_img(value)
+                image_name = value.split(';')[0].strip()
+                for img in image_files:       
+                    output_text(f"Processed {img}.")
+                    output_images.append(img)
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
+
+            elif class_name == "dnd-info":
+                html_info = create_html_info(value)
+                if ";" in value:
+                    # Create HTML info element.
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
+                else:
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
+
+            elif class_name == "dnd-music":
+                html_music = self.create_html_music(value)
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_music}</p></div>'
+
+            else:
+                # Create generic HTML element.
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
+        
+            template += html_element
+        
         # Write the new character file
         with open(filepath, 'w') as f:
             f.write(template)
 
-        output_text(f'Character file created: {filepath}', "note")
+        output_text(f'Character file created: {filepath}', "note")       
+        
+        # Remove duplicate images if any.
+        output_images = list(dict.fromkeys(output_images))
+        
+        # copy images to correct location.
+        if len(output_images) > 0:
+            for image in output_images:
+                if os.path.isfile(image):
+                    output_image_dir = global_vars.output_file_folder + "img"
+                    ensure_directory_exists(output_image_dir)
+
+                    # trash image if needed.
+                    if self.trash_checkbox_value.get():
+                        move_file_to_directory(image, output_image_dir)
+                        if os.path.isfile(image):
+                            global_vars.trash_file(image)
+                    else:
+                        copy_file_to_directory(image, output_image_dir)
+
+                else:
+                    output_text(f'Image file does not exist: {image}', "error")
+
+                    output_image_file = global_vars.output_file_folder + "img/" + image
+                    if os.path.isfile(output_image_file):
+                        output_text(f'Image file exists in target directory: {output_image_file}', "warning")
 
         # move the files to the trash if this option is selected.
-        if self.trash_checkbox_value.get():
-            global_vars.trash_file(file)
-            
+        if not terminal_mode:
+            if self.trash_checkbox_value.get():
+                global_vars.trash_file(file)
+
 
     def output_text_to_gui(self, text):
         """
