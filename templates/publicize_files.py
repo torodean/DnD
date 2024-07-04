@@ -141,7 +141,7 @@ def process(files):
 
 if __name__ == '__main__':
     # Path to the text file containing the list of HTML files
-    public_files_list = 'public_files.list'
+    public_files_list = 'lists/public_files.list'
     
     # Check if the file exists
     if os.path.exists(public_files_list):
