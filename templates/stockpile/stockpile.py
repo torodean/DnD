@@ -868,7 +868,7 @@ def calculate_sell_percentage(items_list, percentage=config.sell_price_percentag
         buy_price = float(item[1])
         sell_price = buy_price * percent_multiplier
         if sell_price < 0.01: # less than 1 copper.
-            sell_price = 0.01
+            sell_price = 0.00
         if sell_price > buy_price:
             sell_price = buy_price
         updated_item = [item[0], buy_price, sell_price, item[3]]
