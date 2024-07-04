@@ -1644,7 +1644,7 @@ class Creator:
                 if "folder" in line or line.startswith('#') or line.strip() == "":
                     continue
 
-                html_element += '<hr>'
+                html_element = '<hr>'
 
                 # parse line
                 variable_class, value = line.split('=', 1)
@@ -1654,12 +1654,12 @@ class Creator:
                 if class_name == "dnd-list" and ";" in value:
                     # Create HTML list element.
                     html_list = create_html_list(value)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
 
                 elif class_name == "dnd-table" and ";" in value:
                     # Create HTML table element.
                     html_table = create_html_table(value)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
 
                 elif class_name == "dnd-image" and ";" in value:
                     # Create HTML image element.
@@ -1668,23 +1668,23 @@ class Creator:
                     for img in image_files:       
                         output_text(f"Processed {img}.")
                         output_images.append(img)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
 
                 elif class_name == "dnd-info":
                     html_info = create_html_info(value)
                     if ";" in value:
                         # Create HTML info element.
-                        html_element = f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
+                        html_element += f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
                     else:
-                        html_element = f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
+                        html_element += f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
 
                 elif class_name == "dnd-music":
                     html_music = self.create_html_music(value)
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_music}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_music}</p></div>'
 
                 else:
                     # Create generic HTML element.
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
 
                 # write HTML element to file
                 f.write(html_element)
@@ -1826,7 +1826,7 @@ class Creator:
 
         # Generate the character file path
         char_name = char_fields['name']
-        filename = f'{char_name.lower().replace(" ", "_")}.html'
+        filename = f'{char_name.replace(" ", "_")}.html'
         filepath = os.path.join(global_vars.output_file_folder, filename)
 
         # Read the template file and replace the fields with the character information
@@ -1972,7 +1972,7 @@ class Creator:
             if not ("=" in line and "[" in line and "]" in line and "dnd-" in line):
                 continue
 
-            html_element += '<hr>'
+            html_element = '<hr>'
 
             # parse line
             variable_class, value = line.split('=', 1)
@@ -1982,12 +1982,12 @@ class Creator:
             if class_name == "dnd-list" and ";" in value:
                 # Create HTML list element.
                 html_list = create_html_list(value)
-                html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_list}</p></div>'
 
             elif class_name == "dnd-table" and ";" in value:
                 # Create HTML table element.
                 html_table = create_html_table(value)
-                html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_table}</p></div>'
 
             elif class_name == "dnd-image" and ";" in value:
                 # Create HTML image element.
@@ -1996,23 +1996,23 @@ class Creator:
                 for img in image_files:       
                     output_text(f"Processed {img}.")
                     output_images.append(img)
-                html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_img}</p></div>'
 
             elif class_name == "dnd-info":
                 html_info = create_html_info(value)
                 if ";" in value:
                     # Create HTML info element.
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3>{html_info}</div>'
                 else:
-                    html_element = f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
+                    html_element += f'<div class="{class_name}"><h3>{variable}</h3><p class=\"first-paragraph\">{value}</p></div>'
 
             elif class_name == "dnd-music":
                 html_music = self.create_html_music(value)
-                html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{html_music}</p></div>'
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{html_music}</p></div>'
 
             else:
                 # Create generic HTML element.
-                html_element = f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
+                html_element += f'<div class="{class_name}"><h3>{variable}</h3><p>{value}</p></div>'
         
             template += html_element
         
@@ -2021,6 +2021,9 @@ class Creator:
             f.write(template)
 
         output_text(f'Character file created: {filepath}', "note")       
+        
+        # Remove duplicate images if any.
+        output_images = list(dict.fromkeys(output_images))
         
         # copy images to correct location.
         if len(output_images) > 0:
