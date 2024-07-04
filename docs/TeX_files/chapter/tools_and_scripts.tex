@@ -28,10 +28,11 @@ This script serves as the backbone for an array of automatic linking and logisti
 	\item Create Directory Structures if not already existing.
 	\item Create index files for each directory.
 	\item Update each index file to link to all files and images within the directory.
-	\item Update the headers of all html files to the template html header.
-	\item Update the navigation of all html files to the template navigation html.
-	\item Search and hyperlink all words found in all html files to the appropriate html file whose name matches the words found.
+	\item Update the headers of all HTML files to the template HTML header.
+	\item Update the navigation of all HTML files to the template navigation HTML.
+	\item Search and hyperlink all words found in all HTML files to the appropriate HTML file whose name matches the words found.
 	\item Beautify the code.
+	\item Publicize the HTML files specified in the templates/lists/public\_files.list file.
 \end{enumerate}
 
 
@@ -127,13 +128,13 @@ The ``Generate Word" button is used for random word generation. This feature tak
 
 The ``Trash" checkbox will determine if processed files will be moved to the trash folder after processing and if duplicate files are to be deleted. Typically, the user will want this to be checked, but it is useful to leave unchecked for testing and if files will be processed multiple times. The ``Download Files" button determines if music files should be downloaded when `.input' files containing a dnd-music section are processed (this is explained mroe in later sections).
 
-\subsubsection{Input Files (.input)}
+\subsubsection{Input Files (.input) \label{input files section}}
 
-The input files are essentially just text files with the file extension `.input'. The main feature of the creator.py tool is to read in these input files, parse them, and generate the appropriate html files from them. These input files must follow a strict formatting but offer a few various helpful features. The name and main heading of the generated HTML file will be created based on the name of the input file (underscores will be replaced by spaces for the heading). Each line of the input file represents a 'section' of the html file that will be generated. Each line follows the following format:
+The input files are essentially just text files with the file extension `.input'. The main feature of the creator.py tool is to read in these input files, parse them, and generate the appropriate HTML files from them. These input files must follow a strict formatting but offer a few various helpful features. The name and main heading of the generated HTML file will be created based on the name of the input file (underscores will be replaced by spaces for the heading). Each line of the input file represents a 'section' of the HTML file that will be generated. Each line follows the following format:
 \begin{lstlisting}
 Heading Text[type]=Information text
 \end{lstlisting}
-The "Heading Text" is what will appear as the header for that html section. The "type" value is what determines the properties of this section and how it is interpreted by the creator tool. The "Information text" is the actual information for that section. The only exception to this rule is the first line which defines the "folder" that the html file generated from the input file will be placed into. This "folder" line is special in that it has no type and the creator tool will recognize the folder keyword and store this information separately. This folder line must be formatted as follows:
+The "Heading Text" is what will appear as the header for that HTML section. The "type" value is what determines the properties of this section and how it is interpreted by the creator tool. The "Information text" is the actual information for that section. The only exception to this rule is the first line which defines the "folder" that the HTML file generated from the input file will be placed into. This "folder" line is special in that it has no type and the creator tool will recognize the folder keyword and store this information separately. This folder line must be formatted as follows:
 \begin{lstlisting}
 folder=path/to/where/I/want/my/generated/file
 \end{lstlisting}
@@ -160,7 +161,7 @@ Coconatus Marmotta[dnd-image]=img/coconatus_marmotta.jpg;Created by Bing AI imag
 	\label{fig:dnd-image-fig}
 \end{figure}
 
-One unique feature of this is that if the image name does not exist (i.e. `img/coconatus\_marmotta.jpg'), the tool will append a ` (1)' to the name and search again (i.e. `img/coconatus\_marmotta (1).jpg'). If this new name is found, the tool will search for image names with the index incremented and include all such images (i.e. `img/coconatus\_marmotta (2).jpg', `img/coconatus\_marmotta (3).jpg', etc) in the output html block.  
+One unique feature of this is that if the image name does not exist (i.e. `img/coconatus\_marmotta.jpg'), the tool will append a ` (1)' to the name and search again (i.e. `img/coconatus\_marmotta (1).jpg'). If this new name is found, the tool will search for image names with the index incremented and include all such images (i.e. `img/coconatus\_marmotta (2).jpg', `img/coconatus\_marmotta (3).jpg', etc) in the output HTML block.  
 
 \subsubsection{dnd-list type}
 
@@ -281,13 +282,13 @@ The above file will create a file in the `items' folder found in `campaign/items
 
 \subsubsection{Character Files (.char)}
 
-The character files are text files with the ".char" extension. These are a special type of input file that generates an html page specific for DnD character information. This was actually designed before the more general input file formatting outlined in the sections above and therefore lacks some of the versatility and extra features that can be included in the input files. Nevertheless, the character format creates an html page that should more than suffice for any npc characters and has many of its own unique features and capabilities. The .char file contains lines that define the various elements of a character. These lines to not currently support the types that are supported with the input files. Each line has a specific output format in the generated html file based on a template and the information itself. Some lines in the file are required while others are optional. The required lines must be present for the character file generated to be completed, while the optional lines will automatically be randomized and generated in the event that they are missing. Eahc line of the character file must be formatting in the following way:
+The character files are text files with the ".char" extension. These are a special type of input file that generates an HTML page specific for DnD character information. This was actually designed before the more general input file formatting outlined in the sections above and therefore lacks some of the versatility and extra features that can be included in the input files. Nevertheless, the character format creates an HTML page that should more than suffice for any npc characters and has many of its own unique features and capabilities. The .char file contains lines that define the various elements of a character. These lines to not currently support the types that are supported with the input files. Each line has a specific output format in the generated HTML file based on a template and the information itself. Some lines in the file are required while others are optional. The required lines must be present for the character file generated to be completed, while the optional lines will automatically be randomized and generated in the event that they are missing. Eahc line of the character file must be formatting in the following way:
 \begin{lstlisting}
 Keyword = Value
 \end{lstlisting}
 The "Keyword" is used by the creator tool to determine which type of information is being input, and the "Value" is the value of the information. For example "level = 3" would let the creator know that the character level is 3, and it will use that information appropriately.
 
-Once the character file is appropriately filled out and created, it should be saved/placed in the templates/input\_files folder for processing by the creator tool just like the .input files. The creator tool will search the templates/img folder for any image references within the character files.
+Once the character file is appropriately filled out and created, it should be saved/placed in the templates/input\_files folder for processing by the creator tool just like the .input files. The creator tool will search the templates/img folder for any image references within the character files. This is different than the behavior of the input files (which rely on the user to specify the 'img' folder in the image path).
 
 
 
@@ -298,7 +299,7 @@ Once the character file is appropriately filled out and created, it should be sa
 
 The required keywords for a character file are the following:
 \begin{enumerate}
-	\item folder: This defines the folder that the output html character file will be placed. This should be a valid file path to a folder.
+	\item folder: This defines the folder that the output HTML character file will be placed. This should be a valid file path to a folder.
 	\item name: This defines the name of the character.
 	\item image: This is an image for the character. This should be just the image file name and extension (no path) and the image itself should be placed in the "templates/img" folder for automatic detection.
 	\item class: This defines the DnD class. This must be a valid class from the following list:
@@ -357,7 +358,7 @@ The optional keywords for a character file are the following:
 	\item notes: Notes to add about the character that aren't contained in the `information' section.
 \end{enumerate}
 
-It is recommended to include all values in the character file and just use "None" for any string values that are not needed. This will prevent any un-expected bugs. Many of the values replace a string in a template file based on the values input, so if they are not specified, a correlated `search string' will appear in the final html file that serves as a placeholder for the information.
+It is recommended to include all values in the character file and just use "None" for any string values that are not needed. This will prevent any un-expected bugs. Many of the values replace a string in a template file based on the values input, so if they are not specified, a correlated `search string' will appear in the final HTML file that serves as a placeholder for the information.
 
 
 
@@ -403,7 +404,20 @@ Once created, the file should be placed in the templates/input\_files folder and
 
 
 
+\subsubsection{Optional Appended Input Types}
 
+The character files can have optional input file type (specified in section \ref{input files section}) blocks specified after the normal character file information. This will generate sections identical to that of the input files at the bottom of the character file page. See the example below:
+
+\begin{lstlisting}
+... # other character stats here
+proficiencies = strength, acrobatics, history
+information = This is some info for foobar, the template character.
+notes = No notes needed for template dude.
+
+A new section[dnd-info]=Some more information.
+
+Some more images[dnd-image]=img/images.jpg;images;More images of this char.
+\end{lstlisting}
 
 
 
@@ -412,10 +426,29 @@ Once created, the file should be placed in the templates/input\_files folder and
 
 \subsubsection{Name Files (.names) \label{section .names}}
 
-SECTION IN PROGRESS!
+The `.name' files are essentially lists of names to be used. The file extension `.names' is simply to differentiate between lists used as other things and lists that are specifically for name generation. These files should each have a common theme (i.e. a file for human names). Within the files, there should be one name per line. The ``Generate Word" button is used for random word generation. This feature takes a list of words (whether names, places, or other) in the form of a names file and generates a similar random word using the data in the input `.names' file. After generating a word, it will also ask the user if they would like to append that word to the list for future generation/use. 
 
+The algorithm used to generate these names is quite straight forward and outlined in detail below. At first, AI name generation was thought of as an option, but this tended to give very cliche, repetitive, and similar sounding names - it wasn't very creative. The algorithm added here generates entirely new words that follow the patterns and structure of the words in the input lists. The more words that are contained in the names list, the better the name generation will be. With small lists, the name generation may not be that good.
 
+The algorithm used for name generation begins by reading in all words in the names file. The words are sorted into a probability matrix that determines the probability of which letter should follow another based on all the occurrences of those letters within the words of the list. For example, the word `hello' would generate the below probability matrix.
 
+\begin{lstlisting}
+{
+    "e": {
+        "l": 1.0
+    },
+    "h": {
+        "e": 1.0
+    },
+    "l": {
+        "l": 0.5,
+        "o": 0.5
+    },
+    "o": {}
+}
+\end{lstlisting}
+
+Once generated, a small number of corrections and adjustments are made, and then this probability matrix is used to construct a new word. The length is randomized based on the smallest and largest words within the names file.
 
 
 
@@ -439,9 +472,18 @@ The `.list' files are simple lists of information. These are similar to the `.na
 
 \subsubsection{Command Line}
 
-The creator application does NOT currently support command line features.
+The creator application supports limited command line features. The file option will run the creator for a single input file and then update all files.
 
+\begin{lstlisting}
+$ ./creator.py -h
+usage: creator.py [-h] [-f FILE]
 
+MMORPDND Creator Tool.
+
+options:
+  -h, --help            show this help message and exit
+  -f FILE, --file FILE  Run the creator for a single input file and update all files.
+\end{lstlisting}
 
 
 
@@ -632,7 +674,7 @@ Backpack;2g;5 lb.
 
 The distinction between these two lists is in the types of items they contain. The general list should be easily obtainable and typically available items for an area. In contrast, the Trade/Specialty items are rare items, or things that may or may not be available - primarily carried by traders to a region.
 
-\subsubsection{Buy and Sell Price History Lists}
+\subsubsection{Buy and Sell Price History Lists \label{stockpile:buy and sell}}
 
 The buy and sell price history files can start blank. The application will create these by adding items into the list that are not already found. The files are formatted so that each line represents a single item. The lines will contain a number of elements separated by a semi-colon delimiter. The first element is the item name. All later elements are the various prices of the items as they have changed (thus capturing the price history).
 
@@ -665,7 +707,7 @@ TODO - finish section.
 
 \subsection{stockpile\_plot.py}
 
-TODO - finish section.
+The `stockpile\_plot.py' script will create plots of all the buy and sell prices of the generated stockpile prices (see section \ref{stockpile:buy and sell}).
 
 \begin{lstlisting}
 usage: stockpile_plot.py [-h] -b BUY -s SELL [-i ITEM] [-o OUTPUT]
