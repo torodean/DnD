@@ -3,7 +3,9 @@ name: Run Script
 on:
   push:
     branches:
-      - automated-updates  # Default branch
+      - main
+      - awtorode-browser
+      - automated-updates 
     paths:
     - 'templates/img/**'
     - 'campaign/characters/**'
