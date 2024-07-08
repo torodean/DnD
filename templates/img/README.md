@@ -116,35 +116,13 @@ Milton_Manastorm.png
 </td>
 
 <td valign="bottom">
-<img src="./_00798ce2-4164-4575-9f14-8f98ed46e976.jpg" width="200"><br>
-_00798ce2-4164-4575-9f14-8f98ed46e976.jpg
-</td>
-
-<td valign="bottom">
-<img src="./_031b4a61-5712-4c91-bc88-647d970ce024.jpg" width="200"><br>
-_031b4a61-5712-4c91-bc88-647d970ce024.jpg
-</td>
-
-<td valign="bottom">
 <img src="./_05b52710-c1d3-4a7a-aa19-408112605db7.jpg" width="200"><br>
 _05b52710-c1d3-4a7a-aa19-408112605db7.jpg
-</td>
-
-</tr>
-<tr>
-<td valign="bottom">
-<img src="./_05f13a87-8d7d-47a4-b8bd-8cd474d8df91.jpg" width="200"><br>
-_05f13a87-8d7d-47a4-b8bd-8cd474d8df91.jpg
 </td>
 
 <td valign="bottom">
 <img src="./_0632df74-e6f8-43ac-b549-1b27fff0b697.jpg" width="200"><br>
 _0632df74-e6f8-43ac-b549-1b27fff0b697.jpg
-</td>
-
-<td valign="bottom">
-<img src="./_06a5b673-6a2a-47fc-8686-ddb4851aae55.jpg" width="200"><br>
-_06a5b673-6a2a-47fc-8686-ddb4851aae55.jpg
 </td>
 
 <td valign="bottom">
@@ -2304,12 +2282,17 @@ aethur_moltenbeard (2).jpg
 </td>
 
 <td valign="bottom">
-<img src="./asfaertaret.jpg" width="200"><br>
-asfaertaret.jpg
+<img src="./alistair_hargro.jpg" width="200"><br>
+alistair_hargro.jpg
 </td>
 
 </tr>
 <tr>
+<td valign="bottom">
+<img src="./asfaertaret.jpg" width="200"><br>
+asfaertaret.jpg
+</td>
+
 <td valign="bottom">
 <img src="./baba (1).jpg" width="200"><br>
 baba (1).jpg
@@ -2325,13 +2308,13 @@ baba (2).jpg
 baba (3).jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./baba (4).jpg" width="200"><br>
 baba (4).jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./baby_coconatus_marmotta (1).jpg" width="200"><br>
 baby_coconatus_marmotta (1).jpg
@@ -2347,13 +2330,18 @@ baby_coconatus_marmotta (2).jpg
 baby_coconatus_marmotta (3).jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./captain_tel'selandorei.jpg" width="200"><br>
 captain_tel'selandorei.jpg
 </td>
 
-</tr>
-<tr>
+<td valign="bottom">
+<img src="./doran_ironshield.jpg" width="200"><br>
+doran_ironshield.jpg
+</td>
+
 <td valign="bottom">
 <img src="./elsie_moonshadow.jpg" width="200"><br>
 elsie_moonshadow.jpg
@@ -2364,6 +2352,8 @@ elsie_moonshadow.jpg
 fix_image_extensions.py
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./foobar.jpg" width="200"><br>
 foobar.jpg
@@ -2374,8 +2364,6 @@ foobar.jpg
 genji_tink (2).jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg" width="200"><br>
 iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg
@@ -2386,9 +2374,16 @@ iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg
 iYZER0V5Ufnx0BV0uO7m--3--2sg5t.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./indigo dahlia, macro photography.jpg" width="200"><br>
 indigo dahlia, macro photography.jpg
+</td>
+
+<td valign="bottom">
+<img src="./lysander_starweaver.jpg" width="200"><br>
+lysander_starweaver.jpg
 </td>
 
 <td valign="bottom">
@@ -2396,11 +2391,16 @@ indigo dahlia, macro photography.jpg
 svedka_manastorm.png
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./svedka_manastorm_1.png" width="200"><br>
 svedka_manastorm_1.png
+</td>
+
+</tr>
+<tr>
+<td valign="bottom">
+<img src="./talia_shadfernia.jpg" width="200"><br>
+talia_shadfernia.jpg
 </td>
 
 <td valign="bottom">
