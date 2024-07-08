@@ -3,7 +3,6 @@ name: Run Script
 on:
   push:
     branches:
-      - main
       - awtorode-browser
       - automated-updates 
     paths:
