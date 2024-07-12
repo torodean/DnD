@@ -2453,8 +2453,8 @@ saltahati_hill.jpg.jpg
 </td>
 
 <td valign="bottom">
-<img src="./shanti_threadneedle.jpg" width="200"><br>
-shanti_threadneedle.jpg
+<img src="./shanti_threadneddle.jpg" width="200"><br>
+shanti_threadneddle.jpg
 </td>
 
 <td valign="bottom">
