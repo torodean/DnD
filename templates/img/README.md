@@ -2233,17 +2233,66 @@ celestial_fireflies (2).jpg
 </td>
 
 <td valign="bottom">
+<img src="./chik'acarka_isle.jpg" width="200"><br>
+chik'acarka_isle.jpg
+</td>
+
+<td valign="bottom">
+<img src="./chik'afu_isle.jpg" width="200"><br>
+chik'afu_isle.jpg
+</td>
+
+</tr>
+<tr>
+<td valign="bottom">
+<img src="./chik'ahir_isle.jpg" width="200"><br>
+chik'ahir_isle.jpg
+</td>
+
+<td valign="bottom">
+<img src="./chik'ako_isle.jpg" width="200"><br>
+chik'ako_isle.jpg
+</td>
+
+<td valign="bottom">
+<img src="./chik'alig_isle.jpg" width="200"><br>
+chik'alig_isle.jpg
+</td>
+
+<td valign="bottom">
+<img src="./chik'ami_isle.jpg" width="200"><br>
+chik'ami_isle.jpg
+</td>
+
+</tr>
+<tr>
+<td valign="bottom">
+<img src="./chik'anik_isle.jpg" width="200"><br>
+chik'anik_isle.jpg
+</td>
+
+<td valign="bottom">
+<img src="./chik'atida_isle.jpg" width="200"><br>
+chik'atida_isle.jpg
+</td>
+
+<td valign="bottom">
+<img src="./chik'awii_isle.jpg" width="200"><br>
+chik'awii_isle.jpg
+</td>
+
+<td valign="bottom">
 <img src="./doran_ironshield.jpg" width="200"><br>
 doran_ironshield.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./durgan_stonefist.jpg" width="200"><br>
 durgan_stonefist.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./elara_brightwater.jpg" width="200"><br>
 elara_brightwater.jpg
@@ -2259,13 +2308,13 @@ elaria_shadowsone.jpg
 elizabeth_moonshay.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./elsie_moonshadow.jpg" width="200"><br>
 elsie_moonshadow.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./finnegan_sharblade.jpg" width="200"><br>
 finnegan_sharblade.jpg
@@ -2281,13 +2330,13 @@ fix_image_extensions.py
 genji_tink (2).jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./grik_sprocketsnatch.jpg" width="200"><br>
 grik_sprocketsnatch.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./grix_snaggletoo.jpg" width="200"><br>
 grix_snaggletoo.jpg
@@ -2303,13 +2352,13 @@ grub_thudashank.jpg
 iYZER0V5Ufnx0BV0uO7m--1--rifj0.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./iYZER0V5Ufnx0BV0uO7m--3--2sg5t.jpg" width="200"><br>
 iYZER0V5Ufnx0BV0uO7m--3--2sg5t.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./indigo dahlia, macro photography.jpg" width="200"><br>
 indigo dahlia, macro photography.jpg
@@ -2325,13 +2374,13 @@ john_harrowfeld.jpg
 kaelan_embabrow.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./kai_steelfist.jpg" width="200"><br>
 kai_steelfist.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./kerdan_plateau.jpg.jpg" width="200"><br>
 kerdan_plateau.jpg.jpg
@@ -2347,13 +2396,13 @@ kip_thunderharr.jpg
 lysander_starweaver.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./lysandra_moonwhisper.jpg" width="200"><br>
 lysandra_moonwhisper.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./malakai_forgofeir.jpg" width="200"><br>
 malakai_forgofeir.jpg
@@ -2369,13 +2418,13 @@ marcus_allercrest.jpg
 marek_blacktor.jpg.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./master_liandor_windwalker.jpg" width="200"><br>
 master_liandor_windwalker.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./nix_whiskercleu.jpg" width="200"><br>
 nix_whiskercleu.jpg
@@ -2391,13 +2440,13 @@ ravik_blacktor.jpg.jpg
 rilian_selterlif.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./ryuman_disctrict.jpg.jpg" width="200"><br>
 ryuman_disctrict.jpg.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./saltahati_hill.jpg.jpg" width="200"><br>
 saltahati_hill.jpg.jpg
@@ -2413,13 +2462,13 @@ shanti_threadneedle.jpg
 svedka_manastorm.png
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./svedka_manastorm_1.png" width="200"><br>
 svedka_manastorm_1.png
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./talia_shadfernia.jpg" width="200"><br>
 talia_shadfernia.jpg
@@ -2435,13 +2484,13 @@ tenichean_soul_orbs (1).jpg
 tenichean_soul_orbs (2).jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./tenichean_soul_orbs (3).jpg" width="200"><br>
 tenichean_soul_orbs (3).jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./tenichean_soul_orbs (4).jpg" width="200"><br>
 tenichean_soul_orbs (4).jpg
@@ -2457,13 +2506,13 @@ thaladir_stormwaver.jpg
 thane_ironbeard.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./thaydus_neldershad.jpg" width="200"><br>
 thaydus_neldershad.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./trivok_blacktor.jpg.jpg" width="200"><br>
 trivok_blacktor.jpg.jpg
@@ -2479,13 +2528,13 @@ vaelin_shosang.jpg
 veridian_pyrohydra (1).jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./veridian_pyrohydra (2).jpg" width="200"><br>
 veridian_pyrohydra (2).jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./veridian_pyrohydra (3).jpg" width="200"><br>
 veridian_pyrohydra (3).jpg
@@ -2501,13 +2550,13 @@ victorai_eirholm.jpg
 zarnaldis_moltenbeard (1).jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./zarnaldis_moltenbeard (2).jpg" width="200"><br>
 zarnaldis_moltenbeard (2).jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./zarnaldis_moltenbeard (3).jpg" width="200"><br>
 zarnaldis_moltenbeard (3).jpg
