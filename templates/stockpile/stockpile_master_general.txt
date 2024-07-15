@@ -169,8 +169,8 @@ Chain mail;75g;55 lb. 16. Stealth Disadvantage (req. Str 13)
 Splint;200g;60 lb. 17. Stealth Disadvantage (req. Str 15)
 Plate;1500g;65 lb. 18. Stealth Disadvantage (req. Str 15)
 Shield;10g;6 lb. (+2)
-wheat;4c;1 lb.
-one baby chicken;5c;1 lb.
+wheat;4c;1 lb. 
+one baby chicken;5c;1 lb. (limit 10 per week)
 flour;4c;1 lb.
 salt;5c;1 lb.
 iron;1s;1 lb.
