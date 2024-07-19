@@ -7,7 +7,7 @@ const path = require('path');
 const DIRECTORIES = ['./templates/img/', './campaign/characters/non-player/img/', './campaign/characters/player/img/'];
 
 const README_FILENAME = 'README.md';
-const NB_IMAGES_PER_LINE = 4;
+const NB_IMAGES_PER_LINE = 3;
 
 // Loop through each directory
 DIRECTORIES.forEach((ROOT_DIR) => {
@@ -27,7 +27,7 @@ DIRECTORIES.forEach((ROOT_DIR) => {
       nbImages++;
       mdContent += `
 <td valign="bottom">
-<img src="./${image}" width="200"><br>
+<img src="./${image}" width="250"><br>
 ${image}
 </td>
 `;
