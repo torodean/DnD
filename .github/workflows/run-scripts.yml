@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - awtorode-browser
-      - automated-updates 
+      - automated-updates
     paths:
     - 'templates/img/**'
     - 'campaign/characters/**'
