@@ -27,7 +27,7 @@ DIRECTORIES.forEach((ROOT_DIR) => {
       nbImages++;
       mdContent += `
 <td valign="bottom">
-<img src="./${image}" width="200"><br>
+<img src="./${image}" width="150"><br>
 ${image}
 </td>
 `;
