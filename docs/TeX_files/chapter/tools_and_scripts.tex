@@ -30,6 +30,7 @@ This script serves as the backbone for an array of automatic linking and logisti
 	\item Update each index file to link to all files and images within the directory.
 	\item Update the headers of all HTML files to the template HTML header.
 	\item Update the navigation of all HTML files to the template navigation HTML.
+	\item Search for invalid hyperlinks in HTML files and removes them.
 	\item Search and hyperlink all words found in all HTML files to the appropriate HTML file whose name matches the words found.
 	\item Beautify the code.
 	\item Publicize the HTML files specified in the templates/lists/public\_files.list file.
@@ -61,14 +62,15 @@ The GUI window is somewhat self explanatory. The two main features are represent
 The MMORPDND application supports some command line features. The update feature will run the updates for all HTML files.
 
 \begin{lstlisting}
-usage: mmorpdnd.py [-h] [-t] [-u]
+usage: mmorpdnd.py [-h] [-t] [-u] [-r]
 
 MMORPDND Tools and apps.
 
-optional arguments:
-	-h, --help    show this help message and exit
-	-t, --test    Runs the test-all feature then exit.
-	-u, --update  Runs the update-all feature then exit.
+options:
+  -h, --help    show this help message and exit
+  -t, --test    Runs the test-all feature then exits.
+  -u, --update  Runs the update_all feature then exits.
+  -r, --remove  Runs the remove_broken_links feature then exits.
 \end{lstlisting}
 
 
