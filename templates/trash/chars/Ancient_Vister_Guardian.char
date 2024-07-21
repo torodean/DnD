@@ -1,0 +1,34 @@
+folder = creatures/monsters
+name = Ancient Vister Guardian
+ac = 25 (natural armor)
+hp = 650
+size = colossal
+type = giant
+alignment = neutral
+speed = 80 ft.
+resistances = bludgeoning, piercing, and slashing from non-magical attacks
+immunities = poison, petrified
+senses = darkvision 120 ft., tremorsense 60 ft., passive Perception 18
+languages = Giant, Terran
+image = ancient_vister_guardian (1).jpg
+level = 20
+race = stone giant
+class = guardian
+background = ancient guardian
+strength = 36
+dexterity = 10
+constitution = 37
+intelligence = 9
+wisdom = 18
+charisma = 16
+abilities = See Abilities section below.
+equipment = Ancient stone armor
+proficiencies = Athletics, Intimidation, Strength, Constitution, Survival
+information = An Ancient Vister Guardian is an Ancient colossal stone giant who guarded sacred mountain passes for millennia. Their immense strength and mastery over the earth make them a formidable foe. Legends say that The guardians were once a part of the mountain itself, brought to life by ancient magic to protect the land from invaders. Their deep connection with the earth grant them extraordinary abilities that allow them to manipulate the very ground they walk upon. 
+notes = A Ancient Vister Guardian's unique abilities make them a powerful guardian of the mountains.
+
+Ancient Vister Guardian[dnd-image]=img/ancient_vister_guardian.jpg;Created by Bing AI image generator.;Variations of the Ancient Vister Guardians.
+
+Lore[dnd-info]=Many mellenia ago, an army of Ancient Vister Guardian's was summoned to combat the threat of Yltharis on the world. These stone giants were eventually rendered innert and hardened into the great wall forming the southern border of Suren. The region of Visterguarde acquired its name around this time and was named after the innert army of Vister Guardians within the Suren walls. It was believed that these colossal guardians serve as a protective ward for the region and against any future world threats.  
+
+Abilities[dnd-list]=Earth Shaker: An Ancient Vister Guardian can use an action to stomp the ground, causing a shockwave in an 100-foot radius. All creatures in the area must succeed on a DC 24 Dexterity saving throw or take 6d12 bludgeoning damage and be knocked prone. Structures in the area take triple damage.;Stone Camouflage: An Ancient Vister Guardian has advantage on Dexterity (Stealth) checks made to hide in rocky terrain.;Mountain’s Embrace: An Ancient Vister Guardian can meld into stone, becoming indistinguishable from the surrounding rock. While melded, An Ancient Vister Guardian is aware of everything happening around him but cannot move or take actions.;Rockslide: As a bonus action, An Ancient Vister Guardian can cause a localized rockslide in a 60-foot cone. All creatures in the area must make a DC 22 Strength saving throw or take 8d10 bludgeoning damage and be restrained by the rubble.;Petrifying Gaze: An Ancient Vister Guardian can use his action to fix his gaze on one creature within 120 feet. The target must succeed on a DC 19 Constitution saving throw or begin to turn to stone and be restrained. The restrained target must repeat the saving throw at the end of its next turn, becoming petrified on a failure or ending the effect on a success.
