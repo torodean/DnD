@@ -1,0 +1,31 @@
+folder = characters/non-player
+name = Zarnaldis Moltenbeard
+ac = 21 (plate armor, shield)
+hp = 195
+size = medium
+type = humanoid (dwarf)
+alignment = lawful good
+speed = 25 ft.
+resistances = fire, poison
+senses = darkvision 60 ft., passive Perception 16
+languages = Common, Dwarvish, Celestial
+image = zarnaldis_moltenbeard (1).jpg
+level = 18
+race = dwarf
+class = paladin (Oath of the Crown)
+background = noble (king)
+strength = 19
+dexterity = 12
+constitution = 18
+intelligence = 14
+wisdom = 16
+charisma = 20
+abilities =  Divine Smite, Lay on Hands, Aura of Protection, Champion Challenge, Turn the Tide, Divine Allegiance, Unyielding Spirit, Exalted Champion
+equipment = Molten King's Blade (legendary longsword), Shield of the Crown, Plate Armor of Devotion, Amulet of Royal Authority
+proficiencies = History, Persuasion, Insight, Athletics
+information = Zarnaldis Moltenbeard, the son of Aethur Moltenbeard, ascended to the throne after his father's assassination. Driven by a desire to avenge his father and restore honor to his lineage, he rules with a mix of determination and sorrow. Despite his young age, he has proven to be a capable leader, deeply committed to the welfare of his people.
+notes = Zarnaldis carries the heavy burden of his father's legacy and the duty to uncover the truth behind the assassination. He is both a warrior and a king, striving to protect Loch Modar and uphold the ideals his father championed.
+
+Zarnaldis Moltenbeard[dnd-image]=img/zarnaldis_moltenbeard.jpg; Image created by Bing AI image generator.; Variations of Zarnaldis Moltenbeard.
+
+Abilities[dnd-list]=;-Divine Smite*: Zarnaldis can expend a spell slot to deal radiant damage to a target in addition to his weapon's damage.;-Lay on Hands*: Zarnaldis can heal a total of 90 hit points, divided as he sees fit among creatures he touches.;-Aura of Protection*: Zarnaldis and friendly creatures within 10 feet of him gain a +5 bonus to all saving throws.;-Champion Challenge*: Zarnaldis can issue a challenge that compels other creatures to do battle with him.;-Turn the Tide*: As a bonus action, Zarnaldis can bolster injured creatures within 30 feet of him, restoring hit points to each creature that has less than half its hit points.;-Divine Allegiance*: When a creature within 5 feet of Zarnaldis takes damage, he can use his reaction to take the damage instead.;-Unyielding Spirit*: Zarnaldis has advantage on saving throws to avoid being paralyzed or stunned.;-Exalted Champion*: Zarnaldis can use his action to channel the presence of his deity to grant himself advantage on attack rolls made against a creature within 30 feet.
