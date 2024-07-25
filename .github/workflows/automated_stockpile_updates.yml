@@ -2,7 +2,11 @@ name: Automated Stockpile Update
 
 on:    
   schedule:
-    - cron: '45 16 * * 4' # Runs every Sunday at 5 AM UTC
+    - cron: '0 5 * * 0' # Runs every Sunday at 5 AM UTC  
+  push:
+    paths:
+      - '.github/workflows/automated_stockpile_updates.yml' # Runs when this file is modified
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   update-stockpile:
