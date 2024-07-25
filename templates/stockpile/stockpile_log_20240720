@@ -1,0 +1,59 @@
+[2024-07-20 20 56 20] WARNING: No config file specified. Using default values. See help message below for constructing a config file.
+[2024-07-20 20 56 20] ...To construct a config file, use the following format:
+[2024-07-20 20 56 20] ...variable=value
+[2024-07-20 20 56 20] ...Available variables and their descriptions:
+[2024-07-20 20 56 20] ...cadence (int): The frequency in seconds at which the configuration parameters are updated.
+[2024-07-20 20 56 20] ...general_price_variance (float): The variance factor for general item prices.
+[2024-07-20 20 56 20] ...trade_price_variance (float): The variance factor for trade item prices.
+[2024-07-20 20 56 20] ...general_items_percent_in_stock (float): The base percentage of general items that are in stock at any given time.
+[2024-07-20 20 56 20] ...general_items_percent_in_stock_variance (float): The variance on the general_items_percent_in_stock value.
+[2024-07-20 20 56 20] ...trade_items_percent_in_stock (float): The base percentage of trade items that are in stock at any given time.
+[2024-07-20 20 56 20] ...trade_items_percent_in_stock_variance (float): The variance on the trade_items_percent_in_stock value.
+[2024-07-20 20 56 20] ...sell_price_percentage (float): The base percentage of the buy price to determine sell prices for items.
+[2024-07-20 20 56 20] ...sell_price_percentage_variance (float): The variance of the sell prices.
+[2024-07-20 20 56 20] ...general_items_input_tag (str): The tags that appear as the header for the dnd-table lines in the .input files for general items.
+[2024-07-20 20 56 20] ...trade_items_input_tag (str): The tags that appear as the header for the dnd-table lines in the .input files for trade items.
+[2024-07-20 20 56 20] 
+Current configuration parameters and their values:
+[2024-07-20 20 56 20] Cadence: 86400 seconds
+[2024-07-20 20 56 20] General price variance: 0.05
+[2024-07-20 20 56 20] Trade price variance: 0.2
+[2024-07-20 20 56 20] General items percent stock: 0.9
+[2024-07-20 20 56 20] Trade items percent stock: 0.2
+[2024-07-20 20 56 20] Sell item percentage: 0.75
+[2024-07-20 20 56 20] Sell item percentage variance: 0.1
+
+[2024-07-20 20 56 20] -------------------------------------------------------
+[2024-07-20 20 56 20] Searching for inconsistencies in /home/awtorode/git/DnD/templates/stockpile/stockpile_master_general.txt formatting:
+[2024-07-20 20 56 20] -------------------------------------------------------
+[2024-07-20 20 56 20] Possible duplicate item: ['Bedroll', ' 1g', ' A thick, padded blanket rolled up for easy carrying, providing a comfortable place to rest while camping.']
+[2024-07-20 20 56 20] Duplicate search complete.
+[2024-07-20 20 56 20] Getting old/current general lists.
+[2024-07-20 20 56 20] num_columns: 4
+[2024-07-20 20 56 20] num_rows: 166
+[2024-07-20 20 56 20] num_columns: 4
+[2024-07-20 20 56 20] num_rows: 35
+[2024-07-20 20 56 20] Update general items based on percentage 0.9 of initial list size with 0.05 variance.
+[2024-07-20 20 56 20] general master list size:  211
+[2024-07-20 20 56 20] current general list size: 165
+[2024-07-20 20 56 20] new general list size:     174
+[2024-07-20 20 56 20] Number of items to remove: 37
+[2024-07-20 20 56 20] New/updated list:
+[2024-07-20 20 56 21] Getting master list of trade items.
+[2024-07-20 20 56 21] -------------------------------------------------------
+[2024-07-20 20 56 21] Searching for inconsistencies in /home/awtorode/git/DnD/templates/stockpile/stockpile_master_trade.txt formatting:
+[2024-07-20 20 56 21] -------------------------------------------------------
+[2024-07-20 20 56 21] Possible duplicate item: ['Arcane Scroll', '150g', "Bull's strength"]
+[2024-07-20 20 56 21] Duplicate search complete.
+[2024-07-20 20 56 21] Getting old/current trade lists.
+[2024-07-20 20 56 21] num_columns: 4
+[2024-07-20 20 56 21] num_rows: 175
+[2024-07-20 20 56 21] num_columns: 4
+[2024-07-20 20 56 21] num_rows: 35
+[2024-07-20 20 56 21] Update general items based on percentage 0.9 of initial list size with 0.05 variance.
+[2024-07-20 20 56 21] general master list size:  171
+[2024-07-20 20 56 21] current general list size: 34
+[2024-07-20 20 56 21] new general list size:     33
+[2024-07-20 20 56 21] Number of items to remove: 16
+[2024-07-20 20 56 21] Number of items to add:    15
+[2024-07-20 20 56 21] New/updated list:
