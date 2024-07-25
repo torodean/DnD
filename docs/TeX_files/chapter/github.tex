@@ -1,0 +1,109 @@
+\chapter{Github Integration And Automation}
+\thispagestyle{fancy}  % Use plain style for the first page of the chapter
+
+
+
+
+
+
+\section{Github Integration}
+
+Both the front-end and back-end MMORPDND projects are hosted on github at the following links:
+
+\begin{itemize}
+\item Front-end: \url{https://github.com/MMORPDND/MMORPDND.github.io}
+\item Back-end: \url{https://github.com/torodean/DnD}
+\end{itemize}
+
+The front-end repository is a static github.io page which contains the back-end repository as a Git sub-module. This sub-module is referenced as a `database' for front-end users to interact with. The `database' is essentially only the `campaign' folder of the back-end repository and does not publicly link to the scripts or back-end specific tools.
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Github Automated Features}
+
+The GitHub repository contains a few automated features. The `automated-updates' branch is dedicated to these features and all of the workflows and automated features will run and update this branch. It is then up to the developers to merge these into main. The front-end website will link directly to the `automated-updates' branch instead of main.
+
+
+\subsection{Automated Python Tests}
+
+This section provides an overview of the GitHub Actions workflow used to run automated tests. Its purpose is to ensure that the codebase remains stable by running a suite of tests. The workflow `.github/workflows/tests.yml' ensures that any changes made to the repository are automatically tested, providing immediate feedback on the impact of those changes. The primary goal of this workflow is to streamline the process of testing and validating code changes, ensuring that new commits do not introduce regressions or break existing functionality. It automatically triggers on pushes to the `main` branch and pull requests targeting the `main` branch, ensuring continuous integration and testing. By integrating this workflow, developers can maintain a high level of code quality with minimal manual effort, leveraging the automation capabilities provided by GitHub Actions. By integrating this workflow, developers can maintain a high level of code quality and quickly identify and fix issues introduced by new changes. The key workflow steps follow:
+
+\begin{enumerate}
+\item Repository Checkout: The workflow begins by checking out the repository to access the code and test files.
+\item Python Setup: It sets up the specified version of Python required for running the tests.
+\item Dependencies Installation: Installs necessary dependencies, specifically `pytest`, which is used for running the tests.
+\item Test Execution: Changes the directory to where the tests are located and runs the specified test files using `pytest`.
+\end{enumerate}
+
+Developers using this workflow should ensure the following:
+
+\begin{itemize}
+\item All necessary dependencies are listed and can be installed via pip.
+\item Test files are located in the specified directory and are correctly named.
+\item The `main` branch is used consistently for integration and testing purposes.
+\item Required secrets, such as GitHub tokens, are set up in the repository settings to allow the workflow to push changes if needed.
+\end{itemize}
+
+
+
+
+
+\subsection{Automated README Update And Generation}
+
+
+This document describes the GitHub Actions workflow configured to automatically update README files with image details. The workflow, defined in `.github/workflows/run\_script.yml`, is triggered on pushes to the `automated-updates` branch that affect the `templates/img/` and `campaign/characters/` directories. The purpose of this script is to provide a quick visual reference (the README.md files) for images contained within the folders. This allows the developers to quickly see what the images in Github are without having to select them when in a browser. For users developing in a desktop environment, this feature may not be needed. It performs the following key steps:
+
+\begin{itemize}
+\item Repository Checkout: Checks out the repository to access the code and directories.
+\item Node.js Setup: Sets up the specified version of Node.js needed to run the script.
+\item Script Execution: Runs the `scripts/update\_readmes.js` script, which processes image directories and updates the README files. The script generates or updates a `README.md` file in each directory with a table of images, including thumbnails and filenames.
+\item Commit and Push Changes: Commits any changes made by the script and pushes them back to the `automated-updates` branch.
+\end{itemize}
+
+Developers should ensure the Node.js script `update\_readmes.js` is correctly placed in the `scripts` directory and has execution permissions. The workflow configuration must be accurate, with required GitHub tokens set up to allow the workflow to push changes. This workflow automates the process of keeping README files up-to-date with image information, thereby enhancing documentation consistency and reducing manual updates.
+
+
+\subsubsection{scripts/update\_readmes.js}
+
+The `scripts/update\_readmes.js' script automates the generation of README.md files within specified directories by creating HTML tables of images. It processes directories listed in TEMPLATE\_DIR, NON\_PLAYER\_DIR, NON\_PLAYER\_DIRS, and PLAYER\_DIR (all four defined below), using the glob package to handle nested directories. For each directory, the script reads all image files (excluding any existing README.md), formats them into a table with thumbnails and filenames, and writes this content into a README.md file within the same directory. This automation helps maintain up-to-date documentation for image assets across various project directories.
+
+\begin{itemize}
+\item TEMPLATE\_DIR = './templates/img/';
+\item NON\_PLAYER\_DIR = './campaign/characters/non-player/img/';
+\item NON\_PLAYER\_DIRS = './campaign/characters/non-player/*/img/';
+\item PLAYER\_DIR = './campaign/characters/player/img/';
+\end{itemize}
+
+
+
+\subsection{Automated LaTeX PDF Building}
+
+
+This section describes the purpose and usage of a GitHub Actions workflow designed to automate the generation and updating of LaTeX documents. The workflow `.github/workflows/build\_latex.yml' ensures that any changes made to the LaTeX source files within the repository are automatically compiled and the resulting PDF is committed back to the repository. The primary goal of this workflow is to streamline the process of maintaining LaTeX documentation and ensure the documentation is properly generated when browser-based Git changes are added or changes on a host machine that does not have LaTeX generation capabilities. It automatically triggers on pushes to the `automated-updates' branch and changes within the documentation directory, ensuring that the LaTeX documents are always up-to-date without manual intervention. By integrating this workflow, developers can maintain consistent and up-to-date LaTeX documentation with minimal manual effort, leveraging the automation capabilities provided by GitHub Actions. The key workflow steps follow:
+
+\begin{enumerate}
+\item Repository Checkout: The workflow begins by checking out the repository to access the LaTeX source files.
+\item TeX Live Setup: It sets up a TeX Live environment to compile the LaTeX documents.
+\item Document Compilation: The LaTeX source files are compiled into a PDF.
+\item File Renaming: The generated PDF is renamed for clarity or versioning purposes.
+\item Commit and Push: The updated PDF is committed and pushed back to the repository, ensuring that the latest version is always available.
+\end{enumerate}
+
+
+Developers using this workflow should ensure the following:
+
+\begin{itemize}
+\item The LaTeX source files are located in the specified directory.
+\item The workflow file is correctly configured with the appropriate branch and paths.
+\item Required secrets, such as GitHub tokens, are set up in the repository settings to allow the workflow to push changes.
+\end{itemize}
+
