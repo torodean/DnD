@@ -60,6 +60,9 @@ jobs:
 
           echo "Updating the stockpile HTML pages!"
           cd ${script_dir}/templates
+          # Mocking Tkinter GUI
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1024x768x24 &
           python3 creator.py -f ${stockpile_in_dir}/stockpile_inventory_lists.input
           cd ${script_dir}
           python3 mmorpdnd.py -u # Run this a second time in case it failed in the creator (bug in workflows)
