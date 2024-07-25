@@ -1,0 +1,68 @@
+name: Automated Stockpile Update
+
+on:    
+  schedule:
+    - cron: '45 16 * * 4' # Runs every Sunday at 5 AM UTC
+
+jobs:
+  update-stockpile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy requests matplotlib prettytable
+
+      - name: Run Stockpile Updates
+        run: |
+          git checkout automated-updates
+          cd templates/stockpile
+          git pull
+          
+          script_dir=$(pwd)
+          stockpile_dir=${script_dir}/../../campaign/notes/stockpile
+
+          echo "Updating git repo and files to latest!"
+          cd ${script_dir}/templates/stockpile
+          sleep 1
+
+          echo "Running the stockpile update!"
+          ./stockpile.py -g ${script_dir}/templates/stockpile/stockpile_master_general.txt -t ${script_dir}/templates/stockpile/stockpile_master_trade.txt -o ${script_dir}/templates/stockpile/stockpile_inventory_lists.input -b ${script_dir}/templates/stockpile/stockpile_buy_history.txt -s ${script_dir}/templates/stockpile/stockpile_sell_history.txt
+          sleep 1
+
+          echo "Running the stockpile plot generation!"
+          ./stockpile_plot.py -b ${script_dir}/templates/stockpile/stockpile_buy_history.txt -s ${script_dir}/templates/stockpile/stockpile_sell_history.txt -o ${stockpile_dir}/plots
+          sleep 1
+
+          echo "Updating the stockpile HTML pages!"
+          cd ${script_dir}/templates
+          ./creator.py -f ${script_dir}/templates/stockpile/stockpile_inventory_lists.input
+          sleep 1
+
+          echo "Updating the git repo with the new files!"
+          git add -A
+          git commit -m "Automatic stockpile update."
+          git push origin automated-updates
+          sleep 1
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'Antonius Torode'
+          git config --global user.email 'torodean@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
+          git add -A
+          git commit -m "Automatic stockpile update."
+          git push origin automated-updates
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
