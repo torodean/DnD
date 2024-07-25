@@ -52,12 +52,14 @@
 \contentsline {section}{\numberline {4.7}templates/img/fix\_image\_extensions.py}{21}{section.4.7}%
 \contentsline {section}{\numberline {4.8}templates/languages/translator.py}{21}{section.4.8}%
 \contentsline {section}{\numberline {4.9}templates/reset\_all\_files.py}{21}{section.4.9}%
-\contentsline {section}{\numberline {4.10}templates/stockpile/}{21}{section.4.10}%
-\contentsline {subsection}{\numberline {4.10.1}stockpile.py}{21}{subsection.4.10.1}%
-\contentsline {subsubsection}{\numberline {4.10.1.1}Item Lists}{21}{subsubsection.4.10.1.1}%
+\contentsline {section}{\numberline {4.10}templates/stockpile/}{22}{section.4.10}%
+\contentsline {subsection}{\numberline {4.10.1}stockpile.py}{22}{subsection.4.10.1}%
+\contentsline {subsubsection}{\numberline {4.10.1.1}Item Lists}{22}{subsubsection.4.10.1.1}%
 \contentsline {subsubsection}{\numberline {4.10.1.2}Buy and Sell Price History Lists }{22}{subsubsection.4.10.1.2}%
-\contentsline {subsubsection}{\numberline {4.10.1.3}Output list}{22}{subsubsection.4.10.1.3}%
-\contentsline {subsection}{\numberline {4.10.2}Stockpile Config}{22}{subsection.4.10.2}%
-\contentsline {subsection}{\numberline {4.10.3}stockpile\_plot.py}{23}{subsection.4.10.3}%
-\contentsline {subsection}{\numberline {4.10.4}publicize\_files.py}{24}{subsection.4.10.4}%
-\contentsline {subsection}{\numberline {4.10.5}add\_external\_links.py}{24}{subsection.4.10.5}%
+\contentsline {subsubsection}{\numberline {4.10.1.3}Output list}{23}{subsubsection.4.10.1.3}%
+\contentsline {subsection}{\numberline {4.10.2}Stockpile Config}{23}{subsection.4.10.2}%
+\contentsline {subsection}{\numberline {4.10.3}stockpile\_plot.py}{24}{subsection.4.10.3}%
+\contentsline {subsection}{\numberline {4.10.4}templates/publicize\_files.py}{24}{subsection.4.10.4}%
+\contentsline {subsection}{\numberline {4.10.5}templates/add\_external\_links.py}{25}{subsection.4.10.5}%
+\contentsline {subsection}{\numberline {4.10.6}templates/visualize\_nodes.py}{25}{subsection.4.10.6}%
+\contentsline {subsection}{\numberline {4.10.7}templates/trash/img/cleanup\_trash\_images.py}{25}{subsection.4.10.7}%
