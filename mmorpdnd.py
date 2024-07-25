@@ -1080,7 +1080,7 @@ class MMORPDND:
         current_dir = os.getcwd()
         os.chdir("./templates")
         if os.path.isfile("publicize_files.py"):
-            command = f"./publicize_files.py"
+            command = f"python3 publicize_files.py"
             os.system(command)
         else:
             output_text("Error: 'publicize_files.py' file not found.", "error")
