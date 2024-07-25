@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "Installing Dependencies!"
           python -m pip install --upgrade pip
-          pip3 install numpy requests matplotlib prettytable
+          pip3 install numpy requests matplotlib prettytable bs4 
 
       - name: Run Stockpile Updates
         run: |        
