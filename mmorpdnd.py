@@ -1,8 +1,42 @@
 #!/bin/python3
 import os
+import glob
 import re
 import random
 import argparse
+
+
+def output_text(text, option = "text"):
+    """
+    Print text in different colors based on the provided option.`
+
+    Args:
+        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
+        text (str): The text to be printed.
+
+    Returns:
+        None
+
+    Note:
+        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
+    """
+    color_codes = {
+        "text": "\033[0m",      # Reset color
+        "warning": "\033[93m",  # Yellow - Warning text.
+        "error": "\033[91m",    # Red - Error text.
+        "note": "\033[94m",     # Blue - notes or program information.
+        "success": "\033[92m",  # Green - Sucess text.
+        "command": "\033[36m",  # Cyan - Command output text.
+        "test": "\033[35m"      # Magenta - Testing.
+    }
+
+    if option in color_codes:
+        color_code = color_codes[option]
+        reset_code = color_codes["text"]
+        print(f"{color_code}{text}{reset_code}")
+    else:
+        print(text)
+
 
 class MMORPDND_VARS:
     """
@@ -172,7 +206,7 @@ def get_relative_path(from_file, to_file):
 
     Example usage:
         get_relative_path('/path/to/source/file.html', '/path/to/target/image.jpg')
-        print(relative_path)  # Output: '../../target/image.jpg'
+        output_text(relative_path)  # Output: '../../target/image.jpg'
     """
     return os.path.relpath(to_file, os.path.dirname(from_file))
 
@@ -237,7 +271,7 @@ def create_dummy_html_files(directory=global_vars.root_dir):
                 with open(os.path.join(root, dirname, filename), "w") as f:
                     f.write(
                         f"<html><head></head><body><h1>This is {filename} in {dirname} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
-                    print(f"HTML file {directory}/{filename} created successfully!")
+                    output_text(f"HTML file {directory}/{filename} created successfully!", option="success")
 
     # Create additional HTML files in the script directory
     for i in range(global_vars.num_dummy_files_per_subdir):
@@ -249,9 +283,9 @@ def create_dummy_html_files(directory=global_vars.root_dir):
         with open(os.path.join(directory, filename), "w") as f:
             f.write(
                 f"<html><head></head><body><h1>This is {filename} in {directory} directory!</h1>Here is a link to {random_one} and {random_two}.</body></html>")
-            print(f"HTML file {directory}/{filename} created successfully!")
+            output_text(f"HTML file {directory}/{filename} created successfully!", option="success")
 
-    print("HTML files created successfully!")
+    output_text("HTML files created successfully!", option="success")
 
 
 def alphabetize_links(list_of_links):
@@ -276,7 +310,7 @@ def alphabetize_links(list_of_links):
 
         sorted_list = alphabetize_links(links)
 
-        print(sorted_list)
+        output_text(sorted_list)
     """
     link_pattern = r'<li><a href="([^"]+)"(?:\sclass="[^"]*")?>([^<]+)</a></li>'
     matches = re.findall(link_pattern, list_of_links)
@@ -323,7 +357,7 @@ class MMORPDND:
             subpath = os.path.join(path, key)
             if not os.path.exists(subpath):
                 os.makedirs(subpath)
-                print(f"Created directory: {subpath}")
+                output_text(f"Created directory: {subpath}")
             if structure[key]:
                 self.create_directories(os.path.join(path, key), structure[key])
 
@@ -374,7 +408,7 @@ class MMORPDND:
             with open(index_file_path, 'w') as f:
                 f.write(f"<html>\n<head>\n<title>Index of {directory_name}</title>\n</head>\n<body>\n")
                 f.write(f"<h1>Index of {root}</h1>\n</body>\n</html>\n")
-            print(f"Created index file at {index_file_path}")
+            output_text(f"Created index file at {index_file_path}", option="success")
 
 
     def move_dir_items_to_end(self, string):
@@ -430,7 +464,7 @@ class MMORPDND:
             ...            <li><a href="stoneshaper_golem.html">stoneshaper_golem</a></li>
             ...            <li><a href="elara_nightshade.html">elara_nightshade</a></li>'''
             >>> new_string = move_img_items_to_end(string)
-            >>> print(new_string)
+            >>> output_text(new_string)
             <li><a href="valen_shadowborn.html">valen_shadowborn</a></li>
             <li><a href="kaelar_stormcaller.html">kaelar_stormcaller</a></li>
             <li><a href="thorne_ironfist.html">thorne_ironfist</a></li>
@@ -483,7 +517,7 @@ class MMORPDND:
         Example usage:
             update_index_files()
         """
-        print("Updating index files...")
+        output_text("Updating index files...")
 
         # Get list of all HTML index files in directory and subdirectories
         for root, dirnames, filenames in os.walk("."):
@@ -501,7 +535,7 @@ class MMORPDND:
 
             # check if the file still exists.
             if not os.path.isfile(file):
-                print(f"File no longer exists: {file}")
+                output_text(f"File no longer exists: {file}", option="warning")
                 continue
 
             with open(file, 'r+') as f:
@@ -562,8 +596,8 @@ class MMORPDND:
                 f.seek(0)
                 f.write(updated_data)
                 f.truncate()
-                print(f"{file} updated")
-        print("All index.html files updated.")
+                output_text(f"{file} updated")
+        output_text("All index.html files updated.")
 
 
     def update_headers(self, directory=global_vars.root_dir):
@@ -623,7 +657,7 @@ class MMORPDND:
                     contents = re.sub(global_vars.header_regex, template, contents)
 
                     title = "<title>" + filename.split('.')[0].replace('_', ' ') + "</title>"
-                    print(title)
+                    output_text(f"title: {title}")
 
                     # Replace the title section with the file name
                     contents = re.sub(global_vars.title_regex, title, contents)
@@ -644,7 +678,7 @@ class MMORPDND:
                     with open(file_path, "w") as f:
                         f.write(contents)
 
-                    print(f"Updated head and css in {file_path}")  # Print progress update
+                    output_text(f"Updated head and css in {file_path}")  # Print progress update
 
 
     def update_navigation(self, directory=global_vars.root_dir):
@@ -694,7 +728,7 @@ class MMORPDND:
                     if any(exclude in file_path for exclude in global_vars.directories_to_exclude):
                         continue
 
-                    print(f"Processing file: {file_path}")
+                    output_text(f"Processing file: {file_path}")
 
                     # Read the original contents of the file in.
                     with open(file_path, "r") as file:
@@ -709,7 +743,7 @@ class MMORPDND:
                     navMatch = navRegex.search(contents)
 
                     if navMatch:
-                        print(" -- Found navigation block")
+                        output_text(" -- Found navigation block")
                         # Replace the navigation block with the contents of the template
                         contents = contents.replace(navMatch.group(0), nav_contents)
 
@@ -717,9 +751,9 @@ class MMORPDND:
                         with open(file_path, 'w') as f:
                             f.write(contents)
 
-                        print(" -- Replaced navigation block!")
+                        output_text(" -- Replaced navigation block!")
                     else:
-                        print(" -- Navigation block not found!")
+                        output_text(" -- Navigation block not found!")
 
                         # insert the nav contents at the start of the body tag
                         new_contents = contents.replace("<body>", f"<body>\n{nav_contents}")
@@ -728,7 +762,7 @@ class MMORPDND:
                         with open(file_path, "w") as file:
                             file.write(new_contents)
 
-                        print(" -- Inserted nav contents at the start of the body tag")
+                        output_text(" -- Inserted nav contents at the start of the body tag")
                         
 
     def beautify_files(self, directory=global_vars.root_dir):
@@ -786,7 +820,7 @@ class MMORPDND:
                     continue
 
                 # Read in the HTML file
-                print(file_path)
+                output_text(f"file_path : {file_path}")
                 with open(file_path, "r") as f:
                     contents = f.read()
 
@@ -809,7 +843,7 @@ class MMORPDND:
                 with open(file_path, "w") as f:
                     f.write(prettified_content)
 
-                print(f"File {file_path} has been prettified.")
+                output_text(f"File {file_path} has been prettified.")
                 
 
     def find_all_html_files(self, directory=global_vars.root_dir):
@@ -840,6 +874,86 @@ class MMORPDND:
                     })
         return html_files
         
+        
+    def get_all_html_files(self, root_folder):
+        """
+        Recursively find all HTML files in the given root folder. Slightly different than 
+        find_all_html_files() as this method includes index.html files.
+
+        Args:
+            root_folder (str): The root directory to search for HTML files.
+
+        Returns:
+            list: A list of file paths to all HTML files found.
+        """
+        return glob.glob(os.path.join(root_folder, '**', '*.html'), recursive=True)
+
+
+    def is_valid_link(self, link, base_path):
+        """
+        Check if the given link is valid by considering the base path of the current HTML file.
+
+        Args:
+            link (str): The relative link to check.
+            base_path (str): The base directory path of the current HTML file.
+
+        Returns:
+            bool: True if the link points to an existing file, False otherwise.
+        """
+        return os.path.isfile(os.path.join(base_path, link))
+
+
+
+    def remove_broken_links_from_html_file(self, file_path, root_folder):
+        """
+        Parse the HTML file, check for valid links, remove invalid links, and print error messages.
+
+        Args:
+            file_path (str): The file path of the HTML file to process.
+            root_folder (str): The root directory containing all HTML files.
+        """
+        with open(file_path, 'r', encoding='utf-8') as file:
+            soup = BeautifulSoup(file, 'html.parser')
+
+        base_path = os.path.dirname(file_path)
+        invalid_links = []
+        
+        for tag in soup.find_all('a', href=True):
+            link = tag['href']
+            
+            # skip music links, web links, and navigation links.
+            if link == "#" or "/music/" in link or link.startswith(('http://', 'https://')):
+                continue
+                
+            if not self.is_valid_link(link, base_path):
+                invalid_links.append(link)
+                tag.unwrap()  # Remove the link but keep the text
+
+        if invalid_links:
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write(str(soup))
+            for link in invalid_links:
+                output_text(f"Invalid link {link} found and removed from {file_path}", option="warning")
+
+
+    def remove_broken_links(self, root_folder=global_vars.root_dir):
+        """
+        Parse all HTML files in a directory, check for valid links, remove invalid links, and print error messages.
+
+        Args:
+            file_path (str): The file path of the HTML file to process.
+            root_folder (str): The root directory containing all HTML files.
+        """        
+        html_files = self.get_all_html_files(root_folder)
+        
+        for html_file in html_files:
+        
+            # Check if we are looking at a file in our exclude list.
+            if any(exclude in html_file for exclude in global_vars.directories_to_exclude):
+                continue
+                
+            self.remove_broken_links_from_html_file(html_file, root_folder)
+    
 
     def update_html_links(self, directory=global_vars.root_dir):
         """
@@ -851,11 +965,32 @@ class MMORPDND:
         Returns:
             None
         """
-        html_files = self.find_all_html_files(directory)
+        html_files = self.find_all_html_files(directory)        
+
+        # Sort html_files by length, longest file names first for linking names. This fixes a bug with
+        # file names that contain others not being the primary link chosen.
+        search_words = sorted(html_files, key=len, reverse=True)
+        
+        # keep track of which number we're on.
+        index = 0        
+        # Get the total number of items in html_files
+        total = len(html_files)
+        # Calculate the width for the progress display (based on the total number of items)
+        width = len(str(total))
+        
         # Search the body text of each HTML file for the search strings
         for file_info in html_files:
-            print("Parsing {0} for link updates!".format(file_info['full_path']))
+            index += 1
+            
+            # Calculate the percentage
+            percentage = int(index / total * 100.0)
+            
+            # Format the progress with padding based on total number of files.
+            output_text(f"({index:0{width}}/{total:0{width}} {percentage:3}%) Parsing {file_info['full_path']} for link updates!")
             file_path = file_info['full_path']
+            
+            if "_public" in file_path:
+                continue
 
             # Read in the contents of the file.
             with open(file_path, 'r') as f:
@@ -866,7 +1001,7 @@ class MMORPDND:
             if body_match:
                 body_text = body_match.group(1)
                 # Search the body text for the search string
-                for search_word in html_files:
+                for search_word in search_words:
                     search_string = search_word['name_no_ext']                    
                     
                     # Skip the public files.
@@ -916,7 +1051,7 @@ class MMORPDND:
                     for pattern in patterns:
                         search_string_match = re.search(pattern, body_text, flags=re.DOTALL | re.VERBOSE)
                         if search_string_match:
-                            print(" -- {0} found in {1}".format(search_string, file_path))
+                            output_text(" -- {0} found in {1}".format(search_string, file_path))
                             link_path = get_relative_path(file_path, search_word['full_path'])
 
                             # Replace the search string with the new string
@@ -927,7 +1062,7 @@ class MMORPDND:
                             content = re.sub(r"<body[^>]*>(.*?)</body>", "<body>" + new_body_text + "</body>", content,
                                              flags=re.DOTALL)
                             content = re.sub(r"<body>", "<body" + body_tags.group(1) + ">", content, flags=re.DOTALL)
-                            print(" -- Replacing {0} with {1}".format(search_string, new_string))
+                            output_text(" -- Replacing {0} with {1}".format(search_string, new_string))
 
                             # Write the modified HTML file
                             with open(file_path, "w") as f:
@@ -948,7 +1083,7 @@ class MMORPDND:
             command = f"./publicize_files.py"
             os.system(command)
         else:
-            print("Error: 'publicize_files.py' file not found.", "error")
+            output_text("Error: 'publicize_files.py' file not found.", "error")
             
         # Return to the original directory 
         os.chdir(current_dir)
@@ -1020,6 +1155,10 @@ class MMORPDND_GUI:
                                              **blue_button_style)
         update_navigation_button.pack(pady=5)
 
+        remove_broken_links_button = tk.Button(self.gui, text="Remove Broken Links", command=self.remove_broken_links,
+                                             **blue_button_style)
+        remove_broken_links_button.pack(pady=5)
+
         update_html_links_button = tk.Button(self.gui, text="Update Links", command=self.update_html_links,
                                              **blue_button_style)
         update_html_links_button.pack(pady=5)
@@ -1048,10 +1187,11 @@ class MMORPDND_GUI:
         self.update_index_links()
         self.update_headers()
         self.update_navigation()
+        self.remove_broken_links()
         self.update_html_links()
         self.beautify_files()
         self.publicize_files()
-        print("...Finished test for all files!")
+        output_text("...Finished test for all files!", option="success")
 
     def update_all(self):
         """
@@ -1064,10 +1204,11 @@ class MMORPDND_GUI:
         self.update_index_links()
         self.update_headers()
         self.update_navigation()
+        self.remove_broken_links()
         self.update_html_links()
         self.beautify_files()
         self.publicize_files()
-        print("...Finished updating all files!")
+        output_text("...Finished updating all files!", option="success")
 
     def create_directories(self):
         self.mmorpdnd.create_directories(global_vars.root_dir, global_vars.directory_structure)
@@ -1090,6 +1231,9 @@ class MMORPDND_GUI:
     def beautify_files(self):
         self.mmorpdnd.beautify_files(global_vars.root_dir)
 
+    def remove_broken_links(self):
+        self.mmorpdnd.remove_broken_links(global_vars.root_dir)
+
     def update_html_links(self):
         self.mmorpdnd.update_html_links(global_vars.root_dir)
         
@@ -1107,6 +1251,9 @@ def main():
     elif args.update:
         gui.update_all()
         exit(1)
+    elif args.remove:
+        gui.remove_broken_links()
+        exit(1)
     else:
         parser.print_help()
 
@@ -1121,8 +1268,10 @@ if __name__ == '__main__':
     
     # Move the args here so they are not ran when importing this script as a package/module for testing.
     parser = argparse.ArgumentParser(description='MMORPDND Tools and apps.')
-    parser.add_argument('-t', '--test', action='store_true', help='Runs the test-all feature then exit.')
-    parser.add_argument('-u', '--update', action='store_true', help='Runs the update-all feature then exit.')
+    parser.add_argument('-t', '--test', action='store_true', help='Runs the test-all feature then exits.')
+    parser.add_argument('-u', '--update', action='store_true', help='Runs the update_all feature then exits.')
+    parser.add_argument('-r', '--remove', action='store_true', help='Runs the remove_broken_links feature then exits.')
+    
 
     args = parser.parse_args()
     

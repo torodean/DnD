@@ -538,13 +538,26 @@ merrick_gearlock.jpg
 </td>
 
 <td valign="bottom">
+<<<<<<< HEAD
 <img src="./miranda_mossfoot.jpg" width="250"><br>
 miranda_mossfoot.jpg
+=======
+<img src="./milton_manastorm.png" width="250"><br>
+milton_manastorm.png
+>>>>>>> main
 </td>
 
 </tr>
 <tr>
 <td valign="bottom">
+<<<<<<< HEAD
+=======
+<img src="./miranda_mossfoot.jpg" width="250"><br>
+miranda_mossfoot.jpg
+</td>
+
+<td valign="bottom">
+>>>>>>> main
 <img src="./mortimer_blackthorn.jpg" width="250"><br>
 mortimer_blackthorn.jpg
 </td>
@@ -562,6 +575,11 @@ nix_whiskercleu.jpg
 </tr>
 <tr>
 <td valign="bottom">
+<img src="./nix_whiskercleu.jpg" width="250"><br>
+nix_whiskercleu.jpg
+</td>
+
+<td valign="bottom">
 <img src="./percival_gearlock.jpg" width="250"><br>
 percival_gearlock.jpg
 </td>
@@ -569,6 +587,13 @@ percival_gearlock.jpg
 <td valign="bottom">
 <img src="./phineous_grenn.jpg" width="250"><br>
 phineous_grenn.jpg
+</td>
+
+</tr>
+<tr>
+<td valign="bottom">
+<img src="./quilton_buzzlewit.jpg" width="250"><br>
+quilton_buzzlewit.jpg
 </td>
 
 <td valign="bottom">
@@ -588,13 +613,21 @@ quintus_salwaither.jpg
 ravik_blacktor.jpg
 </td>
 
+<<<<<<< HEAD
 <td valign="bottom">
 <img src="./rilian_selterlif.jpg" width="250"><br>
 rilian_selterlif.jpg
 </td>
 
+=======
+>>>>>>> main
 </tr>
 <tr>
+<td valign="bottom">
+<img src="./rilian_selterlif.jpg" width="250"><br>
+rilian_selterlif.jpg
+</td>
+
 <td valign="bottom">
 <img src="./riven_darkwire.jpg" width="250"><br>
 riven_darkwire.jpg
@@ -605,13 +638,13 @@ riven_darkwire.jpg
 roderick_thornfield.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./roland_swiftwind.jpg" width="250"><br>
 roland_swiftwind.jpg
 </td>
 
-</tr>
-<tr>
 <td valign="bottom">
 <img src="./rosalind_scribeheart.jpg" width="250"><br>
 rosalind_scribeheart.jpg
@@ -622,6 +655,11 @@ rosalind_scribeheart.jpg
 selene_nittshade.jpg
 </td>
 
+<<<<<<< HEAD
+=======
+</tr>
+<tr>
+>>>>>>> main
 <td valign="bottom">
 <img src="./sendri_meaz.jpg" width="250"><br>
 sendri_meaz.jpg
@@ -639,6 +677,8 @@ seraphina_lightbringer.jpg
 seraphina_stormrider.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./seraphina_thornvale.jpg" width="250"><br>
 seraphina_thornvale.jpg
@@ -646,6 +686,11 @@ seraphina_thornvale.jpg
 
 </tr>
 <tr>
+<td valign="bottom">
+<img src="./shanti_threadneddle.jpg" width="250"><br>
+shanti_threadneddle.jpg
+</td>
+
 <td valign="bottom">
 <img src="./shanti_threadneddle.jpg" width="250"><br>
 shanti_threadneddle.jpg
@@ -669,18 +714,26 @@ talia_shadfernia.jpg
 </td>
 
 <td valign="bottom">
-<img src="./telburn_himreich.jpg" width="250"><br>
-telburn_himreich.jpg
+<img src="./talia_shadfernia.jpg" width="250"><br>
+talia_shadfernia.jpg
 </td>
 
 <td valign="bottom">
-<img src="./telma_fhindre.jpg" width="250"><br>
-telma_fhindre.jpg
+<img src="./telburn_himreich.jpg" width="250"><br>
+telburn_himreich.jpg
 </td>
 
 </tr>
 <tr>
 <td valign="bottom">
+<<<<<<< HEAD
+=======
+<img src="./telma_fhindre.jpg" width="250"><br>
+telma_fhindre.jpg
+</td>
+
+<td valign="bottom">
+>>>>>>> main
 <img src="./thaladir_stormwaver.jpg" width="250"><br>
 thaladir_stormwaver.jpg
 </td>
@@ -688,6 +741,18 @@ thaladir_stormwaver.jpg
 <td valign="bottom">
 <img src="./thaldir_windrider.jpg" width="250"><br>
 thaldir_windrider.jpg
+</td>
+
+</tr>
+<tr>
+<td valign="bottom">
+<img src="./thane_ironbeard.jpg" width="250"><br>
+thane_ironbeard.jpg
+</td>
+
+<td valign="bottom">
+<img src="./thaydus_neldershad.jpg" width="250"><br>
+thaydus_neldershad.jpg
 </td>
 
 <td valign="bottom">
@@ -707,9 +772,21 @@ thaydus_neldershad.jpg
 thorin_stonehammer.jpg
 </td>
 
+</tr>
+<tr>
 <td valign="bottom">
 <img src="./thorne_ironfist.jpg" width="250"><br>
 thorne_ironfist.jpg
+</td>
+
+<td valign="bottom">
+<img src="./thrain_stoneforge.jpg" width="250"><br>
+thrain_stoneforge.jpg
+</td>
+
+<td valign="bottom">
+<img src="./thrainin_rockhelm.jpg" width="250"><br>
+thrainin_rockhelm.jpg
 </td>
 
 </tr>
@@ -739,16 +816,27 @@ toshira_siljie.jpg
 <td valign="bottom">
 <img src="./trivok_blacktor.jpg" width="250"><br>
 trivok_blacktor.jpg
+<<<<<<< HEAD
 </td>
 
 <td valign="bottom">
 <img src="./vaelin_shosang.jpg" width="250"><br>
 vaelin_shosang.jpg
+=======
+>>>>>>> main
 </td>
 
 </tr>
 <tr>
 <td valign="bottom">
+<<<<<<< HEAD
+=======
+<img src="./vaelin_shosang.jpg" width="250"><br>
+vaelin_shosang.jpg
+</td>
+
+<td valign="bottom">
+>>>>>>> main
 <img src="./valen_shadowborn.jpg" width="250"><br>
 valen_shadowborn.jpg
 </td>
@@ -756,6 +844,13 @@ valen_shadowborn.jpg
 <td valign="bottom">
 <img src="./vespera_shadowspir.jpg" width="250"><br>
 vespera_shadowspir.jpg
+</td>
+
+</tr>
+<tr>
+<td valign="bottom">
+<img src="./victorai_eirholm.jpg" width="250"><br>
+victorai_eirholm.jpg
 </td>
 
 <td valign="bottom">
@@ -775,6 +870,11 @@ zadarin_stard_iro.jpg
 zara_ethrax.jpg
 </td>
 
+<<<<<<< HEAD
+=======
+</tr>
+<tr>
+>>>>>>> main
 <td valign="bottom">
 <img src="./zibb_sparkwhistle.jpg" width="250"><br>
 zibb_sparkwhistle.jpg

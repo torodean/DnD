@@ -739,14 +739,19 @@ def get_character_fields(file):
         contents = f.readlines()
     try:
         for line in contents:
+            if line.strip() == "" or line[0] == "#":
+                continue
+        
             var = line.split('=')[0].strip().lower()
             if "name" in var or "information" in var or "notes" in var:
                 val = line.split('=')[1].strip()
             else:
                 val = line.split('=')[1].strip().lower()
             char_fields[var] = val
-    except Exception:
-        output_text(f"ERROR: Incorrect file format: {file}", "error")
+    except Exception as err:
+        output_text(f"ERROR: {err}", "error")
+        output_text(f"ERROR: Likely incorrect file format: {file}", "error")
+        return
 
     # check to make sure class is defined.
     if "class" not in char_fields:
@@ -1779,6 +1784,12 @@ class Creator:
 
         # Define the fields to replace in the template file
         char_fields = get_character_fields(file)
+        
+        # In the event that get_character_fields throws an error, char_fields should be None.
+        if char_fields is None:
+            return # Skip the rest of the method.
+
+        char_class = char_fields['class']
 
         global_vars.output_file_folder = '.'  # used for testing mainly
 
@@ -1799,12 +1810,16 @@ class Creator:
                     continue
 
                 if folder in dirpath:
-                    global_vars.output_file_folder = dirpath + "/"
+                    # add the class to the folder path if it's a non-player character.
+                    if "characters/non-player" in folder:
+                        # Take just the first word of the class (to remove subclass data).
+                        global_vars.output_file_folder = dirpath + "/" + char_class.lower().split(" ")[0] + "/"
+                        ensure_directory_exists(global_vars.output_file_folder)               
+                    else:
+                        global_vars.output_file_folder = dirpath + "/"
                     break
 
             output_text(f"Output file folder set to: {global_vars.output_file_folder}", "note")
-
-        char_class = char_fields['class']
 
         # Default to level 1 if none defined.
         if "level" not in char_fields:

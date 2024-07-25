@@ -30,6 +30,7 @@ This script serves as the backbone for an array of automatic linking and logisti
 	\item Update each index file to link to all files and images within the directory.
 	\item Update the headers of all HTML files to the template HTML header.
 	\item Update the navigation of all HTML files to the template navigation HTML.
+	\item Search for invalid hyperlinks in HTML files and removes them.
 	\item Search and hyperlink all words found in all HTML files to the appropriate HTML file whose name matches the words found.
 	\item Beautify the code.
 	\item Publicize the HTML files specified in the templates/lists/public\_files.list file.
@@ -61,14 +62,15 @@ The GUI window is somewhat self explanatory. The two main features are represent
 The MMORPDND application supports some command line features. The update feature will run the updates for all HTML files.
 
 \begin{lstlisting}
-usage: mmorpdnd.py [-h] [-t] [-u]
+usage: mmorpdnd.py [-h] [-t] [-u] [-r]
 
 MMORPDND Tools and apps.
 
-optional arguments:
-	-h, --help    show this help message and exit
-	-t, --test    Runs the test-all feature then exit.
-	-u, --update  Runs the update-all feature then exit.
+options:
+  -h, --help    show this help message and exit
+  -t, --test    Runs the test-all feature then exits.
+  -u, --update  Runs the update_all feature then exits.
+  -r, --remove  Runs the remove_broken_links feature then exits.
 \end{lstlisting}
 
 
@@ -608,9 +610,32 @@ This tool is still in development and not yet functioning.
 
 \section{templates/reset\_all\_files.py}
 
-This tool is still in development and not yet functioning.
+The `reset\_all\_files.py` script provides functions for restoring all files to a state where they are prepared to be processed by the `creator.py' application. It performs three main operations: copying image files to the `tempaltes/img' folder, deleting HTML files in the campaign directory structure, and moving specific input files back to the `templates/input\_files' folder. The script includes the following functions:
 
+\begin{enumerate}
+    \item \textbf{`copy\_images(source\_dir, dest\_dir)`:} This function copies image files from a specified source directory to a destination directory. It identifies images based on common file extensions such as `.png`, `.jpg`, `.jpeg`, and `.gif`. The function traverses the source directory and its subdirectories, specifically looking for folders named 'img', and copies the detected image files to the destination directory.
 
+    \item \textbf{`delete\_html\_files(directory)`:} This function deletes all HTML files within a specified directory and its subdirectories. It traverses the directory tree, identifies files with a `.html` extension, and removes them. This is useful for cleaning up directories from unwanted HTML files.
+
+    \item \textbf{`move\_input\_files(source\_dir, dest\_dir)`:} This function moves files with `.input` or `.char` extensions from a source directory to a destination directory. It ensures that the destination directory exists, creating it if necessary. The function traverses the source directory and moves the matching files to the destination directory.
+\end{enumerate}
+
+The script is configured with paths relative to its location:
+\begin{itemize}
+    \item The \texttt{campaign\_dir} points to the `../campaign` directory relative to the script directory.
+    \item The \texttt{dest\_img\_dir} is set to the `img` directory within the script's directory for storing copied images.
+    \item The \texttt{trash\_dir} is designated as the `trash` directory within the script's directory.
+    \item The \texttt{input\_files\_dir} is set to the `input\_files` directory within the script's directory for moving input files.
+\end{itemize}
+
+The script performs the following operations when executed:
+\begin{enumerate}
+    \item Copies image files from the `campaign` and `trash` directories to the `img` directory.
+    \item Deletes all HTML files from the `campaign` directory.
+    \item Moves `.input` and `.char` files from the `trash` directory to the `input\_files` directory.
+\end{enumerate}
+
+Ensure that the directories specified (e.g., `campaign`, `img`, `trash`, `input\_files`) exist and are accessible. The script creates directories as needed but assumes the necessary permissions are available.
 
 
 
@@ -744,7 +769,7 @@ When the application starts, it attempts to load the configuration parameters fr
 
 \subsection{stockpile\_plot.py}
 
-The `stockpile\_plot.py' script will create plots of all the buy and sell prices of the generated stockpile prices (see section \ref{stockpile:buy and sell}).
+The `stockpile\_plot.py' script will create plots of all the buy and sell prices of the generated stockpile prices (see section \ref{stockpile:buy and sell}). The input files should be formatted by the stockpile.py script or match the format of the files output by that script.
 
 \begin{lstlisting}
 usage: stockpile_plot.py [-h] -b BUY -s SELL [-i ITEM] [-o OUTPUT]
@@ -761,19 +786,77 @@ optional arguments:
 \end{lstlisting}
 
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/sample_plots.jpg}
+	\caption{Three sample plots created by the stockpile\_plot.py script for the stockpile system.}
+	\label{fig:sample_plots}
+\end{figure}
 
-
-\subsection{publicize\_files.py}
+\subsection{templates/publicize\_files.py}
 
 In some cases, links to a page may be desired for the players to access. In these cases, it is desired to remove the navigation header on the HTML pages as well as links to other pages within the MMORPDND database. This script will facilitate doing just this. The script takes an input file called `public\_files.list'. This file should be located in the same location as the publicize\_files.py script, which is in the templates folder by default. The script will create duplicate files of all files listed in the `public\_files.list' with an appended `\_public' label on the file names. It will then parse all the public files and remove all links within the files that are not links to other public files. If a public file exists for one of the links, the link will instead be updated to the appropriate public file.
 
 
 
 
-\subsection{add\_external\_links.py}
+\subsection{templates/add\_external\_links.py}
 
 The `add\_external\_links.py' script processes HTML files to replace specified words with corresponding hyperlinks. It is designed to automate the embedding of links within a set of HTML files based on a predefined list. 
 
 To use the script, ensure the list of words and links is saved in a file (e.g., lists/links.list), with each line formatted as `word,link'. Place the HTML files to be processed within the target directory (e.g., ../campaign) - which is the default place they should be. Then run the script. It will load the word-link pairs, find all HTML files in the specified directory, and replace the specified words in each HTML file with the corresponding hyperlinks (in the appropriate HTML format).
+
+
+
+
+
+
+
+
+
+
+\subsection{templates/visualize\_nodes.py}
+
+This script generates and visualizes a network graph of HTML files within a campaign (or a specified with some modification) directory. The script begins by defining the directory to scan for HTML files and then proceeds to build and visualize the graph. The process consists of the following steps:
+
+\begin{enumerate}
+    \item \textbf{Extracting Links:} The script uses the `extract\_links' function to parse HTML content and extract links to other HTML files. This function utilizes the BeautifulSoup library to find all anchor tags with an `href' attribute that ends with `.html'.
+    
+    \item \textbf{Building the Graph:} The `build\_graph' function constructs a directed graph using NetworkX. It scans the given directory and its subdirectories for HTML files, excluding `index.html' and files containing `\_public'. For each HTML file, the function adds a node to the graph and creates directed edges between nodes based on the links found in the files.
+    
+    \item \textbf{Visualizing the Graph:} The `visualize\_graph\_plotly' function visualizes the graph using Plotly. It computes the layout of the graph with `nx.spring\_layout' and generates traces for edges and nodes. The node sizes are dynamically adjusted based on their degree, and the final interactive visualization displays the network of HTML links.
+\end{enumerate}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/node_visualization.png}
+	\caption{A visualization of the nodes for all HTML files and their connections. The larger nodes represent files that have more links within them.}
+	\label{fig:node_visualization}
+\end{figure}
+
+
+
+
+
+
+
+
+\subsection{templates/trash/img/cleanup\_trash\_images.py}
+
+This script is designed to identify and delete image files from the campaign (or a specified with some modification) directory if matching files are found in a database folder. The script starts by defining the current directory as the script folder and calculates the relative path for the campaign folder. It then proceeds to find and remove matching image files from the script folder. The script operates as follows:
+
+\begin{enumerate}
+    \item \textbf{Getting Image Files:} The script uses the `get\_image\_files' function to generate a list of image files from a given directory. It filters files based on common image file extensions including `.png', `.jpg', `.jpeg', `.gif', `.bmp', and `.tiff'.
+    
+    \item \textbf{Finding and Deleting Images:} The `find\_and\_delete\_images' function searches for images in the database folder that match the names of images found in the script folder. For each matching image file, it deletes the file from the script folder.
+    
+    \item \textbf{Execution:} The script sets the paths for the script folder and the database folder. It then calls the `find\_and\_delete\_images' function to perform the matching and deletion operation.
+\end{enumerate}
+
+
+
+
+
+
 
 

@@ -1,0 +1,32 @@
+folder = monsters
+name = Veridian Pyrohydra
+ac = 18 (natural armor)
+hp = 325
+size = huge
+type = dragon
+alignment = chaotic neutral
+speed = 40 ft., swim 30 ft.
+resistances = fire, poison
+immunities = green flame
+senses = darkvision 120 ft., tremorsense 60 ft., passive Perception 22
+languages = Draconic, Sylvan
+image = veridian_pyrohydra (1).jpg
+level = 20
+race = -
+class = -
+background = -
+strength = 25
+dexterity = 14
+constitution = 22
+intelligence = 14
+wisdom = 16
+charisma = 18
+abilities = Regeneration, Multiple Heads, Green Flame Breath, Legendary Resistance (3/Day), Forest Manifestation
+equipment = None
+proficiencies = Perception, Stealth, Intimidation
+information = The Veridian Pyrohydra is a mythical beast believed to be a manifestation of the forest's wrath. Legends say it appears when ancient woodlands are threatened by destruction or desecration. This enormous hydra-like creature has scales that shimmer with an emerald hue, and it can breathe devastating green flames from its many heads.
+notes = The origins of the Veridian Pyrohydra are shrouded in mystery, with some saying it was created by an ancient druidic ritual to protect sacred groves. It is said to appear during times of great environmental peril, attacking those who pose a threat to the natural order. Its green flames are both a symbol of the forest's fury and a means to cleanse the land of invaders.
+
+Veridian Pyrohydra[dnd-image]=img/veridian_pyrohydra.jpg;Created by Bing AI image generator.;Variations of the Veridian Pyrohydra.
+
+Abilities[dnd-list]=;-Regeneration*: The Veridian Pyrohydra regains 20 hit points at the start of its turn. If it takes acid or fire damage, this trait doesn't function at the start of its next turn.;-Multiple Heads*: The Veridian Pyrohydra has many heads. While it has more than one head, it has advantage on saving throws against being blinded, charmed, deafened, frightened, stunned, and knocked unconscious.;-Green Flame Breath*: Each head can exhale green fire in a 30-foot cone. Each creature in that area must make a DC 18 Dexterity saving throw, taking 45 (13d6) green fire damage on a failed save, or half as much damage on a successful one.;-Legendary Resistance (3/Day)*: If the Veridian Pyrohydra fails a saving throw, it can choose to succeed instead.;-Forest Manifestation*: The Veridian Pyrohydra can meld into the forest terrain, becoming almost invisible among the trees and foliage. While in this state, it can only be detected by creatures with truesight or by those who succeed on a DC 20 Wisdom (Perception) check.

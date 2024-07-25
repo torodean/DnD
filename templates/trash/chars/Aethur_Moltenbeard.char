@@ -1,0 +1,31 @@
+folder = characters/non-player
+name = Aethur Moltenbeard
+ac = 22 (plate armor, shield)
+hp = 230
+size = medium
+type = humanoid (dwarf)
+alignment = lawful good
+speed = 25 ft.
+resistances = fire, poison
+senses = darkvision 60 ft., passive Perception 18
+languages = Common, Dwarvish, Celestial
+image = aethur_moltenbeard (1).jpg
+level = 20
+race = dwarf
+class = paladin (Oath of Devotion)
+background = noble (king)
+strength = 20
+dexterity = 14
+constitution = 20
+intelligence = 16
+wisdom = 18
+charisma = 22
+abilities = Divine Smite, Lay on Hands, Aura of Protection, Sacred Weapon, Turn the Unholy, Divine Health, Purity of Spirit, Holy Nimbus, Commanding Presence
+equipment = Molten King's Hammer (legendary warhammer), Shield of Loch Modar, Plate Armor of Devotion, Amulet of Dwarven Nobility
+proficiencies = History, Persuasion, Insight, Athletics
+information = Aethur Moltenbeard was the respected and beloved king of Loch Modar. Known for his unyielding sense of justice and commitment to his people, he led with honor and strength. His reign was marked by peace and prosperity until his untimely assassination. His successor was his son Zarnaldis Moltenbeard.
+notes = Aethur's legacy lives on in the hearts of his people and in the actions of those who seek to bring his assassin to justice. He was a paragon of dwarven nobility and valor, embodying the highest ideals of his culture.
+
+Aethur Moltenbeard[dnd-image]=img/aethur_moltenbeard.jpg; Created By Bing AI image generator.; Variations of Aethur Moltenbeard.
+
+Abilities[dnd-list]=;-Divine Smite: Aethur can expend a spell slot to deal radiant damage to a target in addition to his weapon's damage.;-Lay on Hands: Aethur can heal a total of 100 hit points, divided as he sees fit among creatures he touches.;-Aura of Protection: Aethur and friendly creatures within 10 feet of him gain a +5 bonus to all saving throws.;-Sacred Weapon: Aethur can imbue one weapon that he is holding with positive energy, adding +5 to attack rolls made with that weapon.;-Turn the Unholy: As an action, Aethur can present his holy symbol and speak a prayer censuring fiends and undead. Each fiend or undead that can see or hear him within 30 feet must make a Wisdom saving throw.;-Divine Health: Aethur is immune to disease.;-Purity of Spirit: Aethur is always under the effects of a *Protection from Evil and Good* spell.;-Holy Nimbus: Aethur can use his action to cause an aura of sunlight to radiate from him. This aura lasts for 1 minute or until he dismisses it as a bonus action. He emits bright light in a 30-foot radius and dim light 30 feet beyond that. His enemies in the bright light take 10 radiant damage.;-Commanding Presence: Aethur can use his action to inspire fear and respect in his enemies. Each creature within 60 feet of him that can see or hear him must make a Wisdom saving throw or be frightened for 1 minute.
