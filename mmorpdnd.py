@@ -920,9 +920,12 @@ class MMORPDND:
         
         for tag in soup.find_all('a', href=True):
             link = tag['href']
-            if link == "#" or "/music/" in link:
+            
+            # skip music links, web links, and navigation links.
+            if link == "#" or "/music/" in link or link.startswith(('http://', 'https://')):
                 continue
-            if not link.startswith(('http://', 'https://')) and not self.is_valid_link(link, base_path):
+                
+            if not self.is_valid_link(link, base_path):
                 invalid_links.append(link)
                 tag.unwrap()  # Remove the link but keep the text
 
