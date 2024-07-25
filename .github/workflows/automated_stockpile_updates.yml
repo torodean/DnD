@@ -21,14 +21,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.x
-
-      - name: Install Dependencies
+          python-version: 3.x      
+          
+      - name: Install System Dependencies
         run: |
-          echo "Installing Dependencies!"
-          python -m pip install --upgrade pip
-          pip3 install numpy requests matplotlib prettytable bs4 
+          sudo apt-get update
+          sudo apt-get install -y python3-tk python3-pil python3-pil.imagetk
 
+      - name: Install Python Dependencies
+        run: |
+          echo "Installing Python Dependencies!"
+          python3 -m pip install --upgrade pip
+          pip3 install numpy requests matplotlib prettytable networkx plotly scipy bs4 lxml regex cssbeautifier tqdm pytube moviepy
+          
       - name: Run Stockpile Updates
         run: |        
           script_dir=$(pwd)
