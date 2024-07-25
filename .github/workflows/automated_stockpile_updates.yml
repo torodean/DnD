@@ -23,12 +23,14 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Run Stockpile Updates
-        run: |        
+      - name: Install Dependencies
+        run: |
           echo "Installing Dependencies!"
           python -m pip install --upgrade pip
-          pip install numpy requests matplotlib prettytable
-        
+          pip3 install numpy requests matplotlib prettytable
+
+      - name: Run Stockpile Updates
+        run: |        
           script_dir=$(pwd)
           stockpile_in_dir=${script_dir}/templates/stockpile
           stockpile_out_dir=${script_dir}/campaign/notes/stockpile
@@ -44,16 +46,16 @@ jobs:
           sleep 1
 
           echo "Running the stockpile update!"
-          ./stockpile.py -g ${stockpile_in_dir}/stockpile_master_general.txt -t ${stockpile_in_dir}/stockpile_master_trade.txt -o ${stockpile_in_dir}/stockpile_inventory_lists.input -b ${stockpile_in_dir}/stockpile_buy_history.txt -s ${stockpile_in_dir}/stockpile_sell_history.txt
+          python3 stockpile.py -g ${stockpile_in_dir}/stockpile_master_general.txt -t ${stockpile_in_dir}/stockpile_master_trade.txt -o ${stockpile_in_dir}/stockpile_inventory_lists.input -b ${stockpile_in_dir}/stockpile_buy_history.txt -s ${stockpile_in_dir}/stockpile_sell_history.txt
           sleep 1
 
           echo "Running the stockpile plot generation!"
-          ./stockpile_plot.py -b ${stockpile_in_dir}/stockpile_buy_history.txt -s ${stockpile_in_dir}/stockpile_sell_history.txt -o ${stockpile_out_dir}/plots
+          python3 stockpile_plot.py -b ${stockpile_in_dir}/stockpile_buy_history.txt -s ${stockpile_in_dir}/stockpile_sell_history.txt -o ${stockpile_out_dir}/plots
           sleep 1
 
           echo "Updating the stockpile HTML pages!"
           cd ${script_dir}/templates
-          ./creator.py -f ${stockpile_in_dir}/stockpile_inventory_lists.input
+          python3 creator.py -f ${stockpile_in_dir}/stockpile_inventory_lists.input
           sleep 1
 
           echo "Updating the git repo with the new files!"
