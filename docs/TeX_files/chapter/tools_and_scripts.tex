@@ -793,7 +793,16 @@ optional arguments:
 	\label{fig:sample_plots}
 \end{figure}
 
+
+
+
+
+
+
+
 \subsection{templates/publicize\_files.py}
+
+!!THIS SCRIPT WAS DEPRECATED AND INTEGRATED INTO THE MMORPDND.PY SCRIPT - TODO: UPDATE DOCUMENTATION!!
 
 In some cases, links to a page may be desired for the players to access. In these cases, it is desired to remove the navigation header on the HTML pages as well as links to other pages within the MMORPDND database. This script will facilitate doing just this. The script takes an input file called `public\_files.list'. This file should be located in the same location as the publicize\_files.py script, which is in the templates folder by default. The script will create duplicate files of all files listed in the `public\_files.list' with an appended `\_public' label on the file names. It will then parse all the public files and remove all links within the files that are not links to other public files. If a public file exists for one of the links, the link will instead be updated to the appropriate public file.
 
