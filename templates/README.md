@@ -45,3 +45,7 @@ The apps in this folder are sub-apps of the MMORPDND system and each serve a spe
   - This will create a copy of an HTML file with the navigation header and links removed for public release. The new file will have an appended '_public' to the file name. The files to publicize are determined by the public_files.list file.
 - add_external_links.py
   - This script will update all html files in the specified folder (../campaign in this case) with external links specified in the links.list file (located in the lists folder).
+- visualize_nodes.py
+  - This script will create a plot of all linked HTML files for visualization.
+- trash/img/cleanup-trash-images.py
+  - This script retrieves a list of image files from the script's directory, then searches a specified database folder (the campaign folder) and its subdirectories for images that match the filenames from the script's directory. It deletes any matching image files found in the script's directory. The database folder path is specified relative to the script's location. This ensures that the trash does not contain duplicate images.

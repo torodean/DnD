@@ -739,6 +739,9 @@ def get_character_fields(file):
         contents = f.readlines()
     try:
         for line in contents:
+            if line.strip() == "" or line[0] == "#":
+                continue
+        
             var = line.split('=')[0].strip().lower()
             if "name" in var or "information" in var or "notes" in var:
                 val = line.split('=')[1].strip()
