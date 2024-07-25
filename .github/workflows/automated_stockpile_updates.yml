@@ -36,7 +36,10 @@ jobs:
           
           script_dir=$(pwd)
           stockpile_dir=${script_dir}/../../campaign/notes/stockpile
-
+          
+          echo "Script dir set: ${script_dir}"
+          echo "Stockpile dir set: ${stockpile_dir}"
+          
           echo "Updating git repo and files to latest!"
           cd ${script_dir}/templates/stockpile
           sleep 1
