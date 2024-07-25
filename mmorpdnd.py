@@ -1377,13 +1377,13 @@ def main():
 
     if args.test:
         gui.test_all()
-        exit(1)
+        exit(0)
     elif args.update:
         gui.update_all()
-        exit(1)
+        exit(0)
     elif args.remove:
         gui.remove_broken_links()
-        exit(1)
+        exit(0)
     else:
         parser.print_help()
 
