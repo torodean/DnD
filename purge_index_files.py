@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/env python3
 import os
 
 def delete_index_html_files(directory):
