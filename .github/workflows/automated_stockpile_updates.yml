@@ -63,12 +63,6 @@ jobs:
           python3 creator.py -f ${stockpile_in_dir}/stockpile_inventory_lists.input
           sleep 1
 
-          echo "Updating the git repo with the new files!"
-          git add -A
-          git commit -m "Automatic stockpile update."
-          git push origin automated-updates
-          sleep 1
-
       - name: Commit and Push Changes
         run: |
           git config --global user.name 'Antonius Torode'
