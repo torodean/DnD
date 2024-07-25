@@ -41,6 +41,38 @@ This script serves as the backbone for an array of automatic linking and logisti
 
 
 
+\subsection{Features}
+
+\subsubsection{Create And Update index.html Files}
+
+TODO
+
+\subsubsection{Update All HTML Navigation And Headers}
+
+TODO
+
+\subsubsection{Update All HTML Hyperlinks}
+
+TODO
+
+\subsubsection{Beautify Files}
+
+This feature will take all css and HTML files and `beautify' them. This is done by the BeautifulSoup Python library and will format all the files in a similar manner. Because this feature exists, the formatting of the HTML files when editing them is not needed, as it will be overwridden.   
+
+\subsubsection{Publicize Files}
+
+In some cases, links to a page may be desired for the players to access. In these cases, it is desired to remove the navigation header on the HTML pages as well as links to other pages within the MMORPDND database. This feature will facilitate doing just this. It is a simple feature to create pages for `public' (meaning links that the players in a campaign can access without linking them to the rest of the database) release. The script takes an input file called `templates/lists/public\_files.list'. The script will create duplicate files of all files listed in the `public\_files.list' with an appended `\_public' label on the file names. It will then parse all the public files and remove all links within the files that are not links to other public files. If a public file exists for one of the links, the link will instead be updated to the appropriate public file. 
+
+The publicize files feature was originally it's own standalone script that was later integrated into the `mmorpdnd.py' script. This feature uses the `templates/lists/public\_files.list' file as input. This file should have relative file paths to all files that are wished to be made public (relative to the `mmorpdnd.py' script. The script will begin by creating a copy of all files (specified in the list file) with an appended `\_public' attached to the file name. These public files will have all header navigation data removed, and all links removed. In the case that a public file exists for what was previously linked to, the link will be updated to the public file rather than removed.
+
+
+
+
+
+
+
+
+
 
 \subsection{Use}
 
@@ -72,20 +104,6 @@ options:
   -u, --update  Runs the update_all feature then exits.
   -r, --remove  Runs the remove_broken_links feature then exits.
 \end{lstlisting}
-
-
-
-
-
-
-
-\section{templates/publicize\_files.txt}
-
-!!THIS SCRIPT WAS DEPRECATED AND INTEGRATED INTO THE MMORPDND.PY SCRIPT - TODO: UPDATE DOCUMENTATION!!
-
-The publicize files script is a simple tool to create pages for `public' (meaning links that the players in a campaign can access without linking them to the rest of the database) release. This script uses the `lists/public\_files.list' file as input. This file should have relative file paths to all files that are wished to be made public. The script will begin by creating a copy of all files (specified in the list file) with an appended `\_public' attached to the file name. These public files will have all header navigation data removed, and all links removed. In the case that a public file exists for what was previously linked to, the link will be updated to the public file rather than removed.
-
-
 
 
 
@@ -801,12 +819,6 @@ optional arguments:
 
 
 
-
-\subsection{templates/publicize\_files.py}
-
-!!THIS SCRIPT WAS DEPRECATED AND INTEGRATED INTO THE MMORPDND.PY SCRIPT - TODO: UPDATE DOCUMENTATION!!
-
-In some cases, links to a page may be desired for the players to access. In these cases, it is desired to remove the navigation header on the HTML pages as well as links to other pages within the MMORPDND database. This script will facilitate doing just this. The script takes an input file called `public\_files.list'. This file should be located in the same location as the publicize\_files.py script, which is in the templates folder by default. The script will create duplicate files of all files listed in the `public\_files.list' with an appended `\_public' label on the file names. It will then parse all the public files and remove all links within the files that are not links to other public files. If a public file exists for one of the links, the link will instead be updated to the appropriate public file.
 
 
 
