@@ -615,7 +615,7 @@ class MMORPDND:
 
         This method performs the following steps:
         1. Loop through all HTML files in the specified directory and its subdirectories.
-        2. For each HTML file found that does not contain "Template" in its filename:
+        2. For each HTML file found that does not contain "template" in its filename:
             - Read the contents of the HTML file.
             - Check if the file is in the list of directories to exclude.
             - Read the contents of the header template file.
@@ -638,7 +638,7 @@ class MMORPDND:
         for root, dirnames, filenames in os.walk(directory):
             for filename in filenames:
                 # check for html file and if "Template" is in filename.
-                if filename.endswith(".html") and "Template" not in filename:
+                if filename.endswith(".html") and "template" not in filename:
                     # Read the contents of the HTML file
                     file_path = os.path.join(root, filename)
 
@@ -696,7 +696,7 @@ class MMORPDND:
 
         This method performs the following steps:
         1. Loop through all HTML files in the specified directory and its subdirectories.
-        2. For each HTML file found that does not contain "Template" in its filename:
+        2. For each HTML file found that does not contain "template" in its filename:
             - Read the contents of the HTML file.
             - Check if the file is in the list of directories to exclude.
             - Print a progress message indicating the file being processed.
@@ -720,7 +720,7 @@ class MMORPDND:
         # loop through all files in directory and subdirectories
         for root, dirnames, filenames in os.walk(directory):
             for filename in filenames:
-                if filename.endswith(".html") and "Template" not in filename:
+                if filename.endswith(".html") and "template" not in filename:
                     # open the file and read the contents
                     file_path = os.path.join(root, filename)
 
