@@ -962,10 +962,28 @@ class MMORPDND:
         Returns:
             None
         """
-        html_files = self.find_all_html_files(directory)
+        html_files = self.find_all_html_files(directory)        
+
+        # Sort html_files by length, longest file names first for linking names. This fixes a bug with
+        # file names that contain others not being the primary link chosen.
+        search_words = sorted(html_files, key=len, reverse=True)
+        
+        # keep track of which number we're on.
+        index = 0        
+        # Get the total number of items in html_files
+        total = len(html_files)
+        # Calculate the width for the progress display (based on the total number of items)
+        width = len(str(total))
+        
         # Search the body text of each HTML file for the search strings
         for file_info in html_files:
-            output_text("Parsing {0} for link updates!".format(file_info['full_path']))
+            index += 1
+            
+            # Calculate the percentage
+            percentage = int(index / total * 100.0)
+            
+            # Format the progress with padding based on total number of files.
+            output_text(f"({index:0{width}}/{total:0{width}} {percentage:3}%) Parsing {file_info['full_path']} for link updates!")
             file_path = file_info['full_path']
             
             if "_public" in file_path:
@@ -980,7 +998,7 @@ class MMORPDND:
             if body_match:
                 body_text = body_match.group(1)
                 # Search the body text for the search string
-                for search_word in html_files:
+                for search_word in search_words:
                     search_string = search_word['name_no_ext']                    
                     
                     # Skip the public files.
