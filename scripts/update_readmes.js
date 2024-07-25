@@ -2,15 +2,22 @@
 
 const fs = require('fs');
 const path = require('path');
+const glob = require('glob');
 
 // List of directories to process
-const DIRECTORIES = ['./templates/img/', './campaign/characters/non-player/img/', './campaign/characters/player/img/'];
+const TEMPLATE_DIR = './templates/img/';
+const NON_PLAYER_DIR = './campaign/characters/non-player/img/';
+const NON_PLAYER_DIRS = './campaign/characters/non-player/*/img/';
+const PLAYER_DIR = './campaign/characters/player/img/';
+
+// Use glob to get all matching directories
+const directories = [TEMPLATE_DIR, NON_PLAYER_DIR, ...glob.sync(NON_PLAYER_DIRS), PLAYER_DIR];
 
 const README_FILENAME = 'README.md';
 const NB_IMAGES_PER_LINE = 3;
 
 // Loop through each directory
-DIRECTORIES.forEach((ROOT_DIR) => {
+directories.forEach((ROOT_DIR) => {
   let nbImages = 0;
   let mdContent = '<table><tr>';
 
