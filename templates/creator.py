@@ -748,8 +748,10 @@ def get_character_fields(file):
             else:
                 val = line.split('=')[1].strip().lower()
             char_fields[var] = val
-    except Exception:
-        output_text(f"ERROR: Incorrect file format: {file}", "error")
+    except Exception as err:
+        output_text(f"ERROR: {err}", "error")
+        output_text(f"ERROR: Likely incorrect file format: {file}", "error")
+        return
 
     # check to make sure class is defined.
     if "class" not in char_fields:
@@ -1782,6 +1784,10 @@ class Creator:
 
         # Define the fields to replace in the template file
         char_fields = get_character_fields(file)
+        
+        # In the event that get_character_fields throws an error, char_fields should be None.
+        if char_fields is None:
+            return # Skip the rest of the method.
 
         global_vars.output_file_folder = '.'  # used for testing mainly
 
