@@ -2,7 +2,7 @@ name: Automated Stockpile Update
 
 on:    
   schedule:
-    - cron: '47 13 * * 4' # Runs every Sunday at 5 AM UTC
+    - cron: '03 14 * * 4' # Runs every Sunday at 5 AM UTC
 
 jobs:
   update-stockpile:
@@ -24,8 +24,8 @@ jobs:
 
       - name: Run Stockpile Updates
         run: |
-          cd templates/stockpile
           git checkout automated-updates
+          cd templates/stockpile
           git pull
           python3 stockpile.py -g stockpile_master_general.txt -t stockpile_master_trade.txt -o stockpile_inventory_lists.input -b stockpile_buy_history.txt -s stockpile_sell_history.txt
 
