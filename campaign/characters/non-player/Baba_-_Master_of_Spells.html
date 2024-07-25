@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   Baba - Master of Spells
+  </title>
+  <link href="../../../css/mmorpdnd.css" rel="stylesheet"/>
+  <!-- JavaScript to handle navigation buttons -->
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/f3aa8d5630.js">
+  </script>
+  <script>
+   function goBack() {
+        window.history.back();
+      }
+
+      function goForward() {
+        window.history.forward();
+      }
+
+      function goToIndex() {
+        window.location.href = "./index.html";
+      }
+  </script>
+ </head>
+ <body>
+  <div class="navigation">
+   <a href="#" onclick="history.back(); return false;">
+    <i class="fas fa-arrow-left">
+    </i>
+    Back
+   </a>
+   <a href="./index.html">
+    <i class="fas fa-home">
+    </i>
+    Home
+   </a>
+   <a href="../index.html">
+    <i class="fas fa-level-up-alt">
+    </i>
+    Up
+   </a>
+   <a href="#" onclick="history.forward(); return false;">
+    <i class="fas fa-arrow-right">
+    </i>
+    Forward
+   </a>
+  </div>
+  <!-- Top section for character information -->
+  <div class="container">
+   <div>
+    <div class="character-info">
+     <h2>
+      Baba - Master of Spells
+     </h2>
+     <p>
+      <i>
+       tiny humanoid (gnome), chaotic neutral
+      </i>
+     </p>
+     <p>
+      Level: 20
+     </p>
+     <p>
+      Race: gnome
+     </p>
+     <p>
+      Class: wizard (chronomancer)
+     </p>
+     <p>
+      Background: sage
+     </p>
+    </div>
+    <hr/>
+    <!-- Section for Misc Stats -->
+    <div class="dnd-list">
+     <h3>
+      Miscillaneous Stats
+     </h3>
+     <ul>
+      <li>
+       <strong>
+        Armor Class:
+       </strong>
+       20 (mage armor)
+      </li>
+      <li>
+       <strong>
+        Hit Points:
+       </strong>
+       190
+      </li>
+      <li>
+       <strong>
+        Speed:
+       </strong>
+       25 ft.
+      </li>
+      <li>
+       <strong>
+        Resistances:
+       </strong>
+       psychic
+      </li>
+      <li>
+       <strong>
+        Immunities:
+       </strong>
+       charm, fear
+      </li>
+      <li>
+       <strong>
+        Senses:
+       </strong>
+       darkvision 60 ft., passive perception 17, Passive Perception: 14
+      </li>
+      <li>
+       <strong>
+        Languages:
+       </strong>
+       common, gnomish, draconic, elvish, sylvan, infernal
+      </li>
+     </ul>
+    </div>
+   </div>
+   <div class="character-info">
+    <a href="img/baba (2).jpg">
+     <img alt="baba (2)-image" class="character-img" src="img/baba (2).jpg"/>
+    </a>
+   </div>
+  </div>
+  <hr/>
+  <!-- Section for attributes -->
+  <div class="dnd-table">
+   <h3>
+    Attributes
+   </h3>
+   <table>
+    <tr>
+     <th class="title">
+      Ability
+     </th>
+     <th class="title">
+      Score
+     </th>
+     <th class="title">
+      Proficient
+     </th>
+     <th class="title">
+      Modifier
+     </th>
+    </tr>
+    <tr>
+     <td>
+      Strength
+     </td>
+     <td>
+      9
+     </td>
+     <td>
+      -
+     </td>
+     <td class="ability-modifier">
+      -1
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Dexterity
+     </td>
+     <td>
+      15
+     </td>
+     <td>
+      -
+     </td>
+     <td class="ability-modifier">
+      +2
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Constitution
+     </td>
+     <td>
+      15
+     </td>
+     <td>
+      -
+     </td>
+     <td class="ability-modifier">
+      +2
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Intelligence
+     </td>
+     <td>
+      29
+     </td>
+     <td>
+      <i class="fas fa-check">
+      </i>
+     </td>
+     <td class="ability-modifier">
+      +15
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Wisdom
+     </td>
+     <td>
+      18
+     </td>
+     <td>
+      <i class="fas fa-check">
+      </i>
+     </td>
+     <td class="ability-modifier">
+      +10
+     </td>
+    </tr>
+    <tr>
+     <td>
+      Charisma
+     </td>
+     <td>
+      13
+     </td>
+     <td>
+      -
+     </td>
+     <td class="ability-modifier">
+      +1
+     </td>
+    </tr>
+   </table>
+  </div>
+  <hr/>
+  <!-- Section for skills and spells -->
+  <div class="dnd-table">
+   <h3>
+    Skills
+   </h3>
+   <table>
+    <thead>
+     <tr>
+      <th class="title">
+       Skill
+      </th>
+      <th class="title">
+       Proficient
+      </th>
+      <th class="title">
+       Modifier
+      </th>
+     </tr>
+    </thead>
+    <tbody>
+     <tr>
+      <td>
+       Acrobatics (Dex)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +2
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Animal Handling (Wis)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +4
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Arcana (Int)
+      </td>
+      <td class="proficient">
+       <i class="fas fa-check">
+       </i>
+      </td>
+      <td class="ability-modifier">
+       +15
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Athletics (Str)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       -1
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Deception (Cha)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +1
+      </td>
+     </tr>
+     <tr>
+      <td>
+       History (Int)
+      </td>
+      <td class="proficient">
+       <i class="fas fa-check">
+       </i>
+      </td>
+      <td class="ability-modifier">
+       +15
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Insight (Wis)
+      </td>
+      <td class="proficient">
+       <i class="fas fa-check">
+       </i>
+      </td>
+      <td class="ability-modifier">
+       +10
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Intimidation (Cha)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +1
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Investigation (Int)
+      </td>
+      <td class="proficient">
+       <i class="fas fa-check">
+       </i>
+      </td>
+      <td class="ability-modifier">
+       +15
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Medicine (Wis)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +4
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Nature (Int)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +9
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Perception (Wis)
+      </td>
+      <td class="proficient">
+       <i class="fas fa-check">
+       </i>
+      </td>
+      <td class="ability-modifier">
+       +10
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Performance (Cha)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +1
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Persuasion (Cha)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +1
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Religion (Int)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +9
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Sleight of Hand (Dex)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +2
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Stealth (Dex)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +2
+      </td>
+     </tr>
+     <tr>
+      <td>
+       Survival (Wis)
+      </td>
+      <td class="proficient">
+       -
+      </td>
+      <td class="ability-modifier">
+       +4
+      </td>
+     </tr>
+    </tbody>
+   </table>
+  </div>
+  <hr/>
+  <!-- Section for abilities -->
+  <div class="dnd-list">
+   <h3>
+    Abilities, Spells, and Actions
+   </h3>
+   <ul>
+    <li>
+     <strong>
+      temporal flux, rewind, temporal displacement, temporal shield, chrono lock, precognition, aging touch (alternate), time clones, divine nocro-fusion:
+     </strong>
+     [temporal flux, rewind, temporal displacement, temporal shield, chrono lock, precognition, aging touch (alternate), time clones, divine nocro-fusion description]
+    </li>
+   </ul>
+  </div>
+  <hr/>
+  <!-- Section for equipment -->
+  <div class="dnd-list">
+   <h3>
+    Equipment
+   </h3>
+   <ul>
+    <li>
+     <strong>
+      staff of temporal warding, robe of the chronomancer, amulet of temporal power, ring of spell turning:
+     </strong>
+     [staff of temporal warding, robe of the chronomancer, amulet of temporal power, ring of spell turning description]
+    </li>
+   </ul>
+  </div>
+  <hr/>
+  <!-- Section for background information and notes -->
+  <div class="dnd-info">
+   <h3>
+    Background Information
+   </h3>
+   <p class="first-paragraph">
+    This version of Baba hails from an alternate
+    <a href="../../timeline/timeline.html">
+     timeline</a>, where her studies and experiences with time magic have led her down slightly different paths. She has honed her abilities to manipulate time in unique ways, making her a formidable and unpredictable force. Her alternate
+    <a href="../../timeline/timeline.html">
+     timeline
+    </a>
+    self retains her chaotic tendencies and profound understanding of temporal magic, but with subtle differences in her approach and abilities.
+   </p>
+  </div>
+  <hr/>
+  <div class="dnd-info">
+   <h3>
+    Notes
+   </h3>
+   <p class="first-paragraph">
+    Baba (Alternate
+    <a href="../../timeline/timeline.html">
+     timeline
+    </a>
+    ) possesses unique time manipulation abilities that differentiate her from her original counterpart. Her mastery over temporal magic provides endless opportunities for creative spellcasting and strategic maneuvers.
+   </p>
+  </div>
+ </body>
+</html>
+<hr/>
+<div class="dnd-list">
+ <h3>
+  Abilities
+ </h3>
+ <p>
+  <ul>
+   <li>
+   </li>
+   <li>
+    -Temporal Flux: As an action, Baba can cause time to fluctuate wildly in a 30-foot radius around her for 1 minute. During this time, all creatures in the area (excluding Baba) must make a DC 20 Wisdom saving throw at the start of each of their turns or be affected by either the slow or haste spell (determined randomly). She can use this ability twice per long rest.
+   </li>
+   <li>
+    -Rewind: Baba can use her reaction to rewind time by up to 6 seconds (1 round), reversing any actions taken within that time frame. This allows her to undo attacks, spells, or movements. She can use this ability three times per long rest.
+   </li>
+   <li>
+    -Temporal Displacement: Baba can displace herself and up to 6 willing creatures in time, teleporting to any location she has seen or studied, but arriving 1d4 hours earlier or later than intended. She can use this ability twice per long rest.
+   </li>
+   <li>
+    -Temporal Shield: As a bonus action, Baba can create a temporal shield that grants her and allies within 10 feet advantage on all saving throws and resistance to all damage for 1 minute. She can use this ability twice per long rest.
+   </li>
+   <li>
+    -Chrono Lock: Baba can lock a creature in a stasis field, rendering it completely immobile and unable to act for 1 minute. The creature must succeed on a DC 21 Constitution saving throw to avoid this effect. She can use this ability once per long rest.
+   </li>
+   <li>
+    -Precognition: Baba can look into the immediate future and gain a brief glimpse of events to come. As a bonus action, she can grant herself or an ally advantage on all attack rolls, saving throws, and ability checks for the next 10 minutes. She can use this ability twice per long rest.
+   </li>
+   <li>
+    -Aging Touch (Alternate): Baba can cause a creature to rapidly age by 1d10 years with a touch. The target must succeed on a DC 21 Constitution saving throw or suffer the effects of aging. The target's maximum hit points are reduced by 1d8 for each decade aged. Once she uses this ability, she cannot use it again until she finishes a long rest.
+   </li>
+   <li>
+    -Time Clones: Baba can create up to three temporal duplicates of herself that mimic her actions and cast spells. These clones can interact with the environment and last for 1 hour, disappearing if they take any damage. She can use this ability twice per long rest.
+   </li>
+   <li>
+    -Divine Nocro-Fusion: Upon a final death, An alternate version of Baba appears. This alternate version of Baba is divine and absorbs the current Baba into her being without explanation.
+   </li>
+  </ul>
+ </p>
+</div>
