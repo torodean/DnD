@@ -53,11 +53,15 @@ This process relies on regular expressions to manage and update the HTML content
 
 \subsubsection{Update All HTML Navigation And Headers}
 
-TODO
+This feature will update the headers of HTML files in a specified directory and its subdirectories to match a predefined template. The files `templates/headerTemplate.html' and `templates/navTemplate.html' serve as templates that will get copied to all other HTML files. It processes each HTML file (excluding those with various terms in their filenames) by reading its contents and replacing the header section with that of a template file. It updates the title based on the filename, calculates the correct relative path to the CSS file, and replaces a placeholder with this link. The method overwrites the HTML file with the modified content and prints progress updates for each updated file. Finally, it prints a message indicating that all relevant HTML files have been updated. 
+
+This feature then updates the navigation block of HTML files in a specified directory and its subdirectories to match a predefined template. It processes each HTML file (excluding those with various terms in their filenames) by reading its contents and checking if it is in an exclusion list. It then reads the navigation template and searches for an existing navigation block in the HTML file. If found, it replaces this block with the template contents; if not found, it inserts the navigation template at the start of the body tag. The method updates the HTML file with the modified content and prints progress messages indicating the actions taken.
 
 \subsubsection{Update All HTML Hyperlinks}
 
-TODO
+The program features a comprehensive system for managing HTML files, focusing on maintaining and updating links across multiple files. It provides functionalities for locating all HTML files within a specified directory, excluding certain files like "index.html," and generates a list of these files with detailed metadata. Additionally, it offers methods to validate and remove broken links by checking each link's existence against the filesystem, updating HTML files to ensure that all links are functional and accurate.
+
+The program also includes a link updating feature that replaces placeholder text with actual links, ensuring that the HTML files reference the correct file paths. It performs a detailed search and replace operation, accommodating various naming conventions and potential plural forms of file names. Throughout the process, it provides progress updates and warnings about any issues encountered, facilitating effective file management and maintenance.
 
 \subsubsection{Beautify Files}
 
