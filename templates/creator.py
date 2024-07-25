@@ -1789,6 +1789,8 @@ class Creator:
         if char_fields is None:
             return # Skip the rest of the method.
 
+        char_class = char_fields['class']
+
         global_vars.output_file_folder = '.'  # used for testing mainly
 
         if "folder" in char_fields:
@@ -1808,12 +1810,16 @@ class Creator:
                     continue
 
                 if folder in dirpath:
-                    global_vars.output_file_folder = dirpath + "/"
+                    # add the class to the folder path if it's a non-player character.
+                    if "characters/non-player" in folder:
+                        # Take just the first word of the class (to remove subclass data).
+                        global_vars.output_file_folder = dirpath + "/" + char_class.lower().split(" ")[0] + "/"
+                        ensure_directory_exists(global_vars.output_file_folder)               
+                    else:
+                        global_vars.output_file_folder = dirpath + "/"
                     break
 
             output_text(f"Output file folder set to: {global_vars.output_file_folder}", "note")
-
-        char_class = char_fields['class']
 
         # Default to level 1 if none defined.
         if "level" not in char_fields:
