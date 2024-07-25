@@ -1,4 +1,7 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Front-End}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Front-End Development}{1}{subsection.1.1.1}%
+\contentsline {section}{\numberline {1.2}Back-End}{1}{section.1.2}%
 \contentsline {chapter}{\numberline {2}Installation And Setup}{2}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Windows}{2}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Linux}{2}{section.2.2}%
@@ -63,3 +66,10 @@
 \contentsline {subsection}{\numberline {4.10.5}templates/add\_external\_links.py}{25}{subsection.4.10.5}%
 \contentsline {subsection}{\numberline {4.10.6}templates/visualize\_nodes.py}{25}{subsection.4.10.6}%
 \contentsline {subsection}{\numberline {4.10.7}templates/trash/img/cleanup\_trash\_images.py}{25}{subsection.4.10.7}%
+\contentsline {chapter}{\numberline {5}Github Integration And Automation}{27}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Github Integration}{27}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Github Automated Features}{27}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Automated Python Tests}{27}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Automated README Update And Generation}{28}{subsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.2.1}scripts/update\_readmes.js}{28}{subsubsection.5.2.2.1}%
+\contentsline {subsection}{\numberline {5.2.3}Automated LaTeX PDF Building}{28}{subsection.5.2.3}%
