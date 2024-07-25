@@ -26,8 +26,8 @@ jobs:
       - name: Run Stockpile Updates
         run: |        
           echo "Installing Dependencies!"
-          python -m pip3 install --upgrade pip3
-          pip3 install numpy requests matplotlib prettytable
+          python -m pip install --upgrade pip
+          pip install numpy requests matplotlib prettytable
         
           script_dir=$(pwd)
           stockpile_in_dir=${script_dir}/templates/stockpile
