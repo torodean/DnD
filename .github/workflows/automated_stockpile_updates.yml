@@ -1,0 +1,80 @@
+name: Automated Stockpile Update
+
+on:    
+  schedule:
+    - cron: '0 5 * * 0' # Runs every Sunday at 5 AM UTC
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  update-stockpile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x      
+          
+      - name: Install System Dependencies
+        run: |
+          set -e
+          sudo apt-get update
+          sudo apt-get install -y python3-pip python3-tk python3-pil python3-pil.imagetk
+
+      - name: Install Python Dependencies
+        run: |
+          set -e
+          echo "Installing Python Dependencies!"
+          python3 -m pip install --upgrade pip
+          pip3 install numpy requests matplotlib prettytable networkx plotly scipy bs4 lxml regex cssbeautifier tqdm pytube moviepy
+          
+      - name: Run Stockpile Updates
+        run: |
+          set -e
+          script_dir=$(pwd)
+          stockpile_in_dir=${script_dir}/templates/stockpile
+          stockpile_out_dir=${script_dir}/campaign/notes/stockpile
+
+          echo "Script dir: ${script_dir}"
+          echo "Stockpile input dir: ${stockpile_in_dir}"
+          echo "Stockpile output dir: ${stockpile_out_dir}"
+
+          echo "Updating git repo and files to latest!"
+          cd ${script_dir}/templates/stockpile
+          git checkout automated-updates
+          git pull
+          sleep 1
+
+          echo "Running the stockpile update!"
+          python3 stockpile.py -g ${stockpile_in_dir}/stockpile_master_general.txt -t ${stockpile_in_dir}/stockpile_master_trade.txt -o ${stockpile_in_dir}/stockpile_inventory_lists.input -b ${stockpile_in_dir}/stockpile_buy_history.txt -s ${stockpile_in_dir}/stockpile_sell_history.txt
+          sleep 1
+
+          echo "Running the stockpile plot generation!"
+          python3 stockpile_plot.py -b ${stockpile_in_dir}/stockpile_buy_history.txt -s ${stockpile_in_dir}/stockpile_sell_history.txt -o ${stockpile_out_dir}/plots
+          sleep 1
+
+          echo "Updating the stockpile HTML pages!"
+          cd ${script_dir}/templates
+          # Mocking Tkinter GUI
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1024x768x24 &
+          python3 creator.py -f ${stockpile_in_dir}/stockpile_inventory_lists.input
+          cd ${script_dir}
+          python3 mmorpdnd.py -u # Run this a second time in case it failed in the creator (bug in workflows)
+          sleep 1
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'Antonius Torode'
+          git config --global user.email 'torodean@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
+          git add -A
+          git commit -m "Automatic stockpile update."
+          git push origin automated-updates
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}

@@ -1193,6 +1193,7 @@ class MMORPDND:
             publicize_files()
         """
         
+<<<<<<< HEAD
         # Path to the text file containing the list of HTML files
         public_files_list = 'templates/lists/public_files.list'
         
@@ -1202,6 +1203,15 @@ class MMORPDND:
 
             # Process the files listed in the file
             files = self.get_file_list(public_files_list)
+=======
+        current_dir = os.getcwd()
+        os.chdir("./templates")
+        if os.path.isfile("publicize_files.py"):
+            command = f"python3 publicize_files.py"
+            os.system(command)
+        else:
+            output_text("Error: 'publicize_files.py' file not found.", "error")
+>>>>>>> 3966dffcf44c2d4a6380d4154b0a43bcc9a89398
             
             # Store a list of the public files.
             public_files = []
