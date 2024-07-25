@@ -22,20 +22,17 @@ jobs:
           
       - name: Install System Dependencies
         run: |
-          set -e
           sudo apt-get update
           sudo apt-get install -y python3-pip python3-tk python3-pil python3-pil.imagetk
 
       - name: Install Python Dependencies
         run: |
-          set -e
           echo "Installing Python Dependencies!"
           python3 -m pip install --upgrade pip
           pip3 install numpy requests matplotlib prettytable networkx plotly scipy bs4 lxml regex cssbeautifier tqdm pytube moviepy
           
       - name: Run Stockpile Updates
         run: |
-          set -e
           script_dir=$(pwd)
           stockpile_in_dir=${script_dir}/templates/stockpile
           stockpile_out_dir=${script_dir}/campaign/notes/stockpile
