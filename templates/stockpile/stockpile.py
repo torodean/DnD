@@ -36,7 +36,7 @@ def set_log_file_name():
     # Check if the log file already has been set.
     if log_file == "":
         today = datetime.today().strftime("%Y%m%d")
-        log_file = f"{script_name}_log_{today}"
+        log_file = f"{script_name}_log_{today}.log"
         
     return log_file
 
