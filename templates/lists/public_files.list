@@ -1,5 +1,6 @@
-../campaign/notes/stockpile/stockpile_inventory_lists.html
-../campaign/notes/engage_system.html
-../campaign/notes/profit_system.html
-../campaign/notes/orbit_system.html
-../campaign/lore/factions/Orbit.html
+# These files are relative to the mmorpdnd.py script location.
+campaign/notes/stockpile/stockpile_inventory_lists.html
+campaign/notes/engage_system.html
+campaign/notes/profit_system.html
+campaign/notes/orbit_system.html
+campaign/lore/factions/Orbit.html

@@ -41,8 +41,6 @@ The apps in this folder are sub-apps of the MMORPDND system and each serve a spe
   - This app is a tool for making characters with the optional assistance of AI (AI features not yet implemented).
 - reset_all_files.py
   - This will reset all images, delete all HTML files, and move trash files back to input_files to be re-deployed.
-- publicize_files.py
-  - This will create a copy of an HTML file with the navigation header and links removed for public release. The new file will have an appended '_public' to the file name. The files to publicize are determined by the public_files.list file.
 - add_external_links.py
   - This script will update all html files in the specified folder (../campaign in this case) with external links specified in the links.list file (located in the lists folder).
 - visualize_nodes.py
