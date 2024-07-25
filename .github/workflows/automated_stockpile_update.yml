@@ -2,7 +2,7 @@ name: Automated Stockpile Update
 
 on:    
   schedule:
-    - cron: '08 14 * * 4' # Runs every Sunday at 5 AM UTC
+    - cron: '38 14 * * 4' # Runs every Sunday at 5 AM UTC
 
 jobs:
   update-stockpile:
@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v2
