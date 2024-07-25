@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/env python3
 
 # This is a test script for plotting all HTML files as nodes and connecting them via their links.
 
