@@ -1,0 +1,51 @@
+name: Automated Stockpile Update
+
+on:    
+  schedule:
+    - cron: '40 13 * * 4' # Runs every Sunday at 5 AM UTC
+
+jobs:
+  update-stockpile:
+    if: github.ref == 'refs/heads/automated-updates'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy requests
+
+      - name: Run Stockpile Updates
+        run: |
+          cd templates/stockpile
+          git checkout automated-updates
+          git pull
+          python3 stockpile.py -g stockpile_master_general.txt -t stockpile_master_trade.txt -o stockpile_inventory_lists.input -b stockpile_buy_history.txt -s stockpile_sell_history.txt
+
+      - name: Generate Stockpile Plots
+        run: |
+          python3 stockpile_plot.py -b stockpile_buy_history.txt -s stockpile_sell_history.txt -o ../../campaign/notes/stockpile/plots
+
+      - name: Update Stockpile HTML Pages
+        run: |
+          cd ..
+          python3 creator.py -f stockpile_inventory_lists.input
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'Antonius Torode'
+          git config --global user.email 'torodean@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}
+          git add -A
+          git commit -m "Automatic stockpile update."
+          git push origin automated-updates
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
