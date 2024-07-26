@@ -487,7 +487,7 @@ def remove_header(data):
 
 def get_old_lists(output_file):
     """
-    This will return the list of items contained in the secified output list (the current list to be updated).
+    This will return the list of items contained in the specified output list (the current list to be updated).
 
     Args:
         output_file (str): The output file name to retrieve the data from.
@@ -1542,6 +1542,29 @@ def trade_update():
     update_price_history(new_trade_list)
 
 
+def update_latest_info():
+    """
+    Searches for a line in the output file with the format 'Latest Update[dnd-info]=text'
+    and replaces it with 'Latest Update[dnd-info]=%Y-%m-%d %H:%M:%S' (current date and time).
+
+    Returns:
+        None: The function modifies the file in place.
+    """
+    
+    file_path = args.output
+    
+    current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    pattern = re.compile(r'^Latest Update\[dnd-info\]=.*$', re.MULTILINE)
+    
+    with open(file_path, 'r') as file:
+        content = file.read()
+
+    new_content = pattern.sub(f'Latest Update[dnd-info]={current_datetime}', content)
+
+    with open(file_path, 'w') as file:
+        file.write(new_content)
+
+
 def full_update():
     """
     This method will update both the general items and the trade items list.
@@ -1554,6 +1577,7 @@ def full_update():
     """
     general_update()
     trade_update()
+    update_latest_info()
 
 
 if __name__ == '__main__':
