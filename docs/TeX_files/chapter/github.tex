@@ -38,10 +38,10 @@ The GitHub repository contains a few automated features. The `automated-updates'
 This section provides an overview of the GitHub Actions workflow used to run automated tests. Its purpose is to ensure that the codebase remains stable by running a suite of tests. The workflow `.github/workflows/tests.yml' ensures that any changes made to the repository are automatically tested, providing immediate feedback on the impact of those changes. The primary goal of this workflow is to streamline the process of testing and validating code changes, ensuring that new commits do not introduce regressions or break existing functionality. It automatically triggers on pushes to the `main` branch and pull requests targeting the `main` branch, ensuring continuous integration and testing. By integrating this workflow, developers can maintain a high level of code quality with minimal manual effort, leveraging the automation capabilities provided by GitHub Actions. By integrating this workflow, developers can maintain a high level of code quality and quickly identify and fix issues introduced by new changes. The key workflow steps follow:
 
 \begin{enumerate}
-\item Repository Checkout: The workflow begins by checking out the repository to access the code and test files.
-\item Python Setup: It sets up the specified version of Python required for running the tests.
-\item Dependencies Installation: Installs necessary dependencies, specifically `pytest`, which is used for running the tests.
-\item Test Execution: Changes the directory to where the tests are located and runs the specified test files using `pytest`.
+\item \textbf{Repository Checkout}: The workflow begins by checking out the repository to access the code and test files.
+\item \textbf{Python Setup}: It sets up the specified version of Python required for running the tests.
+\item \textbf{Dependencies Installation}: Installs necessary dependencies, specifically `pytest`, which is used for running the tests.
+\item \textbf{Test Execution}: Changes the directory to where the tests are located and runs the specified test files using `pytest`.
 \end{enumerate}
 
 Developers using this workflow should ensure the following:
@@ -63,13 +63,18 @@ Developers using this workflow should ensure the following:
 This document describes the GitHub Actions workflow configured to automatically update README files with image details. The workflow, defined in `.github/workflows/run\_script.yml`, is triggered on pushes to the `automated-updates` branch that affect the `templates/img/` and `campaign/characters/` directories. The purpose of this script is to provide a quick visual reference (the README.md files) for images contained within the folders. This allows the developers to quickly see what the images in Github are without having to select them when in a browser. For users developing in a desktop environment, this feature may not be needed. It performs the following key steps:
 
 \begin{itemize}
-\item Repository Checkout: Checks out the repository to access the code and directories.
-\item Node.js Setup: Sets up the specified version of Node.js needed to run the script.
-\item Script Execution: Runs the `scripts/update\_readmes.js` script, which processes image directories and updates the README files. The script generates or updates a `README.md` file in each directory with a table of images, including thumbnails and filenames.
-\item Commit and Push Changes: Commits any changes made by the script and pushes them back to the `automated-updates` branch.
+\item \textbf{Repository Checkout}: Checks out the repository to access the code and directories.
+\item \textbf{Node.js Setup}: Sets up the specified version of Node.js needed to run the script.
+\item \textbf{Script Execution}: Runs the `scripts/update\_readmes.js` script, which processes image directories and updates the README files. The script generates or updates a `README.md` file in each directory with a table of images, including thumbnails and filenames.
+\item \textbf{Commit and Push Changes}: Commits any changes made by the script and pushes them back to the `automated-updates` branch.
 \end{itemize}
 
 Developers should ensure the Node.js script `update\_readmes.js` is correctly placed in the `scripts` directory and has execution permissions. The workflow configuration must be accurate, with required GitHub tokens set up to allow the workflow to push changes. This workflow automates the process of keeping README files up-to-date with image information, thereby enhancing documentation consistency and reducing manual updates.
+
+
+
+
+
 
 
 \subsubsection{scripts/update\_readmes.js}
@@ -85,17 +90,22 @@ The `scripts/update\_readmes.js' script automates the generation of README.md fi
 
 
 
+
+
+
+
+
 \subsection{Automated LaTeX PDF Building}
 
 
 This section describes the purpose and usage of a GitHub Actions workflow designed to automate the generation and updating of LaTeX documents. The workflow `.github/workflows/build\_latex.yml' ensures that any changes made to the LaTeX source files within the repository are automatically compiled and the resulting PDF is committed back to the repository. The primary goal of this workflow is to streamline the process of maintaining LaTeX documentation and ensure the documentation is properly generated when browser-based Git changes are added or changes on a host machine that does not have LaTeX generation capabilities. It automatically triggers on pushes to the `automated-updates' branch and changes within the documentation directory, ensuring that the LaTeX documents are always up-to-date without manual intervention. By integrating this workflow, developers can maintain consistent and up-to-date LaTeX documentation with minimal manual effort, leveraging the automation capabilities provided by GitHub Actions. The key workflow steps follow:
 
 \begin{enumerate}
-\item Repository Checkout: The workflow begins by checking out the repository to access the LaTeX source files.
-\item TeX Live Setup: It sets up a TeX Live environment to compile the LaTeX documents.
-\item Document Compilation: The LaTeX source files are compiled into a PDF.
-\item File Renaming: The generated PDF is renamed for clarity or versioning purposes.
-\item Commit and Push: The updated PDF is committed and pushed back to the repository, ensuring that the latest version is always available.
+\item \textbf{Repository Checkout}: The workflow begins by checking out the repository to access the LaTeX source files.
+\item \textbf{TeX Live Setup}: It sets up a TeX Live environment to compile the LaTeX documents.
+\item \textbf{Document Compilation}: The LaTeX source files are compiled into a PDF.
+\item \textbf{File Renaming}: The generated PDF is renamed for clarity or versioning purposes.
+\item \textbf{Commit and Push}: The updated PDF is committed and pushed back to the repository, ensuring that the latest version is always available.
 \end{enumerate}
 
 
@@ -106,4 +116,44 @@ Developers using this workflow should ensure the following:
 \item The workflow file is correctly configured with the appropriate branch and paths.
 \item Required secrets, such as GitHub tokens, are set up in the repository settings to allow the workflow to push changes.
 \end{itemize}
+
+
+
+
+
+
+
+\subsection{Automated Stockpile Update Workflow \label{Automated Stockpile Update Workflow}}
+
+The Automated Stockpile Update workflow is designed to run periodically and perform updates on stockpile data. This workflow is scheduled to execute every Sunday at 5 AM UTC and can also be triggered manually through the workflow\_dispatch event.
+
+\begin{itemize}
+    \item \textbf{Checkout Repository}: The repository is checked out using the \texttt{actions/checkout@v2} action with a fetch depth of 0 to ensure that the complete history of the repository is available.
+    
+    \item \textbf{Set up Python}: The Python environment is set up using the \texttt{actions/setup-python@v2} action, specifying Python version 3.x.
+    
+    \item \textbf{Install System Dependencies}: Necessary system dependencies are installed, including all the system requirements found in the `mmorpdnd-setup.sh' script.
+    
+    \item \textbf{Install Python Dependencies}: Python dependencies are installed using \texttt{pip}. The required packages includes all those found in the `mmorpdnd-setup.sh' script.
+    \item \textbf{Run Stockpile Updates}: The script sets up directories for stockpile data and performs the operations outlined in the `stockpile-cron.sh' script (see \ref{stockpile-cron.sh}).
+    
+    \item \textbf{Commit and Push Changes}: Finally, changes are committed and pushed back to the repository. Git configuration is set with the username and email, and the remote URL is updated using a GitHub token stored in the repository secrets. Changes are then added, committed with the message "Automatic stockpile update," and pushed to the \texttt{automated-updates} branch.
+\end{itemize}
+
+This workflow automates the process of updating stockpile data, generating plots, and managing HTML content, ensuring that the repository remains current with the latest updates and changes. This update will also run the full `mmorpdnd.py' update feature (see \ref{mmorpdnd.py}) which updates HTML links, index files, and more.
+
+
+
+
+
+
+
+
+
+\subsection{Front-End Database Updates}
+
+The \texttt{Daily Submodule Update} (`.github/workflows/daily\_submodule\_update.yml') GitHub Actions workflow is designed to run daily at 8:00 AM UTC, with the option for manual triggering. This is ran a few hours after the automated stockpile update (see \ref{Automated Stockpile Update Workflow}) is schedule so that the stockpile update has sufficient time to finish. At the time of writing this, the stockpile update does not take a few hours to run, but this was decided to allow ample room for growth. The workflow performs updates on submodules within the MMORPDND repository by first checking out the repository and fetching all commits to ensure completeness. It does an equivalent functionality of the \texttt{updateSubmodules.sh} script - except automatically runs through a workflow. The script synchronizes the submodule configuration, updates all submodules recursively, and pulls the latest changes from the main repository. For each submodule, it fetches all branches, checks out the \texttt{automated-updates} branch, and pulls the latest updates. Finally, the workflow commits and pushes any changes back to the main repository, configuring Git with the appropriate user details and using a token for authentication. This process ensures that all submodules and the main repository are up-to-date with the latest changes and thus updates the front-end MMORPDND database.
+
+
+
 

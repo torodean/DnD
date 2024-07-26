@@ -18,7 +18,7 @@
 
 
 
-\section{mmorpdnd.py}
+\section{mmorpdnd.py \label{mmorpdnd.py}}
 
 \subsection{Purpose}
 
@@ -45,7 +45,7 @@ This script serves as the backbone for an array of automatic linking and logisti
 
 \subsubsection{Create And Update index.html Files}
 
-This feature generates index files for all subdirectories within a specified root directory. By default, it starts from a global root directory defined in `global\_vars.root_dir'. The feature operates as follows: it traverses all directories and files starting from the specified root using `os.walk'. For each directory, it checks if an index.html file already exists and skips the directory if it does. It also excludes directories listed in `global\_vars.directories\_to\_exclude'. For directories that do not meet these conditions, it creates an index.html file containing basic HTML structure with the directory name in the title and header. Finally, the feature prints a success message indicating the creation of the index file. This index file provides a simple directory listing for each directory without an existing index file.
+This feature generates index files for all subdirectories within a specified root directory. By default, it starts from a global root directory defined in `global\_vars.root\_dir'. The feature operates as follows: it traverses all directories and files starting from the specified root using `os.walk'. For each directory, it checks if an index.html file already exists and skips the directory if it does. It also excludes directories listed in `global\_vars.directories\_to\_exclude'. For directories that do not meet these conditions, it creates an index.html file containing basic HTML structure with the directory name in the title and header. Finally, the feature prints a success message indicating the creation of the index file. This index file provides a simple directory listing for each directory without an existing index file.
 
 This feature then updates HTML index files within the directory and its subdirectories to include links to other files within the same directory. This feature performs several key steps to update HTML index files. First, it prints a message indicating the start of the update process. Next, it searches for all HTML index files within the current directory and its subdirectories, excluding directories specified in `global\_vars.directories\_to\_exclude'. For each index file found, it checks if the file still exists; if not, it prints a warning message. It then reads the file content and identifies all HTML files and certain other file types within the same directory. If an index links section (\texttt{<div class="indexLinks">}) does not already exist, it adds this section before the closing \texttt{</body>} tag. Subsequently, it generates and appends HTML links for each file found in the directory to the \texttt{<div class="indexLinks">} section, replacing the old index links section with the updated one. It then writes the changes back to the file. Finally, it prints a message indicating that all index files have been updated.
 
@@ -137,7 +137,7 @@ options:
 
 The creator tool is a practical solution for converting basic template text files into functional HTML pages. It takes care of the technical aspects by automatically creating HTML files and filling in missing details, like character stats or other content. The tool understands the structure of your template files, recognizes placeholders, and replaces them with accurate data. Whether you're building character profiles, story summaries, or any content with consistent formatting, this tool ensures your HTML documents are correctly formatted and ready for use. It simplifies the process, letting you focus on content creation while it handles the conversion from templates to HTML.
 
-\subsection{Use}
+\subsection{Usage}
 
 The creator tool is a powerful tool that contains many subtle features. It is important to understand these subtleties before using the tool and therefore I encourage the reader to read this enture section before use. 
 
@@ -826,12 +826,35 @@ optional arguments:
 
 
 
+\subsection{stockpile-cron.sh \label{stockpile-cron.sh}}
+
+The `stockpile-cron.sh' script will completely automate running the stockpile system and updating the relevant repositories. This is designed to run on a local linux system. In order for this script to function properly, the user must have permissions to both the DnD back-end and MMORPDND front-end Github repositories. The script assumes both Git repo's live in the users home directory (`~/'). This script will perform the following features:
+
+\begin{itemize}
+\item Update the DnD git repo and files to latest.
+\item Run the stockpile update.
+\item Run the stockpile plot generation.
+\item Update the stockpile HTML page(s).
+\item Update the git repo with the new files.
+\item Update the MMORPDND git database with the new files.
+\end{itemize}
 
 
 
 
 
-\subsection{templates/add\_external\_links.py}
+
+
+
+
+
+
+
+
+
+
+
+\section{templates/add\_external\_links.py}
 
 The `add\_external\_links.py' script processes HTML files to replace specified words with corresponding hyperlinks. It is designed to automate the embedding of links within a set of HTML files based on a predefined list. 
 
@@ -846,7 +869,7 @@ To use the script, ensure the list of words and links is saved in a file (e.g., 
 
 
 
-\subsection{templates/visualize\_nodes.py}
+\section{templates/visualize\_nodes.py}
 
 This script generates and visualizes a network graph of HTML files within a campaign (or a specified with some modification) directory. The script begins by defining the directory to scan for HTML files and then proceeds to build and visualize the graph. The process consists of the following steps:
 
@@ -872,7 +895,7 @@ This script generates and visualizes a network graph of HTML files within a camp
 
 
 
-\subsection{templates/trash/img/cleanup\_trash\_images.py}
+\section{templates/trash/img/cleanup\_trash\_images.py}
 
 This script is designed to identify and delete image files from the campaign (or a specified with some modification) directory if matching files are found in a database folder. The script starts by defining the current directory as the script folder and calculates the relative path for the campaign folder. It then proceeds to find and remove matching image files from the script folder. The script operates as follows:
 
