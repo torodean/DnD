@@ -123,7 +123,7 @@ Developers using this workflow should ensure the following:
 
 
 
-\subsection{Automated Stockpile Update Workflow}
+\subsection{Automated Stockpile Update Workflow \label{Automated Stockpile Update Workflow}}
 
 The Automated Stockpile Update workflow is designed to run periodically and perform updates on stockpile data. This workflow is scheduled to execute every Sunday at 5 AM UTC and can also be triggered manually through the workflow\_dispatch event.
 
@@ -141,6 +141,19 @@ The Automated Stockpile Update workflow is designed to run periodically and perf
 \end{itemize}
 
 This workflow automates the process of updating stockpile data, generating plots, and managing HTML content, ensuring that the repository remains current with the latest updates and changes. This update will also run the full `mmorpdnd.py' update feature (see \ref{mmorpdnd.py}) which updates HTML links, index files, and more.
+
+
+
+
+
+
+
+
+
+\subsection{Front-End Database Updates}
+
+The \texttt{Daily Submodule Update} (`.github/workflows/daily\_submodule\_update.yml') GitHub Actions workflow is designed to run daily at 8:00 AM UTC, with the option for manual triggering. This is ran a few hours after the automated stockpile update (see \ref{Automated Stockpile Update Workflow}) is schedule so that the stockpile update has sufficient time to finish. At the time of writing this, the stockpile update does not take a few hours to run, but this was decided to allow ample room for growth. The workflow performs updates on submodules within the MMORPDND repository by first checking out the repository and fetching all commits to ensure completeness. It does an equivalent functionality of the \texttt{updateSubmodules.sh} script - except automatically runs through a workflow. The script synchronizes the submodule configuration, updates all submodules recursively, and pulls the latest changes from the main repository. For each submodule, it fetches all branches, checks out the \texttt{automated-updates} branch, and pulls the latest updates. Finally, the workflow commits and pushes any changes back to the main repository, configuring Git with the appropriate user details and using a token for authentication. This process ensures that all submodules and the main repository are up-to-date with the latest changes and thus updates the front-end MMORPDND database.
+
 
 
 

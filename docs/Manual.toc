@@ -78,4 +78,5 @@
 \contentsline {subsection}{\numberline {5.2.2}Automated README Update And Generation}{29}{subsection.5.2.2}%
 \contentsline {subsubsection}{\numberline {5.2.2.1}scripts/update\_readmes.js}{29}{subsubsection.5.2.2.1}%
 \contentsline {subsection}{\numberline {5.2.3}Automated LaTeX PDF Building}{29}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Automated Stockpile Update Workflow}{30}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.4}Automated Stockpile Update Workflow }{30}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Front-End Database Updates}{31}{subsection.5.2.5}%
