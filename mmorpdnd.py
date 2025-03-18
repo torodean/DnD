@@ -6,30 +6,34 @@ import random
 import argparse
 
 
-def output_text(text, option = "text"):
+def output_text(text, option="text"):
     """
-    Print text in different colors based on the provided option.`
+    Print text to the console in a specified color using ANSI escape codes.
 
     Args:
-        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
         text (str): The text to be printed.
+        option (str, optional): The color option for the text. Valid options are "text" (default, no color), 
+            "warning" (yellow), "error" (red), "note" (blue), "success" (green), "command" (cyan), 
+            and "test" (magenta). Defaults to "text". Invalid options result in uncolored text.
 
     Returns:
         None
 
     Note:
-        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
+        This function uses ANSI escape codes for color formatting. Colors may not display correctly 
+        in all environments (e.g., some IDEs or Windows terminals without ANSI support).
     """
     color_codes = {
         "text": "\033[0m",      # Reset color
-        "warning": "\033[93m",  # Yellow - Warning text.
-        "error": "\033[91m",    # Red - Error text.
-        "note": "\033[94m",     # Blue - notes or program information.
-        "success": "\033[92m",  # Green - Sucess text.
-        "command": "\033[36m",  # Cyan - Command output text.
-        "test": "\033[35m"      # Magenta - Testing.
+        "warning": "\033[93m",  # Yellow - Warning text
+        "error": "\033[91m",    # Red - Error text
+        "note": "\033[94m",     # Blue - Notes or program information
+        "success": "\033[92m",  # Green - Success text
+        "command": "\033[36m",  # Cyan - Command output text
+        "test": "\033[35m"      # Magenta - Testing
     }
 
+    text = str(text)  # Ensure text is a string
     if option in color_codes:
         color_code = color_codes[option]
         reset_code = color_codes["text"]
