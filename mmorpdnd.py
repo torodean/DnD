@@ -6,30 +6,34 @@ import random
 import argparse
 
 
-def output_text(text, option = "text"):
+def output_text(text, option="text"):
     """
-    Print text in different colors based on the provided option.`
+    Print text to the console in a specified color using ANSI escape codes.
 
     Args:
-        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
         text (str): The text to be printed.
+        option (str, optional): The color option for the text. Valid options are "text" (default, no color), 
+            "warning" (yellow), "error" (red), "note" (blue), "success" (green), "command" (cyan), 
+            and "test" (magenta). Defaults to "text". Invalid options result in uncolored text.
 
     Returns:
         None
 
     Note:
-        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
+        This function uses ANSI escape codes for color formatting. Colors may not display correctly 
+        in all environments (e.g., some IDEs or Windows terminals without ANSI support).
     """
     color_codes = {
         "text": "\033[0m",      # Reset color
-        "warning": "\033[93m",  # Yellow - Warning text.
-        "error": "\033[91m",    # Red - Error text.
-        "note": "\033[94m",     # Blue - notes or program information.
-        "success": "\033[92m",  # Green - Sucess text.
-        "command": "\033[36m",  # Cyan - Command output text.
-        "test": "\033[35m"      # Magenta - Testing.
+        "warning": "\033[93m",  # Yellow - Warning text
+        "error": "\033[91m",    # Red - Error text
+        "note": "\033[94m",     # Blue - Notes or program information
+        "success": "\033[92m",  # Green - Success text
+        "command": "\033[36m",  # Cyan - Command output text
+        "test": "\033[35m"      # Magenta - Testing
     }
 
+    text = str(text)  # Ensure text is a string
     if option in color_codes:
         color_code = color_codes[option]
         reset_code = color_codes["text"]
@@ -903,17 +907,30 @@ class MMORPDND:
         return os.path.isfile(os.path.join(base_path, link))
 
 
-
-    def remove_broken_links_from_html_file(self, file_path, root_folder):
-        """
-        Parse the HTML file, check for valid links, remove invalid links, and print error messages.
-
+    def remove_broken_links_from_html_file(self, file_path):
+    """
+        Parse an HTML file, identify and remove invalid local links while preserving link text, 
+        and print warnings for removed links.
+    
         Args:
+            self: Instance of the class containing the is_valid_link method.
             file_path (str): The file path of the HTML file to process.
-            root_folder (str): The root directory containing all HTML files.
+    
+        Returns:
+            None
+    
+        Notes:
+            - Skips links starting with 'http://', 'https://', containing '/music/', or equal to '#'.
+            - Invalid links are removed by unwrapping <a> tags, keeping the enclosed text.
+            - Uses the is_valid_link method to determine link validity.
+            - Modifies the original file if invalid links are found.
         """
-        with open(file_path, 'r', encoding='utf-8') as file:
-            soup = BeautifulSoup(file, 'html.parser')
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                soup = BeautifulSoup(file, 'html.parser')
+        except IOError as e:
+            output_text(f"Failed to read {file_path}: {e}", option="error")
+            return
 
         base_path = os.path.dirname(file_path)
         invalid_links = []
@@ -938,32 +955,49 @@ class MMORPDND:
 
     def remove_broken_links(self, root_folder=global_vars.root_dir):
         """
-        Parse all HTML files in a directory, check for valid links, remove invalid links, and print error messages.
-
+        Process all HTML files in a directory to remove invalid local links and print warnings for removed links.
+        
         Args:
-            file_path (str): The file path of the HTML file to process.
-            root_folder (str): The root directory containing all HTML files.
-        """        
+            self: Instance of the class containing get_all_html_files and remove_broken_links_from_html_file methods.
+            root_folder (str, optional): The root directory containing all HTML files. Defaults to global_vars.root_dir.
+        
+        Returns:
+            None
+        
+        Notes:
+            - Uses get_all_html_files to retrieve HTML files from the root directory.
+            - Skips files in directories listed in global_vars.directories_to_exclude.
+            - Delegates link removal to remove_broken_links_from_html_file.
+        """    
         html_files = self.get_all_html_files(root_folder)
         
-        for html_file in html_files:
-        
+        for html_file in html_files:        
             # Check if we are looking at a file in our exclude list.
             if any(exclude in html_file for exclude in global_vars.directories_to_exclude):
-                continue
-                
-            self.remove_broken_links_from_html_file(html_file, root_folder)
-    
+                continue                
+            try:
+                self.remove_broken_links_from_html_file(html_file, root_folder)
+            except Exception as e:
+                output_text(f"Failed to process {html_file}: {e}", option="error")    
+
 
     def update_html_links(self, directory=global_vars.root_dir):
         """
-        Update the links in the various HTML files to link to the appropriate file.
-
+        Update HTML files by linking occurrences of file names in body text to their corresponding files.
+        
         Args:
-            directory (str): The directory to search for HTML files. Defaults to global_vars.root_dir.
-
+            self: Instance of the class containing the find_all_html_files method.
+            directory (str, optional): The directory to search for HTML files. Defaults to global_vars.root_dir.
+        
         Returns:
             None
+        
+        Notes:
+            - Retrieves HTML files using find_all_html_files.
+            - Skips files containing '_public' in their path.
+            - Searches body text for file names (and variations like plurals) from the retrieved files.
+            - Replaces matches with <a> tags linking to the relative file paths.
+            - Prints progress and updates using output_text.
         """
         html_files = self.find_all_html_files(directory)        
 
