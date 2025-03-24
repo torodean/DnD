@@ -1,0 +1,5 @@
+folder=items/consumables/potions
+
+Bitterroot Tonic[dnd-info]=A murky brown liquid in a small vial, brewed from bitter roots and herbs. Drinking it grants a temporary boost to endurance, reducing exhaustion by one level for 1 hour (does not stack). Costs 5 gp per vial, but the taste is notoriously foul.
+
+Recipe[dnd-list]=Boil 1 ounce of dried bitterroot in 2 cups of water for 20 minutes.;Strain the liquid and add 1 teaspoon of crushed sage.;Simmer for another 10 minutes, then cool and bottle in a sealed vial.
