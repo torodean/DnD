@@ -908,7 +908,7 @@ class MMORPDND:
 
 
     def remove_broken_links_from_html_file(self, file_path):
-    """
+        """
         Parse an HTML file, identify and remove invalid local links while preserving link text, 
         and print warnings for removed links.
     
