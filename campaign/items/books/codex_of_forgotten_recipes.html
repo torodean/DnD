@@ -1,10 +1,73 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title></title>
-</head>
-<body>
-<div class="dnd-header"><h1>codex of forgotten recipes</h1></div><hr><div class="dnd-info"><h3>Codex Of Forgotten Recipes</h3><p class="first-paragraph">A thick, grease-stained tome bound in cracked leather, containing recipes for bizarre dishes from a bygone era. Its faded ink and odd ingredients make it a curiosity worth 10 gp to a chef or historian.
-</p></div><hr><div class="dnd-info"><h3>Summary</h3><p class="first-paragraph">The book lists meals like "stewed eel with honey glaze" and "roasted cave beetle pie," with detailed instructions.Many ingredients, such as "duskoroot" or "glimmerfish," are extinct or unknown, rendering most recipes impractical. A few legible pages offer tips on preserving meat that could still be useful to an adventurous cook.
-</p></div></body>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   codex of forgotten recipes
+  </title>
+  <link href="../../../css/mmorpdnd.css" rel="stylesheet"/>
+  <!-- JavaScript to handle navigation buttons -->
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/f3aa8d5630.js">
+  </script>
+  <script>
+   function goBack() {
+        window.history.back();
+      }
+
+      function goForward() {
+        window.history.forward();
+      }
+
+      function goToIndex() {
+        window.location.href = "./index.html";
+      }
+  </script>
+ </head>
+ <body>
+  <div class="navigation">
+   <a href="#" onclick="history.back(); return false;">
+    <i class="fas fa-arrow-left">
+    </i>
+    Back
+   </a>
+   <a href="./index.html">
+    <i class="fas fa-home">
+    </i>
+    Home
+   </a>
+   <a href="../index.html">
+    <i class="fas fa-level-up-alt">
+    </i>
+    Up
+   </a>
+   <a href="#" onclick="history.forward(); return false;">
+    <i class="fas fa-arrow-right">
+    </i>
+    Forward
+   </a>
+  </div>
+  <div class="dnd-header">
+   <h1>
+    codex of forgotten recipes
+   </h1>
+  </div>
+  <hr/>
+  <div class="dnd-info">
+   <h3>
+    Codex Of Forgotten Recipes
+   </h3>
+   <p class="first-paragraph">
+    A thick, grease-stained tome bound in cracked leather, containing recipes for bizarre dishes from a bygone era. Its faded ink and odd ingredients make it a curiosity worth 10 gp to a chef or historian.
+   </p>
+  </div>
+  <hr/>
+  <div class="dnd-info">
+   <h3>
+    Summary
+   </h3>
+   <p class="first-paragraph">
+    The book lists meals like "stewed eel with honey glaze" and "roasted cave beetle pie," with detailed instructions.Many ingredients, such as "duskoroot" or "glimmerfish," are extinct or unknown, rendering most recipes impractical. A few legible pages offer tips on preserving meat that could still be useful to an adventurous cook.
+   </p>
+  </div>
+ </body>
 </html>

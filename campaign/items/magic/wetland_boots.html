@@ -1,9 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title></title>
-</head>
-<body>
-<div class="dnd-header"><h1>wetland boots</h1></div><hr><div class="dnd-info"><h3>Wetland Boots</h3><p class="first-paragraph">These boots are always wet inside. They make sploosh noises when walking and give the user disadvantage on stealth checks. They are extremely comfortable though.
-</p></div></body>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   wetland boots
+  </title>
+  <link href="../../../css/mmorpdnd.css" rel="stylesheet"/>
+  <!-- JavaScript to handle navigation buttons -->
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/f3aa8d5630.js">
+  </script>
+  <script>
+   function goBack() {
+        window.history.back();
+      }
+
+      function goForward() {
+        window.history.forward();
+      }
+
+      function goToIndex() {
+        window.location.href = "./index.html";
+      }
+  </script>
+ </head>
+ <body>
+  <div class="navigation">
+   <a href="#" onclick="history.back(); return false;">
+    <i class="fas fa-arrow-left">
+    </i>
+    Back
+   </a>
+   <a href="./index.html">
+    <i class="fas fa-home">
+    </i>
+    Home
+   </a>
+   <a href="../index.html">
+    <i class="fas fa-level-up-alt">
+    </i>
+    Up
+   </a>
+   <a href="#" onclick="history.forward(); return false;">
+    <i class="fas fa-arrow-right">
+    </i>
+    Forward
+   </a>
+  </div>
+  <div class="dnd-header">
+   <h1>
+    wetland boots
+   </h1>
+  </div>
+  <hr/>
+  <div class="dnd-info">
+   <h3>
+    Wetland Boots
+   </h3>
+   <p class="first-paragraph">
+    These boots are always wet inside. They make sploosh noises when walking and give the user disadvantage on stealth checks. They are extremely comfortable though.
+   </p>
+  </div>
+ </body>
 </html>

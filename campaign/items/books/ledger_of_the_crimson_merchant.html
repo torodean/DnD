@@ -1,10 +1,73 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title></title>
-</head>
-<body>
-<div class="dnd-header"><h1>ledger of the crimson merchant</h1></div><hr><div class="dnd-info"><h3>Ledger Of The Crimson Merchant</h3><p class="first-paragraph">A slim, red-bound ledger detailing the transactions of a mysterious merchant who dealt in exotic goods. Its meticulous records hint at shady dealings, valued at 15 gp by those who study underworld history.
-</p></div><hr><div class="dnd-info"><h3>Summary</h3><p class="first-paragraph">The ledger tracks sales of items like "powdered wyrm scales" and "vials of shadow essence" to unnamed buyers. Prices are listed in both gold and cryptic terms like "three nights’ silence" or "a favor unasked," suggesting unusual trades. The final page notes a massive debt left unpaid, with a bloodstain smudging the last entry.
-</p></div></body>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   ledger of the crimson merchant
+  </title>
+  <link href="../../../css/mmorpdnd.css" rel="stylesheet"/>
+  <!-- JavaScript to handle navigation buttons -->
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/f3aa8d5630.js">
+  </script>
+  <script>
+   function goBack() {
+        window.history.back();
+      }
+
+      function goForward() {
+        window.history.forward();
+      }
+
+      function goToIndex() {
+        window.location.href = "./index.html";
+      }
+  </script>
+ </head>
+ <body>
+  <div class="navigation">
+   <a href="#" onclick="history.back(); return false;">
+    <i class="fas fa-arrow-left">
+    </i>
+    Back
+   </a>
+   <a href="./index.html">
+    <i class="fas fa-home">
+    </i>
+    Home
+   </a>
+   <a href="../index.html">
+    <i class="fas fa-level-up-alt">
+    </i>
+    Up
+   </a>
+   <a href="#" onclick="history.forward(); return false;">
+    <i class="fas fa-arrow-right">
+    </i>
+    Forward
+   </a>
+  </div>
+  <div class="dnd-header">
+   <h1>
+    ledger of the crimson merchant
+   </h1>
+  </div>
+  <hr/>
+  <div class="dnd-info">
+   <h3>
+    Ledger Of The Crimson Merchant
+   </h3>
+   <p class="first-paragraph">
+    A slim, red-bound ledger detailing the transactions of a mysterious merchant who dealt in exotic goods. Its meticulous records hint at shady dealings, valued at 15 gp by those who study underworld history.
+   </p>
+  </div>
+  <hr/>
+  <div class="dnd-info">
+   <h3>
+    Summary
+   </h3>
+   <p class="first-paragraph">
+    The ledger tracks sales of items like "powdered wyrm scales" and "vials of shadow essence" to unnamed buyers. Prices are listed in both gold and cryptic terms like "three nights’ silence" or "a favor unasked," suggesting unusual trades. The final page notes a massive debt left unpaid, with a bloodstain smudging the last entry.
+   </p>
+  </div>
+ </body>
 </html>

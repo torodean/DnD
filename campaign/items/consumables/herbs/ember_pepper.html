@@ -1,13 +1,83 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title></title>
-</head>
-<body>
-<div class="dnd-header"><h1>ember pepper</h1></div><hr><div class="dnd-info"><h3>Ember Pepper</h3><p class="first-paragraph">A small, fiery red pepper that grows in arid regions, valued for its warming properties and sharp bite. One pepper (enough for one draught) costs 8 sp and weighs 1 oz.
-</p></div><hr><div class="dnd-list"><h3>Recipe</h3><p><ul>
-<li>Find ember pepper bushes in sandy soil, marked by their bright red fruit.</li>
-<li>Pick peppers when fully ripened, wearing gloves to avoid skin irritation.</li>
-<li>Dry them over a low fire for 6 hours to intensify their heat and preserve them.</li>
-</ul></p></div></body>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   ember pepper
+  </title>
+  <link href="../../../../css/mmorpdnd.css" rel="stylesheet"/>
+  <!-- JavaScript to handle navigation buttons -->
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/f3aa8d5630.js">
+  </script>
+  <script>
+   function goBack() {
+        window.history.back();
+      }
+
+      function goForward() {
+        window.history.forward();
+      }
+
+      function goToIndex() {
+        window.location.href = "./index.html";
+      }
+  </script>
+ </head>
+ <body>
+  <div class="navigation">
+   <a href="#" onclick="history.back(); return false;">
+    <i class="fas fa-arrow-left">
+    </i>
+    Back
+   </a>
+   <a href="./index.html">
+    <i class="fas fa-home">
+    </i>
+    Home
+   </a>
+   <a href="../index.html">
+    <i class="fas fa-level-up-alt">
+    </i>
+    Up
+   </a>
+   <a href="#" onclick="history.forward(); return false;">
+    <i class="fas fa-arrow-right">
+    </i>
+    Forward
+   </a>
+  </div>
+  <div class="dnd-header">
+   <h1>
+    ember pepper
+   </h1>
+  </div>
+  <hr/>
+  <div class="dnd-info">
+   <h3>
+    Ember Pepper
+   </h3>
+   <p class="first-paragraph">
+    A small, fiery red pepper that grows in arid regions, valued for its warming properties and sharp bite. One pepper (enough for one draught) costs 8 sp and weighs 1 oz.
+   </p>
+  </div>
+  <hr/>
+  <div class="dnd-list">
+   <h3>
+    Recipe
+   </h3>
+   <p>
+    <ul>
+     <li>
+      Find ember pepper bushes in sandy soil, marked by their bright red fruit.
+     </li>
+     <li>
+      Pick peppers when fully ripened, wearing gloves to avoid skin irritation.
+     </li>
+     <li>
+      Dry them over a low fire for 6 hours to intensify their heat and preserve them.
+     </li>
+    </ul>
+   </p>
+  </div>
+ </body>
 </html>

@@ -1,9 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title></title>
-</head>
-<body>
-<div class="dnd-header"><h1>ring of unexpected scent</h1></div><hr><div class="dnd-info"><h3>Ring Of Unexpected Scent</h3><p class="first-paragraph">A simple copper ring that, when twisted, emits a random smell (e.g., fresh bread, wet dog, rotting fish) in a 10-foot radius for 10 minutes. Usable thrice per day. Useful for distractions or covering tracks, but the wearer can’t predict the scent.
-</p></div></body>
+ <head>
+  <meta charset="utf-8"/>
+  <title>
+   ring of unexpected scent
+  </title>
+  <link href="../../../css/mmorpdnd.css" rel="stylesheet"/>
+  <!-- JavaScript to handle navigation buttons -->
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/f3aa8d5630.js">
+  </script>
+  <script>
+   function goBack() {
+        window.history.back();
+      }
+
+      function goForward() {
+        window.history.forward();
+      }
+
+      function goToIndex() {
+        window.location.href = "./index.html";
+      }
+  </script>
+ </head>
+ <body>
+  <div class="navigation">
+   <a href="#" onclick="history.back(); return false;">
+    <i class="fas fa-arrow-left">
+    </i>
+    Back
+   </a>
+   <a href="./index.html">
+    <i class="fas fa-home">
+    </i>
+    Home
+   </a>
+   <a href="../index.html">
+    <i class="fas fa-level-up-alt">
+    </i>
+    Up
+   </a>
+   <a href="#" onclick="history.forward(); return false;">
+    <i class="fas fa-arrow-right">
+    </i>
+    Forward
+   </a>
+  </div>
+  <div class="dnd-header">
+   <h1>
+    ring of unexpected scent
+   </h1>
+  </div>
+  <hr/>
+  <div class="dnd-info">
+   <h3>
+    Ring Of Unexpected Scent
+   </h3>
+   <p class="first-paragraph">
+    A simple copper ring that, when twisted, emits a random smell (e.g., fresh bread, wet dog, rotting fish) in a 10-foot radius for 10 minutes. Usable thrice per day. Useful for distractions or covering tracks, but the wearer can’t predict the scent.
+   </p>
+  </div>
+ </body>
 </html>
