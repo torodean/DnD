@@ -1,0 +1,5 @@
+folder=items/consumables/potions
+
+Cloudcap Extract[dnd-info]=A thin, smoky-gray fluid in a glass phial, derived from rare mushrooms. When ingested, it sharpens the senses, granting a +2 bonus to Wisdom (Perception) checks for 1 hour. Costs 6 gp per phial, but causes mild dizziness afterward.
+
+Recipe[dnd-list]=Slice 2 cloudcap mushrooms thinly and soak in 1 cup of warm water for 1 hour.;Boil the mixture down to half its volume, about 20 minutes.;Cool, filter out solids, and store in a glass phial with a tight stopper.

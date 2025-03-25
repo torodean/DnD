@@ -1,0 +1,5 @@
+folder=items/consumables/potions
+
+Ember Pepper Draught[dnd-info]=A spicy, red-orange liquid in a clay bottle, distilled from fiery peppers. Drinking it warms the body, providing resistance to cold weather effects (not damage) for 2 hours. Costs 4 gp per bottle and leaves the drinker sweating profusely.
+
+Recipe[dnd-list]=Dry and grind 3 ember peppers into a fine powder.;Mix the powder with 1 cup of strong grain alcohol and let sit for 2 days.;Strain the mixture, dilute with 1/2 cup of water, and bottle securely.

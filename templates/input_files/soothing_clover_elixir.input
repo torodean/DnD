@@ -1,0 +1,5 @@
+folder=items/consumables/potions
+
+Soothing Clover Elixir[dnd-info]=A pale green mixture in a stoppered flask, made from clover and mint. When consumed, it calms the nerves, granting advantage on saving throws against being frightened for 30 minutes. Costs 3 gp per flask.
+
+Recipe[dnd-list]=Crush 2 handfuls of fresh clover leaves and 1 handful of mint into a paste.;Steep the paste in 1 cup of hot water for 15 minutes.;Filter through cloth, add a pinch of honey, and pour into a flask.

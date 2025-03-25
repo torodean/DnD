@@ -1,0 +1,5 @@
+folder=items/consumables/food
+
+Smoked Fox Jerky[dnd-info]=Tough, smoky strips of fox meat cured with salt and hung over a fire, favored by hunters. A bundle of 6 strips costs 1 gp and provides a day’s worth of sustenance.
+
+Recipe[dnd-list]=Skin and slice 1 pound of fox meat into thin strips.;Rub with 2 tablespoons of salt and let sit for 4 hours.;Hang over a smoky fire (oak or hickory preferred) and dry for 12 hours until leathery.

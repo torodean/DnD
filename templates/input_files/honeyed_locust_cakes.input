@@ -1,0 +1,5 @@
+folder=items/consumables/food
+
+Honeyed Locust Cakes[dnd-info]=Sweet, crunchy cakes made from roasted locusts coated in wild honey, a delicacy in arid regions. A batch of 3 cakes costs 2 gp and provides a quick burst of energy (equivalent to half a day’s rations).
+
+Recipe[dnd-list]=Roast 1 cup of cleaned locusts over an open flame until crispy, about 10 minutes.;Melt 3 tablespoons of wild honey with a pinch of salt in a small pot.;Toss the locusts in the honey mixture, spread on a flat surface, and let cool until hardened.
