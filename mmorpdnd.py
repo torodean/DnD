@@ -353,6 +353,8 @@ class MMORPDND:
             if any(exclude in index_file_path for exclude in global_vars.directories_to_exclude):
                 continue
 
+            # Create the index.html file and write the HTML content to it
+            directory_name = os.path.basename(root)
             # Extract the path starting from 'campaign' onward
             campaign_index = root.find('campaign')  # Find the index where 'campaign' starts
             if campaign_index != -1:  # Ensure 'campaign' is found
