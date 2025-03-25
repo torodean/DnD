@@ -976,7 +976,7 @@ class MMORPDND:
             if any(exclude in html_file for exclude in global_vars.directories_to_exclude):
                 continue                
             try:
-                self.remove_broken_links_from_html_file(html_file, root_folder)
+                self.remove_broken_links_from_html_file(html_file)
             except Exception as e:
                 output_text(f"Failed to process {html_file}: {e}", option="error")    
 
