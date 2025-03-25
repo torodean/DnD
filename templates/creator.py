@@ -11,7 +11,6 @@ import argparse
 # Sets terminal mode.
 terminal_mode = False
 
-
 # Import helper functions from common tools file.
 from mmorpdnd_tools import output_text
 from mmorpdnd_tools import is_image_file
