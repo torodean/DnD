@@ -353,11 +353,15 @@ class MMORPDND:
             if any(exclude in index_file_path for exclude in global_vars.directories_to_exclude):
                 continue
 
-            # Create the index.html file and write the HTML content to it
-            directory_name = os.path.basename(root)
+            # Extract the path starting from 'campaign' onward
+            campaign_index = root.find('campaign')  # Find the index where 'campaign' starts
+            if campaign_index != -1:  # Ensure 'campaign' is found
+                display_path = root[campaign_index:]  # Slice from 'campaign' to the end
+            else:
+                display_path = root  # Fallback to full path if 'campaign' isn’t found (shouldn’t happen per your rule)
             with open(index_file_path, 'w') as f:
                 f.write(f"<html>\n<head>\n<title>Index of {directory_name}</title>\n</head>\n<body>\n")
-                f.write(f"<h1>Index of {root}</h1>\n</body>\n</html>\n")
+                f.write(f"<h1>Index of {display_path}</h1>\n</body>\n</html>\n")
             output_text(f"Created index file at {index_file_path}", option="success")
 
 
