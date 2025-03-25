@@ -29,4 +29,4 @@ jobs:
     - name: Run tests
       run: |
         cd templates/tests
-        pytest -vv test_mmorpdnd.py test_creator.py test_purge_index_files.py test_reset_all_files.py
+        pytest -vv test_mmorpdnd.py test_creator.py test_purge_index_files.py test_reset_all_files.py test_mmorpdnd_tools.py

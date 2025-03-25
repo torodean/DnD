@@ -59,3 +59,6 @@ bin/Makefile
 bin/**/Makefile
 
 music
+
+#Python cache
+__pycache__
