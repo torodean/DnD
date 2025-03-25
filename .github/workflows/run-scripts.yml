@@ -5,8 +5,8 @@ on:
     branches:
       - automated-updates
     paths:
-    - 'templates/img/**'
-    - 'campaign/characters/**'
+      - 'templates/img/**'
+      - 'campaign/characters/**'
 
 jobs:
   run-script:
@@ -20,6 +20,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 20  # The desired Node.js version
+
+      - name: Install Dependencies
+        run: npm ci  # or npm install
 
       - name: Run Script
         run: |
