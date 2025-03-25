@@ -1,0 +1,5 @@
+folder=items/consumables/food
+
+Salted Root Mash[dnd-info]=A thick, savory paste made from boiled roots and coarse salt, stored in clay jars. A single jar (enough for 2 meals) costs 5 sp and is a staple for peasants and soldiers alike.
+
+Recipe[dnd-list]=Boil 3 large turnips, parsnips, or other roots in water until soft, about 30 minutes.;Mash the roots with 1 tablespoon of coarse salt and a splash of the cooking water.;Pack into a jar and let cool; stir in a drizzle of oil if available for extra flavor.

@@ -1,0 +1,5 @@
+folder=items/consumables/food
+
+Pickled Glowcap Mushrooms[dnd-info]=A jar of small, faintly luminescent mushrooms pickled in vinegar and herbs, harvested from damp caves. One jar (4 servings) costs 3 gp and adds an eerie glow to meals.
+
+Recipe[dnd-list]=Gather 1 pound of fresh glowcap mushrooms and rinse thoroughly.;Simmer in a pot with 1 cup of vinegar, 1 teaspoon of dill, and a pinch of garlic for 15 minutes.;Transfer to a jar, seal tightly, and let sit for at least 3 days before eating.

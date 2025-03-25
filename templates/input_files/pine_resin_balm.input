@@ -1,0 +1,5 @@
+folder=items/consumables/potions
+
+Pine Resin Balm[dnd-info]=A thick, amber-colored salve in a small tin, made from pine sap and oils. Applying it to minor wounds stabilizes the user (as if succeeding on a death saving throw) if they’re at 0 hit points. Costs 2 gp per tin, single use.
+
+Recipe[dnd-list]=Melt 1 ounce of pine resin with 1 tablespoon of lard over low heat.;Stir in 1 teaspoon of crushed lavender until fully blended.;Pour into a tin and let harden for 4 hours before sealing.

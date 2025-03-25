@@ -1,0 +1,5 @@
+folder=items/consumables/herbs
+
+Bitterroot[dnd-info]=A gnarled, dark brown root found in rocky hillsides, known for its intensely bitter taste and stamina-boosting properties. A single root (enough for one tonic) costs 1 gp and weighs 2 oz.
+
+Recipe[dnd-list]=Locate bitterroot plants in dry, rocky soil, identified by their small, purple flowers.;Dig carefully around the base to extract the root whole, avoiding breakage.;Rinse off dirt and dry in the sun for 2 days to preserve its potency.
