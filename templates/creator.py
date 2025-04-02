@@ -11,37 +11,9 @@ import argparse
 # Sets terminal mode.
 terminal_mode = False
 
-
-def output_text(text, option = "text"):
-    """
-    Print text in different colors based on the provided option.`
-
-    Args:
-        option (str): The color option for the text. Valid options are "text", "warning", "error", "note", and "success".
-        text (str): The text to be printed.
-
-    Returns:
-        None
-
-    Note:
-        This function uses ANSI escape codes for color formatting. Colors may not be displayed correctly in all environments.
-    """
-    color_codes = {
-        "text": "\033[0m",      # Reset color
-        "warning": "\033[93m",  # Yellow - Warning text.
-        "error": "\033[91m",    # Red - Error text.
-        "note": "\033[94m",     # Blue - notes or program information.
-        "success": "\033[92m",  # Green - Sucess text.
-        "command": "\033[36m",  # Cyan - Command output text.
-        "test": "\033[35m"      # Magenta - Testing.
-    }
-
-    if option in color_codes:
-        color_code = color_codes[option]
-        reset_code = color_codes["text"]
-        print(f"{color_code}{text}{reset_code}")
-    else:
-        print(text)
+# Import helper functions from common tools file.
+from mmorpdnd_tools import output_text
+from mmorpdnd_tools import is_image_file
 
 
 def ensure_directory_exists(directory_path):
@@ -1062,29 +1034,6 @@ def add_number_to_filename(filename, number):
     new_filename = f"{base_name} ({number}){extension}"
 
     return new_filename
-
-
-def is_image_file(file_name):
-    """
-    Checks if a file name is an image file based on its extension.
-
-    Args:
-        file_name (str): The name of the file to check.
-
-    Returns:
-        bool: True if the file name has an image extension, False otherwise.
-
-    Example:
-        >>> is_image_file('myphoto.jpg')
-        True
-        >>> is_image_file('document.pdf')
-        False
-    """
-    image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']
-    for ext in image_extensions:
-        if file_name.lower().endswith(ext):
-            return True
-    return False
 
 
 def create_html_img(input_line):

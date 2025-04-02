@@ -20,6 +20,7 @@ if [[ $(uname) == Linux ]]; then
     pip3 install networkx
     pip3 install plotly
     pip3 install scipy
+    pip3 install pytest
 
 else
     echo "Setup not yet configured for your system!"

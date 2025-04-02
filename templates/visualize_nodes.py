@@ -9,14 +9,6 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
 
-import os
-import networkx as nx
-from bs4 import BeautifulSoup
-
-import os
-import networkx as nx
-from bs4 import BeautifulSoup
-
 def extract_links(html_content):
     """
     Extracts and returns all links to HTML files from the provided HTML content.
