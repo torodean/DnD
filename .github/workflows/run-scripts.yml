@@ -5,8 +5,8 @@ on:
     branches:
       - automated-updates
     paths:
-    - 'templates/img/**'
-    - 'campaign/characters/**'
+      - 'templates/img/**'
+      - 'campaign/characters/**'
 
 jobs:
   run-script:
