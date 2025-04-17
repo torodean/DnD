@@ -790,6 +790,8 @@ def create_html_list(values):
 
             for item in item_list:
                 item = item.strip()  # Remove leading/trailing whitespace
+                if item == "":
+                    continue
                 html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
 
             html_list += "</ul></div>"  # Close the HTML list
@@ -804,6 +806,8 @@ def create_html_list(values):
 
             for item in item_list:
                 item = item.strip()  # Remove leading/trailing whitespace
+                if item == "":
+                    continue
                 html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
 
             html_list += "</ul></div>"  # Close the HTML list
@@ -815,6 +819,8 @@ def create_html_list(values):
 
         for item in items:
             item = item.strip()  # Remove leading/trailing whitespace
+            if item == "":
+                continue
             html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
 
         html_list += "</ul>"  # Close the HTML list

@@ -587,3 +587,96 @@ def test_extract_first_integer(input_string, expected_output):
     Test case to verify the behavior of extract_first_integer function.
     """
     assert extract_first_integer(input_string) == expected_output
+    
+
+def test_empty_input():
+    """
+    Test that an empty string produces an empty HTML list.
+    """
+    result = create_html_list("")
+    expected = "<ul>\n</ul>"
+    assert result == expected, f"Expected {expected}, but got {result}"
+    
+def test_single_item():
+    """
+    Test that a single item is correctly formatted in a simple unordered list.
+    """
+    result = create_html_list("Item 1")
+    expected = "<ul>\n<li>Item 1</li>\n</ul>"
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_multiple_items():
+    """
+    Test that multiple items are formatted correctly in a simple unordered list.
+    """
+    result = create_html_list("Item 1; Item 2; Item 3")
+    expected = "<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n<li>Item 3</li>\n</ul>"
+    assert result == expected, f"Expected {expected}, but got {result}"  
+   
+def test_items_with_whitespace():
+    """
+    Test that items with leading/trailing whitespace are stripped correctly.
+    """
+    result = create_html_list("  Item 1  ;Item 2   ;  Item 3")
+    expected = "<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n<li>Item 3</li>\n</ul>"
+    assert result == expected, f"Expected {expected}, but got {result}" 
+    
+def test_two_columns():
+    """
+    Test that 20-40 items are split into two columns correctly.
+    """
+    items = ";".join([f"Item {i}" for i in range(1, 21)])  # 20 items
+    result = create_html_list(items)
+    expected = (
+        "<div class=\"column-container\">\n"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(1, 11)])
+        + "</ul></div>"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(11, 21)])
+        + "</ul></div>"
+        "</div>\n"
+    )
+    assert result == expected, f"Expected two-column layout, but got {result}"
+    
+def test_three_columns():
+    """
+    Test that more than 40 items are split into three columns correctly.
+    """
+    items = ";".join([f"Item {i}" for i in range(1, 42)])  # 41 items
+    result = create_html_list(items)
+    expected = (
+        "<div class=\"column-container\">\n"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(1, 12)])
+        + "</ul></div>"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(12, 22)])
+        + "</ul></div>"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(22, 32)])
+        + "</ul></div>"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(32, 42)])
+        + "</ul></div>"
+        "</div>\n"
+    )
+    assert result == expected, f"Expected three-column layout, but got {result}"
+
+def test_ignore_empty_items():
+    """
+    Test that empty items (e.g., consecutive semicolons) are ignored.
+    """
+    result = create_html_list("Item 1;;Item 2; ;Item 3")
+    expected = "<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n<li>Item 3</li>\n</ul>"
+    assert result == expected, f"Expected empty items to be ignored, but got {result}"
+    
+def test_large_list_edge_case():
+    """
+    Test that exactly 40 items trigger two columns, not three.
+    """
+    items = ";".join([f"Item {i}" for i in range(1, 41)])  # 40 items
+    result = create_html_list(items)
+    column_count = result.count('<div class="column">')
+    assert "<div class=\"column-container\">" in result, "Expected column container for 40 items"
+    assert column_count == 2, f"Expected 2 columns, but got {column_count}"
