@@ -881,6 +881,8 @@ def create_html_info(values):
     for item in items:
         output_text(f"item: {item}")
         item = item.strip()  # Remove leading/trailing whitespace
+        if item == "":
+            continue
         if item.startswith('-'):
             output_text(f"List item detected in: {item}")
             item_list += item.replace("-", "") + ";"
