@@ -587,3 +587,249 @@ def test_extract_first_integer(input_string, expected_output):
     Test case to verify the behavior of extract_first_integer function.
     """
     assert extract_first_integer(input_string) == expected_output
+    
+###########################################
+# Tests for the create_html_list(..) method
+###########################################
+
+def test_empty_input():
+    """
+    Test that an empty string produces an empty HTML list.
+    """
+    result = create_html_list("")
+    expected = "<ul>\n</ul>"
+    assert result == expected, f"Expected {expected}, but got {result}"
+    
+def test_single_item():
+    """
+    Test that a single item is correctly formatted in a simple unordered list.
+    """
+    result = create_html_list("Item 1")
+    expected = "<ul>\n<li>Item 1</li>\n</ul>"
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_multiple_items():
+    """
+    Test that multiple items are formatted correctly in a simple unordered list.
+    """
+    result = create_html_list("Item 1; Item 2; Item 3")
+    expected = "<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n<li>Item 3</li>\n</ul>"
+    assert result == expected, f"Expected {expected}, but got {result}"  
+   
+def test_items_with_whitespace():
+    """
+    Test that items with leading/trailing whitespace are stripped correctly.
+    """
+    result = create_html_list("  Item 1  ;Item 2   ;  Item 3")
+    expected = "<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n<li>Item 3</li>\n</ul>"
+    assert result == expected, f"Expected {expected}, but got {result}" 
+    
+def test_two_columns():
+    """
+    Test that 20-40 items are split into two columns correctly.
+    """
+    items = ";".join([f"Item {i}" for i in range(1, 21)])  # 20 items
+    result = create_html_list(items)
+    expected = (
+        "<div class=\"column-container\">\n"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(1, 11)])
+        + "</ul></div>"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(11, 21)])
+        + "</ul></div>"
+        "</div>\n"
+    )
+    assert result == expected, f"Expected two-column layout, but got {result}"
+    
+def test_three_columns():
+    """
+    Test that more than 40 items are split into three columns correctly.
+    """
+    items = ";".join([f"Item {i}" for i in range(1, 42)])  # 41 items
+    result = create_html_list(items)
+    expected = (
+        "<div class=\"column-container\">\n"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(1, 12)])
+        + "</ul></div>"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(12, 22)])
+        + "</ul></div>"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(22, 32)])
+        + "</ul></div>"
+        "<div class=\"column\"><ul>\n"
+        + "".join([f"<li>Item {i}</li>\n" for i in range(32, 42)])
+        + "</ul></div>"
+        "</div>\n"
+    )
+    assert result == expected, f"Expected three-column layout, but got {result}"
+
+def test_ignore_empty_items():
+    """
+    Test that empty items (e.g., consecutive semicolons) are ignored.
+    """
+    result = create_html_list("Item 1;;Item 2; ;Item 3")
+    expected = "<ul>\n<li>Item 1</li>\n<li>Item 2</li>\n<li>Item 3</li>\n</ul>"
+    assert result == expected, f"Expected empty items to be ignored, but got {result}"
+    
+def test_large_list_edge_case():
+    """
+    Test that exactly 40 items trigger two columns, not three.
+    """
+    items = ";".join([f"Item {i}" for i in range(1, 41)])  # 40 items
+    result = create_html_list(items)
+    column_count = result.count('<div class="column">')
+    assert "<div class=\"column-container\">" in result, "Expected column container for 40 items"
+    assert column_count == 2, f"Expected 2 columns, but got {column_count}"
+    
+###########################################
+# Tests for the create_html_list(..) method
+###########################################
+
+def test_empty_input():
+    """
+    Test that an empty string produces an empty HTML info block.
+    """
+    result = create_html_info("")
+    expected = ""
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_single_paragraph():
+    """
+    Test that a single paragraph is formatted with first-paragraph class.
+    """
+    result = create_html_info("This is a paragraph")
+    expected = '<p class="first-paragraph">This is a paragraph</p>\n'
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_multiple_paragraphs():
+    """
+    Test that multiple paragraphs are formatted with correct classes.
+    """
+    result = create_html_info("First paragraph;Second paragraph;Third paragraph")
+    expected = (
+        '<p class="first-paragraph">First paragraph</p>\n'
+        '<p>Second paragraph</p>\n'
+        '<p>Third paragraph</p>\n'
+    )
+    assert result == expected, f"Expected {expected}, but got {result}"
+    
+def test_list_items():
+    """
+    Test that a list of items is correctly embedded using create_html_list.
+    """
+    result = create_html_info("Intro;-Item 1;-Item 2;Outro")
+    expected = (
+        '<p class="first-paragraph">Intro</p>\n'
+        '<p><ul>\n<li>Item 1</li>\n<li>Item 2</li>\n</ul></p>\n'
+        '<p>Outro</p>\n'
+    )
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_subsection_with_content():
+    """
+    Test that a subsection with header and content is formatted correctly.
+    """
+    result = create_html_info("Intro;*Header*Content;Outro")
+    expected = (
+        '<p class="first-paragraph">Intro</p>\n'
+        '<h4>Header</h4><p class="subsection">Content</p>'
+        '<p class="first-paragraph">Outro</p>\n'
+    )
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_subsection_header_only():
+    """
+    Test that a subsection with only a header produces just an h4 tag.
+    """
+    result = create_html_info("Intro;*Header*;Outro")
+    expected = (
+        '<p class="first-paragraph">Intro</p>\n'
+        '<h4>Header</h4>'
+        '<p>Outro</p>\n'
+    )
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_mixed_content():
+    """
+    Test a mix of paragraphs, lists, and subsections.
+    """
+    result = create_html_info("Intro;-Item 1;-Item 2;*Header*Subcontent;Outro")
+    expected = (
+        '<p class="first-paragraph">Intro</p>\n'
+        '<p><ul>\n<li>Item 1</li>\n<li>Item 2</li>\n</ul></p>\n'
+        '<h4>Header</h4><p class="subsection">Subcontent</p>'
+        '<p class="first-paragraph">Outro</p>\n'
+    )
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_whitespace_handling():
+    """
+    Test that leading/trailing whitespace is stripped from items.
+    """
+    result = create_html_info("  Intro  ; - Item 1 ;*Header*  Content  ")
+    expected = (
+        '<p class="first-paragraph">Intro</p>\n'
+        '<p><ul>\n<li>Item 1</li>\n</ul></p>\n'
+        '<h4>Header</h4><p class="subsection">Content</p>'
+    )
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_empty_list_items():
+    """
+    Test that empty list items are handled correctly.
+    """
+    result = create_html_info("Intro;- ;-Item 1;;Outro")
+    expected = (
+        '<p class="first-paragraph">Intro</p>\n'
+        '<p><ul>\n<li>Item 1</li>\n</ul></p>\n'
+        '<p>Outro</p>\n'
+    )
+    assert result == expected, f"Expected {expected}, but got {result}"
+    
+def test_list_at_start():
+    """
+    Test that a list at the start is formatted with first-paragraph class.
+    """
+    result = create_html_info("-Item 1;-Item 2;Outro")
+    expected = (
+        '<p class="first-paragraph"><ul>\n<li>Item 1</li>\n<li>Item 2</li>\n</ul></p>\n'
+        '<p>Outro</p>\n'
+    )
+    assert result == expected, f"Expected {expected}, but got {result}"
+
+def test_list_at_end():
+    """
+    Test that a list at the end is formatted correctly.
+    """
+    result = create_html_info("Intro;-Item 1;-Item 2")
+    expected = (
+        '<p class="first-paragraph">Intro</p>\n'
+        '<p><ul>\n<li>Item 1</li>\n<li>Item 2</li>\n</ul></p>\n'
+    )
+    assert result == expected, f"Expected {expected}, but got {result}"
+    
+###########################################
+# Tests for the create_html_img(..) method
+###########################################
+
+#TODO
+
+
+
+
+
+
+
+
+
+###########################################
+# Tests for the create_html_music(..) method
+###########################################
+
+#TODO
+
+
+

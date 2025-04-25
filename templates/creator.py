@@ -790,6 +790,8 @@ def create_html_list(values):
 
             for item in item_list:
                 item = item.strip()  # Remove leading/trailing whitespace
+                if item == "":
+                    continue
                 html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
 
             html_list += "</ul></div>"  # Close the HTML list
@@ -804,6 +806,8 @@ def create_html_list(values):
 
             for item in item_list:
                 item = item.strip()  # Remove leading/trailing whitespace
+                if item == "":
+                    continue
                 html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
 
             html_list += "</ul></div>"  # Close the HTML list
@@ -815,6 +819,8 @@ def create_html_list(values):
 
         for item in items:
             item = item.strip()  # Remove leading/trailing whitespace
+            if item == "":
+                continue
             html_list += f"<li>{item}</li>\n"  # Add each item as an HTML list item
 
         html_list += "</ul>"  # Close the HTML list
@@ -875,6 +881,8 @@ def create_html_info(values):
     for item in items:
         output_text(f"item: {item}")
         item = item.strip()  # Remove leading/trailing whitespace
+        if item == "":
+            continue
         if item.startswith('-'):
             output_text(f"List item detected in: {item}")
             item_list += item.replace("-", "") + ";"
@@ -1343,13 +1351,35 @@ class Creator:
         # Create the HTML list
         html_list = '<ul>\n'
         for url in url_list:
-            video_name = get_youtube_video_name(url)
-            self.output_text_to_gui(f"Downloading {video_name}. See terminal for progress report!")
-            mp3_path = self.download_youtube_video_as_mp3(url)
-            rel_mp3_path = os.path.relpath(mp3_path, global_vars.output_file_folder)
-            html_list += f'<li><a href="{url}">{video_name}</a><a href="{rel_mp3_path}"><i class="fas fa-folder"></i></a></li>\n'
-        html_list += '</ul>'
+            # Validate URL format (basic check for YouTube URL)
+            if not url.startswith(("https://www.youtube.com", "https://youtu.be")):
+                print(f"Skipping invalid URL: {url}")
+                continue
+                
+            # Get video name
+            try:
+                video_name = get_youtube_video_name(url)
+                if video_name is None:
+                    video_name = url  # Fallback to URL if name fetch fails
+            except Exception as e:
+                print(f"Error fetching video name for {url}: {e}")
+                video_name = url
+            
 
+            # Download MP3 and get path
+            try:
+                mp3_path = self.download_youtube_video_as_mp3(url)
+                if mp3_path is None:
+                    print(f"Failed to download MP3 for {url}")
+                    continue  # Skip this URL if download fails
+                rel_mp3_path = os.path.relpath(mp3_path, global_vars.output_file_folder)
+            except Exception as e:
+                print(f"Error downloading MP3 for {url}: {e}")
+                continue  # Skip this URL on download error
+            
+            html_list += f'<li><a href="{url}">{video_name}</a><a href="{rel_mp3_path}"><i class="fas fa-folder"></i></a></li>\n'
+            
+        html_list += '</ul>'
         return html_list
         
 
@@ -1376,13 +1406,17 @@ class Creator:
             "/path/to/output/directory/output.mp3"
         """
         try:
-            if "youtube" not in url:
-                output_text(f"Invalid Youtube url: {url}", "error")
+            # Validate URL
+            if not url or "youtube" not in url.lower():
+                self.output_text_to_gui(f"Invalid YouTube URL: {url}", "error")
                 return None
-
-            output_name = get_youtube_video_name(url).replace("|", "").replace("/", "").replace(":", "").replace("-",
-                                                                                                                 "").replace(
-                " ", "_")
+                
+            output_name = get_youtube_video_name(url)
+            if output_name is not None:
+                output_name = output_name.replace("|", "").replace("/", "").replace(":", "").replace("-", "").replace(" ", "_")
+            else:
+                output_name = "unknown_video"
+                
             mp3_path = f"{output_path}/{output_name}.mp3"
             if os.path.isfile(mp3_path):
                 output_text(f"File already exists: {mp3_path}", "warning")
@@ -1391,6 +1425,8 @@ class Creator:
             if not self.download_checkbox_value.get():
                 output_text(f"Downloading option not checked: {mp3_path}")
                 return mp3_path
+            else:            
+                self.output_text_to_gui(f"Downloading {video_name}. See terminal for progress report!")
 
             # Create a YouTube object with the provided URL
             yt = YouTube(url)
