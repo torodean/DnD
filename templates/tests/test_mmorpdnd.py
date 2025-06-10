@@ -124,13 +124,15 @@ def test_create_index_files(tmp_path, mmorpdnd_instance):
     """
     # Define a directory structure
     directory_structure = {
-        "dir1": {
-            "subdir1": {
-                "file1.txt": {}
+        "campaign" : {  # campaign is expected in the path when consolidating the file path location.
+            "dir1": {
+                "subdir1": {
+                    "file1.txt": {}
+                },
+                "subdir2": {}
             },
-            "subdir2": {}
-        },
-        "dir2": {}
+            "dir2": {}
+        }
     }
 
     # Create the directory structure
@@ -144,22 +146,26 @@ def test_create_index_files(tmp_path, mmorpdnd_instance):
     mmorpdnd_instance.create_index_files(tmp_path)
 
     # Verify that index files are created where necessary
-    assert os.path.exists(tmp_path / "dir1" / "index.html")
-    assert os.path.exists(tmp_path / "dir1" / "subdir1" / "index.html")
-    assert os.path.exists(tmp_path / "dir1" / "subdir2" / "index.html")
-    assert os.path.exists(tmp_path / "dir2" / "index.html")
+    assert os.path.exists(tmp_path / "campaign" / "index.html")
+    assert os.path.exists(tmp_path / "campaign" / "dir1" / "index.html")
+    assert os.path.exists(tmp_path / "campaign" / "dir1" / "subdir1" / "index.html")
+    assert os.path.exists(tmp_path / "campaign" / "dir1" / "subdir2" / "index.html")
+    assert os.path.exists(tmp_path / "campaign" / "dir2" / "index.html")
 
     # Check the content of index files
-    with open(tmp_path / "dir1" / "index.html", 'r') as f:
+    with open(tmp_path / "campaign" / "index.html", 'r') as f:
+        content = f.read()
+        assert "Index of campaign" in content
+    with open(tmp_path / "campaign" / "dir1" / "index.html", 'r') as f:
         content = f.read()
         assert "Index of dir1" in content
-    with open(tmp_path / "dir1" / "subdir1" / "index.html", 'r') as f:
+    with open(tmp_path / "campaign" / "dir1" / "subdir1" / "index.html", 'r') as f:
         content = f.read()
         assert "Index of subdir1" in content
-    with open(tmp_path / "dir1" / "subdir2" / "index.html", 'r') as f:
+    with open(tmp_path / "campaign" / "dir1" / "subdir2" / "index.html", 'r') as f:
         content = f.read()
         assert "Index of subdir2" in content
-    with open(tmp_path / "dir2" / "index.html", 'r') as f:
+    with open(tmp_path / "campaign" / "dir2" / "index.html", 'r') as f:
         content = f.read()
         assert "Index of dir2" in content
         
