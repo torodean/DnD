@@ -360,9 +360,9 @@ class MMORPDND:
             if campaign_index != -1:  # Ensure 'campaign' is found
                 display_path = root[campaign_index:]  # Slice from 'campaign' to the end
             else:
-                display_path = root  # Fallback to full path if 'campaign' isn’t found (shouldn’t happen per your rule)
+                display_path = root  # Fallback to full path if 'campaign' isn’t found (shouldn’t happen)
             with open(index_file_path, 'w') as f:
-                f.write(f"<html>\n<head>\n<title>Index of {directory_name}</title>\n</head>\n<body>\n")
+                f.write(f"<html>\n<head>\n<title>Index of {display_path}</title>\n</head>\n<body>\n")
                 f.write(f"<h1>Index of {display_path}</h1>\n</body>\n</html>\n")
             output_text(f"Created index file at {index_file_path}", option="success")
 
